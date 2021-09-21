@@ -10,5 +10,8 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
+<h1><a href='meditation/meditationInsertForm'>Ju meditation insert Form</a></h1>
+
 </body>
 </html>
