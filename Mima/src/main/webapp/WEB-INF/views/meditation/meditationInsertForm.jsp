@@ -2,114 +2,81 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>	
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>	
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- Fav Icon -->
-<link rel="icon" href="../../../Docpro/assets/images/favicon.ico" type="image/x-icon">
-
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
-<!-- Stylesheets -->
-<link href="../../../Docpro/assets/css/font-awesome-all.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/flaticon.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/owl.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/bootstrap.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/jquery.fancybox.min.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/animate.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/color.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/nice-select.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/style.css" rel="stylesheet">
-<link href="../../../Docpro/assets/css/responsive.css" rel="stylesheet">
 
 
-</head>
-<body>
-
+ <!--Page Title-->
+        <section class="page-title centred bg-color-1">
+            <div class="pattern-layer">
+                <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-70.png);"></div>
+                <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-71.png);"></div>
+            </div>
+            <div class="auto-container">
+                <div class="content-box">
+                    <div class="title">
+                        <h1>명상 컨텐츠 등록</h1>
+                    </div>
+                    <ul class="bread-crumb clearfix">
+                        <li><a href="index.html">Home</a></li>
+                        <li>명상 등록 폼</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!--End Page Title-->
 
 <!-- registration-section -->
 <section class="registration-section bg-color-3">
 	<div class="pattern">
-		<div class="pattern-1"
-			style="background-image: url(assets/images/shape/shape-85.png);"></div>
-		<div class="pattern-2"
-			style="background-image: url(assets/images/shape/shape-86.png);"></div>
+		<div class="pattern-1"style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-85.png);"></div>
+		<div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-86.png);"></div>
 	</div>
 	<div class="auto-container">
 		<div class="inner-box">
 			<div class="content-box">
 				<div class="title-box">
-					<h3>Doctor Registration</h3>
-					<a href="register-page.html">Not a Doctor?</a>
+					<h3>명상 등록</h3>
 				</div>
 				<div class="inner">
-					<form action="register-page.html" method="post"
-						class="registration-form">
+					<form action="register" method="post" class="registration-form" ><!-- 멀티파트 나중에 고치기 -->
 						<div class="row clearfix">
-							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-								<label>Fast name</label> <input type="text" name="fname"
-									placeholder="Enter your name" required="">
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-								<label>Last name</label> <input type="text" name="lname"
-									placeholder="Enter your name" required="">
+							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+								<label>카테고리 체크박스로 줄까? 카테고리랑 해시태그 다르게??</label>
+								<input type="text" id="category" name="category" placeholder="카테고리를 입력하세요" required="reqired">
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-								<label>Email</label> <input type="email" name="email"
-									placeholder="Enter your email" required="">
+								<label>명상 제목</label>
+								<input type="text" id="title" name="title" placeholder="제목을 입력하세요" required="reqired">
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-								<label>Password</label> <input type="password" name="password"
-									placeholder="Your password" required="">
+								<label>내용</label>
+								<textarea class="form-control" id="contents" name="contents" placeholder="명상의 내용을 입력하세요" required="reqired"></textarea>
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-								<label>Confirm password</label> <input type="password"
-									name="cpassword" placeholder="Confirm password" required="">
+								<label>파일첨부</label><!-- 나중에 파일로 고치기 -->
+								<input type="text" id="contents" name="contents" required="reqired">
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-								<div class="custom-check-box">
-									<div class="custom-controls-stacked">
-										<label class="custom-control material-checkbox"> <input
-											type="checkbox" class="material-control-input"> <span
-											class="material-control-indicator"></span> <span
-											class="description">I accept <a
-												href="book-appointment.html">terms</a> and <a
-												href="book-appointment.html">conditions</a> and general
-												policy
-										</span>
-										</label>
-									</div>
-								</div>
+								<label>명상가 이름</label> 
+								<input type="text" id="teacherName" name="teacherName" placeholder="명상가의 이름은?">
+							</div>
+							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+								<label>명상가 정보</label> 
+								<textarea class="form-control" id="contents" name="contents" placeholder="명상가의 정보"></textarea>
+							</div>
+							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+								<label>명상가 사진  파일로 고치기</label>
+								<input type="text" id="teacherInfo" name="teacherInfo">
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
 								<button type="submit" class="theme-btn-one">
-									Register Now<i class="icon-Arrow-Right"></i>
+									등록하기!<i class="icon-Arrow-Right"></i>
 								</button>
 							</div>
 						</div>
 					</form>
-					<div class="text">
-						<span>or</span>
-					</div>
-					<ul class="social-links clearfix">
-						<li><a href="register-page.html">Login with Facebook</a></li>
-						<li><a href="register-page.html">Login with Google Plus</a></li>
-					</ul>
-					<div class="login-now">
-						<p>
-							Already have an account? <a href="register-page.html">Login
-								Now</a>
-						</p>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 <!-- registration-section end -->
-</body>
-</html>

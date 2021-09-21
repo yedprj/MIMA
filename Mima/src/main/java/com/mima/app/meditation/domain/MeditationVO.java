@@ -15,4 +15,7 @@ public class MeditationVO {
 	private String category;		// 카테고리
 	private Date regDate;			// 등록일
 	private Date editDate;			// 수정일
+	private String teacherName;		// 명상가 이름
+	private String teacherInfo;		// 명상가 정보
+	private String teacherPhoto;	// 명상가 사진
 }
