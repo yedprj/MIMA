@@ -11,4 +11,5 @@ public class PostVO {
 	private Date postDate;		// 작성일
 	private String contents;	// 내용
 	private int postLike;		// 좋아요 수
+	//
 }
