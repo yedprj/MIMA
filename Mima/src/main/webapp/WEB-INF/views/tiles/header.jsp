@@ -15,7 +15,7 @@
 			<div class="outer-box">
 				<div class="logo-box">
 					<figure class="logo">
-						<a href="index.html"><img src="assets/images/logo-3.png"
+						<a href="index.html"><img src="${pageContext.request.contextPath}/resources/assets/images/logo-3.png"
 							alt=""></a>
 					</figure>
 				</div>
@@ -200,7 +200,7 @@
 			<div class="outer-box">
 				<div class="logo-box">
 					<figure class="logo">
-						<a href="index.html"><img src="assets/images/small-logo.png"
+						<a href="index.html"><img src="${pageContext.request.contextPath}/resources/assets/images/small-logo.png"
 							alt=""></a>
 					</figure>
 				</div>
@@ -228,7 +228,7 @@
 
 	<nav class="menu-box">
 		<div class="nav-logo">
-			<a href="index.html"><img src="assets/images/logo-2.png" alt=""
+			<a href="index.html"><img src="${pageContext.request.contextPath}/resources/assets/images/logo-2.png" alt=""
 				title=""></a>
 		</div>
 		<div class="menu-outer">
