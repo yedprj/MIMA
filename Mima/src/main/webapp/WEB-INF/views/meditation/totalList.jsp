@@ -93,7 +93,6 @@
                                 </div>
                                 
                                 <div class="outer-box clearfix">
-    
 								    <div class="right-column pull-right">
 								        <div class="author-box">
 								            
