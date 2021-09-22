@@ -2,4 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.post.mapper.PostMapper">
 
+	<select id="getList" resultType="postVO">
+		SELECT * FROM POST
+	</select>
+	
+	<select id="insert">
+		INSERT INTO POST(
+						POST_NO,
+						MEMBER_ID,
+						POST_DATE,
+						CONTENTS,
+						POST_LIKE
+		)
+		VALUES(
+						SEQ_POST.NEXTVAL,
+						1,
+						SYSDATE,
+						#{contents},
+						0				
+		)
+	</select>
+
 </mapper>
