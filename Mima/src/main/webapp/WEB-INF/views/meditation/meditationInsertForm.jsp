@@ -53,7 +53,7 @@
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label>파일첨부</label><!-- 나중에 파일로 고치기 -->
-								<input type="text" id="contents" name="contents" required="reqired">
+								<input type="text" id="meditationFile" name="meditationFile" required="reqired">
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label>명상가 이름</label> 
@@ -61,11 +61,11 @@
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label>명상가 정보</label> 
-								<textarea class="form-control" id="contents" name="contents" placeholder="명상가의 정보"></textarea>
+								<textarea class="form-control" id="teacherInfo" name="teacherInfo" placeholder="명상가의 정보"></textarea>
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label>명상가 사진  파일로 고치기</label>
-								<input type="text" id="teacherInfo" name="teacherInfo">
+								<input type="text" id="teacherPhoto" name="teacherPhoto">
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
 								<button type="submit" class="theme-btn-one">

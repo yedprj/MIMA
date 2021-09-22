@@ -24,6 +24,7 @@
  <!--  추천명상 들어갈 자리!!!!-->
         <section class="team-style-two bg-color-3">
             <div class="auto-container">
+                <div> XX님을 위한 오늘의 추천명상</div>
                 <div class="row clearfix">
                     <div class="col-lg-3 col-md-6 col-sm-12 team-block">
                         <div class="team-block-two wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
@@ -34,8 +35,8 @@
                                     <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
-                                    <h3><a href="doctors-details.html">Dr. Mary Astor</a></h3>
-                                    <span class="designation">Ph.D, DPT, MS OMPT</span>
+                                    <h3><a href="doctors-details.html">상쾌한 아침명상</a></h3>
+                                    <span class="designation">#아침 #간단 #5분</span>
                                     <ul class="rating clearfix">
                                         <li><i class="icon-Star"></i></li>
                                         <li><i class="icon-Star"></i></li>
@@ -44,9 +45,9 @@
                                         <li><i class="icon-Star"></i></li>
                                         <li><a href="index.html">2 reviews</a></li>
                                     </ul>
-                                    <div class="location-box">
+                                   <!--  <div class="location-box">
                                         <p><i class="fas fa-map-marker-alt"></i>G87P+PG Shustoke, Birmingham, UK</p>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -60,8 +61,8 @@
                                     <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
-                                    <h3><a href="doctors-details.html">Dr. Rex Allen</a></h3>
-                                    <span class="designation">Ph.D, DPT, MS OMPT</span>
+                                    <h3><a href="doctors-details.html">스트레스 완화 명상</a></h3>
+                                    <span class="designation">#긴장이완 #차분</span>
                                     <ul class="rating clearfix">
                                         <li><i class="icon-Star"></i></li>
                                         <li><i class="icon-Star"></i></li>
@@ -70,9 +71,6 @@
                                         <li><i class="icon-Star"></i></li>
                                         <li><a href="index.html">5 reviews</a></li>
                                     </ul>
-                                    <div class="location-box">
-                                        <p><i class="fas fa-map-marker-alt"></i>G87P+PG Shustoke, Birmingham, UK</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,8 +84,8 @@
                                     <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
-                                    <h3><a href="doctors-details.html">Dr. Julia Jhones</a></h3>
-                                    <span class="designation">Ph.D, DPT, MS OMPT</span>
+                                    <h3><a href="doctors-details.html">수면을 돕는 명상</a></h3>
+                                    <span class="designation">#자기전 #5분 #꿀잠</span>
                                     <ul class="rating clearfix">
                                         <li><i class="icon-Star"></i></li>
                                         <li><i class="icon-Star"></i></li>
@@ -96,9 +94,6 @@
                                         <li><i class="icon-Star"></i></li>
                                         <li><a href="index.html">5 reviews</a></li>
                                     </ul>
-                                    <div class="location-box">
-                                        <p><i class="fas fa-map-marker-alt"></i>G87P+PG Shustoke, Birmingham, UK</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,8 +107,8 @@
                                     <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
-                                    <h3><a href="doctors-details.html">Dr. Edward Asner</a></h3>
-                                    <span class="designation">Ph.D, DPT, MS OMPT</span>
+                                    <h3><a href="doctors-details.html">화가 날 때 명상</a></h3>
+                                    <span class="designation">#분노조절 #안정 #10분</span>
                                     <ul class="rating clearfix">
                                         <li><i class="icon-Star"></i></li>
                                         <li><i class="icon-Star"></i></li>
@@ -122,9 +117,6 @@
                                         <li><i class="icon-Star"></i></li>
                                         <li><a href="index.html">3 reviews</a></li>
                                     </ul>
-                                    <div class="location-box">
-                                        <p><i class="fas fa-map-marker-alt"></i>G87P+PG Shustoke, Birmingham, UK</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -182,17 +174,17 @@
                         <div class="content_block_1">
                             <div class="content-box">
                                 <div class="sec-title">
-                                    <p>About Docpro</p>
-                                    <h2>Bring care to your home with one click</h2>
+                                    <p>마음, 챙겨주세요</p>
+                                    <h2>트랜드로 떠오르고 있는 명상, 얼마나 아시나요?</h2>
                                 </div>
                                 <div class="text">
                                     <p>Lorem ipsum dolor sit amet consectur adipiscing elit sed eiusmod ex tempor incididunt labore dolore magna aliquaenim ad minim veniam quis nostrud exercitation ullamco laboris.</p>
                                 </div>
                                 <ul class="list-style-one clearfix">
-                                    <li>Associates Insurance</li>
-                                    <li>Pina & Insurance</li>
+                                    <li>건강 보조제? 마음 보조제!</li>
+                                    <li>잠깐의 투자로 내 마음을 돌보자</li>
                                 </ul>
-                                <div class="btn-box"><a href="about.html" class="theme-btn-one">About Us<i class="icon-Arrow-Right"></i></a></div>
+                                <div class="btn-box"><a href="about.html" class="theme-btn-one">더 알아볼까요?<i class="icon-Arrow-Right"></i></a></div>
                             </div>
                         </div>
                     </div>
