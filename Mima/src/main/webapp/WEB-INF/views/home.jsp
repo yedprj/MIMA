@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 
+<<<<<<< HEAD
 <!-- banner-section -->
 <section class="banner-section centred style-three"
 	style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/banner/banner-bg-2.jpg);">
@@ -995,3 +996,4 @@
 	</div>
 </section>
 <!-- agent-section -->
+<h1><a href='meditation/meditationInsertForm'>Ju meditation insert Form</a></h1>

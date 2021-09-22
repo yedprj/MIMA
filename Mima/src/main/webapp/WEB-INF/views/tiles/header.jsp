@@ -79,7 +79,7 @@
 								<!-- 진료예약 nav 끝 -->
 								
 								<!-- 마음 챙김 nav 시작-->
-								<li class="dropdown"><a href="index.html">마음챙김</a>
+								<li class="dropdown"><a href="meditation/meditationMain">마음챙김 메인화면</a>
 									<ul>
 										<li class="dropdown"><a href="patient-dashboard.html">Patient Dashboard</a>
 											<ul>
