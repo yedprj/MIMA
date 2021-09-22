@@ -96,28 +96,28 @@
 									placeholder="주민등록번호" required="required">
 							</div>
 							
-							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-								<label>휴대폰(전화번호)</label> 
-								<input type="text" id="phone" name="phone" 
-								 placeholder="전화번호" required="required">
+							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+								<label>이메일</label> 
+								<input type="text" id="email" name="email" class="form-control"
+									placeholder="이메일(email)" onchange="emailCheck()" required="required">
+								<span id="emailCheck" class="jb-xx-small"></span>
 							</div>
 							
 							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-								<button type="button" id="phonecheck" name="phonecheck" 
-									class="theme-btn-one mt-4">휴대폰 인증</button>
+								<input type="text" id="emailnum" name="emailnum" class="form-control"
+								 placeholder="이메일 인증 번호" disabled="disabled">
+								 <span id="emailnumCheck" class="jb-xx-small"></span>
+							</div>
+							
+							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+								<button type="button" id="emailcheck" name="emailcheck" 
+									class="theme-btn-one">이메일 인증</button>
 							</div>
 							
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label>성별</label> 
 								<input type="text" id="gender" name="gender" 
 									placeholder="성별(gender)" required="required">
-							</div>
-							
-							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-								<label>이메일</label> 
-								<input type="text" id="email" name="email" class="form-control"
-									placeholder="이메일(email)" onchange="emailCheck()" required="required">
-								<span id="emailCheck" class="jb-xx-small"></span>
 							</div>
 							
 							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
@@ -192,6 +192,8 @@
 
 <script>
 
+	var code ="";	// 이메일 전송 인증번호 저장위한 코드
+	
 	$(function(){
 		// 아이디 중복 체크
 		$("#idcheck").on("click", function(e){
@@ -225,6 +227,38 @@
 				}
 			});
 		});
+	});
+	
+	// 인증번호 이메일 전송
+	$("#emailcheck").on("click", function(){
+		
+		var email = $("#email").val();	// 입력한 이메일
+		var emailnum = $("#emailnum");	// 인증번호 입력란
+		
+		$.ajax({
+			type : "get",
+			url : "mailCheck?email=" + email,
+			success : function(data){
+				//console.log("data : " + data);
+				emeilnum.attr("disabled", false);
+				code = data;
+			}
+		});
+	});
+	
+	// 인증 번호 비교
+	$("#emailnum").blur(function(){
+		
+		var inputCode = $("#emailnum").val();	// 입력코드
+		var checkResult = $("#emailnumCheck");	// 비교 결과
+		
+		if (inputCode == code) {				// 일치할 경우
+			checkResult.html("인증번호가 일치합니다.");
+			checkResult.attr("class", "valid-feedback");
+		} else {								// 일치하지 않을 경우
+			checkResult.html("인증번호를 다시 입력해주세요.");
+			checkResult.attr("class", "invalid-feedback");
+		}
 	});
 	
 	// 비밀번호 형식 체크 function 들어갈 부분
