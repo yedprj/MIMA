@@ -16,10 +16,16 @@ public class PostController {
 	@Autowired PostService postService;
 	
 	
+//	//포스트잇 페이지
+//	@GetMapping("post")
+//	public String dept() {
+//		return "post/mindPostIt";
+//	}
+	
 	//포스트잇 페이지
 	@GetMapping("post")
-	public String dept() {
-		return "post/mindPostIt";
+	public String dept2() {
+		return "post/mindPostIt2";
 	}
 	
 	// ajax로 요청 : 목록, 등록, 수정, 삭제
