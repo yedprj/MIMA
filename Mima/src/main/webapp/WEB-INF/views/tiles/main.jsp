@@ -52,6 +52,7 @@
 <link
 	href="${pageContext.request.contextPath}/resources/assets/css/responsive.css"
 	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css" rel="stylesheet">
 
 <link href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css" rel="stylesheet">
 

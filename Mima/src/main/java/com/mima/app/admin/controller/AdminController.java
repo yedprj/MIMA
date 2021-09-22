@@ -12,5 +12,5 @@ public class AdminController {
 	//페이지
 	@GetMapping("/adMain")
 	public void adMain() { }
-	
+
 }
