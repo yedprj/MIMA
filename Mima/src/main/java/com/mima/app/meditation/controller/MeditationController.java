@@ -18,11 +18,16 @@ public class MeditationController {
 	@Autowired
 	MeditationService meditationService;
 	
-	//전체 리스트 조회
+	//To main 조회
 	@GetMapping("/meditationMain")
 	public void meditationMain(Model model) {
 		model.addAttribute("list", meditationService.getMeditationList());
 	}
+	//전체 리스트 조회
+		@GetMapping("/totalList")
+		public void totalList(Model model) {
+			model.addAttribute("list", meditationService.getMeditationList());
+		}
 
 	// 등록 폼페이지
 	@GetMapping("/meditationInsertForm")
