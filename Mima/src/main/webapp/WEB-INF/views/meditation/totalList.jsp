@@ -33,107 +33,72 @@
         <section class="blog-grid">
             <div class="auto-container">
                 <div class="row clearfix">
-                
-                   
-                 <!-- 넘겨줄 값이 많아서 폼을 만들어서 넘기겠다. 교재 311 -->
-					<form id="search-form" action="totalList" method="get">
-						<select name="type">
-						<option value=""
-							<c:out value="${pageMaker.cri.type == null ? 'selected':'' }"/>
-						>선택</option>
-						<option value="T" 
-							<c:out value="${pageMaker.cri.type eq 'T'? 'selected':'' }"/>
-						>제목</option>
-						<option value="C"
-							<c:out value="${pageMaker.cri.type eq 'C'? 'selected':'' }"/>
-						>내용</option>
-						<option value="W"
-							<c:out value="${pageMaker.cri.type eq 'W'? 'selected':'' }"/>
-						>작성자</option>
-						<option value="TC"
-							<c:out value="${pageMaker.cri.type eq 'TC'? 'selected':'' }"/>
-						>제목 or 내용</option>
-						<option value="TW" 
-							<c:out value="${pageMaker.cri.type eq 'TW'? 'selected':'' }"/>
-						>제목 or 작성자</option>
-						<option value="TWC"
-							<c:out value="${pageMaker.cri.type eq 'TWC'? 'selected':'' }"/>
-						>제목 or 내용 or 작성자</option>
-						</select>
-						<input type="text" name="keyword" value="${pageMaker.cri.keyword }">
-
-		               <input type="hidden" id="pageNum" name="pageNum" value="1">
-		               <input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
-		            	<button class='btn btn-default'>Search</button>
-		            </form>
-                
-                
-                
-                
-                
                  <div class="col-lg-12 col-md-12 col-sm-12 sidebar-side">
                         <div class="blog-sidebar">
+			                <div class="sidebar-widget sidebar-tags">
+			                    <div class="widget-content">
+			                        <ul class="tags-list clearfix">
+			                            <li><a href="">감정</a></li>
+			                            <li><a href="">분노</a></li>
+			                            <li><a href="">중독</a></li>
+			                            <li><a href="">인간관계</a></li>
+			                            <li><a href="">수면</a></li>
+			                            <li><a href="">스트레스</a></li>
+			                        </ul>
+			                    </div>
+			                </div>
+                        
                             <div class="sidebar-widget sidebar-search">
                                 <div class="widget-title">
                                     <h3>Search</h3>
                                 </div>
-                                <div class="search-inner">
-                                    <form action="blog-3.html" method="post" class="search-form">
-                                        <div class="form-group">
-                                            <input type="search" name="search-field" placeholder="Search" required="">
-                                            <button type="submit"><i class="fas fa-search"></i></button>
-                                        </div>
-                                    </form>
-                                </div>
+                                
+                         <form action="blog-3.html" method="post" class="search-form">
+				            <div class="row clearfix d-flex">
+				                <div class="search-inner col-lg-4 col-md-12 col-sm-12">
+				                    <div class="nice-select form-group">
+				                        <select class="" name="type">
+											<option value=""
+												<c:out value="${pageMaker.cri.type == null ? 'selected':'' }"/>
+											>선택</option>
+											<option value="T" 
+												<c:out value="${pageMaker.cri.type eq 'T'? 'selected':'' }"/>
+											>제목</option>
+											<option value="C"
+												<c:out value="${pageMaker.cri.type eq 'C'? 'selected':'' }"/>
+											>내용</option>
+											<option value="W"
+												<c:out value="${pageMaker.cri.type eq 'W'? 'selected':'' }"/>
+											>작성자</option>
+											<option value="TC"
+												<c:out value="${pageMaker.cri.type eq 'TC'? 'selected':'' }"/>
+											>제목 or 내용</option>
+											<option value="TW" 
+												<c:out value="${pageMaker.cri.type eq 'TW'? 'selected':'' }"/>
+											>제목 or 작성자</option>
+											<option value="TWC"
+												<c:out value="${pageMaker.cri.type eq 'TWC'? 'selected':'' }"/>
+											>제목 or 내용 or 작성자</option>
+										</select>
+				                    </div>
+				                </div>
+				                <div class="col-lg-7 col-md-12 col-sm-12">
+				                    <div class="form-group">
+				                        <input type="search" name="search-field" placeholder="Search" required="">
+				                        <button type="submit"><i class="fas fa-search"></i></button>
+				                    </div>
+				                </div>
+				            </div>
+				        </form>
+                                
                             </div>
-                    
-                            <div class="sidebar-widget category-widget">
-                                <div class="widget-title">
-                                    <h3>Categories</h3>
-                                </div>
-                                
-                                <div class="outer-box clearfix">
-								    <div class="right-column pull-right">
-								        <div class="author-box">
-								            
-								            <div class="author">
-								                
-								                <div class="select-box">
-								                    <select class="wide">
-								                        <option data-display="Dr. Rex Allen">Dr. Rex Allen</option>
-								                        <option value="1">Cardiology</option>
-								                        <option value="2">Nurology</option>
-								                        <option value="4">Pragnency</option>
-								                    </select>
-								                </div>
-								            </div>
-								        </div>
-								    </div>
-								</div>
-                                
-                                
-                                  <div class="select-box">
-                                    <select class="wide">
-                                       <option data-display="meditationCategory">명상 카테고리</option>
-                                       <option value="emotion">감정</option>
-                                       <option value="anger">분노</option>
-                                       <option value="addict">중독</option>
-                                       <option value="relation">인간관계</option>
-                                       <option value="sleep">수면</option>
-                                       <option value="stress">스트레스</option>
-                                    </select>
-                                </div>
-                            </div>
+                        
                         </div>
                     </div>
                 </div>
-                
-                
-                
-                
-                
-                
+               
                  <div class="row clearfix">
+		            <!-- 명상 카드바디 -->
                     <c:forEach var="item" items="${list }">
 	                    <div class="col-lg-4 col-md-6 col-sm-12 news-block">
 	                        <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
@@ -158,7 +123,7 @@
 	                        </div>
 	                    </div>
                     </c:forEach>
-                    
+                     <!-- end of 명상 카드바디 -->
                 </div>
                  
                  
