@@ -53,6 +53,8 @@
 	href="${pageContext.request.contextPath}/resources/assets/css/responsive.css"
 	rel="stylesheet">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 
 
