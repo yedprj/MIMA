@@ -1,11 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper	namespace="com.mima.app.meditation.mapper.MeditationMapper">
+<mapper
+	namespace="com.mima.app.meditation.mapper.MeditationMapper">
+
+	<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+	<!-- total medit count -->
+	<select id="getTotalMeditCount" resultType="int">
+		SELECT COUNT(*) FROM MEDITATION
+		WHERE
+		<include refid="criteria"></include>
+		MEDITATION_NO > 0
+	</select>
 
 
 	<select id="getMeditationList"
 		resultType="com.mima.app.meditation.domain.MeditationVO">
-		select * from meditation
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
+			ROWNUM RN, MEDITATION_NO, TITLE, CONTENTS, MEDITATION_FILE, 
+			MEDITATION_LIKE, HIT, CATEGORY, REG_DATE, EDIT_DATE, 
+			TEACHER_NAME, TEACHER_INFO, TEACHER_PHOTO
+		FROM MEDITATION
+		where
+		<include refid="criteria"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
 	</select>
 
 
@@ -37,23 +82,30 @@
 		#{teacherPhoto}
 		)
 	</insert>
-	
-	
+
+	<select id="read"
+		resultType="com.mima.app.meditation.domain.MeditationVO">
+		SELECT *
+		FROM MEDITATION
+		WHERE MEDITATION_NO=${meditationNo}
+	</select>
+
 	<update id="update">
 		UPDATE MEDITATION
-			SET
-				TITLE =#{title},
-				CONTENTS =#{contents},
-				EDIT_DATE=sysdate,
-				TEACHER_NAME =#{teacherName},
-				TEACHER_INFO =#{teacherInfo},
-				TEACHER_PHOTO =#{teacherPhoto}
+		SET
+		TITLE =#{title},
+		CONTENTS =#{contents},
+		EDIT_DATE=sysdate,
+		TEACHER_NAME =#{teacherName},
+		TEACHER_INFO =#{teacherInfo},
+		TEACHER_PHOTO =#{teacherPhoto}
 		WHERE MEDITATION_NO=#{meditationNo}
 	</update>
 
 	<delete id="delete">
 		DELETE FROM MEDITATION
-		WHERE MEDITATION_NO=#{meditationNo}
+		WHERE
+		MEDITATION_NO=#{meditationNo}
 	</delete>
 
 

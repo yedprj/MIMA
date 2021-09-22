@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                   <div style="float:right"><div class="btn-box"><a href="blog-details.html" class="theme-btn-one">Total list of meditation<i class="icon-Arrow-Right"></i></a></div></div>
+                   <div style="float:right"><div class="btn-box"><a href="totalList" class="theme-btn-one">Total list of meditation<i class="icon-Arrow-Right"></i></a></div></div>
             </div>
         </section>
         <!-- End of 추천명상 들어갈 자리!!!! -->

@@ -52,7 +52,8 @@
 <link
 	href="${pageContext.request.contextPath}/resources/assets/css/responsive.css"
 	rel="stylesheet">
-
+	<!-- 선택태그 스타일 :) 근데 안돼....ㅠ-->
+<link href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css" rel="stylesheet">
 </head>
 
 
@@ -89,6 +90,7 @@
 	<script src="${pageContext.request.contextPath}/resources/assets/js/tilt.jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.paroller.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.nice-select.min.js"></script>
+	
 
 	<!-- main-js -->
 	<script src="${pageContext.request.contextPath}/resources/assets/js/script.js"></script>
