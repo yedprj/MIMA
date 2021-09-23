@@ -315,7 +315,7 @@
 			  			  .addClass('is-invalid');
 			$("#emailnumCheck").removeClass('valid-feedback')
 	 		   			.addClass('invalid-feedback').text('입력하신 인증번호가 틀립니다. 다시 입력해 주세요.');
-		}
+		} 
 	}
 	
 	/* $("#emailnum").blur(function() {
