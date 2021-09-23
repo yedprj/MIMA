@@ -104,8 +104,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
   margin: 1px 1px 0px 0px;
   cursor: pointer;
 }
-
-
+.team-block-three .inner-box .image-box a:hover{
+  background: #eaf8f6;
+}
 </style>
 
 <div class="boxed_wrapper">
@@ -268,6 +269,29 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 		})// 모달창 버튼 end
 		
+		// 좋아요 클릭시
+		$(document).on("click",".heartIcon",function(){			
+			var heart = $(this);
+			if( heart.css("background-color") == "rgb(6, 26, 58)"){
+				return;
+			}
+			// url을 변수값을 줘서 +, - 되는 url 주소를 바꾸면 됨
+			var postNo = $(this).data("postno");
+			$.ajax({
+				url : "updateLike",
+				method : "put",
+				dataType : "json",
+				data : JSON.stringify({ 
+					postNo : postNo
+				}),
+				contentType: 'application/json', 
+				success : function(){
+					alert("좋아요 성공!!");
+					heart.css("background-color","#061a3a");
+				}// success end
+			}) //  ajax end
+		})// heartIcon end
+		
 		postInsert(); // 등록
 		
 
@@ -327,8 +351,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							+ '<div class="inner-box">'
 							+ '<figure class="image-box">'
 							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+data.postColor+'" alt=""> '
-							+ '<a href="clinic-details.html"><i class="far fa-heart"></i></a>'
-							+ '<a href="clinic-details.html" style="top: 20px; right: 70px;" ><i class="far fa-angry"></i></a>'
+							+ '<a class="heartIcon" data-postNo="'+data.postNo+'"><i class="far fa-heart"></i></a>'
+							+ '<a class="angryIcon" style="top: 20px; right: 70px;"><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
 							+ '<div><h4>'
 							+ data.contents

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mima.app.post.domain.PostVO;
 import com.mima.app.post.service.PostService;
 
+import lombok.extern.java.Log;
+
 @Controller
+@Log
 @RequestMapping("/post/*")
 public class PostController {
 	
@@ -45,5 +49,12 @@ public class PostController {
 		return  postService.insert(vo);
 	}
 	
+	//수정 처리
+	@PutMapping("updateLike")
+	@ResponseBody
+	public int updateLike(@RequestBody PostVO vo, Model model) {
+		log.info(vo.toString());
+		return  postService.updateLike(vo);
+	}
 
 }

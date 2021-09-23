@@ -32,9 +32,9 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public int update(PostVO vo) {
+	public int updateLike(PostVO vo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return postMapper.updateLike(vo);
 	}
 
 	@Override

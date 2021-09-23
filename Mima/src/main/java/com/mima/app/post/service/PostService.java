@@ -12,7 +12,7 @@ public interface PostService {
 	
 	public int insert(PostVO vo);
 	
-	public int update(PostVO vo);
+	public int updateLike(PostVO vo);
 	
 	public int delete(PostVO vo);
 
