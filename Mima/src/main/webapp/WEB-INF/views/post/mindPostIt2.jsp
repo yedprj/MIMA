@@ -324,11 +324,11 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					$("<div class='col-lg-4 col-md-6 col-sm-12 team-block'>")
 						.append(
 							"<div class='team-block-three'>"
-							+ '<div class="team-block-three">'
 							+ '<div class="inner-box">'
 							+ '<figure class="image-box">'
 							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+data.postColor+'" alt=""> '
 							+ '<a href="clinic-details.html"><i class="far fa-heart"></i></a>'
+							+ '<a href="clinic-details.html" style="top: 20px; right: 70px;" ><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
 							+ '<div><h4>'
 							+ data.contents
