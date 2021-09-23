@@ -54,6 +54,8 @@
 	rel="stylesheet">
 	<!-- 선택태그 스타일 :) 근데 안돼....ㅠ-->
 <link href="${pageContext.request.contextPath}/resources/assets/css/nice-select.css" rel="stylesheet">
+
+<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.js"></script>
 </head>
 
 
@@ -78,7 +80,7 @@
 
 
 	<!-- jequery plugins -->
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.js"></script>
+	
 	<script src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/assets/js/owl.js"></script>
