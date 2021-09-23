@@ -105,7 +105,7 @@
 							
 							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 								<input type="text" id="emailnum" name="emailnum" class="form-control"
-								 placeholder="이메일 인증 번호" disabled="disabled">
+								 onchange="checkEmailnum()" placeholder="이메일 인증 번호" disabled >
 								 <span id="emailnumCheck" class="jb-xx-small"></span>
 							</div>
 							
@@ -118,6 +118,12 @@
 								<label>성별</label> 
 								<input type="text" id="gender" name="gender" 
 									placeholder="성별(gender)" required="required">
+							</div>
+							
+							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+								<label>전화번호</label> 
+								<input type="text" id="phone" name="phone" 
+									placeholder="전화번호(phone)" required="required">
 							</div>
 							
 							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
@@ -148,6 +154,11 @@
 							</div>
 							
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+								<label>프로필 업로드</label> 
+								<input type="file" id="ptProfilePhoto" name="ptProfilePhoto">
+							</div>
+							
+							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<div class="custom-check-box">
 									<div class="custom-controls-stacked">
 										<label class="custom-control material-checkbox"> <input
@@ -163,19 +174,12 @@
 								</div>
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-								<button type="submit" class="theme-btn-one">
+								<button type="button" id="joinMember" name="joinMember" class="theme-btn-one">
 									Register Now<i class="icon-Arrow-Right"></i>
 								</button>
 							</div>
 						</div>
 					</form>
-					<div class="text">
-						<span>or</span>
-					</div>
-					<ul class="social-links clearfix">
-						<li><a href="register-page.html">Login with Facebook</a></li>
-						<li><a href="register-page.html">Login with Google Plus</a></li>
-					</ul>
 					<div class="login-now">
 						<p>
 							Already have an account? <a href="register-page.html">Login
@@ -229,37 +233,104 @@
 		});
 	});
 	
+	// 회원 가입
+	$("#joinMember").on("click", function(e) {
+		e.preventDefault();
+		
+		var memberId = $("#memberId").val();
+		var password = $("#password").val();
+		var nickname = $("#nickname").val();
+		var role = $("#role").val();
+		var name = $("#name").val();
+		var identifyNo = $("#identifyNo").val();
+		var gender = $("#gender").val();
+		var address = $("#address").val();
+		var email = $("#email").val();
+		var phone = $("#phone").val();
+		var ptProfilePhoto = $("#ptProfilePhoto").val();
+		
+		if (role == "환자"){
+			role = "pt";
+			var status = "Y";
+		}
+		
+		if (allCheck() == true) {
+			$.ajax({
+				url : "joinMember",
+				type : "post",
+				data : JSON.stringify({memberId : memberId,
+									   password : password,
+									   nickname : nickname,
+									   role : role,
+									   name : name,
+									   identifyNo : identifyNo,
+									   gender : gender,
+									   address : address,
+									   email : email,
+									   phone : phone,
+									   status : status,
+									   ptProfilePhoto : ptProfilePhoto}),
+				dataType : "json",
+				contentType : "application/json",
+				success : function(data) {
+					console.log(data);
+				}
+			});
+		} else {
+			return false;
+		}
+	});
+	
 	// 인증번호 이메일 전송
 	$("#emailcheck").on("click", function(){
 		
 		var email = $("#email").val();	// 입력한 이메일
-		var emailnum = $("#emailnum");	// 인증번호 입력란
 		
 		$.ajax({
 			type : "get",
 			url : "mailCheck?email=" + email,
 			success : function(data){
 				//console.log("data : " + data);
-				emeilnum.attr("disabled", false);
+				$("#emailnum").attr("disabled", false);
 				code = data;
+				//console.log(code);
 			}
 		});
 	});
 	
-	// 인증 번호 비교
-	$("#emailnum").blur(function(){
+	// 인증번호 비교
+	function checkEmailnum() {
 		
 		var inputCode = $("#emailnum").val();	// 입력코드
-		var checkResult = $("#emailnumCheck");	// 비교 결과
 		
+		//console.log(inputCode);
+		//console.log(code);
 		if (inputCode == code) {				// 일치할 경우
-			checkResult.html("인증번호가 일치합니다.");
-			checkResult.attr("class", "valid-feedback");
+			$("#emailnum").removeClass('is-invalid')
+						  .addClass('is-valid');
+			$("#emailnumCheck").removeClass('invalid-feedback')
+			 		   .addClass('valid-feedback').text('입력하신 인증번호가 일치합니다.');
 		} else {								// 일치하지 않을 경우
-			checkResult.html("인증번호를 다시 입력해주세요.");
-			checkResult.attr("class", "invalid-feedback");
+			$("#emailnum").removeClass('is-valid')
+			  			  .addClass('is-invalid');
+			$("#emailnumCheck").removeClass('valid-feedback')
+	 		   			.addClass('invalid-feedback').text('입력하신 인증번호가 틀립니다. 다시 입력해 주세요.');
+		} 
+	}
+	
+	/* $("#emailnum").blur(function() {
+		var inputCode = $("#emailnum").val();	// 입력코드
+		var checkResult = $("#emailnumCheck");	// 비교 결과
+		//console.log();
+		//console.log(code);
+		if (inputCode == code) {				// 일치할 경우
+			$("#emailnumCheck").removeClass('invalid-feedback')
+			 		   .addClass('valid-feedback').text('입력하신 인증번호가 일치합니다.');
+		} else {								// 일치하지 않을 경우
+			$("#emailnumCheck").removeClass('valid-feedback')
+	   				   .addClass('invalid-feedback').text('입력하신 인증번호가 틀립니다. 다시 입력해 주세요.');
 		}
-	});
+	}); */
 	
 	// 비밀번호 형식 체크 function 들어갈 부분
 	function check_pw() {
@@ -380,9 +451,6 @@
 		}
 	}
 	
-	
-	
-	
 	// 회원 가입 시 전체 체크 function
 	function allCheck() {
 		// 아이디 입력 했는지 체크
@@ -439,6 +507,11 @@
 			return false;
 		}
 		
+		// 프로필 등록 체크
+		if (frm.ptProfilePhoto.val == "") {
+			alert("프로필 등록할 사진을 업로드 해주세요.");
+			return false;
+		}
 		return true;
 	}
 	

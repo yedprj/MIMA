@@ -13,4 +13,47 @@
 		SELECT COUNT(*) FROM MEMBER
 		WHERE NICKNAME = #{nickname}
 	</select>
+	
+	<!-- 어드민 약국 의사 승인 쿼리 -->
+	<select id="patnerStatusSelect">
+		SELECT * FROM MEMBER
+		WHERE ROLE = 'doctor'
+		AND ROLE = 'pharmacy'
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="memberInsert">
+		<selectKey keyProperty="memberNo" resultType="int"
+				order="BEFORE">
+			SELECT SEQ_MEMBER.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MEMBER
+			(MEMBER_NO,
+			 MEMBER_ID,
+			 PASSWORD,
+			 NICKNAME,
+			 ROLE,
+			 NAME,
+			 IDENTIFY_NO,
+			 GENDER,
+			 ADDRESS,
+			 EMAIL,
+			 PHONE,
+			 STATUS,
+			 PT_PROFILE_PHOTO)
+		VALUES 
+			(#{memberNo},
+			 #{memberId},
+			 #{password},
+			 #{nickname},
+			 #{role},
+			 #{name},
+			 #{identifyNo},
+			 #{gender},
+			 #{address},
+			 #{email},
+			 #{phone},
+			 #{status},
+			 #{ptProfilePhoto})
+	</insert>
 </mapper>
