@@ -6,7 +6,7 @@ import com.mima.app.post.domain.PostVO;
 
 public interface PostService {
 	
-public List<PostVO> getList();
+	public List<PostVO> getList();
 	
 	public PostVO read(PostVO vo);
 	
