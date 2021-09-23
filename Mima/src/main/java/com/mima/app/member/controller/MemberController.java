@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +34,8 @@ public class MemberController {
 	private JavaMailSender mailSender;
 	
 	// 일반 회원가입 폼으로 이동
-	@GetMapping("/signUpForm")
-	public void signUpForm() { }
+	@GetMapping("/joinForm")
+	public void joinForm() { }
 	
 	// 아이디 중복 체크
 	@PostMapping("/IdCheck")
@@ -59,7 +60,6 @@ public class MemberController {
 	@ResponseBody
 	public String mailcheckGet(String email) throws Exception {
 		
-		
 		logger.info("이메일 인증번호");
 		logger.info("인증번호 : " + email);
 		
@@ -70,7 +70,7 @@ public class MemberController {
 		logger.info("인증번호" + checkNum);
 		
 		// 이메일 보내기
-		String setFrom = "test@naver.com";
+		String setFrom = "dngur1278@naver.com";
 		String toMail = email;
 		String title = "회원가입 이메일 입니다.";
 		String content = "저희 Mima를 방문해주셔서 감사합니다." +
@@ -95,5 +95,14 @@ public class MemberController {
 		String num = Integer.toString(checkNum);
 		
 		return num;
+	}
+	
+	// 회원가입
+	@PostMapping("/joinMember")
+	@ResponseBody
+	public int joinMember(@RequestBody MemberVO vo) {
+		int result = memberService.memberInsert(vo);
+		
+		return result;
 	}
 }

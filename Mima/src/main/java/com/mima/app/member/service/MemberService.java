@@ -8,5 +8,8 @@ public interface MemberService {
 	public int idCheck(MemberVO vo);
 	
 	// 닉네임 중복 체크
-	public int nickNameCheck(MemberVO vo);	
+	public int nickNameCheck(MemberVO vo);
+
+	// 회원가입
+	public int memberInsert(MemberVO vo);
 }
