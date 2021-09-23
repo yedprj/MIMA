@@ -4,23 +4,26 @@
 
 	<select id="getList" resultType="postVO">
 		SELECT * FROM POST
+		ORDER BY POST_NO DESC
 	</select>
 	
-	<select id="insert">
+	<insert id="insert">
 		INSERT INTO POST(
 						POST_NO,
-						MEMBER_ID,
+						MEMBER_NO,
 						POST_DATE,
 						CONTENTS,
-						POST_LIKE
+						POST_LIKE,
+						POST_COLOR
 		)
 		VALUES(
-						SEQ_POST.NEXTVAL,
-						1,
-						SYSDATE,
-						#{contents},
-						0				
+				SEQ_POST.NEXTVAL,
+				#{memberNo},
+				SYSDATE,
+				#{contents},
+				0,
+				#{postColor}				
 		)
-	</select>
+	</insert>
 
 </mapper>
