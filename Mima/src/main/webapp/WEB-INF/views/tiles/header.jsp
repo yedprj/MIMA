@@ -104,33 +104,7 @@
 								<!-- 마음 챙김 nav 끝 -->
 								
 								<!-- 포스트 잇 nav 시작 -->
-								<li class="dropdown"><a href="index.html">포스트 잇</a>
-									<div class="megamenu">
-										<div class="row clearfix">
-											<div class="col-lg-6 column">
-												<ul>
-													<li><h4>Page List 01</h4></li>
-													<li><a href="about.html">About Us</a></li>
-													<li><a href="service-1.html">Service 01</a></li>
-													<li><a href="service-2.html">Service 02</a></li>
-													<li><a href="faq.html">Faq's</a></li>
-													<li><a href="pricing.html">Our Pricing</a></li>
-													<li><a href="contact.html">Contact Us</a>
-													<li><a href="error.html">404</a></li>
-												</ul>
-											</div>
-											<div class="col-lg-6 column">
-												<ul>
-													<li><h4>Page List 02</h4></li>
-													<li><a href="clinic-1.html">Clinic Page 01</a></li>
-													<li><a href="clinic-2.html">Clinic Page 02</a></li>
-													<li><a href="clinic-3.html">Clinic Page 03</a></li>
-													<li><a href="clinic-4.html">Clinic Page 04</a></li>
-													<li><a href="clinic-details.html">Clinic Details</a></li>
-												</ul>
-											</div>
-										</div>
-									</div>
+								<li class="dropdown"><a href="${pageContext.request.contextPath}/post/mindPostIt2">포스트 잇</a>
 								</li>
 								<!-- 포스트 잇 nav 끝 -->
 								
@@ -178,11 +152,11 @@
 								<!-- 로그인 nav 시작 -->
 								<li class="dropdown"><a href="index.html">로그인</a>
 									<ul>
-										<li><a href="blog.html">Blog Grid 01</a></li>
-										<li><a href="blog-2.html">Blog Grid 02</a></li>
-										<li><a href="blog-3.html">Blog Standard</a></li>
-										<li><a href="blog-details.html">Blog Details</a></li>
-									</ul></li>
+										<li><a href="blog.html">로그인</a></li>
+										<li><a href="member/signUpForm">일반 회원가입</a></li>
+										<li><a href="blog-3.html">파트너 회원가입</a></li>
+									</ul>
+								</li>
 							</ul>
 						</div>
 					</nav>
