@@ -37,14 +37,16 @@
                 <!-- 본문 -->
                     <div class="news-block-one">
                         <div class="inner-box">
-                            <figure class="image-box">
-                                <img src="${pageContext.request.contextPath}/assets/images/news/news-18.jpg" alt="">
+                            <div class="image-box" style="text-align:center; background-color: 	#f1f1f4;">
+                                <img src="${pageContext.request.contextPath}/resources/assets/images/news/meditationFile" alt="">
+                                <video width="770" height="470" src="${pageContext.request.contextPath}/resources/meditVideo/${item.meditationFile}"
+                                	controls auto></video>
                                 <span class="category">${item.category }</span>
-                            </figure>
+                           	</div>
                             <div class="lower-content">
                                 <h3>${item.title }</h3>
                                 <ul class="post-info">
-                                    <li><img src="${pageContext.request.contextPath}/assets/images/news/admin-1.png" alt=""><a href="index.html">${item.teacherName }</a></li>
+                                    <li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-1.png" alt=""><a href="index.html">${item.teacherName }</a></li>
                                     <li><fmt:formatDate value="${item.regDate }"
 											pattern="yyyy-MM-dd" /></li>
                                 </ul>

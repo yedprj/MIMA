@@ -23,12 +23,12 @@
                         <li><a href="/app">Home</a></li>
                         <li><a href="meditationMain">마음챙김</a></li>
                         <c:choose>
-							<c:when test="${empty pageCat}">
+							<c:when test="${empty pageMaker.cri.category}">
 							<li>전체 리스트</li>
 							</c:when>
 							<c:otherwise>
 								<li><a href="totalList">전체 리스트</a></li>
-                        		<li>${pageCat }</li>
+                        		<li>${pageMaker.cri.category }</li>
 							</c:otherwise>
 						</c:choose>
                     </ul>
@@ -213,6 +213,7 @@
 	 /* 타이틀 클릭 시 상세페이지로 넘어가면서 페이지넘&어마운트 같이 가져가기 */
 	 $(".move").on('click', function(e){
 		 e.preventDefault();
+		 $('#meditationNo').remove();
 		 actionForm.append('<input type="hidden" id="meditationNo" name="meditationNo" value="'+ $(this).attr("href") +'">');
 		 actionForm.attr("action", "meditationDetail");
 		 actionForm.submit();

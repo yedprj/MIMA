@@ -18,4 +18,5 @@ public class MeditationVO {
 	private String teacherName;		// 명상가 이름
 	private String teacherInfo;		// 명상가 정보
 	private String teacherPhoto;	// 명상가 사진
+	private String meditationThumb; // 토탈리스트에 들어갈 썸넬사진
 }
