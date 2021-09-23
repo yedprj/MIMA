@@ -103,7 +103,7 @@
 								<!-- 마음 챙김 nav 끝 -->
 								
 								<!-- 포스트 잇 nav 시작 -->
-								<li class="dropdown"><a href="post">포스트 잇</a>
+								<li class="dropdown"><a href="${pageContext.request.contextPath}/post/mindPostIt2">포스트 잇</a>
 								</li>
 								<!-- 포스트 잇 nav 끝 -->
 								
