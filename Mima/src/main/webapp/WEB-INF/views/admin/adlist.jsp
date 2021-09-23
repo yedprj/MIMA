@@ -5,14 +5,12 @@
 
 
 <style>
-tr:hover{
-		color:blue;
-		cursor:pointer;}
+
 </style>
 
 <div class="container">
 	<div style="margin-top: 50px;">
-		<h3 align = "center">전체 조회</h3>
+		<h3 align = "center">회원 관리</h3>
 		<hr>
 	</div>
 	<br>
@@ -34,8 +32,8 @@ tr:hover{
 					<td>${patients.preSelfAx }</td>
 					<td>${patients.topic }</td>
 					<td>${patients.medDelivery }</td>
-					<td>${patients.regDate }</td>
-					<td>${patients.editDate }</td>
+					<td><fmt:formatDate value="${patients.regDate }" pattern="yy-MM-dd"/></td>
+					<td><fmt:formatDate value="${patients.editDate }" pattern="yy-MM-dd"/></td>
 				</tr>
 			</c:forEach>
 		</table>
