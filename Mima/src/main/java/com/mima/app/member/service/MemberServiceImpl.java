@@ -29,4 +29,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.memberInsert(vo);
 	}
 
+	// 파트너 회원가입
+	@Override
+	public int partnerMemberInsert(MemberVO vo) {
+		return memberMapper.partnerMemberInsert(vo);
+	}
+
 }

@@ -37,6 +37,10 @@ public class MemberController {
 	@GetMapping("/joinForm")
 	public void joinForm() { }
 	
+	// 파트너 회원가입 폼으로 이동
+	@GetMapping("/partnerJoinForm")
+	public void partnerJoinForm() {}
+	
 	// 아이디 중복 체크
 	@PostMapping("/IdCheck")
 	@ResponseBody

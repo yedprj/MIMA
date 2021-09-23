@@ -12,4 +12,7 @@ public interface MemberService {
 
 	// 회원가입
 	public int memberInsert(MemberVO vo);
+
+	// 파트너 회원가입 (의사/약사)
+	public int partnerMemberInsert(MemberVO vo);	
 }
