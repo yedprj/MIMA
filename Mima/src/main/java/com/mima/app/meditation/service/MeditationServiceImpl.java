@@ -2,6 +2,7 @@ package com.mima.app.meditation.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,7 @@ public class MeditationServiceImpl implements MeditationService {
 	public int getTotalMeditCount(Criteria cri) {
 		return meditationMapper.getTotalMeditCount(cri);
 	}
+
+
 
 }

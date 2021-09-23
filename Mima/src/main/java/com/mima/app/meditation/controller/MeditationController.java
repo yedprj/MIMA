@@ -1,5 +1,7 @@
 package com.mima.app.meditation.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.meditation.domain.MeditationVO;
 import com.mima.app.meditation.service.MeditationService;
 
+import lombok.extern.java.Log;
+
+@Log
 @Controller
 @RequestMapping("/meditation/*")
 public class MeditationController {
@@ -28,17 +33,21 @@ public class MeditationController {
 		
 	}
 	//전체 리스트 조회
-		@GetMapping("/totalList")
-		public void totalList(Model model, @ModelAttribute("cri") Criteria cri) {
-			int total = meditationService.getTotalMeditCount(cri);
-			System.out.println("getList++++++++++++++++" + cri);
-			model.addAttribute("list", meditationService.getMeditationList(cri));
-			model.addAttribute("pageMaker", new PageVO(cri, total));
-		}
+	@GetMapping("/totalList")
+	public void totalList(Model model, @ModelAttribute("cri") Criteria cri) {
+		int total = meditationService.getTotalMeditCount(cri);
+		System.out.println("getList++++++++++++++++" + cri);
+		model.addAttribute("list", meditationService.getMeditationList(cri));
+		
+		model.addAttribute("pageMaker", new PageVO(cri, total));
+		System.out.println(new PageVO(cri, total) +"  ------------- getList++++++++++++++++" + cri);
+	}
+	
+	
 	// 단건조회-디테일 페이지
 	@GetMapping("/meditationDetail")
 	public void meditationDetail(Model model, MeditationVO vo, @ModelAttribute("cri") Criteria cri) {
-		model.addAttribute("meditation", meditationService.read(vo));
+		model.addAttribute("item", meditationService.read(vo));
 	}
 	
 	// 등록 폼페이지

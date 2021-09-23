@@ -79,8 +79,9 @@
 								<!-- 진료예약 nav 끝 -->
 								
 								<!-- 마음 챙김 nav 시작-->
-								<li class="dropdown"><a href="meditation/meditationMain">마음챙김 메인화면</a>
+								<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/meditationMain">마음챙김</a>
 									<ul>
+										<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/totalList"> 전체명상리스트</a>
 										<li class="dropdown"><a href="patient-dashboard.html">Patient Dashboard</a>
 											<ul>
 												<li><a href="patient-dashboard.html">Dashboard</a></li>

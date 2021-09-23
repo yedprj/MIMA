@@ -4,7 +4,11 @@
 	namespace="com.mima.app.meditation.mapper.MeditationMapper">
 
 	<!-- trim 한 것 따로 빼 낸것... -->
-	<sql id="criteria">
+	<sql id="criteria" >
+		<if test="category !=null and category!=''">
+			CATEGORY=#{category}
+				AND
+	 	</if>
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach collection="typeArr" item="type">
 				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
@@ -19,7 +23,7 @@
 						</when>
 
 						<when test="type =='W'.toString()">
-							WRITER LIKE '%'|| #{keyword} || '%'
+							TEACHER_NAME LIKE '%'|| #{keyword} || '%'
 						</when>
 					</choose>
 				</trim>
@@ -37,15 +41,16 @@
 	</select>
 
 
-	<select id="getMeditationList"
+	<select id="getMeditationList" 
 		resultType="com.mima.app.meditation.domain.MeditationVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
-			ROWNUM RN, MEDITATION_NO, TITLE, CONTENTS, MEDITATION_FILE, 
-			MEDITATION_LIKE, HIT, CATEGORY, REG_DATE, EDIT_DATE, 
-			TEACHER_NAME, TEACHER_INFO, TEACHER_PHOTO
+		ROWNUM RN, MEDITATION_NO, TITLE, CONTENTS, MEDITATION_FILE,
+		MEDITATION_LIKE, HIT, CATEGORY, REG_DATE, EDIT_DATE,
+		TEACHER_NAME, TEACHER_INFO, TEACHER_PHOTO, MEDITATION_THUMB
 		FROM MEDITATION
 		where
+				
 		<include refid="criteria"></include>
 				<![CDATA[
 				ROWNUM <= #{pageNum} * #{amount}				
@@ -53,7 +58,7 @@
 		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
 	</select>
 
-
+	
 	<insert id="insert">
 		<selectKey keyProperty="meditationNo" resultType="int"
 			order="BEFORE">
@@ -94,12 +99,15 @@
 		UPDATE MEDITATION
 		SET
 		TITLE =#{title},
-		CONTENTS =#{contents},
+		CONTENTS
+		=#{contents},
 		EDIT_DATE=sysdate,
 		TEACHER_NAME =#{teacherName},
 		TEACHER_INFO =#{teacherInfo},
-		TEACHER_PHOTO =#{teacherPhoto}
-		WHERE MEDITATION_NO=#{meditationNo}
+		TEACHER_PHOTO =#{teacherPhoto},
+		MEDITATION_THUMB =#{meditationThumb}
+		WHERE
+		MEDITATION_NO=#{meditationNo}
 	</update>
 
 	<delete id="delete">
