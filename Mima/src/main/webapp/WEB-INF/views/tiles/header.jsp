@@ -154,8 +154,8 @@
 								<li class="dropdown"><a href="index.html">로그인</a>
 									<ul>
 										<li><a href="blog.html">로그인</a></li>
-										<li><a href="member/joinForm">일반 회원가입</a></li>
-										<li><a href="blog-3.html">파트너 회원가입</a></li>
+										<li><a href="${pageContext.request.contextPath}/member/joinForm">일반 회원가입</a></li>
+										<li><a href="${pageContext.request.contextPath}/member/partnerJoinForm">파트너 회원가입</a></li>
 									</ul>
 								</li>
 							</ul>

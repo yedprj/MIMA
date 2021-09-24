@@ -38,6 +38,10 @@ public class MemberController {
 	@GetMapping("/joinForm")
 	public void joinForm() { }
 	
+	// 파트너 회원가입 폼으로 이동
+	@GetMapping("/partnerJoinForm")
+	public void partnerJoinForm() {}
+	
 	// 아이디 중복 체크
 	@PostMapping("/IdCheck")
 	@ResponseBody
@@ -52,6 +56,15 @@ public class MemberController {
 	@ResponseBody
 	public int nickNameCheck(@RequestBody MemberVO vo) {
 		int result = memberService.nickNameCheck(vo);
+		
+		return result;
+	}
+	
+	// 의사 약사 면허 체크
+	@PostMapping("/licenseCheck")
+	@ResponseBody
+	public int licenseCheck(@RequestBody MemberVO vo) {
+		int result = memberService.licenseCheck(vo);
 		
 		return result;
 	}

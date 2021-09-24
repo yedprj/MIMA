@@ -14,6 +14,11 @@
 		WHERE NICKNAME = #{nickname}
 	</select>
 	
+	<select id="licenseCheck" resultType="int">
+		SELECT COUNT(*) FROM MEMBER
+		WHERE LICENSE = #{license}
+	</select>
+	
 	<!-- 회원가입 -->
 	<insert id="memberInsert">
 		<selectKey keyProperty="memberNo" resultType="int"
@@ -50,6 +55,41 @@
 			 #{ptProfilePhoto})
 	</insert>
 	
+	<insert id="partnerMemberInsert">
+		<selectKey keyProperty="memberNo" resultType="int"
+				order="BEFORE">
+			SELECT SEQ_MEMBER.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MEMBER
+			(MEMBER_NO,
+			 MEMBER_ID,
+			 PASSWORD,
+			 NICKNAME,
+			 ROLE,
+			 NAME,
+			 IDENTIFY_NO,
+			 GENDER,
+			 ADDRESS,
+			 EMAIL,
+			 PHONE,
+			 LICENSE,
+			 STATUS)
+		VALUES
+			(#{memberNo},
+			 #{memberId},
+			 #{password},
+			 #{nickname},
+			 #{role},
+			 #{name},
+			 #{identifyNo},
+			 #{gender},
+			 #{address},
+			 #{email},
+			 #{phone},
+			 #{license},
+			 #{status})
+	</insert>
+
 	<!-- 어드민 약국 의사 승인 쿼리 -->
 	<select id="patnerStatusSelect" resultType="memberVO">
 		SELECT * FROM MEMBER
@@ -61,6 +101,5 @@
 	<update id="patnerStatusUpdate" >
 		UPDATE MEMBER SET STATUS='y' WHERE STATUS='n'
 	</update>
-	
-	
+
 </mapper>
