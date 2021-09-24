@@ -2,4 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.session.mapper.BookingMapper">
 
+<select id="getList" resultType="BookingVO">
+	
+	SELECT BOOKING.BOOKING_NO,
+		   PT_NO,
+		   DOC_NO,
+		   BOOKING_DATE,
+		   PRICE,
+		   CONSULT_DATE,
+		   CONSULT_TIME,
+		   NAME
+	FROM MEMBER
+	INNER JOIN BOOKING
+	ON MEMBER.MEMBER_NO=BOOKING.PT_NO
+	WHERE BOOKING.CONSULT_DATE=SYSDATE
+
+</select>
+
 </mapper>
