@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mappings.report-mapper">
+<mapper namespace="com.mima.app.admin.mapper.ReportMapper">
+
+	<select id="reportRead" resultType="ReportVO">
+		SELECT REPORT_NO FROM REPORT
+		WHERE REPORT_MNO = #{reportMNo}
+		AND POST_NO = #{postNo}
+	</select>
+	<insert id="insert">
+		INSERT INTO REPORT
+			(
+			REPORT_NO,
+			POST_NO,
+			MEMBER_NO,
+			REPORT_MNO,
+			REPORT_DATE
+		)
+		VALUES (
+			SEQ_REPORT.NEXTVAL,
+            #{postNo},
+            #{memberNo},
+            #{reportMNo},
+            SYSDATE
+		)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM REPORT 
+		WHERE REPORT_NO = #{reportNo}
+	</delete>
 
 </mapper>
