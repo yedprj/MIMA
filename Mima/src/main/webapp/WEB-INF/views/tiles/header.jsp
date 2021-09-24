@@ -82,6 +82,7 @@
 								<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/meditationMain">마음챙김</a>
 									<ul>
 										<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/totalList"> 전체명상리스트</a>
+										<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/meditationInsertForm"> 명상 등록</a>
 										<li class="dropdown"><a href="patient-dashboard.html">Patient Dashboard</a>
 											<ul>
 												<li><a href="patient-dashboard.html">Dashboard</a></li>

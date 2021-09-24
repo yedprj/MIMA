@@ -45,7 +45,7 @@
 		resultType="com.mima.app.meditation.domain.MeditationVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
-		ROWNUM RN, MEDITATION_NO, TITLE, CONTENTS, MEDITATION_FILE,
+		ROWNUM RN, MEDITATION_NO, TITLE, CONTENTS,
 		MEDITATION_LIKE, HIT, CATEGORY, REG_DATE, EDIT_DATE,
 		TEACHER_NAME, TEACHER_INFO, TEACHER_PHOTO, MEDITATION_THUMB
 		FROM MEDITATION
@@ -68,23 +68,19 @@
 		MEDITATION_NO,
 		TITLE,
 		CONTENTS,
-		MEDITATION_FILE,
 		CATEGORY,
 		REG_DATE,
 		TEACHER_NAME,
-		TEACHER_INFO,
-		TEACHER_PHOTO
+		TEACHER_INFO
 		)
 		VALUES(
 		#{meditationNo},
 		#{title},
 		#{contents},
-		#{meditationFile},
 		#{category},
 		sysdate,
 		#{teacherName},
-		#{teacherInfo},
-		#{teacherPhoto}
+		#{teacherInfo}
 		)
 	</insert>
 
