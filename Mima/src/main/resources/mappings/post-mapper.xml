@@ -3,7 +3,12 @@
 <mapper namespace="com.mima.app.post.mapper.PostMapper">
 
 	<select id="getList" resultType="postVO">
-		SELECT * FROM POST
+		SELECT post.*, (
+			SELECT 1 FROM REPORT
+			WHERE REPORT_MNO = #{reportMno}
+			AND POST_NO = POST.POST_NO
+		) REPORT_MNO
+		FROM POST
 		ORDER BY POST_NO DESC
 	</select>
 	
@@ -29,6 +34,12 @@
 	<update id="updateLike">
 		UPDATE POST SET 
 			POST_LIKE= POST_LIKE + 1 
+			WHERE POST_NO = #{postNo}
+	</update>
+	
+	<update id="updateNotLike">
+		UPDATE POST SET 
+			POST_LIKE= POST_LIKE - 1 
 			WHERE POST_NO = #{postNo}
 	</update>
 

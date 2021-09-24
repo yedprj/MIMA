@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.admin.mapper.ReportMapper;
 import com.mima.app.post.domain.PostVO;
 import com.mima.app.post.mapper.PostMapper;
 
@@ -14,9 +15,9 @@ public class PostServiceImpl implements PostService {
 	@Autowired PostMapper postMapper;
 
 	@Override
-	public List<PostVO> getList() {
+	public List<PostVO> getList(int reportMno) {
 		// TODO Auto-generated method stub
-		return postMapper.getList();
+		return postMapper.getList(reportMno);
 	}
 
 	@Override
@@ -41,6 +42,12 @@ public class PostServiceImpl implements PostService {
 	public int delete(PostVO vo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int updateNotLike(PostVO vo) {
+		// TODO Auto-generated method stub
+		return postMapper.updateNotLike(vo);
 	}
 
 }
