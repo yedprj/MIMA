@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mima.app.meditation.mapper.MeditAttachMapper">
+	<insert id="insert">
+		INSERT INTO 
+			MEDIT_ATTACH (	MEDITATION_NO,
+							UUID,
+							UPLOADPATH,
+							V_FILE_NAME,
+							P_IMG_NAME
+						)
+				 VALUES (	#{meditationNo}
+				 			#{uuid},
+							#{uploadPath},
+							#{vFileName},
+							#{pImgName}
+							 )
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM MEDIT_ATTACH 
+			WHERE UUID = #{uuid}
+	</delete>
+
+	<select id="findByMeditNo" resultType="com.mima.app.meditation.domain.MeditAttachVO">
+		SELECT * FROM MEDIT_ATTACH 
+			WHERE MEDITATION_NO = #{meditationNo}
+	</select>
+
+	<delete id="deleteAll">
+		DELETE MEDIT_ATTACH
+		 WHERE MEDITATION_NO = #{meditationNo}
+	</delete>
+
+	<select id="getOldFiles" resultType="com.mima.app.meditation.domain.MeditAttachVO">
+		SELECT * 
+			FROM MEDIT_ATTACH
+			 WHERE UPLOADPATH = TO_CHAR(SYSDATE -1 ,'yyyy\mm\dd')
+	</select>
+
+	<select id="read" resultType="com.mima.app.meditation.domain.MeditAttachVO">
+		SELECT * FROM MEDIT_ATTACH WHERE UUID=#{uuid}
+	</select>
+
+</mapper>

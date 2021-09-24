@@ -157,7 +157,7 @@
 	                            <div class="inner-box">
 	                                <figure class="image-box">
 	                                    <a class="move" href="${item.meditationNo }" >
-	                                    	<img src="${pageContext.request.contextPath}/resources/assets/images/news/news-1.jpg" alt="">
+	                                    	<img src="${pageContext.request.contextPath}/resources/assets/images/medit/${item.meditationThumb}" alt="">
 	                                    </a>
 	                                    <span class="category">${item.category }</span>
 	                                </figure>
