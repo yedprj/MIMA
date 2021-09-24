@@ -19,13 +19,6 @@
 		WHERE LICENSE = #{license}
 	</select>
 	
-	<!-- 어드민 약국 의사 승인 쿼리 -->
-	<select id="patnerStatusSelect">
-		SELECT * FROM MEMBER
-		WHERE ROLE = 'doctor'
-		AND ROLE = 'pharmacy'
-	</select>
-	
 	<!-- 회원가입 -->
 	<insert id="memberInsert">
 		<selectKey keyProperty="memberNo" resultType="int"
@@ -96,4 +89,17 @@
 			 #{license},
 			 #{status})
 	</insert>
+
+	<!-- 어드민 약국 의사 승인 쿼리 -->
+	<select id="patnerStatusSelect" resultType="memberVO">
+		SELECT * FROM MEMBER
+		WHERE STATUS = 'n' 
+		AND ( ROLE = 'doctor' OR ROLE = 'pharmacy')
+	</select>
+	
+	<!--어드민 약국 의사 등록 쿼리 -->
+	<update id="patnerStatusUpdate" >
+		UPDATE MEMBER SET STATUS='y' WHERE STATUS='n'
+	</update>
+
 </mapper>

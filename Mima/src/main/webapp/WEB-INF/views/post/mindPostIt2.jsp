@@ -38,74 +38,78 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 .team-block-three .inner-box {
 	box-shadow: none;
 }
+
 .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 2; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 2; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
-    
- /* Modal Content/Box */
- .modal-content {
-     background-color: #fefefe;
-     margin: 15% auto; /* 15% from the top and centered */
-     padding: 20px;
-     border: 1px solid #888;
-     width: 400px; /* Could be more or less, depending on screen size */
-     height : 40%;
-     box-sizing: none;                          
- }
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 400px; /* Could be more or less, depending on screen size */
+	height: 40%;
+	box-sizing: none;
+}
 
 .accept {
 	position: relative;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 20px;
-    padding: 9px 20px;
-    background: #ebfaf8;
-    border-radius: 25px;
-    float: right;
-    margin-right: 10px;
-    color: #39cabb;
+	display: inline-block;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 20px;
+	padding: 9px 20px;
+	background: #ebfaf8;
+	border-radius: 25px;
+	float: right;
+	margin-right: 10px;
+	color: #39cabb;
 }
 
 .cancel {
 	position: relative;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 20px;
-    padding: 9px 21.5px;
-    background: #ffeeec;
-    border-radius: 25px;
-    margin-right: 30px 10px;
-    color: #fe5948;
+	display: inline-block;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 20px;
+	padding: 9px 21.5px;
+	background: #ffeeec;
+	border-radius: 25px;
+	margin-right: 30px 10px;
+	color: #fe5948;
 }
 
-.pallet{
-  width: 295px;
-  height: 250px;
-
-}
-.active{
-  outline: 1px solid black;
-}
-.colorBox{
-  width: 20px;
-  height: 20px;
-  float: left;
-  margin: 1px 1px 0px 0px;
-  cursor: pointer;
+.pallet {
+	width: 295px;
+	height: 250px;
 }
 
+.active {
+	outline: 1px solid black;
+}
 
+.colorBox {
+	width: 20px;
+	height: 20px;
+	float: left;
+	margin: 1px 1px 0px 0px;
+	cursor: pointer;
+}
+
+.team-block-three .inner-box .image-box a:hover {
+	background: #eaf8f6;
+}
 </style>
 
 <div class="boxed_wrapper">
@@ -189,7 +193,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						<div class="right-column pull-right clearfix">
 							<div class="btn-box">
 								<a class="theme-btn-one" id="insertBtn"> <i
-									class="icon-image" ></i> 등록
+									class="icon-image"></i> 등록
 								</a>
 							</div>
 						</div>
@@ -200,7 +204,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 						<div class="clinic-grid-content grid-item">
 							<div class="row clearfix postContents">
-								<!-- 메모 내용 -->							
+								<!-- 메모 내용 -->
 
 							</div>
 						</div>
@@ -219,28 +223,31 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 		</div>
 	</section>
 	<!-- clinic-section end -->
-	
+
 	<!-- The Modal -->
-    <div id="myModal" class="modal">
- 
-      <!-- Modal content -->
-      <div id="box" class="modal-content box">
-          <p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 16pt;">포스트잇 등록</span></b></span></p>
-          <form name="insert" style="padding-bottom: 10px;padding-top: 10px; height:200px;">
-          <textarea id="contents" name="contents" style="background-color:transparent; line-height: 1.5; width:100%; height:170px;"></textarea><br />
-          </form>
-          <div style="cursor:pointer; flex-direction: none;">
-          	  <span id="palletBox" class="pallet"></span>
-              <span class="accept insertBtn" style="float:right;" ><i class="fas fa-check"></i></span>
-              <span class="cancel closeBtn" style="float:right;"><i class="fas fa-times"></i></span>
-          </div>  
-      </div>
- 
-    </div>
-        <!--End Modal-->
+	<div id="myModal" class="modal">
 
-
-
+		<!-- Modal content -->
+		<div id="box" class="modal-content box">
+			<p style="text-align: center;">
+				<span style="font-size: 14pt;"><b><span
+						style="font-size: 16pt;">포스트잇 등록</span></b></span>
+			</p>
+			<form name="insert"
+				style="padding-bottom: 10px; padding-top: 10px; height: 200px;">
+				<textarea id="contents" name="contents"
+					style="background-color: transparent; line-height: 1.5; width: 100%; height: 170px;"></textarea>
+				<br />
+			</form>
+			<div style="cursor: pointer; flex-direction: none;">
+				<span id="palletBox" class="pallet"></span> <span
+					class="accept insertBtn" style="float: right;"><i
+					class="fas fa-check"></i></span> <span class="cancel closeBtn"
+					style="float: right;"><i class="fas fa-times"></i></span>
+			</div>
+		</div>
+	</div>
+	<!--End Modal-->
 
 
 	<!--Scroll to top-->
@@ -250,135 +257,242 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 </div>
 
 <script>
+	var CurrentNo = 30; // 현재 회원번호 
+	
 	$(function() {
 		
 
 		postList();
 
 		// 모달창 띄우기
-		$("#insertBtn").on("click", function (){
+		$("#insertBtn").on("click", function() {
 			$('#myModal').show();
-			
+
 			insert.contents.focus();
-			
-			$(".closeBtn").on("click", function () {
-	            $('#myModal').hide();
-	            modalReset();
-	       	});
+
+			$(".closeBtn").on("click", function() {
+				$('#myModal').hide();
+				modalReset();
+			});
 
 		})// 모달창 버튼 end
-		
+
 		postInsert(); // 등록
-		
 
 	}); //end
-	
-	
-	function modalReset(){
+
+	// 좋아요 클릭시
+	$(document).on("click", ".heartIcon", function() {
+		var heart = $(this);
+		var urlJuso;
+		if (heart.css("background-color") == "rgb(6, 26, 58)") {
+			urlJuso = "updateNotLike";
+			alert("좋아요 취소!!");
+			heart.css("background-color", "#eaf8f6");
+		} else {
+			urlJuso = "updateLike";
+			alert("좋아요 성공!!");
+			heart.css("background-color", "#061a3a");
+		}
+		// url을 변수값을 줘서 +, - 되는 url 주소를 바꾸면 됨
+		var postNo = $(this).closest('#post').data("postno");
+		$.ajax({
+			url : urlJuso,
+			method : "put",
+			dataType : "json",
+			data : JSON.stringify({
+				postNo : postNo
+			}),
+			contentType : 'application/json',
+			success : function() {
+				if (urlJuso == "updateLike") {
+					console.log("좋아요_성공")
+				} else {
+					console.log("좋아요_취소_성공")
+				}
+			}// success end
+		})
+		//  ajax end
+	})// heartIcon end
+
+	// 신고 클릭시
+	$(document).on("click", ".angryIcon", function() {
+		var heart = $(this);
+		var urlJuso;
+		var reportNo;
+		var postNo = $(this).closest('#post').data("postno");
+		var memberNo = $(this).closest('#post').data("memberno");
+
+		// 신고한 건수 확인
+		$.ajax({
+			url : "reportConfirm",
+			method : "post",
+			dataType : "json",
+			data : JSON.stringify({
+				reportMNo : CurrentNo,
+				postNo : postNo
+			}),
+			contentType : 'application/json',
+			success : function(data) {
+				if (data.report) {
+					var test = confirm("신고한 내역이 있습니다. 취소할까요?") // 신고내역 확인
+					if ( test == false) {
+						return;
+					} else {
+						urlJuso = "delete/" + data.report.reportNo;
+						$.ajax({
+							url : urlJuso,
+							method : "delete",
+							dataType : "json",
+							contentType : 'application/json',
+							success : function(data) {
+								console.log("신고_취소_성공");
+								alert("신고 취소!!");
+								heart.css("background-color", "#eaf8f6");
+							}// success end
+						}); //  ajax end
+					}
+				} else {
+					urlJuso = "angryUpdate";
+					$.ajax({
+						url : urlJuso,
+						method : "post",
+						dataType : "json",
+						data : JSON.stringify({
+							postNo : postNo,
+							memberNo : memberNo,
+							reportMNo : CurrentNo
+						}),
+						contentType : 'application/json',
+						success : function() {
+							alert("신고 성공!!");
+							heart.css("background-color", "#061a3a");
+						}// success end
+					}); //  ajax end
+				}
+			},
+			error : function() {
+				console.log("error");
+			}
+		}); // 신고건수 확인 ajax end
+
+	});// angryIcon end
+
+	// 모달 리셋
+	function modalReset() {
 		$("#contents").val("");
-		$("#box").css("background-color","#fff");
+		$("#box").css("background-color", "#fff");
 	}
-	
-	
-	// 등록
+
+	// 포스트 등록
 	function postInsert() {
-		$(".insertBtn").on("click", function(){
-			if($("#contents").val() == ""){
+		$(".insertBtn").on("click", function() {
+			if ($("#contents").val() == "") {
 				alert("내용을 입력하세요!")
 				return;
-			}			
+			}
 			$.ajax({
 				url : "postInsert",
 				method : "post",
 				dataType : "json",
 				data : JSON.stringify({
-					memberNo : "29",
+					memberNo : CurrentNo,
 					contents : $("#contents").val(),
 					postColor : $(".pallet").find(".active").data("img")
 				}),
-				contentType: 'application/json', 
-				success : function(data){
+				contentType : 'application/json',
+				success : function(data) {
 					postList();
 					$('#myModal').hide();
 					modalReset();
 				},// success end
-				error : function(xhr, status, message) { 
-			        alert(xhr+" status: "+status+" er:"+message);
-			    } 
-			}) 	//ajax end	
+				error : function(xhr, status, message) {
+					alert(xhr + " status: " + status + " er:" + message);
+				}
+			}) //ajax end	
 		})
-	} //등록 end
-	
-	
-	var beforeColor; //이전에 선택된 컬러 저장 할 변수	
-
+	} // 포스트 등록 end
 
 	//페이지 목록 조회
 	function postList() {
+		var str ='';
 		$.ajax({
 			url : "postList",
-			dataType : "json",
+			method : "get",
+			data : {
+				reportMno : CurrentNo,
+			},
+			contentType : 'application/json',
 			success : function(datas) {
 				$(".postContents").empty();
-				$.each(datas, function(i, data) {
-					$("<div class='col-lg-4 col-md-6 col-sm-12 team-block'>")
+				$.each(datas,function(i, data) {
+					if(data.reportMno == 1){ str = 'background-color: #061a3a;'; }else {
+						str = '';
+					}
+					$("<div id='post' data-postNo='"+data.postNo+"' data-memberNo='"+data.memberNo+"' class='col-lg-4 col-md-6 col-sm-12 team-block'>")
 						.append(
 							"<div class='team-block-three'>"
 							+ '<div class="inner-box">'
 							+ '<figure class="image-box">'
 							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+data.postColor+'" alt=""> '
-							+ '<a href="clinic-details.html"><i class="far fa-heart"></i></a>'
-							+ '<a href="clinic-details.html" style="top: 20px; right: 70px;" ><i class="far fa-angry"></i></a>'
+							+ '<a class="heartIcon"><i class="far fa-heart"></i></a>'
+							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ str +'"><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
 							+ '<div><h4>'
 							+ data.contents
 							+ '</h4></div>'
-							+ '</div></figure></div></div>'
-						 )
-						.appendTo( $(".postContents") );	
-				}); // each end
+							+ '</div></figure></div></div>')
+						.appendTo($(".postContents"));
+						
+					}); // each end
+					
 			} // success end
 		}) //ajax end
 	} // 페이지목록 조회 end
 	
 
+	var beforeColor; //이전에 선택된 컬러 저장 할 변수	
 
 	//HTML 로딩이 끝난 후
-	window.onload = function(){
-	  init();
+	window.onload = function() {
+		init();
 	}
 
-	function init(){
-	  //2차원 배열 파레트 데이터
-	  var pallet = ["#f4ddda", "#f5f4d6", "#dfe5da", "#dde3e2", "#ebebeb", "#e7dbed"];
-	  var postColor = ["redPost.png","yellow.png","green.png","blueGray.png","purpleGray.png","purple.png"];
-	  var tag = "";
-	  for(i=0; i<pallet.length; i++){
-	      tag += "<div id='"+pallet[i]+"' data-img='"+postColor[i] +"' class='colorBox' onclick='colorSet(this)'></div>";
-	  }
-	  //파레트 파싱
-	  document.getElementById("palletBox").innerHTML = tag;
+	function init() {
+		// 배열 파레트 데이터
+		var pallet = [ "#f4ddda", "#f5f4d6", "#dfe5da", "#dde3e2", "#ebebeb",
+				"#e7dbed" ];
+		var postColor = [ "redPost.png", "yellow.png", "green.png",
+				"blueGray.png", "purpleGray.png", "purple.png" ];
+		var tag = "";
+		for (i = 0; i < pallet.length; i++) {
+			tag += "<div id='" + pallet[i] + "' data-img='" + postColor[i]
+					+ "' class='colorBox' onclick='colorSet(this)'></div>";
+		}
+		//파레트 파싱
+		document.getElementById("palletBox").innerHTML = tag;
 
-	  //색상 입히기
-	  var colorBox = document.getElementsByClassName("colorBox");
-	  for(i=0; i<colorBox.length; i++){
-	    colorBox[i].style.background = colorBox[i].id;
-	  }
+		//색상 입히기
+		var colorBox = document.getElementsByClassName("colorBox");
+		for (i = 0; i < colorBox.length; i++) {
+			colorBox[i].style.background = colorBox[i].id;
+		}
 	}
 
 	// onclick event
-	function colorSet(target){
-	  document.querySelector("#box").style.background = target.id;
+	function colorSet(target) {
+		document.querySelector("#box").style.background = target.id;
 
-	  if(beforeColor != undefined && beforeColor != null){
-	    document.getElementById(beforeColor).className = document.getElementById(beforeColor).className.replace(" active", "");
-	  }
-	  document.getElementById(target.id).className += " active";
-	  beforeColor = target.id;
-	  
-	  console.log(beforeColor);
+		if (beforeColor != undefined && beforeColor != null) {
+			document.getElementById(beforeColor).className = document
+					.getElementById(beforeColor).className.replace(" active",
+					"");
+		}
+		document.getElementById(target.id).className += " active";
+		beforeColor = target.id;
+
+		console.log(beforeColor);
 	}
-	
 </script>
 
 

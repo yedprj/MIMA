@@ -1,5 +1,7 @@
 package com.mima.app.member.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int partnerMemberInsert(MemberVO vo) {
 		return memberMapper.partnerMemberInsert(vo);
+
+	// 파트너 의사 / 약국 승인 유무 검색
+	@Override
+	public List<MemberVO> patnerStatusSelect() {
+		return memberMapper.patnerStatusSelect();
+	}
+
+	// 파트너 의사 / 약국 승인 등록
+	@Override
+	public int patnerStatusUpdate(MemberVO vo) {
+		return memberMapper.patnerStatusUpdate(vo);
 	}
 
 }

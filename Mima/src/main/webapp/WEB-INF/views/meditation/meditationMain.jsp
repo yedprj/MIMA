@@ -31,7 +31,7 @@
                             <div class="inner-box">
                                 <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
                                 <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-5.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_moody.png" alt="">
                                     <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
@@ -57,7 +57,7 @@
                             <div class="inner-box">
                                 <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
                                 <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-6.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/daily_medit.png" alt="">
                                     <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
@@ -80,7 +80,7 @@
                             <div class="inner-box">
                                 <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
                                 <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-7.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_moody.png" alt="">
                                     <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
@@ -103,7 +103,7 @@
                             <div class="inner-box">
                                 <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
                                 <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-8.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/daily_medit.png" alt="">
                                     <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
@@ -137,12 +137,12 @@
             <div class="auto-container">
                 <div class="">
                     <div class="clients-carousel owl-carousel owl-theme owl-nav-none owl-dots-none">
-                        <figure class="clients-logo-box"><a href="totalList?category=감정"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/sad.png" alt=""></a></figure>
-                        <figure class="clients-logo-box"><a href="totalList?category=분노"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/anger.png" alt=""></a></figure>
-                        <figure class="clients-logo-box"><a href="totalList?category=중독"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/addiction.png" alt=""></a></figure>
-                        <figure class="clients-logo-box"><a href="totalList?category=인간관계"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/relation.png" alt=""></a></figure>
-                        <figure class="clients-logo-box"><a href="totalList?category=수면"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/sleep.png" alt=""></a></figure>
-                        <figure class="clients-logo-box"><a href="totalList?category=스트레스"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/stress.png" alt=""></a></figure>
+                        <figure class="clients-logo-box"><a href="totalList?category=감정"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_emotion.png" alt=""></a></figure>
+                        <figure class="clients-logo-box"><a href="totalList?category=분노"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_anger.png" alt=""></a></figure>
+                        <figure class="clients-logo-box"><a href="totalList?category=중독"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_addiction.png" alt=""></a></figure>
+                        <figure class="clients-logo-box"><a href="totalList?category=인간관계"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_relation.png" alt=""></a></figure>
+                        <figure class="clients-logo-box"><a href="totalList?category=수면"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_sleep.png" alt=""></a></figure>
+                        <figure class="clients-logo-box"><a href="totalList?category=스트레스"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_stress.png" alt=""></a></figure>
                     </div>
                 </div>
             </div>
