@@ -1,5 +1,7 @@
 package com.mima.app.member.service;
 
+import java.util.List;
+
 import com.mima.app.member.domain.MemberVO;
 
 public interface MemberService {
@@ -12,4 +14,10 @@ public interface MemberService {
 
 	// 회원가입
 	public int memberInsert(MemberVO vo);
+	
+	// 파트너 의사 / 약국 승인 유무 검색
+	public List<MemberVO> patnerStatusSelect();
+	
+	// 파트너 의사 / 약국 승인 등록
+	public int patnerStatusUpdate(MemberVO vo);
 }
