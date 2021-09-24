@@ -59,10 +59,15 @@
 					<form id="frm" name="frm" class="registration-form">
 						<div class="row clearfix">
 						
-							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 								<label>의사 / 약사 면허 번호</label> 
 								<input type="text" id="license" name="license" class="form-control"
-									placeholder="사용할 닉네임을 입력해주세요">
+									placeholder="의사 / 약사 면허 번호를 입력해주세요">
+							</div>
+							
+							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+								<button type="button" id="licensecheck" name="licensecheck" 
+									class="theme-btn-one mt-4">면허 등록 체크</button>
 							</div>
 						
 							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
@@ -97,7 +102,7 @@
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label>권한</label>
 								<div class="select-box">
-									<select class="good-select wide">
+									<select class="good-select wide" id="roleselect" name="roleselect">
 										<option data-display="권한(Role)">권한(Role)</option>
 										<option value="doctor">의사(doctor)</option>
 										<option value="pharmacy">약국(pharmacy)</option>
@@ -141,7 +146,7 @@
 							
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label>성별</label> 
-								<input type="text" id="gender" name="gender" 
+								<input type="text" id="gender" name="gender"
 									placeholder="성별(gender)" required="required">
 							</div>
 							
@@ -260,7 +265,7 @@
 		var memberId = $("#memberId").val();
 		var password = $("#password").val();
 		var nickname = $("#nickname").val();
-		var role = $("#role").val();
+		var role = $("#roleselect option:selected").val();
 		var name = $("#name").val();
 		var identifyNo = $("#identifyNo").val();
 		var gender = $("#gender").val();
@@ -269,9 +274,12 @@
 		var phone = $("#phone").val();
 		var ptProfilePhoto = $("#ptProfilePhoto").val();
 		
-		if (role == "환자"){
-			role = "pt";
-			var status = "Y";
+		if (role == "의사"){
+			role = "doctor";
+			var status = "N";
+		} else if (role == "약국") {
+			role = "pharmacy";
+			var status = "N";
 		}
 		
 		if (allCheck() == true) {
@@ -288,8 +296,8 @@
 									   address : address,
 									   email : email,
 									   phone : phone,
-									   status : status,
-									   ptProfilePhoto : ptProfilePhoto}),
+									   license : license,
+									   status : status}),
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data) {
@@ -299,6 +307,35 @@
 		} else {
 			return false;
 		}
+	});
+	
+	// 의사 약사 면허 중복 체크
+	$("#licensecheck").on("click", function(e){
+		
+		e.preventDefault();
+		
+		var license = $("#license").val();
+		
+		$.ajax({
+			url : "licenseCheck",
+			type : "post",
+			data : JSON.stringify({license : license}),
+			dataType : "json",
+			contentType : "application/json",
+			success : function(datas) {
+				console.log(datas);
+				if (datas == 0){
+					alert("등록되지 않은 license입니다.");
+					$("#license").removeClass('is-invalid')
+					 		 	 .addClass('is-valid');
+				} else {
+					alert("등록된 license입니다.");
+					$("#license").removeClass('is-valid')
+		 		 	 			 .addClass('is-invalid');
+				}
+				
+			} 
+		});
 	});
 	
 	// 인증번호 이메일 전송
@@ -473,6 +510,13 @@
 	
 	// 회원 가입 시 전체 체크 function
 	function allCheck() {
+		// 면허 입력 했는지 체크
+		if (frm.license.val == ""){
+			alert("면허등록 체크를 해주세요.");
+			return false;
+		}
+			
+		
 		// 아이디 입력 했는지 체크
 		if (frm.memberId.val == "") {
 			alert("아이디를 입력해 주세요.");
@@ -526,12 +570,7 @@
 			alert("주소 검색을 사용해 입력해 주세요.");
 			return false;
 		}
-		
-		// 프로필 등록 체크
-		if (frm.ptProfilePhoto.val == "") {
-			alert("프로필 등록할 사진을 업로드 해주세요.");
-			return false;
-		}
+
 		return true;
 	}
 	

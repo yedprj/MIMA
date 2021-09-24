@@ -59,6 +59,15 @@ public class MemberController {
 		return result;
 	}
 	
+	// 의사 약사 면허 체크
+	@PostMapping("/licenseCheck")
+	@ResponseBody
+	public int licenseCheck(@RequestBody MemberVO vo) {
+		int result = memberService.licenseCheck(vo);
+		
+		return result;
+	}
+	
 	// 이메일 인증
 	@RequestMapping(value="/mailCheck", method=RequestMethod.GET)
 	@ResponseBody

@@ -23,6 +23,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.nickNameCheck(vo);
 	}
 	
+	// 의사 약사 면허 체크
+	@Override
+	public int licenseCheck(MemberVO vo) {
+		return memberMapper.licenseCheck(vo);
+	}
+	
 	// 회원가입
 	@Override
 	public int memberInsert(MemberVO vo) {

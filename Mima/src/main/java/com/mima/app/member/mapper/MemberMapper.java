@@ -10,6 +10,9 @@ public interface MemberMapper {
 	// 닉네임 중복 체크
 	public int nickNameCheck(MemberVO vo);
 	
+	// 의사 약사 면허 체크
+	public int licenseCheck(MemberVO vo);
+	
 	// 일반 회원가입
 	public int memberInsert(MemberVO vo);
 	
