@@ -87,8 +87,8 @@ public class MeditationController {
 	@PostMapping("/meditAjaxInsert")
 	@ResponseBody
 	//업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
-	public MeditationVO meditAjaxInsert(MultipartFile uploadFile, MeditationVO vo) throws IllegalStateException, IOException {
-		MeditationVO insertedVo = new MeditationVO();
+	public MeditAttachVO meditAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo) throws IllegalStateException, IOException {
+		MeditAttachVO attachVo = null;
 		String path = "c:/upload";
 
 		MultipartFile uFile = uploadFile;
@@ -102,14 +102,14 @@ public class MeditationController {
 			File file = new File(path, uuid + filename);
 			uFile.transferTo(file);
 
-			MeditAttachVO attachVo = new MeditAttachVO(); // attachVO list안에 파일정보 저장하기 위해 만듦
+			attachVo = new MeditAttachVO(); // attachVO list안에 파일정보 저장하기 위해 만듦
 			attachVo.setVFileName(filename);
 			attachVo.setUuid(uuid.toString());
 			attachVo.setUploadPath(path);
 			
 			System.out.println(attachVo);
 		}
-		return insertedVo;
+		return attachVo;
 	}
 	
 	

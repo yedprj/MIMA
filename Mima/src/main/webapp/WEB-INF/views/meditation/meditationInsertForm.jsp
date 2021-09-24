@@ -171,18 +171,18 @@ $(function(){
 		return true;
 	}
 	
-	//uploadBtn 눌렀을 때 이벤트 설정 교재502페이지
-	$('#uploadBtn').on("click", function(e){
+	//meditUpBtn 눌렀을 때 이벤트 설정 교재502페이지
+	$('#meditUpBtn').on("click", function(e){
 		e.preventDefault();
-		//console.log(document.frm);
+		//console.log(document.meditInsertFrm);
 		var formData = new FormData(document.meditInsertFrm);
 		console.log("formData writer+content: "+ FormData)
 		var inputFile = $("[name='meditVFile']");
 		var files = inputFile[0].files;
-		//console.log(files);
+		console.log(files);
 		
 		for(var i=0; i<files.length; i++){
-			if(!checkExtension(  files[i].name, files[i].size)  ){
+			if(!checkExtension( files[i].name, files[i].size) ){
 				return;
 			}
 			formData.append("uploadFile", files[i]);
@@ -190,13 +190,14 @@ $(function(){
 		
 		console.log("formData file: "+ formData)
 		$.ajax({
-			url:'../meditAjaxInsert',
+			url:'meditAjaxInsert',
 			processData:false,
 			contentType:false,
 			data: formData,
 			method:'POST',
 			success:function(datas){
 				console.log(datas);
+				console.log(${insertedVo})
 				var str="";
 				for(i=0;i<datas.length;i++){
 					var obj=datas[i]
@@ -219,7 +220,7 @@ $(function(){
 				console.error(reject);
 			}
 		})
-	}); //end of uploadBtn event
+	}); //end of meditUpBtn event
 	
 	
 	//btnRegister event  textbook 564page
