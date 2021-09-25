@@ -57,4 +57,10 @@ public class PostServiceImpl implements PostService {
 		return postMapper.schedulerPost();
 	}
 
+	@Override
+	public List<PostVO> randomList(int reportMno) {
+		// TODO Auto-generated method stub
+		return postMapper.randomList(reportMno);
+	}
+
 }

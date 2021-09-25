@@ -16,10 +16,10 @@ public class FileCheckTask {
 	
 	@Scheduled(cron="0 * * * * *")
 	public void checkFiles()throws Exception{
-		log.info("지난 날짜 삭제 확인");
+		//log.info("지난 날짜 삭제 확인");
 		// 여기서 부터는 실행이 안됨....
-		postService.schedulerPost();
-		log.info("==============삭제확인하기=================");
+		//postService.schedulerPost();
+		//log.info("==============삭제확인하기=================");
 	}
 
 }

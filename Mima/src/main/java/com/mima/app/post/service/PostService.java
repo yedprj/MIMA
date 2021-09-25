@@ -8,6 +8,8 @@ public interface PostService {
 	
 	public List<PostVO> getList(int reportMno);
 	
+	public List<PostVO> randomList(int reportMno);
+	
 	public PostVO read(PostVO vo);
 	
 	public int insert(PostVO vo);

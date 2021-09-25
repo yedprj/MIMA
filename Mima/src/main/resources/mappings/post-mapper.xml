@@ -17,6 +17,21 @@
 		ORDER BY POST_NO DESC
 	</select>
 	
+	<select id="randomList" resultType="postVO">
+		SELECT post.*, (
+			SELECT 1 FROM REPORT
+			WHERE REPORT_MNO = #{reportMno}
+			AND POST_NO = POST.POST_NO
+		) REPORT_MNO,
+	      (
+	       SELECT 1 FROM LIKES
+	         WHERE MEMBER_NO = #{reportMno}
+	         AND LIKE_MAIN_NO = POST.POST_NO
+	      ) LIKES_NO
+		FROM POST
+		ORDER BY DBMS_RANDOM.RANDOM()
+	</select>
+	
 	<insert id="insert">
 		INSERT INTO POST(
 						POST_NO,

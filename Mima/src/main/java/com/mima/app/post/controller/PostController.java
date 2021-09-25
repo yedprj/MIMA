@@ -49,6 +49,13 @@ public class PostController {
 		return postService.getList(vo.getReportMno());
 	}
 	
+	// 랜덤 : 목록 [ post + report(신고내역확인) + likes(좋아요내역확인) ]
+	@GetMapping("randomList")
+	@ResponseBody
+	public List<PostVO> randomList(PostVO vo, Model model){
+		return postService.randomList(vo.getReportMno());
+	}
+	
 	//등록
 	@PostMapping("postInsert")
 	@ResponseBody
