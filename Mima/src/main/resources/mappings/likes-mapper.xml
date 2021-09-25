@@ -2,4 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.likes.mapper.LikesMapper">
 
+	<select id="postLikesRead" resultType="likesVO">
+		SELECT * 
+		FROM LIKES 
+		WHERE LIKE_MAIN_NO = #{likeMainNo}  
+		AND MEMBER_NO = #{memberNo}
+		AND CATEGORY = 'POST'
+	</select>
+
+	<insert id="postLikeinsert">
+		INSERT INTO LIKES(
+			MEMBER_NO,
+			LIKE_DATE,
+			CATEGORY,
+			LIKE_MAIN_NO
+		)
+		VALUES(
+			#{memberNo},
+			SYSDATE, 
+			'POST',
+			#{likeMainNo}
+		)
+	</insert>
+
+	<delete id="postLikedelete">
+		DELETE FROM LIKES
+		WHERE CATEGORY = 'POST' 
+		AND LIKE_MAIN_NO = #{likeMainNo}
+		AND MEMBER_NO = #{memberNo}
+	</delete>
+
+
 </mapper>

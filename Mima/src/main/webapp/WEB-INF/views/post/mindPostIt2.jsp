@@ -115,10 +115,6 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 <div class="boxed_wrapper">
 
 
-
-
-
-
 	<!--page-title-two-->
 	<section class="page-title-two">
 		<div class="title-box centred bg-color-2">
@@ -157,7 +153,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						<div class="right-column pull-right clearfix">
 							<div class="short-box clearfix">
 								<div class="select-box">
-									<p><%=sf.format(nowTime)%></p>
+									<p id="nowTimes"></p>
 								</div>
 							</div>
 						</div>
@@ -259,9 +255,61 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 <script>
 	var CurrentNo = 30; // 현재 회원번호 
 	
-	$(function() {
-		
+	document.addEventListener("DOMContentLoaded", function() {
 
+
+
+        // 시간을 딜레이 없이 나타내기위한 선 실행
+
+        realTimer();
+
+
+
+        // 이후 0.5초에 한번씩 시간을 갱신한다.
+
+        setInterval(realTimer, 500);
+
+    });
+
+
+
+    // 시간을 출력
+
+    function realTimer() {
+
+		const nowDate = new Date();
+
+		const year = nowDate.getFullYear();
+
+		const month= nowDate.getMonth() + 1;
+
+		const date = nowDate.getDate();
+
+		const hour = nowDate.getHours();
+
+		const min = nowDate.getMinutes();
+
+		const sec = nowDate.getSeconds();
+
+		document.getElementById("nowTimes").innerHTML = 
+
+                  year + "-" + addzero(month) + "-" + addzero(date) + "&nbsp;" + hour + ":" + addzero(min) + ":" + addzero(sec);
+
+	}
+
+
+
+        // 1자리수의 숫자인 경우 앞에 0을 붙여준다.
+
+	function addzero(num) {
+
+		if(num < 10) { num = "0" + num; }
+
+ 		return num;
+
+	}
+	
+	$(function() {
 		postList();
 
 		// 모달창 띄우기
@@ -284,18 +332,46 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	// 좋아요 클릭시
 	$(document).on("click", ".heartIcon", function() {
 		var heart = $(this);
+		var postNo = $(this).closest('#post').data("postno");
+		var memberNo = $(this).closest('#post').data("memberno");
 		var urlJuso;
+						
 		if (heart.css("background-color") == "rgb(6, 26, 58)") {
 			urlJuso = "updateNotLike";
-			alert("좋아요 취소!!");
-			heart.css("background-color", "#eaf8f6");
+			$.ajax({
+				url : "likesDelete",
+				method : "delete",
+				dataType : "json",
+				data : JSON.stringify({
+					likeMainNo : postNo,
+					memberNo : CurrentNo
+				}),
+				contentType : 'application/json',
+				success : function(data) {
+					console.log("Likes_기록취소_성공");
+					
+				}// success end
+			}); //  ajax end
+			
 		} else {
 			urlJuso = "updateLike";
-			alert("좋아요 성공!!");
-			heart.css("background-color", "#061a3a");
+			$.ajax({
+				url : "likesInsert",
+				method : "post",
+				dataType : "json",
+				data : JSON.stringify({
+					likeMainNo : postNo,
+					memberNo : CurrentNo
+				}),
+				contentType : 'application/json',
+				success : function() {
+					console.log("Likes 기록입력 성공!!");
+				}// success end
+			}); //  ajax end
 		}
-		// url을 변수값을 줘서 +, - 되는 url 주소를 바꾸면 됨
-		var postNo = $(this).closest('#post').data("postno");
+		
+		console.log(urlJuso);
+		console.log("===========좋아요 수==========");
 		$.ajax({
 			url : urlJuso,
 			method : "put",
@@ -307,8 +383,12 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			success : function() {
 				if (urlJuso == "updateLike") {
 					console.log("좋아요_성공")
+					alert("좋아요 성공!!");
+					heart.css("background-color", "#061a3a");
 				} else {
 					console.log("좋아요_취소_성공")
+					alert("좋아요 취소!!");
+					heart.css("background-color", "#eaf8f6");
 				}
 			}// success end
 		})
@@ -317,7 +397,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 	// 신고 클릭시
 	$(document).on("click", ".angryIcon", function() {
-		var heart = $(this);
+		var angry = $(this);
 		var urlJuso;
 		var reportNo;
 		var postNo = $(this).closest('#post').data("postno");
@@ -348,7 +428,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							success : function(data) {
 								console.log("신고_취소_성공");
 								alert("신고 취소!!");
-								heart.css("background-color", "#eaf8f6");
+								angry.css("background-color", "#eaf8f6");
 							}// success end
 						}); //  ajax end
 					}
@@ -366,8 +446,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						contentType : 'application/json',
 						success : function() {
 							alert("신고 성공!!");
-							heart.css("background-color", "#061a3a");
-						}// success end
+							angry.css("background-color", "#061a3a");
+ 						}// success end
 					}); //  ajax end
 				}
 			},
@@ -415,7 +495,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 	//페이지 목록 조회
 	function postList() {
-		var str ='';
+		var angryStr ='';
+		var heartStr ='';
 		$.ajax({
 			url : "postList",
 			method : "get",
@@ -426,8 +507,11 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			success : function(datas) {
 				$(".postContents").empty();
 				$.each(datas,function(i, data) {
-					if(data.reportMno == 1){ str = 'background-color: #061a3a;'; }else {
-						str = '';
+					if(data.reportMno == 1){ angryStr = 'background-color: #061a3a;'; }else {
+						angryStr = '';
+					}
+					if(data.likesNo == 1){ heartStr = 'background-color: #061a3a;'; }else {
+						heartStr = '';
 					}
 					$("<div id='post' data-postNo='"+data.postNo+"' data-memberNo='"+data.memberNo+"' class='col-lg-4 col-md-6 col-sm-12 team-block'>")
 						.append(
@@ -435,8 +519,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							+ '<div class="inner-box">'
 							+ '<figure class="image-box">'
 							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+data.postColor+'" alt=""> '
-							+ '<a class="heartIcon"><i class="far fa-heart"></i></a>'
-							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ str +'"><i class="far fa-angry"></i></a>'
+							+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
+							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
 							+ '<div><h4>'
 							+ data.contents

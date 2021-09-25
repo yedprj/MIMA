@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mima.app.admin.domain.ReportVO;
 import com.mima.app.admin.service.ReportService;
+import com.mima.app.likes.domain.LikesVO;
+import com.mima.app.likes.service.LikesService;
 import com.mima.app.post.domain.PostVO;
 import com.mima.app.post.service.PostService;
 
@@ -28,7 +30,7 @@ public class PostController {
 	
 	@Autowired PostService postService;
 	@Autowired ReportService reportService;
-	
+	@Autowired LikesService likeService;
 	
 //	//포스트잇 페이지
 //	@GetMapping("post")
@@ -40,7 +42,7 @@ public class PostController {
 	@GetMapping("/mindPostIt2")
 	public void dept2() {}
 	
-	// ajax로 요청 : 목록, 등록, 수정, 삭제
+	// ajax로 요청 : 목록 [ post + report(신고내역확인) + likes(좋아요내역확인) ]
 	@GetMapping("postList")
 	@ResponseBody
 	public List<PostVO> postList(PostVO vo, Model model){
@@ -54,15 +56,28 @@ public class PostController {
 		return  postService.insert(vo);
 	}
 	
-	//수정 처리
+	//수정 처리 - 좋아요
 	@PutMapping("updateLike")
 	@ResponseBody
 	public int updateLike(@RequestBody PostVO vo, Model model) {
 		return  postService.updateLike(vo);
 	}
 	
+	// like 기록 등록
+	@PostMapping("likesInsert")
+	@ResponseBody
+	public int likeInsert(@RequestBody LikesVO vo, Model model) {
+		return  likeService.postLikeinsert(vo);
+	}
 	
-	//수정 처리
+	// like 기록 등록 취소
+	@DeleteMapping("likesDelete")
+	@ResponseBody
+	public int likesDelete(@RequestBody LikesVO vo, Model model) {
+		return  likeService.postLikedelete(vo);
+	}
+	
+	//수정 처리 - 좋아요 취소
 	@PutMapping("updateNotLike")
 	@ResponseBody
 	public int updateNotLike(@RequestBody PostVO vo, Model model) {
@@ -70,7 +85,7 @@ public class PostController {
 	}
 
 	
-	//신고등록
+	//신고등록 
 	@PostMapping("angryUpdate")
 	@ResponseBody
 	public int angryUpdate(@RequestBody ReportVO vo, Model model) {

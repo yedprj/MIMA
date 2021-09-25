@@ -17,5 +17,7 @@ public interface PostService {
 	public int updateNotLike(PostVO vo);
 	
 	public int delete(PostVO vo);
+	
+	public int schedulerPost();
 
 }

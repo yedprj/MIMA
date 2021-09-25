@@ -54,5 +54,5 @@ public class MemberServiceImpl implements MemberService {
 	public int patnerStatusUpdate(MemberVO vo) {
 		return memberMapper.patnerStatusUpdate(vo);
 	}
-
+  
 }
