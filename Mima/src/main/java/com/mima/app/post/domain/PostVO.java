@@ -14,4 +14,5 @@ public class PostVO {
 	private String postColor;
 	//
 	private int reportMno; 		// 신고내역 확인
+	private int likesNo;
 }

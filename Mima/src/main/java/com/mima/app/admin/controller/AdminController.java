@@ -23,9 +23,10 @@ public class AdminController {
 	@GetMapping("/patnerStatusSelect")
 	public void patnerStatusSelect(Model model) {
 		model.addAttribute("patnerStatusSelect",memberService.patnerStatusSelect());
+	}
 		
 	// 파트너 의사 / 약국 승인 등록
-	
-	}
+	@GetMapping("/patnerStatusUpdate")
+	public void patnerStatusUpdate() {}
 }
 

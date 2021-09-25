@@ -71,7 +71,8 @@
 		CATEGORY,
 		REG_DATE,
 		TEACHER_NAME,
-		TEACHER_INFO
+		TEACHER_INFO,
+		V_FILE_UUID
 		)
 		VALUES(
 		#{meditationNo},
@@ -80,7 +81,8 @@
 		#{category},
 		sysdate,
 		#{teacherName},
-		#{teacherInfo}
+		#{teacherInfo},
+		#{vFileUuid}
 		)
 	</insert>
 

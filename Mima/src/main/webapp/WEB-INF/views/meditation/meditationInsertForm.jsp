@@ -54,22 +54,22 @@
                                             	<div class="col-lg-12 col-md-12 col-sm-12 form-group ">
                                             	<div class="d-flex justify-content-around">
                                                     <div class="">
-                                                    <label><input type="radio" name="category" id="emotion"><span>&nbsp;</span> Emotion</label>
+                                                    <label><input type="radio" name="category" id="emotion" value="감정"><span>&nbsp;</span> Emotion</label>
                                        				</div>
                                        				<div class="single-checkbox">
-                                                    <label><input type="radio" name="category" id="anger"><span>&nbsp;</span> Anger</label>
+                                                    <label><input type="radio" name="category" id="anger"value="분노"><span>&nbsp;</span> Anger</label>
                                        				</div>
                                        				<div class="single-checkbox">
-                                                    <label ><input type="radio" name="category" id="addit"><span>&nbsp;</span> Addiction</label>
+                                                    <label ><input type="radio" name="category" id="addit"value="중독"><span>&nbsp;</span> Addiction</label>
                                        				</div>
                                        				<div class="single-checkbox">
-                                                    <label ><input type="radio" name="category" id="relation"><span>&nbsp;</span> Relation</label>
+                                                    <label ><input type="radio" name="category" id="relation"value="관계"><span>&nbsp;</span> Relation</label>
                                        				</div>
                                        				<div class="single-checkbox">
-                                                    <label ><input type="radio" name="category" id="sleep"><span>&nbsp;</span> Sleep</label>
+                                                    <label ><input type="radio" name="category" id="sleep"value="수면"><span>&nbsp;</span> Sleep</label>
                                        				</div>
                                        				<div class="single-checkbox">
-                                                    <label ><input type="radio" name="category" id="stress"><span>&nbsp;</span> Stress</label>
+                                                    <label ><input type="radio" name="category" id="stress"value="스트레스"><span>&nbsp;</span> Stress</label>
                                        				</div>
                                        			</div>	
                                                 </div>
@@ -85,29 +85,30 @@
                                                     
                                                 </div>
                                                 
-                                                <!-- 영상?? 미리보기 부분 -->
-												<div class="uploadResult"></div>
-												
+                                             
 												 <!-- 영상 업로드 Ajax -->
-                                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                     <label>Upload the meditation file</label>
                                                     <input type="file" name="meditVFile" required>
-                                                    <button id="meditUpBtn" class="btn btn-outline-info btn-small">등록</button>
+                                                    <button type="button" id="meditUpBtn" class="btn btn-outline-info btn-small">등록</button>
+                                                </div>
+                                                 <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                    <label>Upload the meditationThumb photo</label>
+                                                    <input type="file" name="meditationThumb">
                                                 </div>
                                                 
-                                                
+                                                <div  class="col-lg-12 col-md-12 col-sm-12">
+                                                <ul id="uploaded"></ul>
+                                                <video id="video" width="300" height="300" controls></video>
+                                                </div>
                                                  <!-- end of 명상 컨텐츠 입력 -->
                                                  
-                                                <!-- 줄 구분 근데 안나와...-->
-                                                <div class="col-lg-12 col-md-12 col-sm-12 form-group ">
-                                                <div style="borderBottom: 1px solid #e5eded;"></div>
-                                                </div>
-                                                
-                                               
+                                                                                           
                                                 <!-- 명상가 정보입력 -->
                                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group ">
-                                            	<label style="font-size:20px">Facilitator Information</label>
+                                            		<label style="font-size:20px">Facilitator Information</label>
                                                 </div>
+                                                
                                                 <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                     <label>Name</label>
                                                     <input type="text" name="teacherName" id="teacherName" placeholder="명상 제목을 입력하세요" required>
@@ -118,25 +119,23 @@
                                                     <label>About..</label>
                                                     <textarea id="teacherInfo" name="teacherInfo" placeholder="Write your not..."></textarea>
                                                 </div>
+                                                
                                                 <!-- 명상가 사진 업로드 ajax -->       
                                                 <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                                     <label>Upload the profile photo</label>
-                                                    <input type="file" name="teacherPhoto">
-                                                    <button id="facilPhotoUpBtn" class="btn btn-outline-info btn-small">등록</button>
+                                                    <input type="file" name="teacherPhoto" id="teacherPhoto">
                                                 </div>
                                                 <!--end of 명상가 정보입력 -->
                                                 
                                                 
                                             </div>
                                         </form>
-                                        <div>
-											<ul id="uploaded"></ul>
-										</div>
+                                        
                                     </div>
                                 </div>
                             </div>
                             <div class="btn-box" style="float:right">
-                                <button id="insertFrmBtn" type="button" class="theme-btn-one">Save Change<i class="icon-Arrow-Right"></i></button>
+                                <button id=btnRegister type="button" class="theme-btn-one">Save Change<i class="icon-Arrow-Right"></i></button>
                                 <button id="insertResetBtn" type="button" class="cancel-btn">Cancel</button>
                             </div>
                         </div>
@@ -171,7 +170,7 @@ $(function(){
 		return true;
 	}
 	
-	//meditUpBtn 눌렀을 때 이벤트 설정 교재502페이지
+	//meditUpBtn 눌렀을 때 이벤트 설정 교재502페이지 --> 명상첨부파일 넣는거
 	$('#meditUpBtn').on("click", function(e){
 		e.preventDefault();
 		//console.log(document.meditInsertFrm);
@@ -197,24 +196,27 @@ $(function(){
 			method:'POST',
 			success:function(datas){
 				console.log(datas);
-				console.log(${insertedVo})
 				var str="";
-				for(i=0;i<datas.length;i++){
-					var obj=datas[i]
-					var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
+				
+					var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.fileName);			      
 				    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
-				      
-					str += "<li "
-					str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>";
-					str += "<span> "+ obj.fileName+"</span>";
+					str += "<li ";
+				    console.log(str)
+					str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-vfileName='"+datas.vfileName+"' data-type='"+datas.image+"' ><div>";
+					str += "<span> "+ datas.vfileName+"</span>";
 					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
 					str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-					str += "<img src='../resources/img/attach.png'></a>";
 					str += "</div>";
-					str +"</li>";
-				}
+					str +="</li>";
+				
+				//비디오 미리보기
+				var vSrc=document.createElement('source');
+				vSrc.setAttribute('id', 'vdieoSrc');
+				vSrc.setAttribute('src', datas.uploadPath+"/"+datas.uuid+datas.vfileName);
+				$('#video').html(vSrc);
 				$("#uploaded").html(str);
 				alert("file uploaded");
+			
 			},
 			error: function(reject){
 				console.error(reject);
@@ -222,17 +224,16 @@ $(function(){
 		})
 	}); //end of meditUpBtn event
 	
-	
 	//btnRegister event  textbook 564page
 	$("#btnRegister").on('click', function(e){
+		
 		var str = "";
-		$("#uploaded li").each(function(idx, obj){
-			var jobj = $(obj); //제이쿼리 객체로 변환시켜주자.
-			str += "<input type='hidden' name='attachList["+idx+"].fileName' value='"+jobj.data("filename")+"'>";
-		    str += "<input type='hidden' name='attachList["+idx+"].uuid' value='"+jobj.data("uuid")+"'>";
-		    str += "<input type='hidden' name='attachList["+idx+"].uploadPath' value='"+jobj.data("path")+"'>";
-		    str += "<input type='hidden' name='attachList["+idx+"].fileType' value='1'>"; //"+ jobj.data("type")+" 벨류안에 불린이어야하는데 지금 이거 안들어가서 오류
-		});
+		var li = $("#uploaded li");
+			str += "<input type='hidden' name='attachFile.vfileName' value='"+li.data("vfilename")+"'>";
+		    str += "<input type='hidden' name='attachFile.uuid' value='"+li.data("uuid")+"'>";
+		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
+		    str += "<input type='hidden' name='vFileUuid'  value='"+li.data("uuid")+"'>";
+		
 		$("#meditInsertFrm").append(str).submit();
 		
 	});//end of btnRegister event
@@ -241,7 +242,9 @@ $(function(){
 	$("#uploaded").on("click", "button", function(e){
 		if(confirm("Remove this file?")){
 			var targetLi = $(this).closest("li");
+			var videoPreview=$('#vdieoSrc');
 			targetLi.remove();
+			videoPreview.remove();
 		}
 	});//end of attachment btn delete event
 	
