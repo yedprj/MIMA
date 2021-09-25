@@ -7,7 +7,12 @@
 			SELECT 1 FROM REPORT
 			WHERE REPORT_MNO = #{reportMno}
 			AND POST_NO = POST.POST_NO
-		) REPORT_MNO
+		) REPORT_MNO,
+	      (
+	       SELECT 1 FROM LIKES
+	         WHERE MEMBER_NO = #{reportMno}
+	         AND LIKE_MAIN_NO = POST.POST_NO
+	      ) LIKES_NO
 		FROM POST
 		ORDER BY POST_NO DESC
 	</select>

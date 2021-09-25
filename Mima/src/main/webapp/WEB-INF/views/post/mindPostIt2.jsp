@@ -260,8 +260,6 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	var CurrentNo = 30; // 현재 회원번호 
 	
 	$(function() {
-		
-
 		postList();
 
 		// 모달창 띄우기
@@ -287,8 +285,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 		var postNo = $(this).closest('#post').data("postno");
 		var memberNo = $(this).closest('#post').data("memberno");
 		var urlJuso;
-				
+						
 		if (heart.css("background-color") == "rgb(6, 26, 58)") {
+			urlJuso = "updateNotLike";
 			$.ajax({
 				url : "likesDelete",
 				method : "delete",
@@ -300,11 +299,12 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				contentType : 'application/json',
 				success : function(data) {
 					console.log("Likes_기록취소_성공");
-					urlJuso = "updateNotLike";
+					
 				}// success end
 			}); //  ajax end
 			
 		} else {
+			urlJuso = "updateLike";
 			$.ajax({
 				url : "likesInsert",
 				method : "post",
@@ -316,10 +316,12 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				contentType : 'application/json',
 				success : function() {
 					console.log("Likes 기록입력 성공!!");
-					urlJuso = "updateLike";
 				}// success end
 			}); //  ajax end
 		}
+		
+		console.log(urlJuso);
+		console.log("===========좋아요 수==========");
 		$.ajax({
 			url : urlJuso,
 			method : "put",
@@ -443,7 +445,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 	//페이지 목록 조회
 	function postList() {
-		var str ='';
+		var angryStr ='';
+		var heartStr ='';
 		$.ajax({
 			url : "postList",
 			method : "get",
@@ -454,8 +457,11 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			success : function(datas) {
 				$(".postContents").empty();
 				$.each(datas,function(i, data) {
-					if(data.reportMno == 1){ str = 'background-color: #061a3a;'; }else {
-						str = '';
+					if(data.reportMno == 1){ angryStr = 'background-color: #061a3a;'; }else {
+						angryStr = '';
+					}
+					if(data.likesNo == 1){ heartStr = 'background-color: #061a3a;'; }else {
+						heartStr = '';
 					}
 					$("<div id='post' data-postNo='"+data.postNo+"' data-memberNo='"+data.memberNo+"' class='col-lg-4 col-md-6 col-sm-12 team-block'>")
 						.append(
@@ -463,8 +469,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							+ '<div class="inner-box">'
 							+ '<figure class="image-box">'
 							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+data.postColor+'" alt=""> '
-							+ '<a class="heartIcon"><i class="far fa-heart"></i></a>'
-							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ str +'"><i class="far fa-angry"></i></a>'
+							+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
+							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
 							+ '<div><h4>'
 							+ data.contents

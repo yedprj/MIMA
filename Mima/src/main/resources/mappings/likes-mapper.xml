@@ -21,7 +21,7 @@
 			#{memberNo},
 			SYSDATE, 
 			'POST',
-			#{liekeMainNo}
+			#{likeMainNo}
 		)
 	</insert>
 
