@@ -31,6 +31,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.licenseCheck(vo);
 	}
 	
+	// 로그인
+	@Override
+	public MemberVO memberLogin(MemberVO vo) {
+		return memberMapper.memberLogin(vo);
+	}
+	
 	// 회원가입
 	@Override
 	public int memberInsert(MemberVO vo) {

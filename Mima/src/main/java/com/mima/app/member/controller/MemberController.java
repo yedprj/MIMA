@@ -42,6 +42,10 @@ public class MemberController {
 	@GetMapping("/partnerJoinForm")
 	public void partnerJoinForm() {}
 	
+	// 로그인 폼으로 이동
+	@GetMapping("/loginForm")
+	public void loginForm() {}
+	
 	// 아이디 중복 체크
 	@PostMapping("/IdCheck")
 	@ResponseBody
@@ -116,6 +120,15 @@ public class MemberController {
 	@ResponseBody
 	public int joinMember(@RequestBody MemberVO vo) {
 		int result = memberService.memberInsert(vo);
+		
+		return result;
+	}
+	
+	// 파트너 회원가입
+	@PostMapping("/partnerJoinMember")
+	@ResponseBody
+	public int partnerJoinMember(@RequestBody MemberVO vo) {
+		int result = memberService.partnerMemberInsert(vo);
 		
 		return result;
 	}
