@@ -11,6 +11,8 @@ import com.mima.app.meditation.domain.MeditationVO;
 import com.mima.app.meditation.mapper.MeditAttachMapper;
 import com.mima.app.meditation.mapper.MeditationMapper;
 
+import jdk.internal.org.jline.utils.Log;
+
 @Service
 public class MeditationServiceImpl implements MeditationService {
 
@@ -21,14 +23,18 @@ public class MeditationServiceImpl implements MeditationService {
 
 	@Override
 	public int insert(MeditationVO vo) {
+				
 		meditationMapper.insert(vo); // 게시글 등록
+		//첨부파일 등록 (첨부파일 테이블에) 교재 567
 		if (vo.getAttachFile() == null) {
-			return 1;
+			return 2;
 		}
-
+		System.out.println("인서트인서트닝ㄴ이ㅏㅓ러ㅣㅏㄴ오러ㅣㅏ뇌"+vo+"meditationServiceImpl");
 		// BoardServiceImpl 참고
-		vo.getAttachFile().setMeditationNo(vo.getMeditationNo());
-		attachMapper.insert(vo.getAttachFile());
+		MeditAttachVO attach = new MeditAttachVO();
+		attach.setMeditationNo(vo.getMeditationNo());
+		System.out.println("첨부파일 인서트 제발 좀 들어가-"+attach+"meditationServiceImpl");
+		attachMapper.insert(attach);
 
 		return 1;
 	}
