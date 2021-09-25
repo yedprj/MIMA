@@ -50,4 +50,11 @@ public class PostServiceImpl implements PostService {
 		return postMapper.updateNotLike(vo);
 	}
 
+	// 스케쥴러 삭제
+	@Override
+	public int schedulerPost() {
+		// TODO Auto-generated method stub
+		return postMapper.schedulerPost();
+	}
+
 }
