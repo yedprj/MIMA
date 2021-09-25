@@ -284,18 +284,42 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	// 좋아요 클릭시
 	$(document).on("click", ".heartIcon", function() {
 		var heart = $(this);
-		var urlJuso;
-		if (heart.css("background-color") == "rgb(6, 26, 58)") {
-			urlJuso = "updateNotLike";
-			alert("좋아요 취소!!");
-			heart.css("background-color", "#eaf8f6");
-		} else {
-			urlJuso = "updateLike";
-			alert("좋아요 성공!!");
-			heart.css("background-color", "#061a3a");
-		}
-		// url을 변수값을 줘서 +, - 되는 url 주소를 바꾸면 됨
 		var postNo = $(this).closest('#post').data("postno");
+		var memberNo = $(this).closest('#post').data("memberno");
+		var urlJuso;
+				
+		if (heart.css("background-color") == "rgb(6, 26, 58)") {
+			$.ajax({
+				url : "likesDelete",
+				method : "delete",
+				dataType : "json",
+				data : JSON.stringify({
+					likeMainNo : postNo,
+					memberNo : CurrentNo
+				}),
+				contentType : 'application/json',
+				success : function(data) {
+					console.log("Likes_기록취소_성공");
+					urlJuso = "updateNotLike";
+				}// success end
+			}); //  ajax end
+			
+		} else {
+			$.ajax({
+				url : "likesInsert",
+				method : "post",
+				dataType : "json",
+				data : JSON.stringify({
+					likeMainNo : postNo,
+					memberNo : CurrentNo
+				}),
+				contentType : 'application/json',
+				success : function() {
+					console.log("Likes 기록입력 성공!!");
+					urlJuso = "updateLike";
+				}// success end
+			}); //  ajax end
+		}
 		$.ajax({
 			url : urlJuso,
 			method : "put",
@@ -307,8 +331,12 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			success : function() {
 				if (urlJuso == "updateLike") {
 					console.log("좋아요_성공")
+					alert("좋아요 성공!!");
+					heart.css("background-color", "#061a3a");
 				} else {
 					console.log("좋아요_취소_성공")
+					alert("좋아요 취소!!");
+					heart.css("background-color", "#eaf8f6");
 				}
 			}// success end
 		})
@@ -317,7 +345,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 	// 신고 클릭시
 	$(document).on("click", ".angryIcon", function() {
-		var heart = $(this);
+		var angry = $(this);
 		var urlJuso;
 		var reportNo;
 		var postNo = $(this).closest('#post').data("postno");
@@ -348,7 +376,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							success : function(data) {
 								console.log("신고_취소_성공");
 								alert("신고 취소!!");
-								heart.css("background-color", "#eaf8f6");
+								angry.css("background-color", "#eaf8f6");
 							}// success end
 						}); //  ajax end
 					}
@@ -366,8 +394,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						contentType : 'application/json',
 						success : function() {
 							alert("신고 성공!!");
-							heart.css("background-color", "#061a3a");
-						}// success end
+							angry.css("background-color", "#061a3a");
+ 						}// success end
 					}); //  ajax end
 				}
 			},
