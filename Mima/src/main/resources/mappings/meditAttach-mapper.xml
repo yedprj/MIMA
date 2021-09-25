@@ -6,14 +6,12 @@
 			MEDIT_ATTACH (	MEDITATION_NO,
 							UUID,
 							UPLOADPATH,
-							V_FILE_NAME,
-							P_IMG_NAME
+							V_FILE_NAME
 						)
-				 VALUES (	#{meditationNo}
+				 VALUES (	#{meditationNo},
 				 			#{uuid},
 							#{uploadPath},
-							#{vFileName},
-							#{pImgName}
+							#{vFileName}
 							 )
 	</insert>
 

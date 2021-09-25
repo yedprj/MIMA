@@ -29,10 +29,11 @@ public class MeditationServiceImpl implements MeditationService {
 		if (vo.getAttachFile() == null) {
 			return 2;
 		}
-		System.out.println("인서트인서트닝ㄴ이ㅏㅓ러ㅣㅏㄴ오러ㅣㅏ뇌"+vo+"meditationServiceImpl");
 		// BoardServiceImpl 참고
-		MeditAttachVO attach = new MeditAttachVO();
+		
+		MeditAttachVO attach =vo.getAttachFile();
 		attach.setMeditationNo(vo.getMeditationNo());
+		
 		System.out.println("첨부파일 인서트 제발 좀 들어가-"+attach+"meditationServiceImpl");
 		attachMapper.insert(attach);
 
