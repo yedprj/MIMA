@@ -15,6 +15,9 @@ public interface MemberMapper {
 	// 의사 약사 면허 체크
 	public int licenseCheck(MemberVO vo);
 	
+	// 로그인
+	public MemberVO memberLogin(MemberVO vo);
+	
 	// 일반 회원가입
 	public int memberInsert(MemberVO vo);
 	

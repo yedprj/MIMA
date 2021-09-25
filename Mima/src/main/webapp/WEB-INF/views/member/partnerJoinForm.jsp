@@ -199,7 +199,7 @@
 								</div>
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-								<button type="button" id="joinMember" name="joinMember" class="theme-btn-one">
+								<button type="button" id="partnerJoinMember" name="partnerJoinMember" class="theme-btn-one">
 									Register Now<i class="icon-Arrow-Right"></i>
 								</button>
 							</div>
@@ -259,7 +259,7 @@
 	});
 	
 	// 회원 가입
-	$("#joinMember").on("click", function(e) {
+	$("#partnerJoinMember").on("click", function(e) {
 		e.preventDefault();
 		
 		var memberId = $("#memberId").val();
@@ -270,21 +270,18 @@
 		var identifyNo = $("#identifyNo").val();
 		var gender = $("#gender").val();
 		var address = $("#address").val();
+		var license = $("#license").val();
 		var email = $("#email").val();
 		var phone = $("#phone").val();
 		var ptProfilePhoto = $("#ptProfilePhoto").val();
 		
-		if (role == "의사"){
-			role = "doctor";
-			var status = "N";
-		} else if (role == "약국") {
-			role = "pharmacy";
+		if (role == "doctor" || role == "pharmacy"){
 			var status = "N";
 		}
 		
 		if (allCheck() == true) {
 			$.ajax({
-				url : "joinMember",
+				url : "partnerJoinMember",
 				type : "post",
 				data : JSON.stringify({memberId : memberId,
 									   password : password,

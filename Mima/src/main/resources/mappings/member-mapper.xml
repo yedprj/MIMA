@@ -14,9 +14,18 @@
 		WHERE NICKNAME = #{nickname}
 	</select>
 	
+	<!-- License 체크 -->
 	<select id="licenseCheck" resultType="int">
 		SELECT COUNT(*) FROM MEMBER
 		WHERE LICENSE = #{license}
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="memberLogin" resultType="MemberVO">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND PASSWORD = #{password}
+		AND STATUS = 'y'
 	</select>
 	
 	<!-- 회원가입 -->
