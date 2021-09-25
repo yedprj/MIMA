@@ -21,6 +21,8 @@ public class MeditationVO {
 	private String meditationThumb; // 토탈리스트에 들어갈 썸넬사진
 	private String vFileUuid;		//명상비디오 uuid
 	
+	private int replyCnt;			//댓글수
+	
 	//게시글 하나에 들어가있는 첨부파일
 	private MeditAttachVO attachFile;
 }

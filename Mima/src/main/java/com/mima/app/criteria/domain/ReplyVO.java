@@ -8,12 +8,15 @@ import lombok.Data;
 
 @Data
 public class ReplyVO {
-	private long rno;
-	private long bno;
-	private String reply;
-	private String replyer;
+	
+	private String cmainCategory;
+	private int cmainNo;
+	private int commentWriterNo;
+	private String contents;
+	private int reviewPoint;
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date replydate;
+	private Date regDate;
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date updatedate;
+	private Date editDate;
+	
 }
