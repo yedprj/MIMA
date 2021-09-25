@@ -73,7 +73,7 @@
 									<table class="table table-hover">
 										<thead class="table-header">
 											<tr align="center">
-												<th>번호</th>
+												<th>NO</th>
 												<th>과거진료기록</th>
 												<th>자가진단표</th>
 												<th>진료분야</th>
