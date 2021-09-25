@@ -41,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int partnerMemberInsert(MemberVO vo) {
 		return memberMapper.partnerMemberInsert(vo);
+	}
 
 	// 파트너 의사 / 약국 승인 유무 검색
 	@Override
