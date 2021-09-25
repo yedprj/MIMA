@@ -153,7 +153,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						<div class="right-column pull-right clearfix">
 							<div class="short-box clearfix">
 								<div class="select-box">
-									<p><%=sf.format(nowTime)%></p>
+									<p id="nowTimes"></p>
 								</div>
 							</div>
 						</div>
@@ -254,6 +254,60 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 <script>
 	var CurrentNo = 30; // 현재 회원번호 
+	
+	document.addEventListener("DOMContentLoaded", function() {
+
+
+
+        // 시간을 딜레이 없이 나타내기위한 선 실행
+
+        realTimer();
+
+
+
+        // 이후 0.5초에 한번씩 시간을 갱신한다.
+
+        setInterval(realTimer, 500);
+
+    });
+
+
+
+    // 시간을 출력
+
+    function realTimer() {
+
+		const nowDate = new Date();
+
+		const year = nowDate.getFullYear();
+
+		const month= nowDate.getMonth() + 1;
+
+		const date = nowDate.getDate();
+
+		const hour = nowDate.getHours();
+
+		const min = nowDate.getMinutes();
+
+		const sec = nowDate.getSeconds();
+
+		document.getElementById("nowTimes").innerHTML = 
+
+                  year + "-" + addzero(month) + "-" + addzero(date) + "&nbsp;" + hour + ":" + addzero(min) + ":" + addzero(sec);
+
+	}
+
+
+
+        // 1자리수의 숫자인 경우 앞에 0을 붙여준다.
+
+	function addzero(num) {
+
+		if(num < 10) { num = "0" + num; }
+
+ 		return num;
+
+	}
 	
 	$(function() {
 		postList();

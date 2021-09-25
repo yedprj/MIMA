@@ -18,6 +18,8 @@ public interface PostMapper {
 	
 	public int delete(PostVO vo);
 	
+	public int schedulerPost();
+	
 	
 
 }

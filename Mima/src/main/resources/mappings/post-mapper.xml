@@ -48,5 +48,8 @@
 			WHERE POST_NO = #{postNo}
 	</update>
 
+	<delete id="schedulerPost" >
+		DELETE FROM POST WHERE POST_DATE = TO_DATE(SYSDATE -1,'YY/MM/DD');
+	</delete>
 
 </mapper>
