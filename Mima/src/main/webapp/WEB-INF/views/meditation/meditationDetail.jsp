@@ -39,7 +39,7 @@
                         <div class="inner-box">
                             <div class="image-box" style="text-align:center; background-color: 	#f1f1f4;">
                                 <img src="${pageContext.request.contextPath}/resources/assets/images/news/meditationFile" alt="">
-                                <video width="770" height="470" src="${pageContext.request.contextPath}/resources/meditVideo/${item.meditationFile}"
+                                <video width="770" height="470" src="${pageContext.request.contextPath}/resources/meditVideo/48fc4135-6089-462c-93b8-5e8833f6432bbb.mp4"
                                 	controls auto></video>
                                 <span class="category">${item.category }</span>
                            	</div>
