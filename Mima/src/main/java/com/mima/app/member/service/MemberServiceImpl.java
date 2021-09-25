@@ -37,10 +37,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.memberInsert(vo);
 	}
 
-	// 파트너 회원가입
-	@Override
-	public int partnerMemberInsert(MemberVO vo) {
-		return memberMapper.partnerMemberInsert(vo);
+	
 
 	// 파트너 의사 / 약국 승인 유무 검색
 	@Override
@@ -52,6 +49,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int patnerStatusUpdate(MemberVO vo) {
 		return memberMapper.patnerStatusUpdate(vo);
+	}
+
+	@Override
+	public int partnerMemberInsert(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
