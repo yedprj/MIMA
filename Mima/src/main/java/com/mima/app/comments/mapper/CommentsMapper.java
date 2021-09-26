@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
-import com.mima.app.criteria.domain.ReplyVO;
 
 public interface CommentsMapper {
 	//CURD
-	public int insert(ReplyVO vo);
-	public int delete(ReplyVO vo);
-	public int update(ReplyVO vo);
-	public ReplyVO read(ReplyVO vo);
+	public int insert(CommentsVO vo);
+	public int delete(CommentsVO vo);
+	public int update(CommentsVO vo);
+	public CommentsVO read(CommentsVO vo);
 	//게시글번호에 해당하는 댓글 조회
-	public  List<ReplyVO> getList(@Param("cri") Criteria cri, @Param("meditationNo") int meditationNo);
+	public  List<CommentsVO> getList(@Param("cri") Criteria cri, @Param("vo") CommentsVO vo);
 
 
 //해당 게시글의 댓글 수

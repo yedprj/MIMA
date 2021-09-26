@@ -1,5 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.comments.mapper.CommentsMapper">
-	<select id=""></select>
+	<select id="read" resultType="com.mima.app.comments.domain.CommentsVO">
+	SELECT * 
+	FROM COMMENTS 
+	WHERE 	CMAIN_CATEGORY=#{cmainCategory} 
+		AND CMAIN_NO =#{cmainNo}
+	</select>
+	
+	<insert id="insert">
+		<selectKey keyProperty="cno" resultType="int" order="BEFORE">
+			SELECT SEQ_COMMENTS.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO COMMENTS (
+				CMAIN_CATEGORY,
+				CMAIN_NO,
+				COMMENT_WRITER_NO,
+				CONTENTS,
+				REVIEW_POINT,
+				REG_DATE,
+				CNO
+	) values(
+				#{category},
+				#{cmainNo}, 
+				#{cmmentWriterNo}, 
+				#{contents}, 
+				#{reviewPoint}, 
+				sysdate, 
+				#{cno}
+	)
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM COMMENTS
+		WHERE CNO=#{cno}
+	</delete>
+
+	<update id="update">
+		UPDATE COMMENTS
+			SET CONTENTS=#{contents},
+				UPDATEDATE=sysdate
+			WHERE CNO=#{cno}
+	</update>
+
+	<!-- 한 명상글에 달린 댓글 리스트 -->
+	<select id="getList" resultType="com.mima.app.comments.domain.CommentsVO">
+		select CMAIN_CATEGORY,
+				CMAIN_NO,
+				COMMENT_WRITER_NO,
+				CONTENTS,
+				REVIEW_POINT,
+				REG_DATE,
+				EDIT_DATE,
+				CNO
+			from (
+				SELECT /* + INDEX(COMMENTS, IDX_COMMENTS) */
+							ROWNUM RN, CMAIN_CATEGORY, CMAIN_NO, 
+							COMMENT_WRITER_NO, CONTENTS, REVIEW_POINT,
+							REG_DATE, EDIT_DATE
+							FROM COMMENTS
+							WHERE CMAIN_CATEGORY =  #{cmainCategory} AND CMAIN_NO = #{cmainNo}
+								AND CNO >0
+								<![CDATA[ AND ROWNUM <= #{cri.pageNum} * #{cri.amount}]]>
+								) a
+								WHERE RN > (#{cri.pageNum}-1) *#{cri.amount}
+			
+	
+	</select>
+
+	<!-- 한 명상글에 달린 댓글 숫자 -->
+	<select id="getCountByMeditNo" resultType="int">
+		SELECT COUNT(*) 
+		FROM COMMENTS 
+		WHERE CMAIN_CATEGORY=#{cmainCategory} 
+		AND CMAIN_NO =#{cmainNo}
+	</select>
+	
 </mapper>

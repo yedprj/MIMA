@@ -4,10 +4,10 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.mapper.CommentsMapper;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.ReplyPageVO;
-import com.mima.app.criteria.domain.ReplyVO;
 import com.mima.app.meditation.mapper.MeditationMapper;
 
 import lombok.extern.java.Log;
@@ -20,20 +20,20 @@ public class CommentsServiceImpl implements CommentsService {
 	@Autowired MeditationMapper meditationMapper;
 	
 	@Override
-	public int insert(ReplyVO vo) {
+	public int insert(CommentsVO vo) {
 		meditationMapper.updateReplycnt(vo.getCmainNo(), 1);
 		return commentsMapper.insert(vo);
 	}
 
 	@Override
-	public int delete(ReplyVO vo) {
+	public int delete(CommentsVO vo) {
 		vo = commentsMapper.read(vo);
 		meditationMapper.updateReplycnt(vo.getCmainNo(), -1);
 		return commentsMapper.delete(vo);
 	}
 
 	@Override
-	public int update(ReplyVO vo) {
+	public int update(CommentsVO vo) {
 		return commentsMapper.update(vo);
 	}
 
@@ -48,7 +48,7 @@ public class CommentsServiceImpl implements CommentsService {
 	}
 
 	@Override
-	public ReplyVO read(ReplyVO vo) {
+	public CommentsVO read(CommentsVO vo) {
 		return commentsMapper.read(vo);
 	}
 }

@@ -129,6 +129,7 @@
 <!-- sidebar-page-container end -->    
 
 
+<script src="../resources/assets/js/comments.js"></script>
 <script>
 /* 페이지 로드 이벤트 */
 let meditationNo = ${item.meditationNo};
