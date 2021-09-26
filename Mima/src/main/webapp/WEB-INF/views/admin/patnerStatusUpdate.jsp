@@ -10,7 +10,7 @@
 등록되었습니다.
 
 <div align="center">
-		<button type="button" class="btn btn-light" style="background-color: #39CABB;" 
+		<button type="button" class="btn btn-secondary" style="background-color: #39CABB;" 
 		onclick="location.href='patnerStatusSelect'">목록</button>
 </div>
 
