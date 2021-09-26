@@ -7,5 +7,6 @@ import com.mima.app.session.domain.BookingVO;
 public interface BookingMapper {
 
 	public List<BookingVO> getList();
+	public List<BookingVO> getlatestapptList();
 	
 }

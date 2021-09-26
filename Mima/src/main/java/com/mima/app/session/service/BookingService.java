@@ -6,6 +6,7 @@ import com.mima.app.session.domain.BookingVO;
 
 public interface BookingService {
 
-	public List<BookingVO> getList(BookingVO vo);
+	public List<BookingVO> getList();
+	public List<BookingVO> getlatestapptList();
 
 }
