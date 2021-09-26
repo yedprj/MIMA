@@ -19,7 +19,9 @@ public class MeditationVO {
 	private String teacherInfo;		// 명상가 정보
 	private String teacherPhoto;	// 명상가 사진
 	private String meditationThumb; // 토탈리스트에 들어갈 썸넬사진
-	private String vFileUuid;		//명상비디오 uuid
+	private String vFileUuid;		// 명상비디오 uuid
+	private int commentsCnt;		// 명상에 달린 댓글 수 
+	
 	
 	//게시글 하나에 들어가있는 첨부파일
 	private MeditAttachVO attachFile;

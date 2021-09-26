@@ -3,6 +3,17 @@
 <mapper
 	namespace="com.mima.app.meditation.mapper.MeditationMapper">
 
+
+<!-- 댓글 수 업데이트 -->
+	<update id="updateCommentsCnt">
+		UPDATE MEDITATION
+		SET COMMENTSCNT = COMMENTSCNT + #{amount}
+		WHERE
+		MEDITATION_NO=#{cmainNo}
+		
+	</update>
+
+
 	<!-- trim 한 것 따로 빼 낸것... -->
 	<sql id="criteria" >
 		<if test="category !=null and category!=''">
@@ -47,7 +58,7 @@
 		FROM( SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
 		ROWNUM RN, MEDITATION_NO, TITLE, CONTENTS,
 		MEDITATION_LIKE, HIT, CATEGORY, REG_DATE, EDIT_DATE,
-		TEACHER_NAME, TEACHER_INFO, TEACHER_PHOTO, MEDITATION_THUMB
+		TEACHER_NAME, TEACHER_INFO, TEACHER_PHOTO, MEDITATION_THUMB, COMMENTSCNT
 		FROM MEDITATION
 		where
 				

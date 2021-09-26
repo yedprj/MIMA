@@ -8,7 +8,7 @@ public class Criteria {
 	private int amount =9;
 	private String type;
 	private String keyword;
-	private String category;
+	private String category; //명상 카테고리 가져오는 카테고리
 	public Criteria() {	}
 	public Criteria(int pageNum, int amount) {
 		this.pageNum = pageNum;

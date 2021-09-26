@@ -23,8 +23,11 @@ public interface MeditationMapper {
 
 	//전체 조회
 	public List<MeditationVO> getMeditationList(Criteria cri);
-	
-		
+			
 	//전체 명상 컨텐츠 리스트 수 조회
 	public int getTotalMeditCount(Criteria cri);
+	
+	//댓글 수 업데이트
+	public void updateCommentsCnt(@Param("cmainCategoty") String cmainCategory, @Param("cmainNo") int cmainNo, @Param("amount") int amount);
+
 }

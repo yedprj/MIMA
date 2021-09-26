@@ -198,11 +198,11 @@ $(function(){
 				console.log(datas);
 				var str="";
 				
-					var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.fileName);			      
+					var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.vfileName);			      
 				    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 					str += "<li ";
 				    console.log(str)
-					str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-vfileName='"+datas.vfileName+"' data-type='"+datas.image+"' ><div>";
+					str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-vFileName='"+datas.vfileName+"' data-type='"+datas.image+"' ><div>";
 					str += "<span> "+ datas.vfileName+"</span>";
 					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
 					str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
@@ -212,7 +212,8 @@ $(function(){
 				//비디오 미리보기
 				var vSrc=document.createElement('source');
 				vSrc.setAttribute('id', 'vdieoSrc');
-				vSrc.setAttribute('src', datas.uploadPath+"/"+datas.uuid+datas.vfileName);
+				vSrc.setAttribute('src', "${pageContext.request.contextPath}/resources/meditVideo/"+datas.uuid+datas.vfileName);
+				
 				$('#video').html(vSrc);
 				$("#uploaded").html(str);
 				alert("file uploaded");
@@ -229,7 +230,7 @@ $(function(){
 		
 		var str = "";
 		var li = $("#uploaded li");
-			str += "<input type='hidden' name='attachFile.vfileName' value='"+li.data("vfilename")+"'>";
+			str += "<input type='hidden' name='attachFile.vFileName' value='"+li.data("vfilename")+"'>";
 		    str += "<input type='hidden' name='attachFile.uuid' value='"+li.data("uuid")+"'>";
 		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
 		    str += "<input type='hidden' name='vFileUuid'  value='"+li.data("uuid")+"'>";

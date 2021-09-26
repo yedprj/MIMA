@@ -89,7 +89,7 @@ public class MeditationController {
 	//업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
 	public MeditAttachVO meditAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo) throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "c:/upload";
+		String path = "C:/Users/Admin/git/MIMA/Mima/src/main/webapp/resources/meditVideo";
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
@@ -111,36 +111,5 @@ public class MeditationController {
 		}
 		return attachVo;
 	}
-	
-	//명상가 사진 등록
-		@PostMapping("/meditTeacherAjaxInsert")
-		@ResponseBody
-		//업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
-		public MeditAttachVO meditTeacherAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo) throws IllegalStateException, IOException {
-			MeditAttachVO attachVo = null;
-			String path = "c:/upload";
-
-			MultipartFile uFile = uploadFile;
-			if (!uFile.isEmpty() && uFile.getSize() > 0) {
-				String filename = uFile.getOriginalFilename(); // 사용자가 업로드한 파일명
-
-				// 파일 자체도 보안을 걸기 위해 파일이름 바꾸기도 한다. 원래 파일명과 서버에 저장된 파일이름을 따로 관리
-				// String saveName = System.currentTimeMillis()+""; //이거를 팀별로 상의해서 지정해 주면 된다.
-				// File file =new File("c:/upload", saveName);
-				UUID uuid = UUID.randomUUID();
-				File file = new File(path, uuid + filename);
-				uFile.transferTo(file);
-
-				attachVo = new MeditAttachVO(); // attachVO list안에 파일정보 저장하기 위해 만듦
-				attachVo.setVFileName(filename);
-				attachVo.setUuid(uuid.toString());
-				attachVo.setUploadPath(path);
-				
-				System.out.println(attachVo);
-			}
-			return attachVo;
-		}
-	
-	
 	
 }
