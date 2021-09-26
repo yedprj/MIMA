@@ -66,16 +66,16 @@ let replyService =(function(){
 		//한건댓글 읽기
 		 function read(param, callback, err){
 			var cmainCategory=param.cmainCategory;
-			var cmainNo = param.cmainNo;
-			console.log(cmainCategory,cmainNo);
+			var cno = param.cno;
+			console.log(cmainCategory,cno);
 			
 		  $.ajax({
-			  url:"../replies/",
+			  url:"../replies/"+cmainCategory+cno,
 			  method:"get",
 			  dataType:"json",
 			  data:{
 					cmainCategory: cmainCategory,
-					cmainNo: cmainNo,
+					cno: cno,
 					},
 			  success: function(data){
 				  if(callback){

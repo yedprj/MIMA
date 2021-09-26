@@ -297,7 +297,8 @@ $(function(){
 		 $(".chat").on("click","#replyEdit", function(e) {
 			 e.preventDefault();
 			 let cno = $(this).attr('href');
-			 replyService.read(cmainCategory, cno, function(data){
+			 alert(cno)
+			 replyService.read({cmainCategory:cmainCategory, cno:cno}, function(data){
 				 $(modalInputReply).val(data.contents);
 				 $(modalInputWriter).val(data.commentWriterNo).attr("disabled", "disabled");
 				 $("#hiddenCno").val(cno);

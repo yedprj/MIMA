@@ -49,7 +49,7 @@ public class CommentsServiceImpl implements CommentsService {
 		pageVo.setReplyCnt(commentsMapper.getCountByMeditNo(vo));
 		pageVo.setList(commentsMapper.getList(cri, cmainCategory, cmainNo));
 		log.info(vo.toString()+"~~~~~~~~~~~~~~~~~~~~코멘트vo");
-		log.info(pageVo.toString()+"====페이지보========getList CommentsServiceImpl");
+		log.info("====페이지보========getList CommentsServiceImpl"+pageVo.toString());
 		return pageVo;
 	}
 
