@@ -117,7 +117,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 	<!--page-title-two-->
 	<section class="page-title-two">
-		<div class="title-box centred bg-color-2">
+		<div class="title-box centred bg-color-1">
 			<div class="pattern-layer">
 				<div class="pattern-1"
 					style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-70.png);"></div>
@@ -126,7 +126,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			</div>
 			<div class="auto-container">
 				<div class="title">
-					<h1>그린 포스트잇</h1>
+					<h1 style='color:#061a3a;'>그린 포스트잇</h1>
 				</div>
 			</div>
 		</div>
@@ -153,7 +153,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						<div class="right-column pull-right clearfix">
 							<div class="short-box clearfix">
 								<div class="select-box">
-									<p id="nowTimes"></p>
+									<span style='color:#061a3a;' id="DdayTimes"></span>
 								</div>
 							</div>
 						</div>
@@ -175,13 +175,13 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							<li>
 								<div class="single-checkbox">
 									<input type="radio" name="check-box" id="check1"> <label
-										for="check1"><span></span>Latest</label>
+										id="last" for="check1"><span></span>Latest</label>
 								</div>
 							</li>
 							<li>
 								<div class="single-checkbox">
 									<input type="radio" name="check-box" id="check2"> <label
-										for="check2"><span></span>Random</label>
+										id="random" for="check2"><span></span>Random</label>
 								</div>
 							</li>
 						</ul>
@@ -256,58 +256,57 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	var CurrentNo = 30; // 현재 회원번호 
 	
 	document.addEventListener("DOMContentLoaded", function() {
-
-
-
         // 시간을 딜레이 없이 나타내기위한 선 실행
-
-        realTimer();
-
-
-
+        //realTimer();
+        DdayTimer();
         // 이후 0.5초에 한번씩 시간을 갱신한다.
-
-        setInterval(realTimer, 500);
-
-    });
-
-
+        //setInterval(realTimer, 500);
+        setInterval(DdayTimer, 500);
+	});
 
     // 시간을 출력
-
     function realTimer() {
-
 		const nowDate = new Date();
-
 		const year = nowDate.getFullYear();
-
 		const month= nowDate.getMonth() + 1;
-
 		const date = nowDate.getDate();
-
 		const hour = nowDate.getHours();
-
 		const min = nowDate.getMinutes();
-
 		const sec = nowDate.getSeconds();
 
 		document.getElementById("nowTimes").innerHTML = 
+            year + "-" 
+            + addzero(month) + "-" 
+            + addzero(date) + "&nbsp;" 
+            + hour + ":" 
+            + addzero(min) + ":" 
+            + addzero(sec);
+	}
+    
+ // 시간을 출력
+    function DdayTimer() {
+		const today = new Date();
+		const tomorrow = new Date(today.setDate(today.getDate()) + 1); 
+		const hour = 23 - today.getHours();
+		if(today.getHours < 11){
+			hour = 24 - today.getHours();
+		}
+		const min = 60 - today.getMinutes();
+		const sec = 60 - today.getSeconds();
 
-                  year + "-" + addzero(month) + "-" + addzero(date) + "&nbsp;" + hour + ":" + addzero(min) + ":" + addzero(sec);
-
+		
+		document.getElementById("DdayTimes").innerHTML =  
+			"<b>남은 시간 "+ addzero(hour) + "시간" 
+            + addzero(min) + "분" 
+            + addzero(sec) + "초</b>";
 	}
 
-
-
-        // 1자리수의 숫자인 경우 앞에 0을 붙여준다.
-
+    // 1자리수의 숫자인 경우 앞에 0을 붙여준다.
 	function addzero(num) {
-
 		if(num < 10) { num = "0" + num; }
-
  		return num;
-
 	}
+    
 	
 	$(function() {
 		postList();
@@ -497,12 +496,17 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	function postList() {
 		var angryStr ='';
 		var heartStr ='';
+		var startNum = 1;
+		var amount = 9;
 		$.ajax({
 			url : "postList",
-			method : "get",
-			data : {
+			method : "post",
+			dataType : "json",
+			data : JSON.stringify({
 				reportMno : CurrentNo,
-			},
+				startNum : startNum,
+				amount : amount
+			}),
 			contentType : 'application/json',
 			success : function(datas) {
 				$(".postContents").empty();
@@ -533,6 +537,51 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			} // success end
 		}) //ajax end
 	} // 페이지목록 조회 end
+	
+	//랜덤 페이지 목록 조회
+	$(document).on("click", "#random", function randomList() {
+		var angryStr ='';
+		var heartStr ='';
+		$.ajax({
+			url : "randomList",
+			method : "get",
+			data : {
+				reportMno : CurrentNo
+			},
+			contentType : 'application/json',
+			success : function(datas) {
+				$(".postContents").empty();
+				$.each(datas,function(i, data) {
+					if(data.reportMno == 1){ angryStr = 'background-color: #061a3a;'; }else {
+						angryStr = '';
+					}
+					if(data.likesNo == 1){ heartStr = 'background-color: #061a3a;'; }else {
+						heartStr = '';
+					}
+					$("<div id='post' data-postNo='"+data.postNo+"' data-memberNo='"+data.memberNo+"' class='col-lg-4 col-md-6 col-sm-12 team-block'>")
+						.append(
+							"<div class='team-block-three'>"
+							+ '<div class="inner-box">'
+							+ '<figure class="image-box">'
+							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+data.postColor+'" alt=""> '
+							+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
+							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
+							+ '<div class="textBox">'
+							+ '<div><h4>'
+							+ data.contents
+							+ '</h4></div>'
+							+ '</div></figure></div></div>')
+						.appendTo($(".postContents"));
+						
+					}); // each end
+					
+			} // success end
+		}) //ajax end
+	}); // 랜덤 페이지목록 조회 end
+	
+	$(document).on("click", "#last", function randomList() {
+		postList();
+	});
 	
 
 	var beforeColor; //이전에 선택된 컬러 저장 할 변수	

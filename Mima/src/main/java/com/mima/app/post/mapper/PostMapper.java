@@ -6,7 +6,9 @@ import com.mima.app.post.domain.PostVO;
 
 public interface PostMapper {
 	
-	public List<PostVO> getList(int reportMno);
+	public List<PostVO> getList(PostVO vo);
+	
+	public List<PostVO> randomList(int reportMno);
 	
 	public PostVO read(PostVO vo);
 	
