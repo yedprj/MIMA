@@ -17,8 +17,8 @@ public class PatnerDoctorController {
 	
 	@GetMapping("docMain")
 	public void docMain(Model model, BookingVO vo) {
-		model.addAttribute("bookingList", bookingService.getList(vo));
-//		model.addAttribute(null, model);
+		model.addAttribute("bookingList", bookingService.getList());
+		model.addAttribute("getlatestapptList", bookingService.getlatestapptList());
 	}
 	
 	@GetMapping("apptManage")

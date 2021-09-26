@@ -14,8 +14,13 @@ public class BookingServiceImpl implements BookingService {
 	@Autowired BookingMapper bookingMapper;
 	
 	@Override
-	public List<BookingVO> getList(BookingVO vo) {
+	public List<BookingVO> getList() {
 		return bookingMapper.getList();
+	}
+
+	@Override
+	public List<BookingVO> getlatestapptList() {
+		return bookingMapper.getlatestapptList();
 	}
 
 }
