@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 
 
@@ -26,7 +30,13 @@ public class AdminController {
 	}
 		
 	// 파트너 의사 / 약국 승인 등록
-	@GetMapping("/patnerStatusUpdate")
-	public void patnerStatusUpdate() {}
+	@PutMapping("patnerStatusUpdate")
+	@ResponseBody
+	public int patnerStatusUpdate(@RequestBody MemberVO vo) {
+		int result = memberService.patnerStatusUpdate(vo);
+		return result;
+	}
+	
+	 
 }
 

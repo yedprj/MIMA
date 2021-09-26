@@ -108,7 +108,10 @@
 	
 	<!--어드민 약국 의사 등록 쿼리 -->
 	<update id="patnerStatusUpdate" >
-		UPDATE MEMBER SET STATUS='y' WHERE STATUS='n'
+		UPDATE MEMBER 
+		SET STATUS='y' 
+		WHERE LICENSE = #{license}
+		AND STATUS='n'
 	</update>
 
 </mapper>
