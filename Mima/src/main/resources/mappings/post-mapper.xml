@@ -49,7 +49,7 @@
 	</update>
 
 	<delete id="schedulerPost" >
-		DELETE FROM POST WHERE POST_DATE = TO_DATE(SYSDATE -1,'YY/MM/DD');
+		DELETE FROM POST WHERE POST_DATE = TO_DATE(SYSDATE -1,'YY/MM/DD')
 	</delete>
 
 </mapper>
