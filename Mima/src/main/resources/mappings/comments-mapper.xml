@@ -4,8 +4,7 @@
 	<select id="read" resultType="com.mima.app.comments.domain.CommentsVO">
 	SELECT * 
 	FROM COMMENTS 
-	WHERE 	CMAIN_CATEGORY=#{cmainCategory} 
-		AND CMAIN_NO =#{cmainNo}
+	WHERE CNO =#{cno}
 	</select>
 	
 	<insert id="insert">
@@ -39,7 +38,7 @@
 	<update id="update">
 		UPDATE COMMENTS
 			SET CONTENTS=#{contents},
-				UPDATEDATE=sysdate
+				EDIT_DATE=sysdate
 			WHERE CNO=#{cno}
 	</update>
 

@@ -38,10 +38,10 @@
                     <div class="news-block-one">
                         <div class="inner-box">
                             <div class="image-box" style="text-align:center; background-color: 	#f1f1f4;">
-                            ${item.attachFile }
+                            
                             <!-- 분명히 vFileName 있는데 없다고 나와 ㅠㅠㅠ왜이러는거야...글고 이클립스 폴더 안에 저장하니 저장하고 리프레시 안하면 안나옴... -->
                                 <%-- <img src="${pageContext.request.contextPath}/resources/assets/images/news/meditationFile" alt=""> --%>
-                                <video width="770" height="470" src="${pageContext.request.contextPath}/resources/meditVideo/${item.attachFile.uuid }cc.mp4"
+                                <video width="770" height="470" src="c:/upload/${item.fileName }"
                                 	controls auto></video>
                                 <span class="category">${item.category }</span>
                            	</div>
@@ -84,7 +84,7 @@
                                 </div>
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                    <textarea name="contents" placeholder="Leave A Comment"></textarea>
+                                    <textarea id="commentInput" name="contents" placeholder="Leave A Comment"></textarea>
                                 </div>
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn" >
@@ -144,21 +144,25 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
+              
+              <h4 class="modal-title" id="myModalLabel">댓글 수정</h4>
+              
               <button type="button" class="close" data-dismiss="modal"
                 aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">댓글 수정</h4>
             </div>
             <div class="modal-body">
             	<input type="hidden" id="hiddenCno" name='cno'>
+            	<div class="form-group">
+	                <label>댓글 작성자</label> 
+	                <input class="form-control" name='commentWriter' value='김밤빵이' disabled>
+	                <input type="hidden" class="form-control" name='commentWriterNo' value='1'>
+              	</div>
+              
               <div class="form-group">
                 <label>Reply</label> 
                 <input class="form-control" name='contents' value='내용'>
               </div>      
-              <div class="form-group">
-                <label>댓글 작성자</label> 
-                <input class="form-control" name='commentWriter' value='글쓴이'>
-                <input type="hidden" class="form-control" name='commentWriterNo' value='글쓴이'>
-              </div>
+              
             </div>
 			<div class="modal-footer">
 		        <button id='replyEditBtn' type="button" class="btn btn-warning">수정</button>
@@ -190,6 +194,7 @@ $(function(){
 	   $("#saveReply").on("click", function() {
 	      replyService.add(function (data) {       
 	         $(".chat").append(makeLi(data));
+	         $('#commentInput').val("");
 	         showList(-1); //댓글 등록 후 댓글 마지막 페이지로
 	      });
 	   });
@@ -297,10 +302,10 @@ $(function(){
 		 $(".chat").on("click","#replyEdit", function(e) {
 			 e.preventDefault();
 			 let cno = $(this).attr('href');
-			 alert(cno)
+			
 			 replyService.read({cmainCategory:cmainCategory, cno:cno}, function(data){
 				 $(modalInputReply).val(data.contents);
-				 $(modalInputWriter).val(data.commentWriterNo).attr("disabled", "disabled");
+				 $(modalInputWriter).val(data.commentWriterNo);
 				 $("#hiddenCno").val(cno);
 				 $(".modal").modal("show");
 				 
@@ -310,8 +315,9 @@ $(function(){
 	   
 		 $(modalEditBtn).on('click', function(e){
 			 var cno = $("#hiddenCno").val();
+			 
 			var editedReply={
-					comments: modalInputReply.val(),
+					contents: modalInputReply.val(),
 					cno:cno
 			};
 			
@@ -324,6 +330,26 @@ $(function(){
 		 });
 	   
 	   
+		 
+		   //삭제처리(delete)
+		   $(".chat").on("click","#replyDelete", function(e) {
+			   e.preventDefault();
+			   let cno = $(this).attr('href');
+			   console.log("cno==================="+ cno);
+			   let li= $(this).closest('li');
+			   console.log("list=================="+JSON.stringify(li));
+			   
+			   replyService.deleteReply(cno, function(count){
+					console.log("count==========="+count);
+					 if(count ===true){
+					alert("댓글 삭제 완료");
+					$(li).remove();
+					}
+				}, function(err){
+					alert('Error...');
+				});
+		   });
+		 
 	   
 })/* end of 페이지 온 로드 */
 

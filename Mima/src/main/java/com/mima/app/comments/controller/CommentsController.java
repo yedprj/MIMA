@@ -30,7 +30,7 @@ public class CommentsController {
 		}
 		
 		//댓글 조회
-		@GetMapping("/{cmainCategory}{cno}")
+		@GetMapping("/{cno}")
 		public CommentsVO read(CommentsVO vo){
 			
 		return commentsService.read(vo);

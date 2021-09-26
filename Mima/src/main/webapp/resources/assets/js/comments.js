@@ -23,7 +23,6 @@ let replyService =(function(){
 		var cmainCategory=param.cmainCategory;
 		var cmainNo = param.cmainNo;
 		var page = param.page ||1;
-		console.log(cmainCategory, cmainNo, page);
 	$.ajax({
 			  url:"../replies/",
 			  method:"get",
@@ -65,21 +64,14 @@ let replyService =(function(){
 
 		//한건댓글 읽기
 		 function read(param, callback, err){
-			var cmainCategory=param.cmainCategory;
 			var cno = param.cno;
-			console.log(cmainCategory,cno);
 			
 		  $.ajax({
-			  url:"../replies/"+cmainCategory+cno,
+			  url:"../replies/"+cno,
 			  method:"get",
 			  dataType:"json",
-			  data:{
-					cmainCategory: cmainCategory,
-					cno: cno,
-					},
 			  success: function(data){
 				  if(callback){
-					console.log(data)
 				   callback(data)
 				   }
 				},
@@ -91,9 +83,8 @@ let replyService =(function(){
 
 		//댓글 수정
 		function update(editedReply, callback, err){
-			console.log(editedReply)
 		  $.ajax({
-			  url:"../replies/"+editedReply.rno,
+			  url:"../replies/"+editedReply.cno,
 			  method:"put",
 			  data: JSON.stringify(editedReply),
 			  contentType:"application/json; charset=utf-8",
