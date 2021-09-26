@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mima.app.admin.mapper.ReportMapper;
 import com.mima.app.post.domain.PostVO;
 import com.mima.app.post.mapper.PostMapper;
 
@@ -15,9 +14,9 @@ public class PostServiceImpl implements PostService {
 	@Autowired PostMapper postMapper;
 
 	@Override
-	public List<PostVO> getList(int reportMno) {
+	public List<PostVO> getList(PostVO vo) {
 		// TODO Auto-generated method stub
-		return postMapper.getList(reportMno);
+		return postMapper.getList(vo);
 	}
 
 	@Override

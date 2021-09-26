@@ -3,18 +3,32 @@
 <mapper namespace="com.mima.app.post.mapper.PostMapper">
 
 	<select id="getList" resultType="postVO">
-		SELECT post.*, (
-			SELECT 1 FROM REPORT
-			WHERE REPORT_MNO = #{reportMno}
-			AND POST_NO = POST.POST_NO
-		) REPORT_MNO,
-	      (
-	       SELECT 1 FROM LIKES
-	         WHERE MEMBER_NO = #{reportMno}
-	         AND LIKE_MAIN_NO = POST.POST_NO
-	      ) LIKES_NO
-		FROM POST
-		ORDER BY POST_NO DESC
+		<![CDATA[SELECT post_no, member_no, post_date, contents, post_like, post_color, (
+         SELECT 1 FROM REPORT
+         WHERE REPORT_MNO = #{reportMno}
+         AND POST_NO = PK.POST_NO
+      ) REPORT_MNO,
+         (
+          SELECT 1 FROM LIKES
+            WHERE MEMBER_NO = #{reportMno}
+            AND LIKE_MAIN_NO = PK.POST_NO
+         ) LIKES_NO
+			FROM (   SELECT /*+ INDEX_DESC(POST INDEX_POST ) */
+                  	 ROWNUM RN, post_no, member_no, post_date, contents, post_like, post_color, (
+                                                        SELECT 1 FROM REPORT
+                                                        WHERE REPORT_MNO = #{reportMno}
+                                                        AND POST_NO = p.POST_NO
+                                                    ) REPORT_MNO,
+                                                      (
+                                                       SELECT 1 FROM LIKES
+                                                         WHERE MEMBER_NO = #{reportMno}
+                                                         AND LIKE_MAIN_NO = p.POST_NO
+                                                      ) LIKES_NO
+            FROM POST p
+                WHERE  ROWNUM <= #{startNum} * #{amount}
+                ORDER BY post_no desc
+      ) PK
+      WHERE RN >  (#{startNum}-1)* #{amount} )]]>
 	</select>
 	
 	<select id="randomList" resultType="postVO">
@@ -64,7 +78,7 @@
 	</update>
 
 	<delete id="schedulerPost" >
-		DELETE FROM POST WHERE POST_DATE = TO_DATE(SYSDATE -1,'YY/MM/DD');
+		DELETE FROM POST WHERE POST_DATE = TO_DATE(SYSDATE -1,'YY/MM/DD')
 	</delete>
 
 </mapper>

@@ -496,12 +496,17 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	function postList() {
 		var angryStr ='';
 		var heartStr ='';
+		var startNum = 1;
+		var amount = 9;
 		$.ajax({
 			url : "postList",
-			method : "get",
-			data : {
+			method : "post",
+			dataType : "json",
+			data : JSON.stringify({
 				reportMno : CurrentNo,
-			},
+				startNum : startNum,
+				amount : amount
+			}),
 			contentType : 'application/json',
 			success : function(datas) {
 				$(".postContents").empty();
@@ -541,7 +546,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			url : "randomList",
 			method : "get",
 			data : {
-				reportMno : CurrentNo,
+				reportMno : CurrentNo
 			},
 			contentType : 'application/json',
 			success : function(datas) {
