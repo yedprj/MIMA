@@ -4,10 +4,10 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.comments.domain.CommentsPageVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.mapper.CommentsMapper;
 import com.mima.app.criteria.domain.Criteria;
-import com.mima.app.criteria.domain.ReplyPageVO;
 import com.mima.app.meditation.mapper.MeditationMapper;
 
 import lombok.extern.java.Log;
@@ -21,14 +21,14 @@ public class CommentsServiceImpl implements CommentsService {
 	
 	@Override
 	public int insert(CommentsVO vo) {
-		meditationMapper.updateReplycnt(vo.getCmainNo(), 1);
+		meditationMapper.updateCommentsCnt(vo.getCmainCategory(), vo.getCmainNo(), 1);
 		return commentsMapper.insert(vo);
 	}
 
 	@Override
 	public int delete(CommentsVO vo) {
 		vo = commentsMapper.read(vo);
-		meditationMapper.updateReplycnt(vo.getCmainNo(), -1);
+		meditationMapper.updateCommentsCnt(vo.getCmainCategory(), vo.getCmainNo(), -1);
 		return commentsMapper.delete(vo);
 	}
 
@@ -38,13 +38,18 @@ public class CommentsServiceImpl implements CommentsService {
 	}
 
 	@Override
-	public ReplyPageVO getList(@Param("cri") Criteria cri, @Param("meditationNo") int meditationNo) {
-		ReplyPageVO vo = new ReplyPageVO();
+	public CommentsPageVO getList(@Param("cri") Criteria cri, @Param("cmainCategory") String cmainCategory, @Param("cmainNo") int cmainNo) {
+		CommentsPageVO pageVo = new CommentsPageVO();
+		CommentsVO vo = new CommentsVO();
+		vo.setCmainCategory(cmainCategory);
+		vo.setCmainNo(cmainNo);
+		
 		log.info("================="+cri.getPageNum());
-		vo.setReplyCnt(commentsMapper.getCountByMeditNo(meditationNo));
-		vo.setList(commentsMapper.getList(cri, meditationNo));
-		log.info(vo.toString()+"=======================getList ReplyServiceImpl");
-		return vo;
+		pageVo.setReplyCnt(commentsMapper.getCountByMeditNo(vo));
+		pageVo.setList(commentsMapper.getList(cri, cmainCategory, cmainNo));
+		log.info(vo.toString()+"~~~~~~~~~~~~~~~~~~~~코멘트vo");
+		log.info(pageVo.toString()+"====페이지보========getList CommentsServiceImpl");
+		return pageVo;
 	}
 
 	@Override

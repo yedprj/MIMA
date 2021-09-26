@@ -11,7 +11,6 @@ import com.mima.app.meditation.domain.MeditationVO;
 import com.mima.app.meditation.mapper.MeditAttachMapper;
 import com.mima.app.meditation.mapper.MeditationMapper;
 
-import jdk.internal.org.jline.utils.Log;
 
 @Service
 public class MeditationServiceImpl implements MeditationService {

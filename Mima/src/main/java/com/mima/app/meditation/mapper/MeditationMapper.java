@@ -28,6 +28,6 @@ public interface MeditationMapper {
 	public int getTotalMeditCount(Criteria cri);
 	
 	//댓글 수 업데이트
-	public void updateReplycnt(@Param("meditationNo") int meditationNo, @Param("amount") int amount);
+	public void updateCommentsCnt(@Param("cmainCategoty") String cmainCategory, @Param("cmainNo") int cmainNo, @Param("amount") int amount);
 
 }

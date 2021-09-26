@@ -1,6 +1,7 @@
 /*WebApp/resources/assets/js/comments.js*/
 let replyService =(function(){
 
+	//댓글 등록
 	function add(callback, err){
 	  $.ajax({
 		  url:"../replies/",
@@ -16,19 +17,24 @@ let replyService =(function(){
 		  }
 	  });
   }
+	 //댓글 조회
 	  function getList(param, callback, err){
 		
-		var bno = param.bno;
+		var cmainCategory=param.cmainCategory;
+		var cmainNo = param.cmainNo;
 		var page = param.page ||1;
-		
+		console.log(cmainCategory, cmainNo, page);
 	$.ajax({
 			  url:"../replies/",
 			  method:"get",
-			  data:{bno: bno,
+			  data:{
+					cmainCategory: cmainCategory,
+					cmainNo: cmainNo,
 					page:page
 					},
 			  dataType:"json",
 			  success: function(data){
+				console.log(data);
 				  if(callback){
 						callback(data.replyCnt, data.list);
 					} 
@@ -40,6 +46,7 @@ let replyService =(function(){
 		  });
 		 }
 		  
+		//댓글 삭제
 		  function deleteReply(rno, callback, err){
 		  $.ajax({
 			  url:"../replies/"+rno,
@@ -56,6 +63,7 @@ let replyService =(function(){
 		  });
   		}
 
+		//한건댓글 읽기
 		 function read(rno, callback, err){
 		  $.ajax({
 			  url:"../replies/"+rno,
@@ -72,7 +80,7 @@ let replyService =(function(){
 		  });
   		}
 
-
+		//댓글 수정
 		function update(editedReply, callback, err){
 			console.log(editedReply)
 		  $.ajax({

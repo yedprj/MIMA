@@ -112,6 +112,9 @@
 		                            </div>
 		                        </li>
 	                        </ul>
+	                        <div class="panel-footer">
+	
+							</div><!-- /end of 댓글 페이지 리스트 -->
                         </div>
                         
                         
@@ -126,23 +129,25 @@
         </div>
     </div>
 </section>
-<!-- sidebar-page-container end -->    
+<!-- side bar-page-container end -->    
 
 
 <script src="../resources/assets/js/comments.js"></script>
 <script>
 /* 페이지 로드 이벤트 */
-let meditationNo = ${item.meditationNo};
+
+let cmainCategory = "medit";
+let cmainNo = ${item.meditationNo};
 let str = "";
 
 /* 페이지 온 로드 */
-${function(){
+$(function(){
 	showList(${cri.pageNum});
 	
+	//showList function
 	function showList(page){
 	   //목록조회(get)
-	   replyService.getList({bno:bno, page:page}, function (replyCnt, list){
-	      
+	   replyService.getList({cmainCategory:cmainCategory, cmainNo:cmainNo, page:page}, function (replyCnt, list){
 	      if(page==-1){
 	    	  pageNum =Math.ceil(replyCnt/10.0);
 	    	  //alert(pageNum +"from showList page ==-1")
@@ -161,33 +166,70 @@ ${function(){
 	      $(".chat").html(str);
 	      showReplyPage(replyCnt);
 	   });//end of 댓글목록조회getList
+	}//end of showList function
+	   
+	   //get replyPages function
+	   var pageNum =1;
+	   var replyPageFooter = $(".panel-footer");
+	   function showReplyPage(replyCnt){
+		   var endNum = Math.ceil(pageNum/10.0)*10;
+		   var startNum =endNum-9;
+
+		   var prev = startNum !=1;
+		   var next = false;
+		   
+		   if(endNum *10 >= replyCnt){
+			   endNum = Math.ceil(replyCnt/10.0);
+		   }
+			   
+		   if(endNum * 10 < replyCnt){
+			   next = true;
+		   }
+	   		var str= "<ul class='pagination pull-right'>";
+	   		
+	   		if(prev){
+	   			str+="<li class='page-item'><a class='page-link' href='"+(startNum-1)+"'>Previous</a></li>";
+	   		}
+	   		
+	   		for(var i =startNum; i<=endNum; i++){
+	   			var active=pageNum ==1?"active":"";
+	   			
+	   			str+="<li class='page-item"+active+"'><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+	   		}
+	   		
+	   		if(next){
+	   			str+="<li class='page-item'><a class='page-link' href='"+(endNum+1)+"'>Next</a></li>";
+	   		}
+	   		
+	   		str+='</ul><div>';
+	   		//console.log(str);
+	   		replyPageFooter.html(str);
+	   }// end of get replyPages function
 	
-}}
-/* end of 페이지 온 로드 */
+	
+	   function makeLi(data) {
+		   return '<li>'
+		       +'<figure class="thumb-box">'
+		       +'    <img src="assets/images/news/comment-1.png" alt="">'
+		       +'</figure>'
+		       +'<div class="comment-inner">'
+		       +'    <div class="comment-info">'
+			   +'		<h5>'+data.commentWriterNo+'</h5>'
+		       +'        <span class="comment-time">'+data.regDate+'</span>'
+		       +'     </div>'
+		       +'     <p>'+data.contents+'</p>'
+		       +'  		<a style="float:right;" href="'+data.rno+'" id="replyDelete" class="btn btn-danger">삭제</a>'	
+		       +'       <a style="float:right;" href="'+data.rno+'" id="replyEdit" class="btn btn-info">수정</a>'
+		       +'</div>'
+		   	   +'</li>'
+		   }
+
+	   
+	 
+	   
+	   
+	   
+})/* end of 페이지 온 로드 */
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

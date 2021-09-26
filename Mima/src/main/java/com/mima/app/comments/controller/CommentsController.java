@@ -16,9 +16,7 @@ import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 
-import lombok.extern.java.Log;
 
-@Log
 @RestController
 @RequestMapping("/replies/*")
 public class CommentsController {
@@ -26,36 +24,36 @@ public class CommentsController {
 	@Autowired CommentsService commentsService;
 	//해당 게시글의 댓글만
 		@GetMapping("/")
-		public CommentsPageVO getList(Criteria cri, @RequestParam int meditationNo, @RequestParam int page){
+		public CommentsPageVO getList(Criteria cri, CommentsVO vo, @RequestParam int page){
 			cri.setPageNum(page);
-			return CommentsService.getList(cri, bno);
+			return commentsService.getList(cri, vo.getCmainCategory(), vo.getCmainNo());
 		}
 		
 		//댓글 조회
-		@GetMapping("/{rno}")
-		public CommentsVO read(@PathVariable Long rno, CommentsVO vo){
-			vo.setRno(rno);
-		return CommentsService.read(vo);
+		@GetMapping("/{cno}")
+		public CommentsVO read(@PathVariable int cno, CommentsVO vo){
+			vo.setCno(cno);
+		return commentsService.read(vo);
 		}
 		//등록
 		@PostMapping("/") //post: 파라미터 질의문자열(query string)->?id=100&pw=111&name=choi
 		public CommentsVO insert(CommentsVO vo) {
-			CommentsService.insert(vo);
+			commentsService.insert(vo);
 			return vo;
 		}
 		
 		//수정
-		@PutMapping("/{rno}") //put: 파라미터가 JSON값으로 넘어옴 ->{id:100, pw:"111", name:"choi"}
+		@PutMapping("/{cno}") //put: 파라미터가 JSON값으로 넘어옴 ->{id:100, pw:"111", name:"choi"}
 		public CommentsVO update(@RequestBody CommentsVO vo) {
-			CommentsService.update(vo);
+			commentsService.update(vo);
 			
-			return CommentsService.read(vo);
+			return commentsService.read(vo);
 		}
 		//삭제
-		@DeleteMapping("/{rno}") ////delete: 파라미터가 JSON값으로 넘어옴 ->{id:100, pw:"111", name:"choi"}
-		public boolean delete(@PathVariable Long rno, CommentsVO vo) {
-			vo.setRno(rno);
-			int result = CommentsService.delete(vo);
+		@DeleteMapping("/{cno}") ////delete: 파라미터가 JSON값으로 넘어옴 ->{id:100, pw:"111", name:"choi"}
+		public boolean delete(@PathVariable int cno, CommentsVO vo) {
+			vo.setCno(cno);
+			int result = commentsService.delete(vo);
 			return result == 1 ? true: false;
 		}
 	
