@@ -70,20 +70,25 @@
                         <div class="group-title">
                             <h3>Leave a Comment</h3>
                         </div>
-                        <form action="blog-details.html" method="post" class="comment-form">
+                        <form id="replyForm" action="../replies" method="post" class="comment-form">
                             <div class="row clearfix">
+                                <input type="hidden" name="cmainNo" value="${item.meditationNo }">
+                                <input type="hidden" name="cmainCategory" value="medit">
+                                <!-- 세션에서 멤버 넘버 가져와서 넣어줄것 -->
+                                <input type="hidden" name="commentWriterNo" value="1">
                                 
                                 <div class="col-lg-4 col-md-4 col-sm-12 form-group">
+                                
                                 <!-- 세션에서 이름 가져와서 넣어줄 것임 -->
-                                    <input type="text" name="fname" value="김밤빵Test" disabled>
+                                    <input type="text" name="writer" value="김밤빵Test" disabled>
                                 </div>
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                    <textarea name="message" placeholder="Leave A Comment"></textarea>
+                                    <textarea name="contents" placeholder="Leave A Comment"></textarea>
                                 </div>
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn" >
-                                    <button style="float:right" type="submit" class="theme-btn-one">Send Message<i class="icon-Arrow-Right"></i></button>
+                                    <button id="saveReply" style="float:right" type="button" class="theme-btn-one">댓글 등록<i class="icon-Arrow-Right"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -143,6 +148,14 @@ let str = "";
 /* 페이지 온 로드 */
 $(function(){
 	showList(${cri.pageNum});
+	
+	//댓글 등록처리(post)
+	   $("#saveReply").on("click", function() {
+	      replyService.add(function (data) {       
+	         $(".chat").append(makeLi(data));
+	         showList(-1); //댓글 등록 후 댓글 마지막 페이지로
+	      });
+	   });
 	
 	//showList function
 	function showList(page){

@@ -168,6 +168,7 @@
 	                                        <li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-1.png" alt="">${item.teacherName }</li>
 	                                        <li><fmt:formatDate value="${item.regDate }"
 											pattern="yyyy-MM-dd" /></li>
+											<li>${item.commentsCnt } Reviews</li>
 	                                    </ul>
 	                                    <div class="link"><a href="blog-sdetails.html"><i class="icon-Arrow-Right"></i></a></div>
 	                                    <div class="btn-box"><a href="${item.meditationNo }" class="theme-btn-one move">명상하러 가기<i class="icon-Arrow-Right"></i></a></div>

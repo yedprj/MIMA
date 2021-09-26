@@ -21,6 +21,7 @@ public class CommentsServiceImpl implements CommentsService {
 	
 	@Override
 	public int insert(CommentsVO vo) {
+		log.info(vo.toString()+"~~~~~~~~~~~코멘트 보입니더 코멘트서비스임플");
 		meditationMapper.updateCommentsCnt(vo.getCmainCategory(), vo.getCmainNo(), 1);
 		return commentsMapper.insert(vo);
 	}

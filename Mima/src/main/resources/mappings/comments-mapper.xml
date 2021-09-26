@@ -21,9 +21,9 @@
 				REG_DATE,
 				CNO
 	) values(
-				#{category},
+				#{cmainCategory},
 				#{cmainNo}, 
-				#{cmmentWriterNo}, 
+				#{commentWriterNo}, 
 				#{contents}, 
 				#{reviewPoint}, 
 				sysdate, 
