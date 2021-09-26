@@ -212,7 +212,7 @@ $(function(){
 				//비디오 미리보기
 				var vSrc=document.createElement('source');
 				vSrc.setAttribute('id', 'vdieoSrc');
-				vSrc.setAttribute('src', "${pageContext.request.contextPath}/resources/meditVideo/"+datas.uuid+datas.vfileName);
+				vSrc.setAttribute('src', "C:/upload"+datas.uuid+datas.vfileName);
 				
 				$('#video').html(vSrc);
 				$("#uploaded").html(str);
