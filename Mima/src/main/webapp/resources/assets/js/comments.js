@@ -47,9 +47,9 @@ let replyService =(function(){
 		 }
 		  
 		//댓글 삭제
-		  function deleteReply(rno, callback, err){
+		  function deleteReply(cno, callback, err){
 		  $.ajax({
-			  url:"../replies/"+rno,
+			  url:"../replies/"+cno,
 			  method:"delete",
 			  dataType:"json",
 			  success: function(data){
@@ -64,13 +64,22 @@ let replyService =(function(){
   		}
 
 		//한건댓글 읽기
-		 function read(rno, callback, err){
+		 function read(param, callback, err){
+			var cmainCategory=param.cmainCategory;
+			var cmainNo = param.cmainNo;
+			console.log(cmainCategory,cmainNo);
+			
 		  $.ajax({
-			  url:"../replies/"+rno,
+			  url:"../replies/",
 			  method:"get",
 			  dataType:"json",
+			  data:{
+					cmainCategory: cmainCategory,
+					cmainNo: cmainNo,
+					},
 			  success: function(data){
 				  if(callback){
+					console.log(data)
 				   callback(data)
 				   }
 				},

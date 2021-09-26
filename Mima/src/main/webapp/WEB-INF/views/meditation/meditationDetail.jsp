@@ -137,6 +137,43 @@
 <!-- side bar-page-container end -->    
 
 
+
+<!-- edit reply Modal -->
+      <div class="modal fade" id="editReplyModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">댓글 수정</h4>
+            </div>
+            <div class="modal-body">
+            	<input type="hidden" id="hiddenCno" name='cno'>
+              <div class="form-group">
+                <label>Reply</label> 
+                <input class="form-control" name='contents' value='내용'>
+              </div>      
+              <div class="form-group">
+                <label>댓글 작성자</label> 
+                <input class="form-control" name='commentWriter' value='글쓴이'>
+                <input type="hidden" class="form-control" name='commentWriterNo' value='글쓴이'>
+              </div>
+            </div>
+			<div class="modal-footer">
+		        <button id='replyEditBtn' type="button" class="btn btn-warning">수정</button>
+		        <button id='modalCloseBtn' type="button" data-dismiss="modal" class="btn btn-default">취소</button>
+	     	 </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+
+
+
 <script src="../resources/assets/js/comments.js"></script>
 <script>
 /* 페이지 로드 이벤트 */
@@ -219,7 +256,18 @@ $(function(){
 	   		replyPageFooter.html(str);
 	   }// end of get replyPages function
 	
-	
+	 //댓글 페이지 이동이벤트
+	   replyPageFooter.on('click','li a', function(e){
+		   e.preventDefault();
+		 
+		   var targetPageNum=$(this).attr("href");
+		   		  
+		   showList(targetPageNum);
+	   });//End of onClick event reply pagination
+	   
+	   
+	   
+	   
 	   function makeLi(data) {
 		   return '<li>'
 		       +'<figure class="thumb-box">'
@@ -231,14 +279,48 @@ $(function(){
 		       +'        <span class="comment-time">'+data.regDate+'</span>'
 		       +'     </div>'
 		       +'     <p>'+data.contents+'</p>'
-		       +'  		<a style="float:right;" href="'+data.rno+'" id="replyDelete" class="btn btn-danger">삭제</a>'	
-		       +'       <a style="float:right;" href="'+data.rno+'" id="replyEdit" class="btn btn-info">수정</a>'
+		       +'  		<a style="float:right;" href="'+data.cno+'" id="replyDelete" class="btn btn-danger">삭제</a>'	
+		       +'       <a style="float:right;" href="'+data.cno+'" id="replyEdit" class="btn btn-info">수정</a>'
 		       +'</div>'
 		   	   +'</li>'
 		   }
 
 	   
-	 
+	 //댓글 수정처리(모달띄우기)
+		var modal=$(".modal");
+		var modalInputReply=modal.find("input[name='contents']");
+		var modalInputWriter =modal.find("input[name='commentWriterNo']");
+		
+		var modalEditBtn=$("#replyEditBtn");
+		
+		//댓글수정버튼 이벤트(모달띄우기)
+		 $(".chat").on("click","#replyEdit", function(e) {
+			 e.preventDefault();
+			 let cno = $(this).attr('href');
+			 replyService.read(cmainCategory, cno, function(data){
+				 $(modalInputReply).val(data.contents);
+				 $(modalInputWriter).val(data.commentWriterNo).attr("disabled", "disabled");
+				 $("#hiddenCno").val(cno);
+				 $(".modal").modal("show");
+				 
+			 }, function(err){console.error(err)});
+			 
+		 });// End of 댓글수정버튼 이벤트(모달띄우기)
+	   
+		 $(modalEditBtn).on('click', function(e){
+			 var cno = $("#hiddenCno").val();
+			var editedReply={
+					comments: modalInputReply.val(),
+					cno:cno
+			};
+			
+			replyService.update(editedReply, function(result){
+				alert("댓글이 수정되었습니다.")
+				modal.find("input").val();
+				modal.modal("hide");
+				showList(1);
+			});
+		 });
 	   
 	   
 	   
