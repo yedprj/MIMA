@@ -89,7 +89,7 @@
 												 <!-- 영상 업로드 Ajax -->
                                                 <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                     <label>Upload the meditation file</label>
-                                                    <input type="file" name="meditVFile" required>
+                                                    <input id="fileInput" type="file" name="meditVFile" required>
                                                     <button type="button" id="meditUpBtn" class="btn btn-outline-info btn-small">등록</button>
                                                 </div>
                                                  <div class="col-lg-6 col-md-6 col-sm-12 form-group">
@@ -111,22 +111,14 @@
                                                 
                                                 <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                     <label>Name</label>
-                                                    <input type="text" name="teacherName" id="teacherName" placeholder="명상 제목을 입력하세요" required>
+                                                    <input type="text" name="teacherName" id="teacherName" placeholder="명상가 이름을 입력하세요" required>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12"></div>
                                                 
                                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                                     <label>About..</label>
-                                                    <textarea id="teacherInfo" name="teacherInfo" placeholder="Write your not..."></textarea>
+                                                    <textarea id="teacherInfo" name="teacherInfo" placeholder="이 명상가에 대해 알려주세요"></textarea>
                                                 </div>
-                                                
-                                                <!-- 명상가 사진 업로드 ajax -->       
-                                                <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                                    <label>Upload the profile photo</label>
-                                                    <input type="file" name="teacherPhoto" id="teacherPhoto">
-                                                </div>
-                                                <!--end of 명상가 정보입력 -->
-                                                
                                                 
                                             </div>
                                         </form>
@@ -150,7 +142,10 @@
 $(function(){
 	
 	$('#insertResetBtn').on('click', function(){
-		$('#meditInsertFrm').reset();
+		//이거 작동 안함. 누르면 그냥 alert 해서 취소하겠습니까 하고 메인으로이동하게
+		alert("취소하겠습니까? 명상 메인으로 돌아갑니닷!");
+		document.location.href="${pageContext.request.contextPath}/meditation/meditationMain"
+		
 	})
 	
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -170,6 +165,38 @@ $(function(){
 		return true;
 	}
 	
+	//비디오 미리보기
+	const input = document.getElementById('fileInput');
+	const video =document.getElementById('video');
+	var videoSource=document.createElement('source');
+	//videoSource.setAttribute('src', "c:upload/"+datas.uuid+datas.vfileName);
+	
+	input.addEventListener('change', function() {
+	  const files = this.files || [];
+
+	  if (!files.length) return;
+	  
+	  const reader = new FileReader();
+
+	  reader.onload = function (e) {
+	    videoSource.setAttribute('src', e.target.result);
+		videoSource.setAttribute('id', 'videoSource');
+		console.log(videoSource)
+	    video.appendChild(videoSource);
+	    video.load();
+	    video.play();
+	  };
+	  
+	  reader.onprogress = function (e) {
+	    console.log('progress: ', Math.round((e.loaded * 100) / e.total));
+	  };
+	  
+	  reader.readAsDataURL(files[0]);
+	});//End of 비디오 미리보기
+	
+	
+	
+	
 	//meditUpBtn 눌렀을 때 이벤트 설정 교재502페이지 --> 명상첨부파일 넣는거
 	$('#meditUpBtn').on("click", function(e){
 		e.preventDefault();
@@ -186,6 +213,7 @@ $(function(){
 			}
 			formData.append("uploadFile", files[i]);
 		}
+			
 		
 		console.log("formData file: "+ formData)
 		$.ajax({
@@ -201,7 +229,6 @@ $(function(){
 					var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.vfileName);			      
 				    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 					str += "<li ";
-				    console.log(str)
 					str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-vFileName='"+datas.vfileName+"' data-type='"+datas.image+"' ><div>";
 					str += "<span> "+ datas.vfileName+"</span>";
 					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
@@ -209,12 +236,8 @@ $(function(){
 					str += "</div>";
 					str +="</li>";
 				
-				//비디오 미리보기
-				var vSrc=document.createElement('source');
-				vSrc.setAttribute('id', 'vdieoSrc');
-				vSrc.setAttribute('src', "${pageContext.request.contextPath}/resources/meditVideo/"+datas.uuid+datas.vfileName);
 				
-				$('#video').html(vSrc);
+								
 				$("#uploaded").html(str);
 				alert("file uploaded");
 			
@@ -243,7 +266,7 @@ $(function(){
 	$("#uploaded").on("click", "button", function(e){
 		if(confirm("Remove this file?")){
 			var targetLi = $(this).closest("li");
-			var videoPreview=$('#vdieoSrc');
+			var videoPreview=$('#videoSource');
 			targetLi.remove();
 			videoPreview.remove();
 		}

@@ -1,7 +1,84 @@
-/*WebApp/resources/assets/js/comments.js*/
-let replyService =(function(){
+/*WebApp/resources/assets/js/like.js*/
+let likeService =(function(){
 
-	//댓글 등록
+	//좋아요 등록
+	// 좋아요 클릭 이벤트
+		$(document).on("click", "#likeBtn", function() {
+			var heart = $(this);
+			var category=cmainCategory;
+			var postNo = cmainNo;
+			/* 멤버번호는 로그인 세션에서 가져올거임 */
+			var memberNo = 1;
+			var likeAjaxUrl;
+							
+			if (heart.css("background-color") == "rgb(6, 26, 58)") {
+				likeAjaxUrl = "updateNotLike";
+				$.ajax({
+					url : "likesDelete",
+					method : "delete",
+					dataType : "json",
+					data : JSON.stringify({
+						likeMainNo : postNo,
+						memberNo : CurrentNo
+					}),
+					contentType : 'application/json',
+					success : function(data) {
+						console.log("Likes_기록취소_성공");
+						
+					}// success end
+				}); //  ajax end
+				
+			} else {
+				urlJuso = "updateLike";
+				$.ajax({
+					url : "likesInsert",
+					method : "post",
+					dataType : "json",
+					data : JSON.stringify({
+						likeMainNo : postNo,
+						memberNo : CurrentNo
+					}),
+					contentType : 'application/json',
+					success : function() {
+						console.log("Likes 기록입력 성공!!");
+					}// success end
+				}); //  ajax end
+			}
+			
+			console.log(urlJuso);
+			console.log("===========좋아요 수==========");
+			$.ajax({
+				url : urlJuso,
+				method : "put",
+				dataType : "json",
+				data : JSON.stringify({
+					postNo : postNo
+				}),
+				contentType : 'application/json',
+				success : function() {
+					if (urlJuso == "updateLike") {
+						console.log("좋아요_성공")
+						alert("좋아요 성공!!");
+						heart.css("background-color", "#061a3a");
+					} else {
+						console.log("좋아요_취소_성공")
+						alert("좋아요 취소!!");
+						heart.css("background-color", "#eaf8f6");
+					}
+				}// success end
+			})
+			//  ajax end
+		})// heartIcon end	   
+		   
+		   
+	
+	
+	
+	
+	
+	
+	
+	
 	function add(callback, err){
 	  $.ajax({
 		  url:"../replies/",

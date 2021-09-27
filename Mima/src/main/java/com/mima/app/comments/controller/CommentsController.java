@@ -31,8 +31,8 @@ public class CommentsController {
 		
 		//댓글 조회
 		@GetMapping("/{cno}")
-		public CommentsVO read(@PathVariable int cno, CommentsVO vo){
-			vo.setCno(cno);
+		public CommentsVO read(CommentsVO vo){
+			
 		return commentsService.read(vo);
 		}
 		//등록

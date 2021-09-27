@@ -30,4 +30,11 @@ public interface MeditationMapper {
 	//댓글 수 업데이트
 	public void updateCommentsCnt(@Param("cmainCategoty") String cmainCategory, @Param("cmainNo") int cmainNo, @Param("amount") int amount);
 
+	//좋아요 숫자+1
+	public int updateLike(MeditationVO vo);
+	//좋아요 숫자-1
+	public int updateNotLike(MeditationVO vo);
+	//랜덤 명상 리스트
+	public List<MeditationVO> randomMeditList();
+	
 }
