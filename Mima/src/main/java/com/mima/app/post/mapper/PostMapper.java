@@ -22,6 +22,8 @@ public interface PostMapper {
 	
 	public int schedulerPost();
 	
+	public int postCount();
+	
 	
 
 }

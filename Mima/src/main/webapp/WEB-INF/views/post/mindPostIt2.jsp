@@ -206,14 +206,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						</div>
 					</div>
 					<div></div>
-					<div class="pagination-wrapper">
-						<ul class="pagination">
-							<li><a href="clinic-1.html" class="current">1</a></li>
-							<li><a href="clinic-1.html">2</a></li>
-							<li><a href="clinic-1.html">3</a></li>
-							<li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
-						</ul>
+					<div class="d-grid gap-2">
+					  <button style="height: 100%; width: 100%" class="theme-btn-one" type="button" id="addBtn">더보기+</button>
 					</div>
+					<br><br>
 				</div>
 			</div>
 		</div>
@@ -253,7 +249,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 </div>
 
 <script>
-	var CurrentNo = 30; // 현재 회원번호 
+	var reportMno = 30; // 현재 회원번호
+	var pageNum = 0;
+	var amount = 0;
 	
 	document.addEventListener("DOMContentLoaded", function() {
         // 시간을 딜레이 없이 나타내기위한 선 실행
@@ -343,7 +341,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				dataType : "json",
 				data : JSON.stringify({
 					likeMainNo : postNo,
-					memberNo : CurrentNo
+					memberNo : reportMno,
+					category : "POST"
 				}),
 				contentType : 'application/json',
 				success : function(data) {
@@ -360,7 +359,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				dataType : "json",
 				data : JSON.stringify({
 					likeMainNo : postNo,
-					memberNo : CurrentNo
+					memberNo : reportMno,
+					category : "POST"
 				}),
 				contentType : 'application/json',
 				success : function() {
@@ -408,7 +408,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			method : "post",
 			dataType : "json",
 			data : JSON.stringify({
-				reportMNo : CurrentNo,
+				reportMNo : reportMno,
 				postNo : postNo
 			}),
 			contentType : 'application/json',
@@ -440,7 +440,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						data : JSON.stringify({
 							postNo : postNo,
 							memberNo : memberNo,
-							reportMNo : CurrentNo
+							reportMNo : reportMno
 						}),
 						contentType : 'application/json',
 						success : function() {
@@ -475,7 +475,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				method : "post",
 				dataType : "json",
 				data : JSON.stringify({
-					memberNo : CurrentNo,
+					memberNo : reportMno,
 					contents : $("#contents").val(),
 					postColor : $(".pallet").find(".active").data("img")
 				}),
@@ -491,20 +491,45 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			}) //ajax end	
 		})
 	} // 포스트 등록 end
+	
 
+
+	// post 전체 갯수 조회
+	function addBtn(pageNum, amount){
+		$(document).on("click","#addBtn",function(){
+			pageNum = pageNum + 1;
+			amount = amount + 9;
+		}) // click 버튼 end
+			pageNum = 1;
+			amount = 9;
+		return pageNum, amount;
+	}
+	
 	//페이지 목록 조회
 	function postList() {
+		
 		var angryStr ='';
 		var heartStr ='';
-		var startNum = 1;
-		var amount = 9;
+		
+		var postCount = 0;
+		// 전체행 조회
+		$.ajax({
+			url : "postCount",
+			method : "get",
+			success : function(data) { postCount = data; console.log(postCount); }
+		});
+		
+		//addBtn(pageNum, amount);
+		pageNum = 1;
+		amount = 9;
+			
 		$.ajax({
 			url : "postList",
 			method : "post",
 			dataType : "json",
 			data : JSON.stringify({
-				reportMno : CurrentNo,
-				startNum : startNum,
+				reportMno : reportMno,
+				pageNum : pageNum,
 				amount : amount
 			}),
 			contentType : 'application/json',
@@ -536,6 +561,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					
 			} // success end
 		}) //ajax end
+		$("<button class='' id='addBtn' />").html("더보기");
 	} // 페이지목록 조회 end
 	
 	//랜덤 페이지 목록 조회
@@ -546,7 +572,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			url : "randomList",
 			method : "get",
 			data : {
-				reportMno : CurrentNo
+				reportMno : reportMno
 			},
 			contentType : 'application/json',
 			success : function(datas) {

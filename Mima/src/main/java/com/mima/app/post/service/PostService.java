@@ -21,5 +21,7 @@ public interface PostService {
 	public int delete(PostVO vo);
 	
 	public int schedulerPost();
+	
+	public int postCount();
 
 }
