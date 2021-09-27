@@ -19,6 +19,6 @@ public class PostVO {
 	private int reportMno; 		// 신고내역 확인
 	private int likesNo;
 	
-	private int startNum; // 시작하는 넘버
+	private int pageNum; // 시작하는 넘버
 	private int amount; // 양
 }
