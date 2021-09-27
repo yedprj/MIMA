@@ -63,6 +63,7 @@
 									Login Now<i class="icon-Arrow-Right"></i>
 								</button>
 							</div>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						</div>
 					</form>
 					
