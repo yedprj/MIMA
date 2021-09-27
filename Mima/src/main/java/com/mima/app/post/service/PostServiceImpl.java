@@ -62,4 +62,10 @@ public class PostServiceImpl implements PostService {
 		return postMapper.randomList(reportMno);
 	}
 
+	@Override
+	public int postCount() {
+		// TODO Auto-generated method stub
+		return postMapper.postCount();
+	}
+
 }

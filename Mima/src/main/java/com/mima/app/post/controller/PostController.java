@@ -42,8 +42,16 @@ public class PostController {
 	@GetMapping("/mindPostIt2")
 	public void dept2() {}
 	
+	
+	@GetMapping("/postCount")
+	@ResponseBody
+	public int postCount() {
+		return postService.postCount();
+	}
+	
+	
 	// ajax로 요청 : 목록 [ post + report(신고내역확인) + likes(좋아요내역확인) ]
-	@PostMapping("postList")
+	@PostMapping("/postList")
 	@ResponseBody
 	public List<PostVO> postList(@RequestBody PostVO vo, Model model){
 		return postService.getList(vo);

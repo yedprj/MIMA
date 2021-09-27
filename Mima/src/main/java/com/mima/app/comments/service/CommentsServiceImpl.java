@@ -1,5 +1,7 @@
 package com.mima.app.comments.service;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,5 +58,11 @@ public class CommentsServiceImpl implements CommentsService {
 	@Override
 	public CommentsVO read(CommentsVO vo) {
 		return commentsMapper.read(vo);
+	}
+
+	// 닥터 대쉬보드 나의 후기
+	@Override
+	public List<CommentsVO> getlatestreviewList() {
+		return commentsMapper.getlatestreviewList();
 	}
 }

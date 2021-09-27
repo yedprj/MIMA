@@ -7,7 +7,7 @@
 		FROM LIKES
 		WHERE LIKE_MAIN_NO = #{likeMainNo}
 		AND MEMBER_NO = #{memberNo}
-		AND CATEGORY = 'POST'
+		AND CATEGORY = #{category}
 	</select>
 
 	<insert id="postLikeinsert">

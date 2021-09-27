@@ -43,7 +43,7 @@
 	</update>
 
 	<!-- 한 명상글에 달린 댓글 리스트 -->
-	<select id="getList" resultType="com.mima.app.comments.domain.CommentsVO">
+	<select id="getList" resultType="CommentsVO">
 		select CMAIN_CATEGORY,
 				CMAIN_NO,
 				COMMENT_WRITER_NO,
@@ -73,6 +73,22 @@
 		FROM COMMENTS 
 		WHERE CMAIN_CATEGORY=#{cmainCategory} 
 		AND CMAIN_NO =#{cmainNo}
+	</select>
+	
+	<!-- 닥터 대쉬보드의 나의 후기 -->
+	<select id="getlatestreviewList" resultType="CommentsVO">
+		<![CDATA[
+		SELECT C.CMAIN_NO,
+               C.COMMENT_WRITER_NO,
+               C.CONTENTS,
+               C.REVIEW_POINT,
+               C.REG_DATE,
+               M.NICKNAME
+        FROM COMMENTS C JOIN MEMBER M
+        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
+        WHERE ROWNUM < 6
+        ORDER BY REG_DATE DESC
+		]]>
 	</select>
 	
 </mapper>

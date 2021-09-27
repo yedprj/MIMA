@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.service.CommentsService;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
 
@@ -14,11 +16,13 @@ import com.mima.app.session.service.BookingService;
 public class PatnerDoctorController {
 	
 	@Autowired BookingService bookingService;
+	@Autowired CommentsService commentsService;
 	
 	@GetMapping("docMain")
-	public void docMain(Model model, BookingVO vo) {
+	public void docMain(Model model, BookingVO bookingvo, CommentsVO commentsvo) {
 		model.addAttribute("bookingList", bookingService.getList());
 		model.addAttribute("getlatestapptList", bookingService.getlatestapptList());
+		model.addAttribute("getlatestreviewList", commentsService.getlatestreviewList());
 	}
 	
 	@GetMapping("apptManage")

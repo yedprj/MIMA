@@ -1,6 +1,9 @@
 package com.mima.app.admin.mapper;
 
+import java.util.List;
+
 import com.mima.app.admin.domain.ReportVO;
+import com.mima.app.admin.domain.RmemberVO;
 
 public interface ReportMapper {
 	
@@ -13,6 +16,16 @@ public interface ReportMapper {
 	// 포스트 신고 취소
 	public int delete(ReportVO vo);
 	
+	//관리자 신고 전체 조회
+	public List<ReportVO> adminGetList(); 
 	
-
+	//관리자 신고 단건 조회
+	public ReportVO adminRead(ReportVO vo);
+	
+	//관리자 삭제
+	public int adminDelete(ReportVO vo);
+	
+	// 신고 당한 사람 한 사람 조회
+	public List<RmemberVO> rmemberReportSelect();
+	
 }
