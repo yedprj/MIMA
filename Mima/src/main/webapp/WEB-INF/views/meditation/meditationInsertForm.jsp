@@ -235,8 +235,6 @@ $(function(){
 					str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
 					str += "</div>";
 					str +="</li>";
-				
-				
 								
 				$("#uploaded").html(str);
 				alert("file uploaded");
