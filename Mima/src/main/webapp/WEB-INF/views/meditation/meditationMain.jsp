@@ -162,12 +162,12 @@
                                     <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-38.png);"></div>
                                     <div class="pattern-3"></div>
                                 </div>
-                                <figure class="image image-1 paroller"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/about-1.jpg" alt=""></figure>
-                                <figure class="image image-2 paroller-2"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/about-2.jpg" alt=""></figure>
+                                <figure class="image image-1 paroller-2"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/stones.jpg" alt=""></figure>
+                                <figure class="image image-2 paroller"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/monk.jpg" alt=""></figure>
                                 <div class="image-content">
-                                    <figure class="icon-box"><img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-8.png" alt=""></figure>
-                                    <span>Appointment With</span>
-                                    <h4>Specialist</h4>
+                                    <figure class="icon-box"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/미마명상.png" alt=""></figure>
+                                    <span>지금 시작해 보세요</span>
+                                    <h4>명상</h4>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +186,7 @@
                                     <li>건강 보조제? 마음 보조제!</li>
                                     <li>잠깐의 투자로 내 마음을 돌보자</li>
                                 </ul>
-                                <div class="btn-box"><a href="about.html" class="theme-btn-one">더 알아볼까요?<i class="icon-Arrow-Right"></i></a></div>
+                                <div class="btn-box"><a href="aboutMedit" class="theme-btn-one">더 알아볼까요?<i class="icon-Arrow-Right"></i></a></div>
                             </div>
                         </div>
                     </div>

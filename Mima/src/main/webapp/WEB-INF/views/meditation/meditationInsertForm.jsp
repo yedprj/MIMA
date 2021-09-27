@@ -120,14 +120,6 @@
                                                     <textarea id="teacherInfo" name="teacherInfo" placeholder="이 명상가에 대해 알려주세요"></textarea>
                                                 </div>
                                                 
-                                                <!-- 명상가 사진 업로드 ajax -->       
-                                                <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                                    <label>Upload the profile photo</label>
-                                                    <input type="file" name="teacherPhoto" id="teacherPhoto">
-                                                </div>
-                                                <!--end of 명상가 정보입력 -->
-                                                
-                                                
                                             </div>
                                         </form>
                                         

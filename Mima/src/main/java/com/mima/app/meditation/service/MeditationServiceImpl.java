@@ -78,5 +78,15 @@ public class MeditationServiceImpl implements MeditationService {
 	public MeditAttachVO attachRead(String uuid) {
 		return attachMapper.read(uuid);
 	}
+	//좋아요+1
+	@Override
+	public int updateLike(MeditationVO vo) {
+		return meditationMapper.updateLike(vo);
+	}
+	//좋아요-1
+	@Override
+	public int updateNotLike(MeditationVO vo) {
+		return meditationMapper.updateNotLike(vo);
+	}
 
 }

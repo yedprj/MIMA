@@ -5,6 +5,7 @@ import java.util.List;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.meditation.domain.MeditationVO;
+import com.mima.app.post.domain.PostVO;
 
 public interface MeditationService {
 		
@@ -31,4 +32,9 @@ public interface MeditationService {
 	
 	//첨부파일 단건조회
 	public MeditAttachVO attachRead(String uuid);
+	
+	//좋아요 숫자+1
+	public int updateLike(MeditationVO vo);
+	//좋아요 숫자-1
+	public int updateNotLike(MeditationVO vo);
 }

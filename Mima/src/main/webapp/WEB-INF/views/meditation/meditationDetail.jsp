@@ -41,20 +41,25 @@
                             
                             <!-- 분명히 vFileName 있는데 없다고 나와 ㅠㅠㅠ왜이러는거야...글고 이클립스 폴더 안에 저장하니 저장하고 리프레시 안하면 안나옴... -->
                                 <%-- <img src="${pageContext.request.contextPath}/resources/assets/images/news/meditationFile" alt=""> --%>
-                                <video width="770" height="470" src="c:/upload/${item.fileName }"
-                                	controls auto></video>
+                                <video width="770" height="470" src="${pageContext.request.contextPath}/meditation/video/${item.fileName }" controls auto></video>
                                 <span class="category">${item.category }</span>
                            	</div>
+                           	<!-- 명상정보 담는 부분 -->
                             <div class="lower-content">
                                 <h3>${item.title }</h3>
+                                
+                                <!-- 좋아요 버튼 아이콘 -->
+                                <a  style="float:right; margin-right:20px;"><i id="likeBtn" class="fas fa-heart fa-3x"></i></a>
+                                
+                                <!-- 명상가 정보 -->
                                 <ul class="post-info">
-                                    <li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-1.png" alt="">
+                                    <li><img src="${pageContext.request.contextPath}/resources/assets/images/medit/미마명상.png" alt="">
                                     	${item.teacherName }</li>
                                     <li><fmt:formatDate value="${item.regDate }" pattern="yyyy-MM-dd" /></li>
                                 </ul>
                                 <p>${item.contents }</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                             </div>
+                            <!-- End of 명상정보 담는 부분 -->
                         </div>
                     </div>
                     <blockquote>
@@ -71,7 +76,7 @@
                             <h3>Leave a Comment</h3>
                         </div>
                         <form id="replyForm" action="../replies" method="post" class="comment-form">
-                            <div class="row clearfix">
+                            <div id="endOfCForm" class="row clearfix">
                                 <input type="hidden" name="cmainNo" value="${item.meditationNo }">
                                 <input type="hidden" name="cmainCategory" value="medit">
                                 <!-- 세션에서 멤버 넘버 가져와서 넣어줄것 -->
@@ -87,7 +92,7 @@
                                     <textarea id="commentInput" name="contents" placeholder="Leave A Comment"></textarea>
                                 </div>
                                 
-                                <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn" >
+                                <div  class="col-lg-12 col-md-12 col-sm-12 form-group message-btn" >
                                     <button id="saveReply" style="float:right" type="button" class="theme-btn-one">댓글 등록<i class="icon-Arrow-Right"></i></button>
                                 </div>
                             </div>
@@ -98,36 +103,19 @@
                  
                  <!-- 코멘트 코멘트  -->
                     <div class="comment-box">
-                        <div class="group-title">
+                        <div class="group-titleC">
                             <h3>Comments</h3>
                         </div>
                         <div class="comment">
 	                        <ul class="chat">
-		                        <li>
-			                        <figure class="thumb-box">
-		                                <img src="assets/images/news/comment-1.png" alt="">
-		                            </figure>
-		                            <div class="comment-inner">
-		                                <div class="comment-info">
-		                                    <h5>Leroy Anderson</h5>
-		                                    <span class="comment-time">April 10, 2020</span>
-		                                </div>
-		                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incidid unt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc itation ullamco laboris.</p>
-		                                <a href="blog-details.html" class="reply-btn">Reply</a>
-		                            </div>
-		                        </li>
+		                        <!-- 댓글 들어가는 부분~~ -->
 	                        </ul>
 	                        <div class="panel-footer">
 	
 							</div><!-- /end of 댓글 페이지 리스트 -->
                         </div>
-                        
-                        
                     </div>
                      <!-- end of 코멘트본문 코멘트  -->
-                     
-                   
-                    
                 </div>
             </div>
          
@@ -188,6 +176,10 @@ let str = "";
 
 /* 페이지 온 로드 */
 $(function(){
+	//댓글 페이지 링크 클릭시 댓글 제일 위로 이동
+	var offset = $('#endOfCForm').offset();
+	
+	//페이지 로드시 댓글 리스트 불러오기
 	showList(${cri.pageNum});
 	
 	//댓글 등록처리(post)
@@ -266,8 +258,11 @@ $(function(){
 		   e.preventDefault();
 		 
 		   var targetPageNum=$(this).attr("href");
-		   		  
 		   showList(targetPageNum);
+		   
+		   
+		   $('html').animate({scrollTop : offset.top}, 400);
+
 	   });//End of onClick event reply pagination
 	   
 	   
@@ -351,6 +346,82 @@ $(function(){
 		   });
 		 
 	   
+		   
+	// 좋아요 클릭 이벤트
+		$(document).on("click", "#likeBtn", function() {
+			var heart = $(this);
+			var category=cmainCategory;
+			var postNo = cmainNo;
+			/* 멤버번호는 로그인 세션에서 가져올거임 */
+			var memberNo = 1;
+			var likeAjaxUrl;
+							
+			if (heart.css("background-color") == "rgb(6, 26, 58)") {
+				likeAjaxUrl = "updateNotLike";
+				$.ajax({
+					url : "likesDelete",
+					method : "delete",
+					dataType : "json",
+					data : JSON.stringify({
+						likeMainNo : postNo,
+						category:category,
+						memberNo : memberNo
+					}),
+					contentType : 'application/json',
+					success : function(data) {
+						console.log("Likes_기록취소_성공");
+						
+					}// success end
+				}); //  ajax end
+				
+			} else {
+				likeAjaxUrl = "updateLike";
+				$.ajax({
+					url : "likesInsert",
+					method : "post",
+					dataType : "json",
+					data : JSON.stringify({
+						likeMainNo : postNo,
+						category:category,
+						memberNo : MemberNo
+					}),
+					contentType : 'application/json',
+					success : function() {
+						console.log("Likes 기록입력 성공!!");
+					}// success end
+				}); //  ajax end
+			}
+			
+			console.log(likeAjaxUrl);
+			console.log("===========좋아요 수==========");
+			$.ajax({
+				url : likeAjaxUrl,
+				method : "put",
+				dataType : "json",
+				data : JSON.stringify({
+					postNo : postNo
+				}),
+				contentType : 'application/json',
+				success : function() {
+					if (urlJuso == "updateLike") {
+						console.log("좋아요_성공")
+						alert("좋아요 성공!!");
+						heart.css("background-color", "#061a3a");
+					} else {
+						console.log("좋아요_취소_성공")
+						alert("좋아요 취소!!");
+						heart.css("background-color", "#eaf8f6");
+					}
+				}// success end
+			})
+			//  ajax end
+		})// heartIcon end	   
+		   
+		   
+		   
+		   
+		   
+		   
 })/* end of 페이지 온 로드 */
 
 </script>

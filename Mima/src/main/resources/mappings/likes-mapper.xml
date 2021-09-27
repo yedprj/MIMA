@@ -3,34 +3,57 @@
 <mapper namespace="com.mima.app.likes.mapper.LikesMapper">
 
 	<select id="postLikesRead" resultType="likesVO">
-		SELECT * 
-		FROM LIKES 
-		WHERE LIKE_MAIN_NO = #{likeMainNo}  
+		SELECT *
+		FROM LIKES
+		WHERE LIKE_MAIN_NO = #{likeMainNo}
 		AND MEMBER_NO = #{memberNo}
 		AND CATEGORY = 'POST'
 	</select>
 
 	<insert id="postLikeinsert">
 		INSERT INTO LIKES(
-			MEMBER_NO,
-			LIKE_DATE,
-			CATEGORY,
-			LIKE_MAIN_NO
+		MEMBER_NO,
+		LIKE_DATE,
+		CATEGORY,
+		LIKE_MAIN_NO
 		)
 		VALUES(
-			#{memberNo},
-			SYSDATE, 
-			'POST',
-			#{likeMainNo}
+		#{memberNo},
+		SYSDATE,
+		'POST',
+		#{likeMainNo}
 		)
 	</insert>
 
 	<delete id="postLikedelete">
 		DELETE FROM LIKES
-		WHERE CATEGORY = 'POST' 
+		WHERE CATEGORY = 'POST'
 		AND LIKE_MAIN_NO = #{likeMainNo}
 		AND MEMBER_NO = #{memberNo}
 	</delete>
 
+	<!-- 공용사용 -->
+	
+	<insert id="likeInsert">
+		INSERT INTO LIKES(
+		MEMBER_NO,
+		LIKE_DATE,
+		CATEGORY,
+		LIKE_MAIN_NO
+		)
+		VALUES(
+		#{memberNo},
+		SYSDATE,
+		#{category},
+		#{likeMainNo}
+		)
+	</insert>
+
+	<delete id="likeDelete">
+		DELETE FROM LIKES
+		WHERE CATEGORY = #{category}
+		AND LIKE_MAIN_NO = #{likeMainNo}
+		AND MEMBER_NO = #{memberNo}
+	</delete>
 
 </mapper>
