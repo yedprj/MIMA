@@ -281,8 +281,8 @@ $(function(){
 		       +'        <span class="comment-time">'+data.regDate+'</span>'
 		       +'     </div>'
 		       +'     <p>'+data.contents+'</p>'
-		       +'  		<a style="float:right;" href="'+data.cno+'" id="replyDelete" class="btn btn-danger">삭제</a>'	
-		       +'       <a style="float:right;" href="'+data.cno+'" id="replyEdit" class="btn btn-info">수정</a>'
+		       +'  		<a style="float:right; background-color:#fe5948; border: none; border-radius: 30px;" href="'+data.cno+'" id="replyDelete" class="btn btn-danger">삭제</a>'	
+		       +'       <a style="float:right; background-color:#39cabb; border: none; border-radius: 30px; margin-right:10px" href="'+data.cno+'" id="replyEdit" class="btn btn-info">수정</a>'
 		       +'</div>'
 		   	   +'</li>'
 		   }
