@@ -43,21 +43,23 @@
                                 <%-- <img src="${pageContext.request.contextPath}/resources/assets/images/news/meditationFile" alt=""> --%>
                                 <video width="770" height="470" src="${pageContext.request.contextPath}/meditation/video/${item.fileName }" controls auto></video>
                                 <span class="category">${item.category }</span>
+                                
                            	</div>
+                                
                            	<!-- 명상정보 담는 부분 -->
                             <div class="lower-content">
-                                <h3>${item.title }</h3>
-                                
-                                <!-- 좋아요 버튼 아이콘 -->
-                                <a  style="float:right; margin-right:20px;"><i id="likeBtn" class="fas fa-heart fa-3x"></i></a>
-                                
+                           	 <!-- 좋아요 버튼 아이콘 -->
+                                <a><i id="likeBtn" class="fas fa-heart fa-2x" style="color:rgb(246, 238, 238)"></i></a><h3>${item.title }</h3>
+
                                 <!-- 명상가 정보 -->
                                 <ul class="post-info">
                                     <li><img src="${pageContext.request.contextPath}/resources/assets/images/medit/미마명상.png" alt="">
                                     	${item.teacherName }</li>
                                     <li><fmt:formatDate value="${item.regDate }" pattern="yyyy-MM-dd" /></li>
+                                    <li>Likes: ${item.meditationLike }</li>
                                 </ul>
                                 <p>${item.contents }</p>
+                               
                             </div>
                             <!-- End of 명상정보 담는 부분 -->
                         </div>
@@ -348,7 +350,9 @@ $(function(){
 	   
 		   
 	// 좋아요 클릭 이벤트
-		$(document).on("click", "#likeBtn", function() {
+		$(document).on("click", "#likeBtn", function(e) {
+			e.preventDefault();
+			
 			var heart = $(this);
 			var category=cmainCategory;
 			var postNo = cmainNo;
@@ -356,10 +360,10 @@ $(function(){
 			var memberNo = 1;
 			var likeAjaxUrl;
 							
-			if (heart.css("background-color") == "rgb(6, 26, 58)") {
+			if ($(heart).css("color") == "rgb(255, 51, 51)") {
 				likeAjaxUrl = "updateNotLike";
 				$.ajax({
-					url : "likesDelete",
+					url : "../likes/likesDelete",
 					method : "delete",
 					dataType : "json",
 					data : JSON.stringify({
@@ -369,7 +373,6 @@ $(function(){
 					}),
 					contentType : 'application/json',
 					success : function(data) {
-						console.log("Likes_기록취소_성공");
 						
 					}// success end
 				}); //  ajax end
@@ -377,18 +380,20 @@ $(function(){
 			} else {
 				likeAjaxUrl = "updateLike";
 				$.ajax({
-					url : "likesInsert",
+					url : "../likes/likesInsert",
 					method : "post",
 					dataType : "json",
 					data : JSON.stringify({
 						likeMainNo : postNo,
 						category:category,
-						memberNo : MemberNo
+						memberNo : memberNo
 					}),
 					contentType : 'application/json',
 					success : function() {
-						console.log("Likes 기록입력 성공!!");
-					}// success end
+					},
+					errpr: function(err){
+						console.error(err);
+					}
 				}); //  ajax end
 			}
 			
@@ -399,18 +404,16 @@ $(function(){
 				method : "put",
 				dataType : "json",
 				data : JSON.stringify({
-					postNo : postNo
+					meditationNo : postNo
 				}),
 				contentType : 'application/json',
 				success : function() {
-					if (urlJuso == "updateLike") {
-						console.log("좋아요_성공")
-						alert("좋아요 성공!!");
-						heart.css("background-color", "#061a3a");
+					if (likeAjaxUrl == "updateLike") {
+						alert("이 명상을 좋아합니다!");
+						$(heart).css("color", "rgb(255, 51, 51)");
 					} else {
-						console.log("좋아요_취소_성공")
-						alert("좋아요 취소!!");
-						heart.css("background-color", "#eaf8f6");
+						alert("좋아요 취소 ㅠㅠ");
+						$(heart).css("color", "	rgb(237, 222, 222)");
 					}
 				}// success end
 			})

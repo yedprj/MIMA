@@ -3,17 +3,24 @@
 <mapper
 	namespace="com.mima.app.meditation.mapper.MeditationMapper">
 
+	<select id="randomMeditList" resultType="com.mima.app.meditation.domain.MeditationVO">
+	        select * from (select * from meditation
+                        order by dbms_random.value)
+         <![CDATA[ where rownum <= 4 ]]>
+	</select>
+
+
 	<!-- 좋아요 업데이트 -->
 	<update id="updateLike">
-		UPDATE MEDITATAION SET 
-			MEDITATAION_LIKE= MEDITATAION_LIKE + 1 
-			WHERE MEDITATAION_NO = #{meditationNo}
+		UPDATE MEDITATION SET 
+			MEDITATION_LIKE= MEDITATION_LIKE + 1 
+			WHERE MEDITATION_NO = #{meditationNo}
 	</update>
 	
 	<update id="updateNotLike">
-		UPDATE MEDITATAION SET 
-			MEDITATAION_LIKE= MEDITATAION_LIKE - 1 
-			WHERE MEDITATAION_NO = #{meditationNo}
+		UPDATE MEDITATION SET 
+			MEDITATION_LIKE= MEDITATION_LIKE - 1 
+			WHERE MEDITATION_NO = #{meditationNo}
 	</update>
 	<!-- end of 좋아요 업데이트 -->
 

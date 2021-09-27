@@ -63,31 +63,38 @@ public class MeditationController {
 	
 	// To main 조회
 	@GetMapping("/meditationMain")
-	public void meditationMain(Model model) {
-		// 추천 명상 컨텐츠만 넘겨주면 됨.
+	public void meditationMain(Model model, @ModelAttribute("cri") Criteria cri) {
+		int total = meditationService.getTotalMeditCount(cri);
+		
+		model.addAttribute("pageMaker", new PageVO(cri, total));
+		model.addAttribute("list", meditationService.randomMeditList());
 
 	}
 	
 	// about medit
 		@GetMapping("/aboutMedit")
-		public void aboutMedit(Model model) {
-			// 추천 명상 컨텐츠만 넘겨주면 됨.
+		public void aboutMedit(Model model,@ModelAttribute("cri") Criteria cri) {
+			int total = meditationService.getTotalMeditCount(cri);
+			
+			model.addAttribute("pageMaker", new PageVO(cri, total));
+			model.addAttribute("list", meditationService.randomMeditList());
 		}
 
 	// 전체 리스트 조회
 	@GetMapping("/totalList")
 	public void totalList(Model model, @ModelAttribute("cri") Criteria cri) {
 		int total = meditationService.getTotalMeditCount(cri);
+		
 		model.addAttribute("list", meditationService.getMeditationList(cri));
-
 		model.addAttribute("pageMaker", new PageVO(cri, total));
-		System.out.println(new PageVO(cri, total) + "----- getList++++++" + cri);
 	}
 
 	// 단건조회-디테일 페이지
 	@GetMapping("/meditationDetail")
 	public void meditationDetail(Model model, MeditationVO vo, @ModelAttribute("cri") Criteria cri) {
+		System.out.println("before call read"+vo);
 		vo = meditationService.read(vo);
+		System.out.println("after call read"+vo);
 		String uuid = vo.getAttachFile().getUuid();
 		String name = vo.getAttachFile().getVFileName();
 		vo.setFileName(uuid + name);

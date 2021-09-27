@@ -53,7 +53,9 @@ public class MeditationServiceImpl implements MeditationService {
 	@Override
 	public MeditationVO read(MeditationVO vo) {
 		vo = meditationMapper.read(vo); // 게시글만 조회, 보에 담음
+		System.out.println("after read+++++++"+vo);
 		vo.setAttachFile(attachMapper.findByMeditNo(vo.getMeditationNo())); // 첨부파일도 조회해서 담기
+		System.out.println("첨부파일 담은 보!!!!"+vo);
 		return vo;
 	}
 
@@ -87,6 +89,11 @@ public class MeditationServiceImpl implements MeditationService {
 	@Override
 	public int updateNotLike(MeditationVO vo) {
 		return meditationMapper.updateNotLike(vo);
+	}
+	//랜덤 명상 리스트 4개
+	@Override
+	public List<MeditationVO> randomMeditList() {
+		return meditationMapper.randomMeditList();
 	}
 
 }

@@ -22,6 +22,7 @@ public class LikesController {
 	@PostMapping("likesInsert")
 	@ResponseBody
 	public int likeInsert(@RequestBody LikesVO vo, Model model) {
+		System.out.println("LikesVO test=== like insert"+vo);
 		return  likeService.likeInsert(vo);
 	}
 	
@@ -29,6 +30,7 @@ public class LikesController {
 	@DeleteMapping("likesDelete")
 	@ResponseBody
 	public int likesDelete(@RequestBody LikesVO vo, Model model) {
+		System.out.println("LikesVO test=== like delete"+vo);
 		return  likeService.likeDelete(vo);
 	}
 	

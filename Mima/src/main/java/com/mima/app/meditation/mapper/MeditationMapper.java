@@ -34,5 +34,7 @@ public interface MeditationMapper {
 	public int updateLike(MeditationVO vo);
 	//좋아요 숫자-1
 	public int updateNotLike(MeditationVO vo);
+	//랜덤 명상 리스트
+	public List<MeditationVO> randomMeditList();
 	
 }
