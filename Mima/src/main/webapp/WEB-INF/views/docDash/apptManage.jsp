@@ -105,119 +105,23 @@
                             <div class="single-item">
                                 <figure class="image-box"><img src="assets/images/resource/appointment-1.jpg" alt=""></figure>
                                 <div class="inner">
-                                    <h4>Mary Astor</h4>
+                                	<div class="name-box">
+	                                    <h4>${name } 이름</h4>
+	                                    <span class="ptno">#${bookingList.ptNo} 예약번호</span>
+	                                </div>
                                     <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
+                                        <li><i class="fas fa-map-marker-alt"></i></li>
+                                        <li><i class="fas fa-clock"></i>${bookingTime } 예약날짜</li>
+                                        <li><i class="fas fa-hourglass-start"></i>${consultTime } 진료날짜</li>
+                                        <li><i class="fas fa-hourglass-start"></i>${consultTime } 진료시간</li>
+                                        <li><i class="fas fa-hourglass-start"></i>${consultTime } 결제금액</li>
+                                        <li><i class="fas fa-hourglass-start"></i>${consultTime } 결제상태</li>
+                                        <li><i class="fas fa-envelope"></i>${email }</li>
+                                        <li><i class="fas fa-phone"></i>${phone }</li>
                                     </ul>
                                     <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <figure class="image-box"><img src="assets/images/resource/appointment-2.jpg" alt=""></figure>
-                                <div class="inner">
-                                    <h4>Rex Allen</h4>
-                                    <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-                                    </ul>
-                                    <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <figure class="image-box"><img src="assets/images/resource/appointment-3.jpg" alt=""></figure>
-                                <div class="inner">
-                                    <h4>Leroy Anderson</h4>
-                                    <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-                                    </ul>
-                                    <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <figure class="image-box"><img src="assets/images/resource/appointment-4.jpg" alt=""></figure>
-                                <div class="inner">
-                                    <h4>Julia Jhones</h4>
-                                    <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-                                    </ul>
-                                    <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <figure class="image-box"><img src="assets/images/resource/appointment-5.jpg" alt=""></figure>
-                                <div class="inner">
-                                    <h4>Terry Bradshaw</h4>
-                                    <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-                                    </ul>
-                                    <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <figure class="image-box"><img src="assets/images/resource/appointment-6.jpg" alt=""></figure>
-                                <div class="inner">
-                                    <h4>Amelia Anna</h4>
-                                    <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-                                    </ul>
-                                    <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <figure class="image-box"><img src="assets/images/resource/appointment-7.jpg" alt=""></figure>
-                                <div class="inner">
-                                    <h4>Samuel Daniels</h4>
-                                    <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-                                    </ul>
-                                    <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
+                                        <li><i class="fas fa-check"></i><a href="">Accept</a></li>
+                                        <li><i class="fas fa-times"></i><a href="">Cancel</a></li>
                                     </ul>
                                 </div>
                             </div>
