@@ -3,6 +3,28 @@
 <mapper
 	namespace="com.mima.app.meditation.mapper.MeditationMapper">
 
+	<select id="randomMeditList" resultType="com.mima.app.meditation.domain.MeditationVO">
+	        select * from (select * from meditation
+                        order by dbms_random.value)
+         <![CDATA[ where rownum <= 4 ]]>
+	</select>
+
+
+	<!-- 좋아요 업데이트 -->
+	<update id="updateLike">
+		UPDATE MEDITATION SET 
+			MEDITATION_LIKE= MEDITATION_LIKE + 1 
+			WHERE MEDITATION_NO = #{meditationNo}
+	</update>
+	
+	<update id="updateNotLike">
+		UPDATE MEDITATION SET 
+			MEDITATION_LIKE= MEDITATION_LIKE - 1 
+			WHERE MEDITATION_NO = #{meditationNo}
+	</update>
+	<!-- end of 좋아요 업데이트 -->
+
+
 
 <!-- 댓글 수 업데이트 -->
 	<update id="updateCommentsCnt">
@@ -58,7 +80,7 @@
 		FROM( SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
 		ROWNUM RN, MEDITATION_NO, TITLE, CONTENTS,
 		MEDITATION_LIKE, HIT, CATEGORY, REG_DATE, EDIT_DATE,
-		TEACHER_NAME, TEACHER_INFO, TEACHER_PHOTO, MEDITATION_THUMB, COMMENTSCNT
+		TEACHER_NAME, TEACHER_INFO, MEDITATION_THUMB, COMMENTSCNT
 		FROM MEDITATION
 		where
 				
@@ -108,12 +130,10 @@
 		UPDATE MEDITATION
 		SET
 		TITLE =#{title},
-		CONTENTS
-		=#{contents},
+		CONTENTS=#{contents},
 		EDIT_DATE=sysdate,
 		TEACHER_NAME =#{teacherName},
 		TEACHER_INFO =#{teacherInfo},
-		TEACHER_PHOTO =#{teacherPhoto},
 		MEDITATION_THUMB =#{meditationThumb}
 		WHERE
 		MEDITATION_NO=#{meditationNo}

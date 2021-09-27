@@ -151,6 +151,7 @@
                
                  <div class="row clearfix">
 		            <!-- 명상 카드바디 -->
+		           
                     <c:forEach var="item" items="${list }">
 	                    <div class="col-lg-4 col-md-6 col-sm-12 news-block">
 	                        <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">

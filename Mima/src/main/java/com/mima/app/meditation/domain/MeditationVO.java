@@ -22,6 +22,7 @@ public class MeditationVO {
 	private String vFileUuid;		// 명상비디오 uuid
 	private int commentsCnt;		// 명상에 달린 댓글 수 
 	
+	private String fileName;
 	
 	//게시글 하나에 들어가있는 첨부파일
 	private MeditAttachVO attachFile;

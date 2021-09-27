@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>>
  <!--Page Title-->
         <section class="page-title centred bg-color-1">
             <div class="pattern-layer">
@@ -26,101 +27,34 @@
             <div class="auto-container">
                 <div> XX님을 위한 오늘의 추천명상</div>
                 <div class="row clearfix">
+                	<c:forEach var="medit" items="${list }">
                     <div class="col-lg-3 col-md-6 col-sm-12 team-block">
                         <div class="team-block-two wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                             <div class="inner-box">
                                 <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
                                 <figure class="image-box">
                                     <img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_moody.png" alt="">
-                                    <a href="index.html"><i class="far fa-heart"></i></a>
                                 </figure>
                                 <div class="lower-content">
-                                    <h3><a href="doctors-details.html">상쾌한 아침명상</a></h3>
-                                    <span class="designation">#아침 #간단 #5분</span>
-                                    <ul class="rating clearfix">
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><a href="index.html">2 reviews</a></li>
-                                    </ul>
-                                   <!--  <div class="location-box">
-                                        <p><i class="fas fa-map-marker-alt"></i>G87P+PG Shustoke, Birmingham, UK</p>
-                                    </div> -->
+                                    <h3><a class="move" href="${medit.meditationNo }">${medit.title }</a></h3>
+                                    <div>
+                                     <span><img src="${pageContext.request.contextPath}/resources/assets/images/medit/admin-1.png" alt="">${medit.teacherName }</span>
+                                     <span><fmt:formatDate value="${medit.regDate }" pattern="yyyy-MM-dd" /></span>
+                                     <br>
+                                    	<span>${medit.category }</span>
+                                    <br>
+                                    <span>${medit.commentsCnt } reviews</span>
+                                    </div>
+                                    <br>
+	                                <div class="btn-box">
+	                                	<a type="button" href="${medit.meditationNo }" class="btn move" style="background-color:rgb(229, 204, 255); border-color:none;">더보기<i class="icon-Arrow-Right"></i></a>
+	                                </div>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 team-block">
-                        <div class="team-block-two wow fadeInUp animated animated" data-wow-delay="200ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
-                                <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/daily_medit.png" alt="">
-                                    <a href="index.html"><i class="far fa-heart"></i></a>
-                                </figure>
-                                <div class="lower-content">
-                                    <h3><a href="doctors-details.html">스트레스 완화 명상</a></h3>
-                                    <span class="designation">#긴장이완 #차분</span>
-                                    <ul class="rating clearfix">
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><a href="index.html">5 reviews</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 team-block">
-                        <div class="team-block-two wow fadeInUp animated animated" data-wow-delay="400ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
-                                <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_moody.png" alt="">
-                                    <a href="index.html"><i class="far fa-heart"></i></a>
-                                </figure>
-                                <div class="lower-content">
-                                    <h3><a href="doctors-details.html">수면을 돕는 명상</a></h3>
-                                    <span class="designation">#자기전 #5분 #꿀잠</span>
-                                    <ul class="rating clearfix">
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><a href="index.html">5 reviews</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12 team-block">
-                        <div class="team-block-two wow fadeInUp animated animated" data-wow-delay="600ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
-                                <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/daily_medit.png" alt="">
-                                    <a href="index.html"><i class="far fa-heart"></i></a>
-                                </figure>
-                                <div class="lower-content">
-                                    <h3><a href="doctors-details.html">화가 날 때 명상</a></h3>
-                                    <span class="designation">#분노조절 #안정 #10분</span>
-                                    <ul class="rating clearfix">
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><i class="icon-Star"></i></li>
-                                        <li><a href="index.html">3 reviews</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
                    <div style="float:right"><div class="btn-box"><a href="totalList" class="theme-btn-one">Total list of meditation<i class="icon-Arrow-Right"></i></a></div></div>
             </div>
@@ -162,12 +96,12 @@
                                     <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-38.png);"></div>
                                     <div class="pattern-3"></div>
                                 </div>
-                                <figure class="image image-1 paroller"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/about-1.jpg" alt=""></figure>
-                                <figure class="image image-2 paroller-2"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/about-2.jpg" alt=""></figure>
+                                <figure class="image image-1 paroller-2"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/stones.jpg" alt=""></figure>
+                                <figure class="image image-2 paroller"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/monk.jpg" alt=""></figure>
                                 <div class="image-content">
-                                    <figure class="icon-box"><img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-8.png" alt=""></figure>
-                                    <span>Appointment With</span>
-                                    <h4>Specialist</h4>
+                                    <figure class="icon-box"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/미마명상.png" alt=""></figure>
+                                    <span>지금 시작해 보세요</span>
+                                    <h4>명상</h4>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +120,7 @@
                                     <li>건강 보조제? 마음 보조제!</li>
                                     <li>잠깐의 투자로 내 마음을 돌보자</li>
                                 </ul>
-                                <div class="btn-box"><a href="about.html" class="theme-btn-one">더 알아볼까요?<i class="icon-Arrow-Right"></i></a></div>
+                                <div class="btn-box"><a href="aboutMedit" class="theme-btn-one">더 알아볼까요?<i class="icon-Arrow-Right"></i></a></div>
                             </div>
                         </div>
                     </div>
@@ -194,7 +128,24 @@
             </div>
         </section>
         <!--End of 명상에 관해서-->
-<div>
-${list }
-
+	<div>
 </div>
+
+
+ <form action="meditationDetail" method="get" id="frm">
+		<input type="hidden" id="pageNum" name="pageNum" value="1">
+    	<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
+ </form>
+
+
+<script>
+ $(document).ready(function() {
+	 $(".move").on('click', function(e){
+		 e.preventDefault();
+		 $('#frm').append('<input type="hidden" id="meditationNo" name="meditationNo" value="'+ $(this).attr("href") +'">');
+		 $('#frm').submit();
+	 });
+
+	
+    });
+</script>

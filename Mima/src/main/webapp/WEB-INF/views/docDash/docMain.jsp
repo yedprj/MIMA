@@ -225,162 +225,37 @@
                                     <table class="doctors-table">
                                         <thead class="table-header">
                                             <tr>
-                                                <th>Patient Name</th>
-                                                <th>Appt Date</th>
-                                                <th>Purpose</th>
-                                                <th>Type</th>
-                                                <th>Paid Amount</th>
-                                                <th>&nbsp;</th>
-                                                <th>&nbsp;</th>
+                                                <th>닉네임</th>
+                                                <th>별점</th>
+                                                <th>날짜</th>
+                                                <th>내용</th>
                                             </tr>    
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="name-box">
-                                                        <figure class="image"><img src="assets/images/resource/dashboard-doc-1.png" alt=""></figure>
-                                                        <h5>Amelia Anna</h5>
-                                                        <span class="designation">#LK1024T01</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>20 Oct 2020</p>
-                                                    <span class="time">10:30AM</span>
-                                                </td>
-                                                <td>
-                                                    <p>General</p>
-                                                </td>
-                                                <td>
-                                                    <p>Old Patient</p>
-                                                </td>
-                                                <td>
-                                                    <p>$50.00</p>
-                                                </td>
-                                                <td>
-                                                    <span class="accept"><i class="fas fa-check"></i>Accept</span>
-                                                </td>
-                                                <td>
-                                                    <span class="cancel"><i class="fas fa-times"></i>Cancel</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="name-box">
-                                                        <figure class="image"><img src="assets/images/resource/dashboard-doc-2.png" alt=""></figure>
-                                                        <h5>Paolo Dybala</h5>
-                                                        <span class="designation">#LK1024T02</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>20 Oct 2020</p>
-                                                    <span class="time">10:30AM</span>
-                                                </td>
-                                                <td>
-                                                    <p>General</p>
-                                                </td>
-                                                <td>
-                                                    <p>New Patient</p>
-                                                </td>
-                                                <td>
-                                                    <p>$50.00</p>
-                                                </td>
-                                                <td>
-                                                    <span class="accept"><i class="fas fa-check"></i>Accept</span>
-                                                </td>
-                                                <td>
-                                                    <span class="cancel"><i class="fas fa-times"></i>Cancel</span>
-                                                </td>
-                                            </tr>
-                                            <tr class="cancel-block">
-                                                <td>
-                                                    <div class="name-box">
-                                                        <figure class="image"><img src="assets/images/resource/dashboard-doc-3.png" alt=""></figure>
-                                                        <h5>Samuel Daniels</h5>
-                                                        <span class="designation">#LK1024T03</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>20 Oct 2020</p>
-                                                    <span class="time">10:30AM</span>
-                                                </td>
-                                                <td>
-                                                    <p>General</p>
-                                                </td>
-                                                <td>
-                                                    <p>Old Patient</p>
-                                                </td>
-                                                <td>
-                                                    <p>$50.00</p>
-                                                </td>
-                                                <td>
-                                                    <span class="accept"><i class="fas fa-check"></i>Accept</span>
-                                                </td>
-                                                <td>
-                                                    <span class="cancel"><i class="fas fa-times"></i>Cancel</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="name-box">
-                                                        <figure class="image"><img src="assets/images/resource/dashboard-doc-4.png" alt=""></figure>
-                                                        <h5>Julia Jhones</h5>
-                                                        <span class="designation">#LK1024T04</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>20 Oct 2020</p>
-                                                    <span class="time">10:30AM</span>
-                                                </td>
-                                                <td>
-                                                    <p>General</p>
-                                                </td>
-                                                <td>
-                                                    <p>Old Patient</p>
-                                                </td>
-                                                <td>
-                                                    <p>$50.00</p>
-                                                </td>
-                                                <td>
-                                                    <span class="accept"><i class="fas fa-check"></i>Accept</span>
-                                                </td>
-                                                <td>
-                                                    <span class="cancel"><i class="fas fa-times"></i>Cancel</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="name-box">
-                                                        <figure class="image"><img src="assets/images/resource/dashboard-doc-5.png" alt=""></figure>
-                                                        <h5>Mary Astor</h5>
-                                                        <span class="designation">#LK1024T05</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p>20 Oct 2020</p>
-                                                    <span class="time">10:30AM</span>
-                                                </td>
-                                                <td>
-                                                    <p>General</p>
-                                                </td>
-                                                <td>
-                                                    <p>New Patient</p>
-                                                </td>
-                                                <td>
-                                                    <p>$50.00</p>
-                                                </td>
-                                                <td>
-                                                    <span class="accept"><i class="fas fa-check"></i>Accept</span>
-                                                </td>
-                                                <td>
-                                                    <span class="cancel"><i class="fas fa-times"></i>Cancel</span>
-                                                </td>
-                                            </tr>
+                                        	<c:forEach items="${getlatestreviewList}" var="getlatestreviewList">
+                                        		<tr>
+													<td>
+														<div class="name-box">
+	                                                        <h5>${getlatestreviewList.nickname}</h5>
+	                                                    </div>
+	                                                </td>
+	                                                <td>
+	                                                	<c:forEach var="i" begin="1" end="${getlatestreviewList.reviewPoint}">
+			                                        		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
+			                                        	</c:forEach>
+			                                        	<c:forEach var="i" begin="1" end="${5-getlatestreviewList.reviewPoint}">
+			                                        		<i class="icon-Star"></i>
+			                                        	</c:forEach>
+	                                                </td>
+													<td><fmt:formatDate value="${getlatestreviewList.regDate}" pattern="yy-MM-dd"/></td>
+	                                                <td>${getlatestreviewList.contents}</td>
+	                                            </tr>
+                                        	</c:forEach>
                                         </tbody>    
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -392,3 +267,4 @@
             <span class="fa fa-arrow-up"></span>
         </button>
     </div>
+    

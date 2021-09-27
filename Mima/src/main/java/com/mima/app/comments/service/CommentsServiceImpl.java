@@ -1,5 +1,7 @@
 package com.mima.app.comments.service;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,12 +51,18 @@ public class CommentsServiceImpl implements CommentsService {
 		pageVo.setReplyCnt(commentsMapper.getCountByMeditNo(vo));
 		pageVo.setList(commentsMapper.getList(cri, cmainCategory, cmainNo));
 		log.info(vo.toString()+"~~~~~~~~~~~~~~~~~~~~코멘트vo");
-		log.info(pageVo.toString()+"====페이지보========getList CommentsServiceImpl");
+		log.info("====페이지보========getList CommentsServiceImpl"+pageVo.toString());
 		return pageVo;
 	}
 
 	@Override
 	public CommentsVO read(CommentsVO vo) {
 		return commentsMapper.read(vo);
+	}
+
+	// 닥터 대쉬보드 나의 후기
+	@Override
+	public List<CommentsVO> getlatestreviewList() {
+		return commentsMapper.getlatestreviewList();
 	}
 }
