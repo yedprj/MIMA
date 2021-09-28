@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.admin.domain.ReportVO;
@@ -32,18 +33,21 @@ public class ReportController {
 	}
 	
 	@GetMapping("/rpget")
-	public void rpget(Model model, ReportVO vo) {
-		model.addAttribute("report",reportService.adminRead(vo));
+	public void rpget(Model model, RmemberVO vo) {
+		model.addAttribute("report",reportService.rmemberReportSelect(vo));
 	}
 	
 	@GetMapping("/rpdelete")
-	public String rpdelete(RedirectAttributes rttr, ReportVO vo) {
+	public String rpdelete(RedirectAttributes rttr, @RequestParam int reportNo) {
 		
+		ReportVO vo = new ReportVO();
+		vo.setReportNo(reportNo);
 		int result = reportService.delete(vo);
 		
 		if(result ==1) {
-			rttr.addAttribute("deleteResult", vo.getReportNo());
+			rttr.addFlashAttribute("result","success");
 		}
+		//rttr.addAttribute("list", reportService.rmemberReportSelect());
 		return "redirect:/report/rplist";
 		
 	}

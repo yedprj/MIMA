@@ -83,6 +83,9 @@
 			  JOIN MEMBER M
 			  ON (R.MEMBER_NO = M.MEMBER_NO))B
 		ON (B.REPORT_NO = A.REPORT_NO)
+		<if test="reportNo != null">
+			WHERE A.REPORT_NO = ${reportNo}
+		</if>
 		ORDER BY A.REPORT_NO ASC
 	</select>
 		
