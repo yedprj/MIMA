@@ -20,14 +20,14 @@
 		VALUES(
 		#{memberNo},
 		SYSDATE,
-		'POST',
+		#{category},
 		#{likeMainNo}
 		)
 	</insert>
 
 	<delete id="postLikedelete">
 		DELETE FROM LIKES
-		WHERE CATEGORY = 'POST'
+		WHERE CATEGORY = #{category}
 		AND LIKE_MAIN_NO = #{likeMainNo}
 		AND MEMBER_NO = #{memberNo}
 	</delete>

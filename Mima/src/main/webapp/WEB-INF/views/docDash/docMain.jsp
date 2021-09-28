@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     
@@ -53,9 +52,9 @@
                     </div>
                     <div class="profile-info">
                         <ul class="list clearfix">
-                            <li><a href="doctors-dashboard.html" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
-                            <li><a href="appointment.html"><i class="fas fa-clock"></i>예약관리</a></li>
-                            <li><a href="my-patients.html"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
+                            <li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+                            <li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
+                            <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
                             <li><a href="add-listing.html"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
                             <li><a href="review.html"><i class="fas fa-star"></i>나의 후기</a></li>
                             <li><a href="message.html"><i class="fas fa-comments"></i>나의 문의</a></li>
@@ -130,7 +129,6 @@
                                                 <th>환자명</th>
                                                 <th>예약번호</th>
                                                 <th>진료일</th>
-                                                <th>진료시간</th>
                                                 <th>예약일</th>
                                                 <th>결제금액</th>
                                                 <th>결제상태</th>
@@ -146,8 +144,10 @@
 	                                                    </div>
 	                                                </td>
 													<td>${bookingList.bookingNo}</td>
-													<td><fmt:formatDate value="${bookingList.consultDate}" pattern="yy-MM-dd"/></td>
-													<td><span class="time">${bookingList.consultTime}</span></td>
+													<td>
+														<fmt:formatDate value="${bookingList.consultDate}" pattern="yy-MM-dd"/>
+														<span class="time">${bookingList.consultTime}</span>
+													</td>
 													<td><fmt:formatDate value="${bookingList.bookingDate}" pattern="yy-MM-dd"/></td>
 													<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${bookingList.price}" /></td>
 													<td>${bookingList.payStatus}</td>
@@ -176,7 +176,6 @@
                                                 <th>환자명</th>
                                                 <th>예약번호</th>
                                                 <th>진료일</th>
-                                                <th>진료시간</th>
                                                 <th>예약일</th>
                                                 <th>결제금액</th>
                                                 <th>결제상태</th>
@@ -192,16 +191,18 @@
 	                                                    </div>
 	                                                </td>
 													<td>${getlatestapptList.bookingNo}</td>
-													<td><fmt:formatDate value="${getlatestapptList.consultDate}" pattern="yy-MM-dd"/></td>
-													<td><span class="time">${getlatestapptList.consultTime}</span></td>
+													<td>
+														<fmt:formatDate value="${getlatestapptList.consultDate}" pattern="yy-MM-dd"/>
+														<span class="time">${getlatestapptList.consultTime}</span>
+													</td>
 													<td><fmt:formatDate value="${getlatestapptList.bookingDate}" pattern="yy-MM-dd"/></td>
 													<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${getlatestapptList.price}" /></td>
 													<td>${getlatestapptList.payStatus}</td>
 													<td>
-	                                                    <span class="accept"><i class="fas fa-check"></i>진료노트</span>
+                                                    <span class="print"><i class="fas fa-print"></i>처방전</span>
 	                                                </td>
 	                                                <td>
-	                                                    <span class="cancel"><i class="fas fa-times"></i>처방전</span>
+	                                                    <span class="view"><i class="fas fa-eye"></i>진료노트</span>
 	                                                </td>
 												</tr>
 											</c:forEach>
