@@ -1,6 +1,136 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+// 모달 박스 스타일
+<style>
+.layerPopLostIdPw h4 {
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+.layerPopLostIdPw .tabBox {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.layerPopLostIdPw .tabBox li {
+  display: inline-block;
+  width: 49%;
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid #ddd;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.layerPopLostIdPw .tabBox li a {
+  display: block;
+}
+.layerPopLostIdPw .tabBox li.active {
+  background-color: #192028;
+}
+.layerPopLostIdPw .tabBox li.active a {
+  color: #ffffff;
+}
+.layerPopLostIdPw .lostIdBox dl {
+  margin-bottom: 15px;
+}
+.layerPopLostIdPw .lostIdBox dt {
+  color: #3c4452;
+  line-height: 24px;
+  margin-bottom: 5px;
+}
+.layerPopLostIdPw .lostPwBox {
+  display: none;
+}
+.layerPopLostIdPw .lostPwBox dl {
+  margin-bottom: 15px;
+}
+.layerPopLostIdPw .lostPwBox dt {
+  color: #3c4452;
+  line-height: 24px;
+  margin-bottom: 5px;
+}
+.layerPopLostIdPw .confirmBox {
+  margin-top: 35px;
+  text-align: center;
+}
+.layerPopLostIdPw .confirmBox .confirm {
+  width: 195px;
+  height: 50px;
+  background-color: #192028;
+  color: #ffffff;
+  cursor: pointer;
+}
+.layerPopLostIdPw .closeBox {
+  position: absolute;
+  top: -52px;
+  right: -52px;
+}
+
+// 스위치 박스 스타일
+.ico-default {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+
+.switchBox > .lostIdBox > dl > dt .ico-facebook2:before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -7.5px 0 0 -4px;
+	width: 8px;
+	height: 15px;
+	background-position: -350px -230px;
+}
+.switchBox > .lostIdBox > dl > dt .ico-google:before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -8px 0 0 -7.5px;
+	width: 15px;
+	height: 16px;
+	background-position: -360px -230px;
+}
+.switchBox > .lostIdBox > dl > dt .ico-naver:before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -5.5px 0 0 -6px;
+	width: 12px;
+	height: 11px;
+	background-position: -380px -230px;
+}
+.switchBox > .lostIdBox > dl > dt .ico-kakao:before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -7.5px 0 0 -8px;
+	width: 16px;
+	height: 15px;
+	background-position: -400px -230px;
+}
+.switchBox > .lostIdBox > dl > dt .ico-appstore {
+	display:inline-block;
+	*display:inline;
+	position:relative;
+	margin-right:10px;
+	vertical-align:middle;
+	background-color:#fff;
+}
+.switchBox > .lostIdBox > dl > dt .ico-appstore:before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -11px 0 0 -7.5px;
+	width: 16px;
+	height: 19px;
+	background-position: -419px -226px;
+}
+</style>
+
 <!--page-title-two-->
 <section class="page-title-two">
 	<div class="title-box centred bg-color-2">
@@ -93,5 +223,6 @@
 			</div>
 		</div>
 	</div>
+	
 </section>
 <!-- registration-section end -->

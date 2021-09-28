@@ -28,9 +28,10 @@
 		<security:logout 
 			logout-url="/logout"
 			logout-success-url="/"/>
+			
 		<!-- 접근제한 -->
 		<security:access-denied-handler ref="customAccessDenied"/>
-		<security:csrf disabled="false"/>
+		<security:csrf disabled="true"/>
 	</security:http>
 	
 	<security:authentication-manager>
