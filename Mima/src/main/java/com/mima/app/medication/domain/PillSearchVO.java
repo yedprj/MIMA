@@ -1,6 +1,5 @@
 package com.mima.app.medication.domain;
 
-import java.util.Date;
 
 import lombok.Data;
 
@@ -22,8 +21,8 @@ public class PillSearchVO {
 	private String intrcQesitm;		// 약 사용상 주의할 약 또는 음식
 	private String seQesitm;		// 약 부작용
 	private String depositMethodQesitm;  // 약 보관법
-	private Date openDe;			// 공개일자
-	private Date updateDe;			// 수정일자
+	private String openDe;			// 공개일자
+	private String updateDe;			// 수정일자
 	private String itemlmage;		// 낱알 이미지
 	
 	

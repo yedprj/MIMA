@@ -6,7 +6,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,11 +23,9 @@ import lombok.extern.java.Log;
 public class ApiExplorer {
 	
 	
+	
 	@RequestMapping("/pillsearch")
-	public void search(PillSearchVO vo) throws IOException {
-		
-		PillSearchVO pill = new PillSearchVO();
-		
+	public void search(PillSearchVO vo) throws IOException { 		
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("인증키(url encode)", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
@@ -42,6 +44,7 @@ public class ApiExplorer {
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         }
+        
         StringBuilder sb = new StringBuilder();
         String line;
         while ((line = rd.readLine()) != null) {
@@ -49,7 +52,45 @@ public class ApiExplorer {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
+        // 전체 조회
+        //System.out.println(sb.toString());
+        //System.out.println("============================================");
+        
+        
+        JSONArray jArry = new JSONObject(new JSONObject(sb.toString()).get("body").toString()).getJSONArray("items");
+        /*
+         * String value = sb.toString();
+         * JSONObject firstJson = new JSONObject(value);
+         * String bodyValue = firstJson.get("body").toString();
+         * JSONObject twoJson = new JSONObject(bodyValue);
+         * JSONArray jArry = towJson.getJSONArray("items");
+         * System.out.println(jArry.getJSONObject(0));
+		 * System.out.println("******************배열안에******************");
+		 * System.out.println(jArry.getJSONObject(0).get("entpName"));
+		 */
+        System.out.println(jArry);
+        List<PillSearchVO> pList = new ArrayList<PillSearchVO>();
+		
+		
+		for (int i=0; i<jArry.length(); i++) {
+			JSONObject JO = jArry.getJSONObject(i);
+			PillSearchVO pill = new PillSearchVO();
+			if(!JO.isNull("entpName")) { pill.setEntpName(String.valueOf(JO.get("entpName")));  }
+			if(!JO.isNull("itemName")) { pill.setItemName(String.valueOf(JO.get("itemName"))); }
+			if(!JO.isNull("itemSeq")) { pill.setItemSeq(Integer.parseInt(JO.get("itemSeq").toString())); }
+			if(!JO.isNull("efcyQesitm")) { pill.setEfcyQesitm(String.valueOf(JO.get("efcyQesitm"))); }
+			if(!JO.isNull("useMethodQesitm")) { pill.setUseMethodQesitm(String.valueOf(JO.get("useMethodQesitm"))); }
+			if(!JO.isNull("atpnWarnQesit")) { pill.setAtpnWarnQesit(String.valueOf(JO.get("atpnWarnQesit"))); }
+			if(!JO.isNull("atpnQesitm")) { pill.setAtpnQesitm(String.valueOf(JO.get("atpnQesitm"))); }
+			if(!JO.isNull("seQesitm")) { pill.setSeQesitm(String.valueOf(JO.get("seQesitm"))); }
+			if(!JO.isNull("depositMethodQesitm")) { pill.setDepositMethodQesitm(String.valueOf(JO.get("depositMethodQesitm"))); }
+			if(!JO.isNull("openDe")) { pill.setOpenDe(String.valueOf(JO.get("openDe"))); }
+			if(!JO.isNull("updateDe")) { pill.setUpdateDe(String.valueOf(JO.get("updateDe"))); }
+			if(!JO.isNull("itemImage")) { pill.setItemlmage(String.valueOf(JO.get("itemImage"))); }
+			pList.add(pill);
+		}
+		System.out.println("!!!!!!!!!!!!!최종 리스트!!!!!!!!!!!!!!!!!");
+		System.out.println(pList);
         
         // vo에 결과값 담기
         
