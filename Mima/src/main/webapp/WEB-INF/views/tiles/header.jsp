@@ -151,11 +151,11 @@
 								<!-- 문의 nav 끝 -->
 								
 								<!-- 로그인 nav 시작 -->
-								<li class="dropdown"><a href="${pageContext.request.contextPath}/member/loginForm">로그인</a>
+								<li class="dropdown"><a href="${pageContext.request.contextPath}/login">로그인</a>
 									<ul>
-										<li><a href="${pageContext.request.contextPath}/member/loginForm">로그인</a></li>
-										<li><a href="${pageContext.request.contextPath}/member/joinForm">일반 회원가입</a></li>
-										<li><a href="${pageContext.request.contextPath}/member/partnerJoinForm">파트너 회원가입</a></li>
+										<li><a href="${pageContext.request.contextPath}/login">로그인</a></li>
+										<li><a href="${pageContext.request.contextPath}/joinForm">일반 회원가입</a></li>
+										<li><a href="${pageContext.request.contextPath}/partnerJoinForm">파트너 회원가입</a></li>
 										<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
 										<li><a href="${pageContext.request.contextPath}/docDash/docMain">닥터 대쉬보드</a></li>
 									</ul>
