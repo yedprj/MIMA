@@ -24,7 +24,7 @@
 			username-parameter="memberId"				
 			authentication-success-handler-ref="customLoginSuccess"/>
 		
-		로그아웃
+		<!-- 로그아웃 -->
 		<security:logout 
 			logout-url="/logout"
 			logout-success-url="/"/>
@@ -36,7 +36,7 @@
 	<security:authentication-manager>
 		
 		<security:authentication-provider>
-			인증 권한 실제 처리 / {noop}인코딩 없이 처리
+			<!-- 인증 권한 실제 처리 / {noop}인코딩 없이 처리 -->
 			<security:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="select member_id, password, status
 										from member

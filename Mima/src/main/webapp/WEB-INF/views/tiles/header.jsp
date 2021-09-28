@@ -88,9 +88,9 @@
 												<li><a href="patient-dashboard.html">Dashboard</a></li>
 												<li><a href="favourite-doctors.html">Favourite
 														Doctors</a></li>
-												<li><a href="schedule-timing-2.html">Schedule
+												<li><a href="schedule-timing-2.html">Scheduleddddd
 														Timing</a></li>
-												<li><a href="message-2.html">Messages</a></li>
+												<li><a href="message-2.html">Messagesddddd</a></li>
 												<li><a href="patient-profile.html">My Profile</a></li>
 												<li><a href="change-password-2.html">Change
 														Password</a></li>
