@@ -23,4 +23,9 @@ public class BookingServiceImpl implements BookingService {
 		return bookingMapper.getlatestapptList();
 	}
 
+	@Override
+	public List<BookingVO> apptList() {
+		return bookingMapper.apptList();
+	}
+
 }

@@ -8,5 +8,6 @@ public interface BookingService {
 
 	public List<BookingVO> getList();
 	public List<BookingVO> getlatestapptList();
+	public List<BookingVO> apptList();
 
 }

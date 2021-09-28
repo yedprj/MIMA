@@ -35,4 +35,26 @@
     ]]>
 </select>
 
+<select id="apptList" resultType="BookingVO">
+	<![CDATA[
+	SELECT B.BOOKING_NO,
+		   B.PT_NO,
+		   B.DOC_NO,
+		   B.BOOKING_DATE,
+		   B.PRICE,
+		   B.PAY_STATUS,
+		   B.CONSULT_DATE,
+		   B.CONSULT_TIME,
+		   M.NAME
+	FROM BOOKING B JOIN MEMBER M
+	ON B.PT_NO=M.MEMBER_NO
+    WHERE B.CONSULT_DATE>TO_DATE(SYSDATE)
+	ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
+	]]>
+</select>
+
+<select id="">
+	
+</select>
+
 </mapper>
