@@ -38,11 +38,6 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public ReportVO adminRead(ReportVO vo) {
-		return reportMapper.adminRead(vo);
-	}
-
-	@Override
 	public int adminDelete(ReportVO vo) {
 		return reportMapper.adminDelete(vo);
 	}
@@ -50,6 +45,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public List<RmemberVO> rmemberReportSelect() {
 		return reportMapper.rmemberReportSelect();
+	}
+
+	@Override
+	public RmemberVO rmemberReportSelect(RmemberVO vo) {
+		return reportMapper.rmemberReportSelect(vo);
 	}
 
 }
