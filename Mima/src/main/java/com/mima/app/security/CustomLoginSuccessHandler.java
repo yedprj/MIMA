@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import lombok.extern.java.Log;
 
 @Log
+@Component("customLoginSuccess")
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 
 	@Override
@@ -31,16 +33,16 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		log.info("ROLE NAMES: " + roleNames);
 		
 		if (roleNames.contains("ROLE_ADMIN")) {
-			response.sendRedirect("/sample/admin");
+			response.sendRedirect("/app");
 			return;
 		}
 		
-		if (roleNames.contains("ROLE_MEMBER")) {
-			response.sendRedirect("/sample/member");
+		if (roleNames.contains("ROLE_PT")) {
+			response.sendRedirect("/app");
 			return;
 		}
 		
-		response.sendRedirect("/");
+		response.sendRedirect("/app");
 	}
 
 }

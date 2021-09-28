@@ -173,6 +173,8 @@
 									</div>
 								</div>
 							</div>
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}">
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
 								<button type="button" id="joinMember" name="joinMember" class="theme-btn-one">
 									Register Now<i class="icon-Arrow-Right"></i>
@@ -197,6 +199,8 @@
 <script>
 
 	var code ="";	// 이메일 전송 인증번호 저장위한 코드
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	$(function(){
 		// 아이디 중복 체크
@@ -209,6 +213,9 @@
 				url : "IdCheck",
 				type : "post",
 				data : JSON.stringify({memberId : memberId}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data){
@@ -258,6 +265,9 @@
 			$.ajax({
 				url : "joinMember",
 				type : "post",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				data : JSON.stringify({memberId : memberId,
 									   password : password,
 									   nickname : nickname,
@@ -274,6 +284,12 @@
 				contentType : "application/json",
 				success : function(data) {
 					console.log(data);
+					if (data == 1) {
+						alert("회원가입 성공!");
+						window.location.href = "loginForm";
+					} else {
+						alert("회원가입 실패!")
+					}
 				}
 			});
 		} else {
@@ -388,6 +404,8 @@
 							.removeClass('is-invalid');
 				$('#userPwOk').removeClass('is-valid')
 							  .removeClass('is-invalid');
+				$('#pwCheck').removeClass('valid-feedback')
+							 .removeClass('invalid-feedback');
 			}
 		}
 	}
@@ -402,6 +420,9 @@
 				url : "nickNameCheck",
 				type : "post",
 				data : JSON.stringify({nickname : nickname}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data){

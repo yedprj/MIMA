@@ -5,40 +5,31 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="customAccessDenied" class="com.mima.app.security.CustomAccessDeniedHandler"></bean>
-	<bean id="customLoginSuccess" class="com.mima.app.security.CustomLoginSuccessHandler"></bean>
+	<bean id="customAccessDenied" class="com.mima.app.security.CustomAccessDeniedHandler"/>
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
-	<!-- <security:http pattern="/css/**" security="none" /> -->
 	<security:http pattern="/resources/**" security="none" />
 	
-	<security:http>
+	<security:http auto-config="true" use-expressions="true">
 		<!-- 접근 제한 설정 pattern: url패턴 , access: 권한 체크 -->
-		<security:intercept-url pattern="/home" access="permitAll()"/>
-		<!-- 권한 멤버만 접근 가능 -->
-		<security:intercept-url pattern="/loginForm" access="permitAll()"/>
-		<security:intercept-url pattern="/logout" access="permitAll()"/>
+		<security:intercept-url pattern="/**" access="permitAll()"/>
 		<!-- 권한 admin만 접근 가능 -->
 		<security:intercept-url pattern="/admin/**" access="hasAuthority('ROLE_ADMIN')"/>
 		
-		<!-- 접근 제한 메세지 처리 -->
-		<!-- <security:access-denied-handler error-page="/accessError"/> -->
-		<security:access-denied-handler ref="customAccessDenied"/>
-		
 		<!--  <security:form-login/> -->
 		<security:form-login 
-			login-page="/loginForm" 
-			login-processing-url="/loginCheck"
+			login-page="/login" 
+			login-processing-url="/login"
 			username-parameter="memberId"				
-			authentication-success-handler-ref="customLoginSuccess"
-			default-target-url="/home"/>
+			authentication-success-handler-ref="customLoginSuccess"/>
 		
 		<!-- 로그아웃 -->
 		<security:logout 
 			logout-url="/logout"
-			logout-success-url="/home"/>
-		
-		<security:access-denied-handler error-page="/error/accessError.jsp"/>
-		<security:csrf disabled="false" />
+			logout-success-url="/"/>
+		<!-- 접근제한 -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+		<security:csrf disabled="false"/>
 	</security:http>
 	
 	<security:authentication-manager>
@@ -46,13 +37,13 @@
 		<security:authentication-provider>
 			<!-- 인증 권한 실제 처리 / {noop}인코딩 없이 처리 -->
 			<security:jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="select memberId, password, role
+				users-by-username-query="select member_id, password, status
 										from member
-										where id = ?"
-				authorities-by-username-query="select id, 'ROLE_' || upper(role) 
-									   		   from users 
-									   		   where id = ?"/> 
-			<!--  <security:password-encoder hash="bcrypt"/> -->
+										where member_id = ?"
+				authorities-by-username-query="select member_id, 'ROLE_' || upper(role) 
+									   		   from member 
+									   		   where member_id = ?"/> 
+			<security:password-encoder hash="bcrypt"/>
 		</security:authentication-provider>
 	</security:authentication-manager>
 </beans>

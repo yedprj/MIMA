@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +24,6 @@ import com.mima.app.member.service.MemberService;
 
 
 @Controller
-@RequestMapping("/member/*")
 public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -34,17 +33,22 @@ public class MemberController {
 	@Autowired 
 	private JavaMailSender mailSender;
 	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	// 일반 회원가입 폼으로 이동
 	@GetMapping("/joinForm")
-	public void joinForm() { }
+	public String joinForm() { 
+		
+		return "member/joinForm";
+	}
 	
 	// 파트너 회원가입 폼으로 이동
 	@GetMapping("/partnerJoinForm")
-	public void partnerJoinForm() {}
-	
-	// 로그인 폼으로 이동
-	@GetMapping("/loginForm")
-	public void loginForm() {}
+	public String partnerJoinForm() {
+		
+		return "member/partnerJoinForm";
+	}
 	
 	// 아이디 중복 체크
 	@PostMapping("/IdCheck")
@@ -88,7 +92,7 @@ public class MemberController {
 		logger.info("인증번호" + checkNum);
 		
 		// 이메일 보내기
-		String setFrom = "dngur1278@naver.com";
+		String setFrom = "yedampark123@naver.com";
 		String toMail = email;
 		String title = "회원가입 이메일 입니다.";
 		String content = "저희 Mima를 방문해주셔서 감사합니다." +
@@ -119,6 +123,8 @@ public class MemberController {
 	@PostMapping("/joinMember")
 	@ResponseBody
 	public int joinMember(@RequestBody MemberVO vo) {
+		
+		vo.setPassword(bCryptPasswordEncoder.encode(vo.getPassword()));
 		int result = memberService.memberInsert(vo);
 		
 		return result;
