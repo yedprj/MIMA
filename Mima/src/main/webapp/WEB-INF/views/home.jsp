@@ -80,6 +80,8 @@
 		<div class="sec-title centred">
 			<p>Category</p>
 			<h2>Browse by specialist</h2>
+			<!-- s:0929 진료시작 페이지 테스트 링크 -->
+			<a class="theme-btn-one" href="${pageContext.request.contextPath}/consultation/consultationStart">진료시작페이지</a>
 		</div>
 		<div class="row clearfix">
 			<div class="col-lg-3 col-md-6 col-sm-12 category-block">
@@ -102,9 +104,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-						<!--s:09/29 임시 테스트 원격진료 버튼 누르면 진료 화면 띄우기 굿굿!! 됨!!!!!!! -->
-							<button onclick="window.open('http://localhost:3000','진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');" class="theme-btn-one">진료 시작하기<i class="icon-Arrow-Right"></i>
-							</button>
+						<!--s: 임시 테스트 원격진료 버튼 누르면 진료 화면 띄우기 굿굿!! 됨!!!!!!! -->
+							<!-- <button onclick="window.open('http://localhost:3000','진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');" class="theme-btn-one">진료 시작하기<i class="icon-Arrow-Right"></i>
+							</button> -->
 						</div>
 					</div>
 				</div>

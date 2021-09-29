@@ -28,4 +28,10 @@ public class BookingServiceImpl implements BookingService {
 		return bookingMapper.apptList();
 	}
 
+//	s:0929 진료시간 5분전 매10초마다 테이블확인 to get rm Id
+	@Override
+	public List<BookingVO> getRoomId() {
+		return bookingMapper.getRoomId();
+	}
+
 }
