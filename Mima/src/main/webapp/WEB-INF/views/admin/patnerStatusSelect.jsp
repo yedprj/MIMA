@@ -23,9 +23,10 @@
 							<div class="inner-box">
 								<div class="pattern"
 									style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
-								<button type="button" class="btn btn-secondary"
+								<button type="button" class="btn btn-white"
 									style="background-color: #39CABB;" 
-									id="insertpartner" name="insertpartner">등록</button>
+									id="insertpartner" name="insertpartner">등록
+								</button>
 								<div class="lower-content">
 									<h3>
 										<a>${member.name }</a>
@@ -54,11 +55,14 @@
 			</div>
 		</div>
 
-		<br>
-		<br>
+		<br><br>
+		
 		<div align="center">
-			<button type="button" class="btn btn-secondary"
-				style="background-color: #39CABB;" onclick="location.href='adMain'">목록</button>
+			<div class="add-listing my-profile">
+				<div class="btn-box">
+					<a href="adMain" class="cancel-btn">목록</a>
+				</div>
+			</div>
 		</div>
 
 	</section>
@@ -70,12 +74,13 @@
 
  	$(function(){
  		 
- 		$(document).on("click","#insertpartner", function(){
+ 		
+ 		$(document).on("click","button[name=insertpartner]", function(){
  			console.log("버튼클릭!");
  			var license = $("#license").val();
 			console.log(license);
  			
- 			$.ajax({
+ 			 $.ajax({
  				url : "patnerStatusUpdate",
  				method : "put",
  				dataType : "json",

@@ -9,7 +9,6 @@
 
 	<!-- doctors-dashboard -->
 	<section class="doctors-dashboard bg-color-3">
-		<div class="left-panel"></div>
 		<div>
 			<div class="content-container">
 				<div class="outer-container">
@@ -79,19 +78,20 @@
 						</ul>
 					</div>
 					<br> <br>
+
 					<div align="center">
-						<button type="button" class="btn btn-secondary"
-							style="background-color: #39CABB;"
-							onclick="location.href='../admin/adMain'">목록</button>
+						<div class="add-listing my-profile">
+							<div class="btn-box">
+								<a href="../admin/adMain" class="cancel-btn">목록</a>
+							</div>
+						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- doctors-dashboard -->
-
-
-
 
 
 	<!--Scroll to top-->

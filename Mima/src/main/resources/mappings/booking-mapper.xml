@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.session.mapper.BookingMapper">
 
+<!-- 닥터 대쉬보드 메인 페이지 오늘의 예약_J -->
 <select id="getList" resultType="BookingVO">
 	SELECT B.BOOKING_NO,
 		   B.PT_NO,
@@ -17,6 +18,7 @@
 	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE)
 </select>
 
+<!-- 닥터 대쉬보드 메인 페이지 진료내역_J -->
 <select id="getlatestapptList" resultType="BookingVO">
 	<![CDATA[
 	SELECT B.BOOKING_NO,
@@ -35,6 +37,7 @@
     ]]>
 </select>
 
+<!-- 닥터 대쉬보드 예약관리 페이지_J -->
 <select id="apptList" resultType="BookingVO">
 	<![CDATA[
 	SELECT B.BOOKING_NO,
@@ -43,12 +46,13 @@
 		   B.BOOKING_DATE,
 		   B.PRICE,
 		   B.PAY_STATUS,
+		   B.BOOKING_STATUS,
 		   B.CONSULT_DATE,
 		   B.CONSULT_TIME,
 		   M.NAME
 	FROM BOOKING B JOIN MEMBER M
 	ON B.PT_NO=M.MEMBER_NO
-    WHERE B.CONSULT_DATE>TO_DATE(SYSDATE)
+    WHERE B.CONSULT_DATE>=TO_DATE(SYSDATE)
 	ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
 	]]>
 </select>
@@ -58,6 +62,24 @@
 	SELECT ROOM_ID
 	FROM BOOKING
 	WHERE PAY_STATUS='y' AND BOOKING_STATUS='y' AND TO_CHAR(CONSULT_DATE, 'YYYY-MM-dd') = TO_CHAR(sysdate, 'YYYY-MM-dd')
+
+<select id="apptHistoryList" resultType="BookingVO">
+	<![CDATA[
+	SELECT B.BOOKING_NO,
+		   B.PT_NO,
+		   B.DOC_NO,
+		   B.BOOKING_DATE,
+		   B.PRICE,
+		   B.PAY_STATUS,
+		   B.BOOKING_STATUS,
+		   B.CONSULT_DATE,
+		   B.CONSULT_TIME,
+		   M.NAME
+	FROM BOOKING B JOIN MEMBER M
+	ON B.PT_NO=M.MEMBER_NO
+    WHERE B.CONSULT_DATE<TO_DATE(SYSDATE) AND BOOKING_STATUS = 'y'
+	ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC
+	]]>
 </select>
 
 </mapper>
