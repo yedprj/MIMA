@@ -99,15 +99,17 @@
 			 #{status})
 	</insert>
 
-	<!-- 어드민 약국 의사 승인 쿼리 -->
+	<!-- e. 29 -->
+	<!-- 관리자 약국 의사 승인 유무 쿼리 -->
 	<select id="patnerStatusSelect" resultType="memberVO">
 		SELECT * FROM MEMBER
 		WHERE STATUS = 'n' 
 		AND ( ROLE = 'doctor' OR ROLE = 'pharmacy')
 	</select>
 	
-	<!--어드민 약국 의사 등록 쿼리 -->
-	<update id="patnerStatusUpdate" >
+	<!-- e. 29 -->
+	<!--관리자 약국 의사 등록 쿼리 -->
+	<update id="patnerStatusUpdate">
 		UPDATE MEMBER 
 		SET STATUS='y' 
 		WHERE LICENSE = #{license}

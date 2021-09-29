@@ -6,13 +6,8 @@ import com.mima.app.member.domain.PatientsVO;
 
 public interface PatientsService {
 	
+	//e.29
+	//관리자 회원정보조회
 	public List<PatientsVO> getList();
 	
-	public PatientsVO read(PatientsVO vo);
-	
-	public int insert(PatientsVO vo);
-	
-	public int update(PatientsVO vo);
-	
-	public int delete(PatientsVO vo);
 }

@@ -24,9 +24,11 @@ public interface MemberService {
 	// 파트너 회원가입 (의사/약사)
 	public int partnerMemberInsert(MemberVO vo);	
 	
+	//e.29
 	// 파트너 의사 / 약국 승인 유무 검색
 	public List<MemberVO> patnerStatusSelect();
 	
+	//e.29
 	// 파트너 의사 / 약국 승인 등록
 	public int patnerStatusUpdate(MemberVO vo);
 }

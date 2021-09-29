@@ -7,86 +7,121 @@
 		WHERE REPORT_MNO = #{reportMNo}
 		AND POST_NO = #{postNo}
 	</select>
-	
+
 	<insert id="insert">
 		INSERT INTO REPORT
-			(
-			REPORT_NO,
-			POST_NO,
-			MEMBER_NO,
-			REPORT_MNO,
-			REPORT_DATE
+		(
+		REPORT_NO,
+		POST_NO,
+		MEMBER_NO,
+		REPORT_MNO,
+		REPORT_DATE
 		)
 		VALUES (
-			SEQ_REPORT.NEXTVAL,
-            #{postNo},
-            #{memberNo},
-            #{reportMNo},
-            SYSDATE
+		SEQ_REPORT.NEXTVAL,
+		#{postNo},
+		#{memberNo},
+		#{reportMNo},
+		SYSDATE
 		)
 	</insert>
 
 	<delete id="delete">
-		DELETE FROM REPORT 
+		DELETE FROM REPORT
 		WHERE REPORT_NO = #{reportNo}
 	</delete>
 
 
-
-	<select id="adminGetList" resultType="ReportVO">
-		SELECT REPORT_NO
-				,POST_NO
-				,MEMBER_NO
-				,REPORT_MNO
-				,REPORT_DATE
-				,CHECK_DATE
-				,REPORT_RESULT
-		FROM REPORT 
-	</select>
-	
-	<select id="adminRead" resultType="ReportVO">
-		SELECT REPORT_NO
-				,POST_NO
-				,MEMBER_NO
-				,REPORT_MNO
-				,REPORT_DATE
-				,CHECK_DATE
-				,REPORT_RESULT
-		FROM REPORT 
-		WHERE REPORT_NO=#{reportNo}
-	</select>
-	
+	<!-- e.29 -->
+	<!-- 관리자 신고당한사람 삭제 -->
 	<delete id="adminDelete">
 		DELETE FROM REPORT
 		WHERE REPORT_NO=#{reportNo}
 	</delete>
-	
+
+	<!-- e.29 -->
+	<!-- 관리자 신고당한사람 전체 및 단건조회 -->
 	<select id="rmemberReportSelect" resultType="RmemberVO">
-		SELECT A.REPORT_NO AS REPORT_NO, 
-			   A.POST_NO AS POST_NO, 
-			   B.MEMBER_NO AS MEMBER_NO, 
-			   B.MEMBER_ID AS RMEMBER_ID, 
-			   A.REPORT_MNO AS REPORT_MNO, 
-			   A.MEMBER_ID AS REPORT_ID, 
-			   A.REPORT_DATE AS REPORT_DATE, 
-			   A.CHECK_DATE AS CHECK_DATE, 
-			   A.REPORT_RESULT AS REPORT_RESULT
+		SELECT A.REPORT_NO AS REPORT_NO,
+		A.POST_NO AS POST_NO,
+		B.MEMBER_NO AS MEMBER_NO,
+		B.MEMBER_ID AS RMEMBER_ID,
+		A.REPORT_MNO AS REPORT_MNO,
+		A.MEMBER_ID AS REPORT_ID,
+		A.REPORT_DATE AS REPORT_DATE,
+		A.CHECK_DATE AS CHECK_DATE,
+		A.REPORT_RESULT AS REPORT_RESULT
 		FROM (
-			  SELECT M.MEMBER_ID , R.POST_NO, R.REPORT_NO, 
-					 R.REPORT_DATE, R.CHECK_DATE, R.REPORT_RESULT, 
-					 R.REPORT_MNO 
-			  FROM REPORT R JOIN MEMBER M
-			  ON (R.REPORT_MNO = M.MEMBER_NO))A 
+		SELECT M.MEMBER_ID , R.POST_NO, R.REPORT_NO,
+		R.REPORT_DATE, R.CHECK_DATE, R.REPORT_RESULT,
+		R.REPORT_MNO
+		FROM REPORT R JOIN MEMBER M
+		ON (R.REPORT_MNO = M.MEMBER_NO))A
 		JOIN (
-			  SELECT M.MEMBER_ID, R.MEMBER_NO, R.POST_NO, R.REPORT_NO
-			  FROM REPORT R 
-			  JOIN MEMBER M
-			  ON (R.MEMBER_NO = M.MEMBER_NO))B
+		SELECT M.MEMBER_ID, R.MEMBER_NO, R.POST_NO, R.REPORT_NO
+		FROM REPORT R
+		JOIN MEMBER M
+		ON (R.MEMBER_NO = M.MEMBER_NO))B
 		ON (B.REPORT_NO = A.REPORT_NO)
 		<if test="reportNo != null">
 			WHERE A.REPORT_NO = ${reportNo}
 		</if>
 		ORDER BY A.REPORT_NO ASC
 	</select>
-		
+
+	<!-- e.29 -->
+	<!-- 페이징 -->
+	<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criteria">
+		<if test="category !=null and category!=''">
+			CATEGORY=#{category}
+			AND
+		</if>
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<!-- total count -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) FROM REPORT
+		WHERE
+		<include refid="criteria"></include>
+		REPORT_NO > 0
+	</select>
+
+
+	<select id="getList"
+		resultType="com.mima.app.admin.domain.ReportVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(REPORT REPORT_PK) */
+		ROWNUM RN,
+		REPORTNO, POSTNO, MEMBERNO, REPORTMNO, REPORTDATE, CHECKDATE,
+		REPORTRESULT
+		FROM REPORT
+		where
+		<include refid="criteria"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+
 </mapper>
