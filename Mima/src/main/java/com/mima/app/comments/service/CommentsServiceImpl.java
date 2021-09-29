@@ -60,9 +60,15 @@ public class CommentsServiceImpl implements CommentsService {
 		return commentsMapper.read(vo);
 	}
 
-	// 닥터 대쉬보드 나의 후기
+	// 닥터 대쉬보드 메인 페이지 나의 후기_J
 	@Override
 	public List<CommentsVO> getlatestreviewList() {
 		return commentsMapper.getlatestreviewList();
+	}
+
+	// 닥터 대쉬보드 나의 후기 페이지_J29
+	@Override
+	public List<CommentsVO> docReview() {
+		return commentsMapper.docReview();
 	}
 }

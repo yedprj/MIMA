@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mima.app.admin.domain.ReportVO;
 import com.mima.app.admin.domain.RmemberVO;
 import com.mima.app.admin.mapper.ReportMapper;
+import com.mima.app.criteria.domain.Criteria;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -32,24 +33,39 @@ public class ReportServiceImpl implements ReportService {
 		return reportMapper.delete(vo);
 	}
 
-	@Override
-	public List<ReportVO> adminGetList() {
-		return reportMapper.adminGetList();
-	}
-
+	//e.29
+	//관리자 신고당한사람 삭제
 	@Override
 	public int adminDelete(ReportVO vo) {
 		return reportMapper.adminDelete(vo);
 	}
 
+	//e.29
+	//관리자 신고당한사람 전체조회
 	@Override
 	public List<RmemberVO> rmemberReportSelect() {
 		return reportMapper.rmemberReportSelect();
 	}
 
+	//e.29
+	//관리자 신고당한사람 단건조회
 	@Override
 	public RmemberVO rmemberReportSelect(RmemberVO vo) {
 		return reportMapper.rmemberReportSelect(vo);
+	}
+
+	//e.29
+	//페이징
+	@Override
+	public List<ReportVO> getList(Criteria cri) {
+		return reportMapper.getList(cri);
+	}
+
+	//e.29
+	//페이징
+	@Override
+	public int getTotalCount(Criteria cri) {
+		return reportMapper.getTotalCount(cri);
 	}
 
 }

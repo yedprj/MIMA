@@ -15,30 +15,12 @@ public class PatientsServiceImpl implements PatientsService {
 	@Autowired
 	PatientsMapper patientsMapper;
 
+	//e.29
+	//관리자 회원정보조회
 	@Override
 	public List<PatientsVO> getList() {
 		return patientsMapper.getList();
 	}
-
-	@Override
-	public PatientsVO read(PatientsVO vo) {
-		return patientsMapper.read(vo);
-	}
-
-	@Override
-	public int insert(PatientsVO vo) {
-		return patientsMapper.insert(vo);
-	}
-
-	@Override
-	public int update(PatientsVO vo) {
-		return patientsMapper.update(vo);
-	}
-
-	@Override
-	public int delete(PatientsVO vo) {
-		return patientsMapper.delete(vo);
-	}
-
+	
 	
 }

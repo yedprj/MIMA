@@ -55,8 +55,8 @@
                             <li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
                             <li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
                             <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
-                            <li><a href="add-listing.html"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
-                            <li><a href="review.html"><i class="fas fa-star"></i>나의 후기</a></li>
+                            <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
+                            <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
                             <li><a href="message.html"><i class="fas fa-comments"></i>나의 문의</a></li>
                             <li><a href="my-profile.html"><i class="fas fa-user"></i>프로필 관리</a></li>
                             <li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
@@ -165,7 +165,7 @@
                             <div class="title-box">
                                 <h3>진료내역</h3>
                                 <div class="btn-box">
-                                <a href="apptManageHistory" class="theme-btn-one">전체보기<i class="icon-Arrow-Right"></i></a>
+                                <a href="apptHistory" class="theme-btn-one">전체보기<i class="icon-Arrow-Right"></i></a>
                                 </div>
                             </div>
                             <div class="doctors-list">

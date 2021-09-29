@@ -75,7 +75,7 @@
 		AND CMAIN_NO =#{cmainNo}
 	</select>
 	
-	<!-- 닥터 대쉬보드의 나의 후기 -->
+	<!-- 닥터 대쉬보드 메인 페이지 나의 후기 -->
 	<select id="getlatestreviewList" resultType="CommentsVO">
 		<![CDATA[
 		SELECT C.CMAIN_NO,
@@ -87,6 +87,21 @@
         FROM COMMENTS C JOIN MEMBER M
         ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         WHERE ROWNUM < 6
+        ORDER BY REG_DATE DESC
+		]]>
+	</select>
+	
+	<!-- 닥터 대쉬보드 나의 후기 페이지_J29-->
+	<select id="docReview" resultType="CommentsVO">
+		<![CDATA[
+		SELECT C.CMAIN_NO,
+               C.COMMENT_WRITER_NO,
+               C.CONTENTS,
+               C.REVIEW_POINT,
+               C.REG_DATE,
+               M.NICKNAME
+        FROM COMMENTS C JOIN MEMBER M
+        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         ORDER BY REG_DATE DESC
 		]]>
 	</select>
