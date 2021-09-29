@@ -252,6 +252,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	var reportMno = 30; // 현재 회원번호
 	var pageNum = 0;
 	var amount = 0;
+	var angryStr ='';
+	var heartStr ='';
+	var postCount = 0;
 	
 	document.addEventListener("DOMContentLoaded", function() {
         // 시간을 딜레이 없이 나타내기위한 선 실행
@@ -307,7 +310,17 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
     
 	
 	$(function() {
+		
 		postList();
+		
+		// 전체행 조회
+		$.ajax({
+			url : "postCount",
+			method : "get",
+			success : function(data) { 
+				postCount = data; 
+			}
+		});
 
 		// 모달창 띄우기
 		$("#insertBtn").on("click", function() {
@@ -490,48 +503,79 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				}
 			}) //ajax end	
 		})
-	} // 포스트 등록 end
+	} // 포스트 등록 end	
+
+
+	// POST 더보기 클릭시 포스트잇 추가(페이징처리)
+	$(document).on("click","#addBtn",function(){
+				
+		var divCount = $(".postContents #post").length;
+		pageNum = (divCount / 9) + 1;
+		amount = 9;	
+		
+		$.ajax({
+			url : "postList",
+			method : "get",
+			dataType : "json",
+			data : {
+				reportMno : reportMno,
+				pageNum : pageNum,
+				amount : amount
+			},
+			contentType : 'application/json',
+			success : function(datas) {
+				$.each(datas,function(i, data) {
+					if(data.reportMno == 1){ angryStr = 'background-color: #061a3a;'; }else {
+						angryStr = '';
+					}
+					if(data.likesNo == 1){ heartStr = 'background-color: #061a3a;'; }else {
+						heartStr = '';
+					}
+					$("<div id='post' data-postNo='"+data.postNo+"' data-memberNo='"+data.memberNo+"' class='col-lg-4 col-md-6 col-sm-12 team-block'>")
+						.append(
+							"<div class='team-block-three'>"
+							+ '<div class="inner-box">'
+							+ '<figure class="image-box">'
+							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+data.postColor+'" alt=""> '
+							+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
+							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
+							+ '<div class="textBox">'
+							+ '<div><h4>'
+							+ data.contents
+							+ '</h4></div>'
+							+ '</div></figure></div></div>')
+						.appendTo($(".postContents"));
+					}); // each end	
+			} // success end
+		}); //ajax end
+		$("<button id='addBtn' />").html("더보기");
+		console.log(pageNum);
+		console.log(Math.ceil(postCount/9));
+		if (pageNum == Math.ceil(postCount/9) ){
+			$("#addBtn").remove();
+			console.log("버튼 삭제");
+		}
+	}); 
+	
 	
 
-
-	// post 전체 갯수 조회
-	function addBtn(pageNum, amount){
-		$(document).on("click","#addBtn",function(){
-			pageNum = pageNum + 1;
-			amount = amount + 9;
-		}) // click 버튼 end
-			pageNum = 1;
-			amount = 9;
-		return pageNum, amount;
-	}
 	
 	//페이지 목록 조회
 	function postList() {
-		
-		var angryStr ='';
-		var heartStr ='';
-		
-		var postCount = 0;
-		// 전체행 조회
-		$.ajax({
-			url : "postCount",
-			method : "get",
-			success : function(data) { postCount = data; console.log(postCount); }
-		});
-		
+	
 		//addBtn(pageNum, amount);
 		pageNum = 1;
 		amount = 9;
 			
 		$.ajax({
 			url : "postList",
-			method : "post",
+			method : "get",
 			dataType : "json",
-			data : JSON.stringify({
+			data : {
 				reportMno : reportMno,
 				pageNum : pageNum,
 				amount : amount
-			}),
+			},
 			contentType : 'application/json',
 			success : function(datas) {
 				$(".postContents").empty();
@@ -557,17 +601,15 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							+ '</div></figure></div></div>')
 						.appendTo($(".postContents"));
 						
-					}); // each end
-					
+					}); // each end	
 			} // success end
 		}) //ajax end
-		$("<button class='' id='addBtn' />").html("더보기");
+		$("<button id='addBtn' />").html("더보기");
 	} // 페이지목록 조회 end
 	
 	//랜덤 페이지 목록 조회
 	$(document).on("click", "#random", function randomList() {
-		var angryStr ='';
-		var heartStr ='';
+
 		$.ajax({
 			url : "randomList",
 			method : "get",

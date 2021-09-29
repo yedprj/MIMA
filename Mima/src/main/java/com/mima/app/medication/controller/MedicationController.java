@@ -25,11 +25,13 @@ import lombok.extern.java.Log;
 @RequestMapping("/medication/*")
 public class MedicationController {
 	
+	// 약검색 페이지 [K]210929
 	@GetMapping("/pillSearch")
 	public void pillSearch() {
 		
 	}
 	
+	// 약 API 연결 페이지 [K]210929
 	@RequestMapping("/pill")
 	public void search(Model model) throws IOException { 		
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"); /*URL*/
@@ -81,9 +83,7 @@ public class MedicationController {
 			if(!JO.isNull("itemImage")) { pill.setItemlmage(String.valueOf(JO.get("itemImage"))); }
 			pList.add(pill);
 		}
-
 		model.addAttribute("plist", pList);
-       
         
     }
 	
