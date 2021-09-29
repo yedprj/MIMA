@@ -31,6 +31,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.licenseCheck(vo);
 	}
 	
+	// 아이디 찾기 p-29
+	@Override
+	public String findMemberId(MemberVO vo) {
+		return memberMapper.findMemberId(vo);
+	}
+	
+	// 비밀번호 찾기 p-29
+	@Override
+	public int findPassword(MemberVO vo) {
+		return memberMapper.findPassword(vo);
+	}
+	
 	// 로그인
 	@Override
 	public MemberVO memberLogin(MemberVO vo) {
@@ -62,5 +74,5 @@ public class MemberServiceImpl implements MemberService {
 	public int patnerStatusUpdate(MemberVO vo) {
 		return memberMapper.patnerStatusUpdate(vo);
 	}
-  
+
 }

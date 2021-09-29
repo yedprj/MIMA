@@ -14,6 +14,12 @@ public interface MemberService {
 
 	// 의사 약사 면허 체크
 	public int licenseCheck(MemberVO vo);	
+
+	// 아이디 찾기 p-29
+	public String findMemberId(MemberVO vo);	
+
+	// 아이디 이메일로 초기화 유무 묻기 p-29
+	public int findPassword(MemberVO vo);	
 	
 	// 로그인
 	public MemberVO memberLogin(MemberVO vo);
