@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <jsp:include page="include/dashHeader.jsp"></jsp:include>
-
 <!-- doctors-dashboard -->
 <section class="doctors-dashboard bg-color-3">
 	<!-- 왼쪽사이드 메뉴바 연결 -->
 	<jsp:include page="include/sideDash.jsp"></jsp:include>
-		
+
 	<div class="right-panel">
 		<div class="content-container">
 			<div class="outer-container">
