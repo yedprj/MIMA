@@ -40,9 +40,9 @@ public class PostController {
 	
 	//포스트잇 페이지
 	@GetMapping("/mindPostIt2")
-	public void dept2() {}
+	public void mindPostIt2() {}
 	
-	
+	// 포스트잇 총 갯수 조회
 	@GetMapping("/postCount")
 	@ResponseBody
 	public int postCount() {
@@ -51,9 +51,9 @@ public class PostController {
 	
 	
 	// ajax로 요청 : 목록 [ post + report(신고내역확인) + likes(좋아요내역확인) ]
-	@PostMapping("/postList")
+	@GetMapping("/postList")
 	@ResponseBody
-	public List<PostVO> postList(@RequestBody PostVO vo, Model model){
+	public List<PostVO> postList(PostVO vo, Model model){
 		return postService.getList(vo);
 	}
 	

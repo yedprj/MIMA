@@ -22,8 +22,7 @@ import lombok.extern.java.Log;
 @Controller
 public class ApiExplorer {
 	
-	
-	
+	// (K)210929 - 약검색 TEST 페이지
 	@RequestMapping("/pillsearch")
 	public void search(PillSearchVO vo) throws IOException { 		
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"); /*URL*/
