@@ -49,12 +49,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.partnerMemberInsert(vo);
 	}
 
+	//e.29
 	// 파트너 의사 / 약국 승인 유무 검색
 	@Override
 	public List<MemberVO> patnerStatusSelect() {
 		return memberMapper.patnerStatusSelect();
 	}
 
+	//e.29
 	// 파트너 의사 / 약국 승인 등록
 	@Override
 	public int patnerStatusUpdate(MemberVO vo) {

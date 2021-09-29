@@ -23,6 +23,8 @@ public class ReportController {
 	@Autowired
 	ReportService reportService;
 	
+	//e.29
+	//관리자 신고당한사람 전체조회
 	@GetMapping("/rplist")
 	public void rplist(Model model) {
 		List<RmemberVO> list = new ArrayList<RmemberVO>();
@@ -32,11 +34,15 @@ public class ReportController {
 		model.addAttribute("list", list);
 	}
 	
+	//e.29
+	//관라자 신고당한사람 단건조회
 	@GetMapping("/rpget")
 	public void rpget(Model model, RmemberVO vo) {
 		model.addAttribute("report",reportService.rmemberReportSelect(vo));
 	}
 	
+	//e.29
+	//관리자 신고당한사람 삭제
 	@GetMapping("/rpdelete")
 	public String rpdelete(RedirectAttributes rttr, @RequestParam int reportNo) {
 		
@@ -44,7 +50,7 @@ public class ReportController {
 		vo.setReportNo(reportNo);
 		int result = reportService.delete(vo);
 		
-		if(result ==1) {
+		if(result == 1) {
 			rttr.addFlashAttribute("result","success");
 		}
 		//rttr.addAttribute("list", reportService.rmemberReportSelect());
@@ -52,7 +58,4 @@ public class ReportController {
 		
 	}
 	
-	
-	
-
 }

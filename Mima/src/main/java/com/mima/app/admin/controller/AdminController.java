@@ -19,22 +19,29 @@ public class AdminController {
 	
 	@Autowired MemberService memberService;
 	
-	//페이지
+	//e.29
+	//관리자 메인페이지
 	@GetMapping("/adMain")
-	public void adMain() { }
+	public void adMain() { 
+		
+	}
 	
+	//e.29
 	// 파트너 의사 / 약국 승인 유무 검색
 	@GetMapping("/patnerStatusSelect")
 	public void patnerStatusSelect(Model model) {
 		model.addAttribute("patnerStatusSelect",memberService.patnerStatusSelect());
 	}
 		
+	//e.29
 	// 파트너 의사 / 약국 승인 등록
-	@PutMapping("patnerStatusUpdate")
+	@PutMapping("/patnerStatusUpdate")
 	@ResponseBody
 	public int patnerStatusUpdate(@RequestBody MemberVO vo) {
-		int result = memberService.patnerStatusUpdate(vo);
-		return result;
+		System.out.println(vo.getLicense());
+		//int result = memberService.patnerStatusUpdate(vo);
+		//return result;
+		return 0;
 	}
 	
 	 

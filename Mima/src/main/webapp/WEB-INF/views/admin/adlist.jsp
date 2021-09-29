@@ -73,21 +73,20 @@
 							</ul>
 						</div>
 						<br> <br>
-						<div align="center">
-							<button type="button" class="btn btn-secondary" style="background-color: #39CABB;" 
-								onclick="location.href='../admin/adMain'">목록</button>
+					<div align="center">
+						<div class="add-listing my-profile">
+							<div class="btn-box">
+								<a href="../admin/adMain" class="cancel-btn">목록</a>
+							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 		</section>
 		<!-- doctors-dashboard -->
 
-
-
-
-
-		<!--Scroll to top-->
+	<!--Scroll to top-->
 		<button class="scroll-top scroll-to-target" data-target="html">
 			<span class="fa fa-arrow-up"></span>
 		</button>
