@@ -35,6 +35,7 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public List<BookingVO> getRoomId() {
 		return bookingMapper.getRoomId();
+	}
 
 	@Override
 	public List<BookingVO> apptHistoryList() {

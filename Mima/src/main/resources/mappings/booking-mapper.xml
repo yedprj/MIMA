@@ -62,7 +62,7 @@
 	SELECT ROOM_ID
 	FROM BOOKING
 	WHERE PAY_STATUS='y' AND BOOKING_STATUS='y' AND TO_CHAR(CONSULT_DATE, 'YYYY-MM-dd') = TO_CHAR(sysdate, 'YYYY-MM-dd')
-
+</select>
 <select id="apptHistoryList" resultType="BookingVO">
 	<![CDATA[
 	SELECT B.BOOKING_NO,
