@@ -102,9 +102,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
-								List<i class="icon-Arrow-Right"></i>
-							</a>
+						<!--s:09/29 임시 테스트 원격진료 버튼 누르면 진료 화면 띄우기 굿굿!! 됨!!!!!!! -->
+							<button onclick="window.open('http://localhost:3000','진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');" class="theme-btn-one">진료 시작하기<i class="icon-Arrow-Right"></i>
+							</button>
 						</div>
 					</div>
 				</div>
