@@ -57,6 +57,12 @@
 	]]>
 </select>
 
+<!-- s:0929 진료시간 임박하면 진료경로 검색 -->
+<select id="getRoomId" resultType="BookingVO">
+	SELECT ROOM_ID
+	FROM BOOKING
+	WHERE PAY_STATUS='y' AND BOOKING_STATUS='y' AND TO_CHAR(CONSULT_DATE, 'YYYY-MM-dd') = TO_CHAR(sysdate, 'YYYY-MM-dd')
+
 <select id="apptHistoryList" resultType="BookingVO">
 	<![CDATA[
 	SELECT B.BOOKING_NO,

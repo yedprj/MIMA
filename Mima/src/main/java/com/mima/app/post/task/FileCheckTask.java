@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.mima.app.post.service.PostService;
+import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.service.BookingService;
 
 import lombok.extern.java.Log;
 
@@ -14,6 +16,7 @@ import lombok.extern.java.Log;
 public class FileCheckTask {
 	
 	@Autowired PostService postService;
+	@Autowired BookingService bookingService;
 	
 	@Scheduled(cron="0 0 0 * * *")
 	public void checkFiles() throws Exception{
@@ -26,6 +29,9 @@ public class FileCheckTask {
 	}
 
 
-	
-	
+	@Scheduled(cron="*/10 0 8-18 * * MON-FRI")
+	public void checkRoomId() {
+		log.info("진료를 위한 url을 확인중입니다...");
+		bookingService.getRoomId();
+	}
 }

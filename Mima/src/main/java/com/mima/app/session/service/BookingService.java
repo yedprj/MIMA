@@ -15,6 +15,9 @@ public interface BookingService {
 	// 닥터 대쉬보드 예약관리 페이지_J
 	public List<BookingVO> apptList();
 	
+	//s:0929 진료시간 5분 전 부터 매 10초마다 테이블 확인해서 방 아이디 확인
+	public List<BookingVO> getRoomId();
+
 	// 닥터 대쉬보드 진료내역 페이지_J29
 	public List<BookingVO> apptHistoryList();
 
