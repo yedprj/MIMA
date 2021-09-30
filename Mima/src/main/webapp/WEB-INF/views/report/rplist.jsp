@@ -69,14 +69,25 @@
 							</div>
 						</div>
 					</div>
+					<!-- pagination  -->
 					<div class="pagination-wrapper" align="center">
 						<ul class="pagination">
-							<li><a href="clinic-1.html" class="current">1</a></li>
-							<li><a href="clinic-1.html">2</a></li>
-							<li><a href="clinic-1.html">3</a></li>
-							<li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
+						
+							<c:if test="${pageMaker.prev }">
+							<li><a href="${pageMaker.startPage-1 }" class="current">1</a></li>
+							</c:if>
+							
+							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+							<li><a href=""${num }">2</a></li>
+							</c:forEach>
+							
+							<c:if test="${pageMaker.next }">							
+							<li><a href="${pageMaker.endPage+1 }"><i class="icon-Arrow-Right"></i></a></li>
+							</c:if>
+							
 						</ul>
 					</div>
+					<!-- pagination end -->
 					<br> <br>
 
 					<div align="center">

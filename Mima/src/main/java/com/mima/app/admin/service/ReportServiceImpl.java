@@ -43,7 +43,7 @@ public class ReportServiceImpl implements ReportService {
 	//e.29
 	//관리자 신고당한사람 전체조회
 	@Override
-	public List<RmemberVO> rmemberReportSelect() {
+	public List<RmemberVO> rmemberReportSelectList() {
 		return reportMapper.rmemberReportSelect();
 	}
 
