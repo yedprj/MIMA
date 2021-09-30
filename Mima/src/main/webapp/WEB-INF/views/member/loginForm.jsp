@@ -70,10 +70,8 @@
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<div class="forgot-passowrd clearfix">
-									
-									<a href="#" data-toggle="modal" data-target="#modalpw">&nbsp;Forget Password?</a>
-									
-									<a href="#" data-toggle="modal" data-target="#modalidpw">Forget Id / </a>	
+
+									 <a href="#" data-toggle="modal"data-target="#modalidpw">Forget Id or Password Reset? </a>
 								</div>
 							</div>
 
@@ -108,14 +106,30 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">아이디 찾기</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<h5 class="modal-title" id="exampleModalLabel">아이디 찾기 / 비밀번호 초기화</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<form id="frm" name="frm">
-					<div>
+
+					<div style="margin-bottom: 10px;"
+						class="custom-control custom-radio custom-control-inline">
+						<input type="radio" class="custom-control-input" id="search_1"
+							name="search_total" onclick="searchCheck(1)" checked="checked">
+						<label class="custom-control-label font-weight-bold"
+							for="search_1">아이디 찾기</label>
+					</div>
+
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" class="custom-control-input" id="search_2"
+							name="search_total" onclick="searchCheck(2)"> <label
+							class="custom-control-label font-weight-bold" for="search_2">비밀번호 초기화</label>
+					</div>
+
+					<div id="searchI">
 						<div class="row clearfix">
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label for="recipient-name" class="col-form-label">이름</label> <input
@@ -127,36 +141,17 @@
 									type="text" class="form-control" id="phone" name="phone"
 									placeholder="-를 제외한 숫자만 입력해 주세요">
 							</div>
+							<button type="button" id="findId" class="btn btn-primary btn-block mx-3">아이디 찾기</button>
+							<button type="button" class="btn btn-secondary btn-block mx-3" data-dismiss="modal">취소</button>
 						</div>
 					</div>
-				</form>
-			</div>
-			<div class="modal-footer">				
-				<button type="button" id="findId" class="btn btn-primary">확인</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="modalpw" tabindex="-1"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">비밀번호 찾기</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form id="frm1" name="frm1">
-					<div>
+					
+					<div id="searchP" style="display: none;">
 						<div class="row clearfix">
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label for="recipient-name" class="col-form-label">아이디</label> <input
-									type="text" class="form-control" id="mmemberId" name="mmemberId"
-									placeholder="아이디를 입력해주세요">
+									type="text" class="form-control" id="mmemberId"
+									name="mmemberId" placeholder="아이디를 입력해주세요">
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 								<label for="message-text" class="col-form-label">이메일</label> <input
@@ -165,15 +160,13 @@
 							</div>
 						</div>
 						
-						<div id="pwReset">
-						
+						<div id="pwReset"></div>
+						<div id="pwcheck">
+							<button type="button" id="findpw" class="btn btn-primary btn-block">확인</button>
+							<button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">취소</button>
 						</div>
 					</div>
 				</form>
-			</div>
-			<div class="modal-footer">			
-				<button type="button" id="findpw" class="btn btn-primary">확인</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 			</div>
 		</div>
 	</div>
@@ -184,6 +177,17 @@
 
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";
+	
+	<!-- 모달 변경 부분 p-30 -->
+	function searchCheck(num) {
+		if (num == '1') {
+			$("#searchP").css('display','none');
+			$("#searchI").css('display', 'block');   
+		} else {
+			$("#searchI").css('display', 'none');
+			$("#searchP").css('display', "block");
+		}
+	} 
 	
 	$(function(){
 		<!-- 아이디 찾기 ajax p-29-->
@@ -204,7 +208,6 @@
 					console.log(data);
 					$("#mmemberId").val(data);
 					alert("찾으시는 아이디는 " + data + " 입니다.");
-					$("#modalidpw").modal("hide");
 				},
 				error : function(reject){
 					console.log(reject)
@@ -230,6 +233,7 @@
 						let str = "";
 						str += pwResetCk();
 						$("#pwReset").html(str);
+						$("#pwcheck").css('display','none');
 					} else {
 						alert("등록되지 않은 이메일 입니다.");
 					}
@@ -243,28 +247,36 @@
 		// 비밀번호 리셋 여부 묻는 html p-29
 		function pwResetCk() {
 			return "<div class='col-lg-12 col-md-12 col-sm-12 form-group'>"
-				   +"	<h5>비밀번호를 초기화 하시겠습니까?</h5>"
-				   +"	<span>초기화 시 등록된 이메일로 전송이 됩니다.</span>"
+				   +"	<div class='mx-3'>"
+				   +"		<h5>비밀번호를 초기화 하시겠습니까?</h5>"
+				   +"		<span>초기화 시 등록된 이메일로 전송이 됩니다.</span>"
+				   +"	</div>"
 				   +"</div>"
-				   +"<div>"
-				   +"	<button type='button' id='resetPw' name='resetPw' class='btn btn-primary'>확인"
+				   +"<div class='col-lg-12 col-md-12 col-sm-12 form-group'>"
+				   +"	<button type='button' id='resetPw' name='resetPw' class='btn btn-primary btn-block'>확인"
 				   +"	</button>"
-				   +"	<button type='button' class='btn btn-secondary' data-dismiss='modal'>취소"
+				   +"	<button type='button' class='btn btn-secondary btn-block' data-dismiss='modal'>취소"
 				   +"	</button>"
 				   +"</div>"
 		}
 		
-		// 비밀번호 reset 후 이메일로 전송 p-29
+		// 비밀번호 reset 후 이메일로 전송 p-30
 		$(document).on('click', '#resetPw', function(){	
 			var email = $('#email').val();
+			var mmemberId = $("#mmemberId").val();
 			
 			$.ajax({
-				url: "resetPwMail?email=" + email,
+				url: "resetPwMail?email=" + email + "&memberId="+mmemberId,
 				type: "get",
 				success : function(data) {
 					console.log(data);
-					alert("초기화된 비밀번호가 등록된 메일로 전송되었습니다");
-					$("#modalpw").modal("hide");
+					message = data.trim();
+					if (message == "success"){
+						alert("초기화된 비밀번호가 등록된 메일로 전송되었습니다.");
+						$("#modalpw").modal("hide");	
+					} else {
+						alert("초기화에 실패 했습니다.");
+					}
 				}, error : function(reject) {
 					console.log(reject);
 				}

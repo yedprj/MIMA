@@ -75,4 +75,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.patnerStatusUpdate(vo);
 	}
 
+	// 비밀번호 초기화 시 멤버 테이블 비밀번호 업데이트 p.30
+	@Override
+	public int passwordResetUpdate(MemberVO vo) {
+		return memberMapper.passwordResetUpdate(vo);
+	}
+
 }

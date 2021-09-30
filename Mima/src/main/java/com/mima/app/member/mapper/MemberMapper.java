@@ -37,4 +37,7 @@ public interface MemberMapper {
 	//e.29
 	// 파트너 의사 / 약국 승인 등록
 	public int patnerStatusUpdate(MemberVO vo);
+	
+	// 비밀번호 초기화 시 멤버 테이블 비밀번호 업데이트 p.30
+	public int passwordResetUpdate(MemberVO vo);
 }
