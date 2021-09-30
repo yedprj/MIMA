@@ -39,8 +39,79 @@
 		WHERE REPORT_NO=#{reportNo}
 	</delete>
 
+	<!-- e.30 -->
+	<!-- 페이징 -->
+	<select id="getList" resultType="RmemberVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(REPORT REPORT_PK) */
+			ROWNUM RN,
+			A.REPORT_NO AS REPORT_NO,
+			A.POST_NO AS POST_NO,
+			B.MEMBER_NO AS MEMBER_NO,
+			B.MEMBER_ID AS RMEMBER_ID,
+			A.REPORT_MNO AS REPORT_MNO,
+			A.MEMBER_ID AS REPORT_ID,
+			A.REPORT_DATE AS REPORT_DATE,
+			A.CHECK_DATE AS CHECK_DATE,
+			A.REPORT_RESULT AS REPORT_RESULT
+		FROM (
+				SELECT M.MEMBER_ID , R.POST_NO, R.REPORT_NO,
+				R.REPORT_DATE, R.CHECK_DATE, R.REPORT_RESULT,
+				R.REPORT_MNO
+				FROM REPORT R JOIN MEMBER M
+				ON (R.REPORT_MNO = M.MEMBER_NO))A
+		JOIN (
+				SELECT M.MEMBER_ID, R.MEMBER_NO, R.POST_NO, R.REPORT_NO
+				FROM REPORT R
+				JOIN MEMBER M
+				ON (R.MEMBER_NO = M.MEMBER_NO))B
+		ON (B.REPORT_NO = A.REPORT_NO)
+			WHERE
+		<include refid="criteria"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+
+	<!-- e.30 -->
+	<!-- 관리자 신고당한사람 전체조회 -->
+	<select id="rmemberReportSelectList" resultType="RmemberVO">
+	SELECT *
+		FROM( SELECT /*+INDEX_DESC(REPORT REPORT_PK) */
+			ROWNUM RN,
+			A.REPORT_NO AS REPORT_NO,
+			A.POST_NO AS POST_NO,
+			B.MEMBER_NO AS MEMBER_NO,
+			B.MEMBER_ID AS RMEMBER_ID,
+			A.REPORT_MNO AS REPORT_MNO,
+			A.MEMBER_ID AS REPORT_ID,
+			A.REPORT_DATE AS REPORT_DATE,
+			A.CHECK_DATE AS CHECK_DATE,
+			A.REPORT_RESULT AS REPORT_RESULT
+		FROM (
+				SELECT M.MEMBER_ID , R.POST_NO, R.REPORT_NO,
+				R.REPORT_DATE, R.CHECK_DATE, R.REPORT_RESULT,
+				R.REPORT_MNO
+				FROM REPORT R JOIN MEMBER M
+				ON (R.REPORT_MNO = M.MEMBER_NO))A
+		JOIN (
+				SELECT M.MEMBER_ID, R.MEMBER_NO, R.POST_NO, R.REPORT_NO
+				FROM REPORT R
+				JOIN MEMBER M
+				ON (R.MEMBER_NO = M.MEMBER_NO))B
+		ON (B.REPORT_NO = A.REPORT_NO)
+			where
+		<include refid="criteria"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+
+
 	<!-- e.29 -->
-	<!-- 관리자 신고당한사람 전체 및 단건조회 -->
+	<!-- 관리자 신고당한사람 단건조회 -->
 	<select id="rmemberReportSelect" resultType="RmemberVO">
 		SELECT A.REPORT_NO AS REPORT_NO,
 		A.POST_NO AS POST_NO,
@@ -108,20 +179,5 @@
 	</select>
 
 
-	<select id="getList"
-		resultType="com.mima.app.admin.domain.ReportVO">
-		SELECT *
-		FROM( SELECT /*+INDEX_DESC(REPORT REPORT_PK) */
-		ROWNUM RN,
-		REPORTNO, POSTNO, MEMBERNO, REPORTMNO, REPORTDATE, CHECKDATE,
-		REPORTRESULT
-		FROM REPORT
-		where
-		<include refid="criteria"></include>
-				<![CDATA[
-				ROWNUM <= #{pageNum} * #{amount}				
-				)
-		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
-	</select>
 
 </mapper>
