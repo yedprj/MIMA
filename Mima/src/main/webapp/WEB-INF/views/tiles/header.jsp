@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!-- preloader -->
 <div class="preloader"></div>
@@ -8,7 +9,6 @@
 
 <!-- main header -->
 <header class="main-header style-two">
-
 	<!-- header-lower -->
 	<div class="header-lower">
 		<div class="auto-container">
@@ -165,9 +165,21 @@
 						</div>
 					</nav>
 				</div>
+				<!-- 로그인 로그아웃 p.30 -->
 				<div class="btn-box">
-					<a href="register-page.html" class="theme-btn-one"><i
-						class="icon-image"></i>Join Now</a>
+					<sec:authorize access="isAnonymous()">
+						<a href="${pageContext.request.contextPath}/login" class="theme-btn-one"><i
+							class="icon-image"></i>Login Now</a>
+					</sec:authorize>
+					
+					<sec:authorize access="isAuthenticated()">
+						${session.name }님
+						<form id="frm" name="frm" action="${pageContext.request.contextPath}/logout" method="post">
+							<a href="#" id="logoutBtn" class="theme-btn-one mx-3"><i class="icon-image"></i>Logout</a>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}">
+						</form>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>
@@ -234,3 +246,10 @@
 	</nav>
 </div>
 <!-- End Mobile Menu -->
+<script>
+	$(function() {
+		$("#logoutBtn").on("click", function(){
+			frm.submit();
+		});
+	});
+</script>

@@ -7,8 +7,12 @@
 
 	<bean id="customAccessDenied" class="com.mima.app.security.CustomAccessDeniedHandler"/>
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
-	<security:http pattern="/resources/**" security="none" />
+	<!-- 세션 유지할 때 vo객체 가져오기 위해 추가 p.30 -->
+	<bean id="customUserService" class="com.mima.app.member.service.CustomUserDetailsService" />
+	
+	<!-- 시큐리티 적용 안되는 부분있어서 수정 /가 시큐리티에서 resources를 찾아서 변경 p.30  -->
+	<security:http pattern="/assets/**" security="none" />
+	<security:http pattern="/meditVideo/**" security="none" />
 	
 
 	<security:http auto-config="true" use-expressions="true">
@@ -24,27 +28,28 @@
 			username-parameter="memberId"				
 			authentication-success-handler-ref="customLoginSuccess"/>
 		
-		<!-- 로그아웃 -->
+		<!-- 로그아웃 p.30-->
 		<security:logout 
 			logout-url="/logout"
+			invalidate-session="true"
 			logout-success-url="/"/>
 			
 		<!-- 접근제한 -->
 		<security:access-denied-handler ref="customAccessDenied"/>
-		<security:csrf disabled="true"/>
+		<security:csrf disabled="false"/>
 	</security:http>
 	
 	<security:authentication-manager>
-		
-		<security:authentication-provider>
+		<!-- vo 객체 가져오기 위해 수정 -->
+		<security:authentication-provider user-service-ref="customUserService">
 			<!-- 인증 권한 실제 처리 / {noop}인코딩 없이 처리 -->
-			<security:jdbc-user-service data-source-ref="dataSource"
+			<!-- <security:jdbc-user-service data-source-ref="dataSource"
 				users-by-username-query="select member_id, password, status
 										from member
 										where member_id = ?"
 				authorities-by-username-query="select member_id, 'ROLE_' || upper(role) 
 									   		   from member 
-									   		   where member_id = ?"/> 
+									   		   where member_id = ?"/> --> 
 			<security:password-encoder hash="bcrypt"/>
 		</security:authentication-provider>
 	</security:authentication-manager>

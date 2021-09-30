@@ -96,10 +96,10 @@ public class MemberController {
 		return result;
 	}
 	
-	// 비밀번호 초기화 메일 보내기 p-29
+	// 비밀번호 초기화 메일 보내기 e.30
 	@RequestMapping(value="/resetPwMail", method=RequestMethod.GET)
 	@ResponseBody
-	public String resetPwMailGet(String email) throws Exception {
+	public String resetPwMailGet(String email, String memberId) throws Exception {
 		
 		logger.info("이메일 인증번호");
 		logger.info("인증번호 : " + email);
@@ -107,6 +107,8 @@ public class MemberController {
 		String pswd = "";
 		StringBuffer sb = new StringBuffer();
 		StringBuffer sc = new StringBuffer("!@#$%^&*");		// 특수문자 모음, {}[] 같은 비호감 문자 제거
+		String message = "";
+		int result = 0;
 		
 		// 대문자 4개를 임의 발생
 		// 첫 글자 대문자
@@ -139,31 +141,41 @@ public class MemberController {
 		
 		logger.info("무작위 비밀번호=============" + pswd);
 		
-		String setFrom = "yedampark123@naver.com";
-		String toMail = email;
-		String title = "초기화 된 비밀번호 입니다.";
-		String content = "회원님께서 초기화 하신 비밀번호는"
+		String setFrom1 = "dngur1278@gmail.com";
+		String toMail1 = email;
+		String title1 = "초기화 된 비밀번호 입니다.";
+		String content1 = "회원님께서 초기화 하신 비밀번호는"
 						 +pswd + "입니다."
 						 +"<br><br>"
 						 +"초기화된 비밀번호로 로그인 하신 후 변경해주세요.";
 		
 		try {
+			MimeMessage message1 = mailSender.createMimeMessage();
+			MimeMessageHelper helper1 = new MimeMessageHelper(message1, true, "utf-8");
+			helper1.setFrom(setFrom1);
+			helper1.setTo(toMail1);
+			helper1.setSubject(title1);
+			helper1.setText(content1,true);
+			mailSender.send(message1);
 			
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-			helper.setFrom(setFrom);
-			helper.setTo(toMail);
-			helper.setSubject(title);
-			helper.setText(content,true);
-			mailSender.send(message);
+			// 비밀번호 업데이트 e.30
+			MemberVO vo = new MemberVO();
+			vo.setMemberId(memberId);
+			vo.setPassword(bCryptPasswordEncoder.encode(pswd));
+			vo.setEmail(email);
+			result = memberService.passwordResetUpdate(vo);
 			
-			// 비밀번호 업데이트
 			
+			if (result == 1) {
+				message = "success";
+			}else {
+				message = "fail";
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return pswd;
+		return message;
 	}
 	
 	// 이메일 인증
@@ -181,7 +193,7 @@ public class MemberController {
 		logger.info("인증번호" + checkNum);
 		
 		// 이메일 보내기
-		String setFrom = "yedampark123@naver.com";
+		String setFrom = "dngur1278@gmail.com";
 		String toMail = email;
 		String title = "회원가입 이메일 입니다.";
 		String content = "저희 Mima를 방문해주셔서 감사합니다." +
@@ -190,7 +202,6 @@ public class MemberController {
 						 "<br>" +
 						 "해당 인증번호를 확인란에 기입하여 주세요.";
 		try {
-			
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
 			helper.setFrom(setFrom);
@@ -198,6 +209,8 @@ public class MemberController {
 			helper.setSubject(title);
 			helper.setText(content,true);
 			mailSender.send(message);
+			
+			
 			
 		} catch(Exception e) {
 			e.printStackTrace();

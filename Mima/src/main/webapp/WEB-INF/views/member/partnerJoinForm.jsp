@@ -222,8 +222,11 @@
 <!-- registration-section end -->
 
 <script>
+	<!-- csrf로 인해 전체적인 수정 p.30 -->
 
 	var code ="";	// 이메일 전송 인증번호 저장위한 코드
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	$(function(){
 		// 아이디 중복 체크
@@ -236,6 +239,9 @@
 				url : "IdCheck",
 				type : "post",
 				data : JSON.stringify({memberId : memberId}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data){
@@ -285,6 +291,9 @@
 			$.ajax({
 				url : "partnerJoinMember",
 				type : "post",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				data : JSON.stringify({memberId : memberId,
 									   password : password,
 									   nickname : nickname,
@@ -319,6 +328,9 @@
 			url : "licenseCheck",
 			type : "post",
 			data : JSON.stringify({license : license}),
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			dataType : "json",
 			contentType : "application/json",
 			success : function(datas) {
@@ -458,6 +470,9 @@
 				url : "nickNameCheck",
 				type : "post",
 				data : JSON.stringify({nickname : nickname}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data){
