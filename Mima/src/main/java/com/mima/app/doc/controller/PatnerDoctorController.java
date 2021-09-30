@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mima.app.admin.domain.CscVO;
+import com.mima.app.admin.service.CscService;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.session.domain.BookingVO;
@@ -17,6 +19,7 @@ public class PatnerDoctorController {
 	
 	@Autowired BookingService bookingService;
 	@Autowired CommentsService commentsService;
+	@Autowired CscService cscService;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("docMain")
@@ -48,6 +51,11 @@ public class PatnerDoctorController {
 	@GetMapping("docReview")
 	public void docReview(Model model, CommentsVO commentsvo) {
 		model.addAttribute("docReview", commentsService.docReview());
+	}
+	
+	@GetMapping("docQna")
+	public void docQna(Model model, CscVO cscvo) {
+		model.addAttribute("docQna", cscService.docQna());
 	}
 	
 	/*
