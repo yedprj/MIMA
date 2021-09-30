@@ -26,7 +26,7 @@ public class ReportController {
 	@Autowired
 	ReportService reportService;
 	
-	//e.29
+	//e.30
 	//관리자 신고당한사람 전체조회
 	@GetMapping("/rplist")
 	public void rplist(Model model, @ModelAttribute("cri") Criteria cri) {

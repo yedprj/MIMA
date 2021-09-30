@@ -74,7 +74,7 @@
 		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
 	</select>
 
-	<!-- e.29 -->
+	<!-- e.30 -->
 	<!-- 관리자 신고당한사람 전체조회 -->
 	<select id="rmemberReportSelectList" resultType="RmemberVO">
 	SELECT *

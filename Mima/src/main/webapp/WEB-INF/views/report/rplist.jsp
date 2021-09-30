@@ -69,6 +69,7 @@
 							</div>
 						</div>
 					</div>
+					<!-- e.30 -->
 					<!-- pagination  -->
 					<div class="pagination-wrapper" align="center">
 						<ul class="pagination">
