@@ -249,7 +249,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 </div>
 
 <script>
-	var reportMno = 30; // 현재 회원번호
+	var reportMno = 6; // 현재 회원번호
 	var pageNum = 0;
 	var amount = 0;
 	var angryStr ='';
@@ -421,7 +421,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			method : "post",
 			dataType : "json",
 			data : JSON.stringify({
-				reportMNo : reportMno,
+				reportMno : reportMno,
 				postNo : postNo
 			}),
 			contentType : 'application/json',
@@ -453,7 +453,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						data : JSON.stringify({
 							postNo : postNo,
 							memberNo : memberNo,
-							reportMNo : reportMno
+							reportMno : reportMno
 						}),
 						contentType : 'application/json',
 						success : function() {
@@ -607,9 +607,12 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 		$("<button id='addBtn' />").html("더보기");
 	} // 페이지목록 조회 end
 	
+	// 객체 생성
+	
+	var arry =[];
 	//랜덤 페이지 목록 조회
 	$(document).on("click", "#random", function randomList() {
-
+		arry =[];
 		$.ajax({
 			url : "randomList",
 			method : "get",
@@ -620,29 +623,41 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			success : function(datas) {
 				$(".postContents").empty();
 				$.each(datas,function(i, data) {
-					if(data.reportMno == 1){ angryStr = 'background-color: #061a3a;'; }else {
-						angryStr = '';
-					}
-					if(data.likesNo == 1){ heartStr = 'background-color: #061a3a;'; }else {
-						heartStr = '';
-					}
-					$("<div id='post' data-postNo='"+data.postNo+"' data-memberNo='"+data.memberNo+"' class='col-lg-4 col-md-6 col-sm-12 team-block'>")
+					var myObj = { 
+							postNo : data.postNo,
+							memberNo : data.memberNo,
+							postDate : data.postDate,
+							contents : data.contents,
+							postLike : data.postLike,
+							postColor :data.postColor,
+							reportMno : data.reportMno,
+							likesNo : data.likesNo
+						}
+					arry.push(myObj);	
+				}); // each end
+				console.log(arry);
+				for	(var i=0; i < 9; i++ ){
+					console.log(i , arry[i]);
+					if(arry[i].reportMno == 1){ angryStr = 'background-color: #061a3a;'; }else {
+						angryStr = '';	}
+					if(arry[i].likesNo == 1){ heartStr = 'background-color: #061a3a;'; }else {
+						heartStr = '';	}
+					$("<div id='post' data-postNo='"+arry[i].postNo+"' data-memberNo='"+arry[i].memberNo+"' class='col-lg-4 col-md-6 col-sm-12 team-block'>")
 						.append(
 							"<div class='team-block-three'>"
 							+ '<div class="inner-box">'
 							+ '<figure class="image-box">'
-							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+data.postColor+'" alt=""> '
+							+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+arry[i].postColor+'" alt=""> '
 							+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
 							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
 							+ '<div><h4>'
-							+ data.contents
+							+ arry[i].contents
 							+ '</h4></div>'
 							+ '</div></figure></div></div>')
 						.appendTo($(".postContents"));
-						
-					}); // each end
 					
+				}	
 			} // success end
 		}) //ajax end
 	}); // 랜덤 페이지목록 조회 end

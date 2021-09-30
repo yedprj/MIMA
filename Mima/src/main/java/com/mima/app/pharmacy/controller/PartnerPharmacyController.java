@@ -1,6 +1,16 @@
 package com.mima.app.pharmacy.controller;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +20,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
@@ -67,5 +81,95 @@ public class PartnerPharmacyController {
 		return  memberSerivce.memberLogin(vo);
 	}
 	
+	@RequestMapping("/pharmacyApi")
+	public void pharmacyApi() throws IOException { 
+		
+		String url ="http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyFullDown";
+		String serviceKey = "kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D";
+		String decodeServiceKey = URLDecoder.decode(serviceKey,"UTF-8");
+		String pageNo = "1";
+		String numbOfRows = "23414";
+		
+		try {
+		Document documentInfo = DocumentBuilderFactory.newInstance()
+													  .newDocumentBuilder()
+													  .parse(url + "?serviceKey=" + serviceKey + "&pageNo="+ pageNo + "&numOfRows=" + numbOfRows);
+		
+		documentInfo.getDocumentElement().normalize();
+		
+		// 파싱 
+		NodeList nList = documentInfo.getElementsByTagName("item");
+		for(int temp=0; temp < nList.getLength(); temp++) {
+			Node nNode = nList.item(temp);
+			if(nNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) nNode;
+				System.out.println("약국주소:"+getTagValue("dutyAddr",eElement));
+				
+				System.out.println("약국주소:"+getTagValue("dutyTel1",eElement));
+				System.out.println("좌표1:"+getTagValue("wgs84Lat",eElement));
+				System.out.println("좌표2:"+getTagValue("wgs84Lon",eElement));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+		
+        
+        
+        /*<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <response>
+        	<header>
+        		<resultCode>00</resultCode>
+        		<resultMsg>NORMAL SERVICE.</resultMsg>
+        	</header>
+        	<body>
+        		<items>
+        			<item>
+        				<dutyAddr>대전광역시 동구 계족로 362, 성남약국 1층 (성남동)</dutyAddr>
+        				<dutyName>성남약국</dutyName>
+        				<dutyTel1>042-672-2957</dutyTel1>
+        				<dutyTime1c>1900</dutyTime1c>
+        				<dutyTime1s>0900</dutyTime1s>
+        				<dutyTime2c>1900</dutyTime2c>
+        				<dutyTime2s>0900</dutyTime2s>
+        				<dutyTime3c>1900</dutyTime3c>
+        				<dutyTime3s>0900</dutyTime3s>
+        				<dutyTime4c>1900</dutyTime4c>
+        				<dutyTime4s>0900</dutyTime4s>
+        				<dutyTime5c>1900</dutyTime5c>
+        				<dutyTime5s>0900</dutyTime5s>
+        				<dutyTime6c>1300</dutyTime6c>
+        				<dutyTime6s>0900</dutyTime6s>
+        				<hpid>C1601311</hpid>
+        				<postCdn1>345</postCdn1>
+        				<postCdn2>90 </postCdn2>
+        				<rnum>1</rnum>
+        				<wgs84Lat>36.3444243564852</wgs84Lat>
+        				<wgs84Lon>127.434066050389</wgs84Lon>
+        			</item>
+        		</items>
+	        	<numOfRows>3</numOfRows>
+	        	<pageNo>1</pageNo>
+	        	<totalCount>23413</totalCount>
+        	</body>
+        </response>
+        */
+        
+        
+	}
+
+	private String getTagValue(String tag, Element eElement) {
+		// TODO Auto-generated method stub
+		NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
+		Node nValue = (Node) nlList.item(0);
+		if(nValue == null) return null;
+		return nValue.getNodeValue();
+	}
+	
+
+	
+	
+	
+	
 }
