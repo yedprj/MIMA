@@ -32,15 +32,20 @@ public class FileCheckTask {
 	}
 
 	//s:0929 
-	@Scheduled(cron="*/10 0 8-22 * * MON-FRI")
+	//@Scheduled(cron="*/10 * 8-22 * * MON-FRI")
+	@Scheduled(cron="*/10 * * * * MON-FRI")
 	public void checkRoomId() {
 		log.info("~~~~~진료를 위한 url을 확인중입니다...~~~~~~~~");
 		List<BookingVO> oldList = new ArrayList<BookingVO>();
 		List<BookingVO> readyList = new ArrayList<BookingVO>();
 		readyList = bookingService.getRoomId();
+		System.out.println("----"+readyList.size());
 		oldList = readyList;
+		System.out.println(oldList.size() +"~~~~~oldlist");
 		if(oldList.size() < readyList.size()) {
-			
+			System.out.println("새 RoomId가 추가되었습니다.");
+		} else {
+			System.out.println("nothing much");
 		}
 		
 	}
