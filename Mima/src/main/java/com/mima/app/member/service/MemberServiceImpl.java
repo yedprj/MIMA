@@ -80,5 +80,12 @@ public class MemberServiceImpl implements MemberService {
 	public int passwordResetUpdate(MemberVO vo) {
 		return memberMapper.passwordResetUpdate(vo);
 	}
+	
+	// Session에 vo객체를 담을려고 추가 p.30
+	@Override
+	public MemberVO getUserById(String memberId) {
+		MemberVO mvo = memberMapper.getUserById(memberId);
+		return mvo;
+	}
 
 }

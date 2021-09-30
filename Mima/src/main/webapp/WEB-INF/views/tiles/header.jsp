@@ -173,7 +173,7 @@
 					</sec:authorize>
 					
 					<sec:authorize access="isAuthenticated()">
-						<sec:authentication property="principal.username"/>님
+						${session.name }님
 						<form id="frm" name="frm" action="${pageContext.request.contextPath}/logout" method="post">
 							<a href="#" id="logoutBtn" class="theme-btn-one mx-3"><i class="icon-image"></i>Logout</a>
 						<input type="hidden" name="${_csrf.parameterName}"

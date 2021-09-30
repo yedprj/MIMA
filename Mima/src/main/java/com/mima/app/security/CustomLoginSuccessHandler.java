@@ -20,7 +20,7 @@ import lombok.extern.java.Log;
 @Log
 @Component("customLoginSuccess")
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
-
+	// 로그인 후에 Session유지를 위해 변경 p.30
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication auth) throws IOException, ServletException {
