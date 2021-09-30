@@ -1,6 +1,9 @@
 package com.mima.app.post.task;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -31,7 +34,16 @@ public class FileCheckTask {
 
 	@Scheduled(cron="*/10 0 8-18 * * MON-FRI")
 	public void checkRoomId() {
-		log.info("진료를 위한 url을 확인중입니다...");
-		bookingService.getRoomId();
+		log.info("~~~~~진료를 위한 url을 확인중입니다...~~~~~~~~");
+		List<BookingVO> oldList = new ArrayList<BookingVO>();
+		
+		List<BookingVO> readyList = new ArrayList<BookingVO>();
+		
+		readyList = bookingService.getRoomId();
+		
+		oldList = readyList;
+		if(oldList.size() < readyList.size()) {
+
+		}
 	}
 }
