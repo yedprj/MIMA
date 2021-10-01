@@ -21,6 +21,7 @@ public class FileCheckTask {
 	@Autowired PostService postService;
 	@Autowired BookingService bookingService;
 	
+
 	@Scheduled(cron="5 0 0 * * *")
 	public void checkFiles() throws Exception{
 		

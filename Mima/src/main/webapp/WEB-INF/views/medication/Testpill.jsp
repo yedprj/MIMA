@@ -11,6 +11,7 @@
 		<div class="row clearfix">
 			<div class="col-lg-12 col-md-12 col-sm-12 sidebar-side">
 				<div class="blog-sidebar">
+					<!-- 약 검색 구간 -->
 					<div class="sidebar-widget sidebar-search"
 						style="background-color: #ebf7f6;">
 						<div class="widget-title col-12">
@@ -30,7 +31,6 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
 						<div class="search-inner">
 							<form action="blog-3.html" method="post" class="search-form">
@@ -45,6 +45,24 @@
 							</form>
 						</div>
 					</div>
+					<!-- 약 검색 출력 구간 -->
+						<c:if test="${not empty plist}">
+							<c:forEach items="${plist}" var="list">
+								<p>${list.entpName}</p>
+								<p>${list.itemName}</p>
+								<p>${list.itemSeq}</p>
+								<p>${list.efcyQesitm}</p>
+								<p>${list.useMethodQesitm}</p>
+								<p>${list.atpnWarnQesit}</p>
+								<p>${list.atpnQesitm}</p>
+								<p>${list.intrcQesitm}</p>
+								<p>${list.seQesitm}</p>
+								<p>${list.depositMethodQesitm}</p>
+								<p>${list.openDe}</p>
+								<p>${list.updateDe}</p>
+								<p><img src="${list.itemlmage}"></p>
+							</c:forEach>
+						</c:if>
 
 
 
@@ -82,25 +100,12 @@
 		</div>
 	</div>
 </section>
-<c:forEach items="${plist}" var="list">
-	<p>${list.entpName}</p>
-	<p>${list.itemName}</p>
-	<p>${list.itemSeq}</p>
-	<p>${list.efcyQesitm}</p>
-	<p>${list.useMethodQesitm}</p>
-	<p>${list.atpnWarnQesit}</p>
-	<p>${list.atpnQesitm}</p>
-	<p>${list.intrcQesitm}</p>
-	<p>${list.seQesitm}</p>
-	<p>${list.depositMethodQesitm}</p>
-	<p>${list.openDe}</p>
-	<p>${list.updateDe}</p>
-	<p><img src="${list.itemlmage}"></p>
 
-</c:forEach>
 <!-- sidebar-page-container end -->
 
 
 <script>
+
+
 </script>
 

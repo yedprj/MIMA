@@ -16,14 +16,14 @@ public class PillSearchVO {
 	private int itemSeq;			// 품목 기준 코드
 	private String efcyQesitm;		// 약 효능
 	private String useMethodQesitm; // 약 사용법
-	private String atpnWarnQesit;	// 약 사용전 주의사항
+	private String atpnWarnQesitm;	// 약 사용전 주의사항
 	private String atpnQesitm;		// 약 사용상 주의사항
 	private String intrcQesitm;		// 약 사용상 주의할 약 또는 음식
 	private String seQesitm;		// 약 부작용
 	private String depositMethodQesitm;  // 약 보관법
 	private String openDe;			// 공개일자
 	private String updateDe;			// 수정일자
-	private String itemlmage;		// 낱알 이미지
+	private String itemImage;		// 낱알 이미지
 	
 	
 }

@@ -36,7 +36,7 @@
 			
 		<!-- 접근제한 -->
 		<security:access-denied-handler ref="customAccessDenied"/>
-		<security:csrf disabled="false"/>
+		<security:csrf disabled="true"/>
 	</security:http>
 	
 	<security:authentication-manager>
