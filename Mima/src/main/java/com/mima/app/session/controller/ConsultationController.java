@@ -33,7 +33,6 @@ public class ConsultationController {
 		}
 
 
-		//s:10/10 진료시 요청오면 환자정보 가져오기
 	@GetMapping("/ptInformation")
 	public void ptInformation(Model model, BookingVO vo, PtInfoVO ptVo) {
 		ptVo=consultationService.getPtInformation(vo);
