@@ -17,4 +17,6 @@ public class BookingVO {
 	private Date consultDate;	// 진료일
 	private String consultTime;	// 진료시간
 	private Date editDate;		// 예약 수정 날짜
+	
+	private String roomId; 		// 진료 링크주소 s:0929
 }

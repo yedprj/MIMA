@@ -31,6 +31,18 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.licenseCheck(vo);
 	}
 	
+	// 아이디 찾기 p-29
+	@Override
+	public String findMemberId(MemberVO vo) {
+		return memberMapper.findMemberId(vo);
+	}
+	
+	// 비밀번호 찾기 p-29
+	@Override
+	public int findPassword(MemberVO vo) {
+		return memberMapper.findPassword(vo);
+	}
+	
 	// 로그인
 	@Override
 	public MemberVO memberLogin(MemberVO vo) {
@@ -49,16 +61,31 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.partnerMemberInsert(vo);
 	}
 
+	//e.29
 	// 파트너 의사 / 약국 승인 유무 검색
 	@Override
 	public List<MemberVO> patnerStatusSelect() {
 		return memberMapper.patnerStatusSelect();
 	}
 
+	//e.29
 	// 파트너 의사 / 약국 승인 등록
 	@Override
 	public int patnerStatusUpdate(MemberVO vo) {
 		return memberMapper.patnerStatusUpdate(vo);
 	}
-  
+
+	// 비밀번호 초기화 시 멤버 테이블 비밀번호 업데이트 p.30
+	@Override
+	public int passwordResetUpdate(MemberVO vo) {
+		return memberMapper.passwordResetUpdate(vo);
+	}
+	
+	// Session에 vo객체를 담을려고 추가 p.30
+	@Override
+	public MemberVO getUserById(String memberId) {
+		MemberVO mvo = memberMapper.getUserById(memberId);
+		return mvo;
+	}
+
 }

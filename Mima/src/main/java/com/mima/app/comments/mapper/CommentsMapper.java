@@ -21,6 +21,9 @@ public interface CommentsMapper {
 	//해당 게시글의 댓글 수
 	public int getCountByMeditNo(CommentsVO vo);
 	
-	// 닥터 대쉬보드 나의 후기
+	// 닥터 대쉬보드 메인 페이지 나의 후기_J
 	public List<CommentsVO> getlatestreviewList();
+	
+	// 닥터 대쉬보드 메인 페이지 나의 후기_J29
+	public List<CommentsVO> docReview();
 }

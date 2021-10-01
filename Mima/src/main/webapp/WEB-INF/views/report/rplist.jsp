@@ -9,7 +9,6 @@
 
 	<!-- doctors-dashboard -->
 	<section class="doctors-dashboard bg-color-3">
-		<div class="left-panel"></div>
 		<div>
 			<div class="content-container">
 				<div class="outer-container">
@@ -70,28 +69,41 @@
 							</div>
 						</div>
 					</div>
+					<!-- e.30 -->
+					<!-- pagination  -->
 					<div class="pagination-wrapper" align="center">
 						<ul class="pagination">
-							<li><a href="clinic-1.html" class="current">1</a></li>
-							<li><a href="clinic-1.html">2</a></li>
-							<li><a href="clinic-1.html">3</a></li>
-							<li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
+						
+							<c:if test="${pageMaker.prev }">
+							<li><a href="${pageMaker.startPage-1 }" class="current">1</a></li>
+							</c:if>
+							
+							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+							<li><a href=""${num }">2</a></li>
+							</c:forEach>
+							
+							<c:if test="${pageMaker.next }">							
+							<li><a href="${pageMaker.endPage+1 }"><i class="icon-Arrow-Right"></i></a></li>
+							</c:if>
+							
 						</ul>
 					</div>
+					<!-- pagination end -->
 					<br> <br>
+
 					<div align="center">
-						<button type="button" class="btn btn-secondary"
-							style="background-color: #39CABB;"
-							onclick="location.href='../admin/adMain'">목록</button>
+						<div class="add-listing my-profile">
+							<div class="btn-box">
+								<a href="../admin/adMain" class="cancel-btn">목록</a>
+							</div>
+						</div>
 					</div>
+
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- doctors-dashboard -->
-
-
-
 
 
 	<!--Scroll to top-->

@@ -19,6 +19,9 @@ public interface CommentsService {
 		//게시글번호에 해당하는 댓글 조회
 		public CommentsPageVO getList(@Param("cri") Criteria cri,  @Param("cmainCategory") String cmainCategory, @Param("cmainNo") int cmainNo);
 
-		// 닥터 대쉬보드 나의 후기
+		// 닥터 대쉬보드 메인 페이지 나의 후기_J
 		public List<CommentsVO> getlatestreviewList();
+		
+		// 닥터 대쉬보드 메인 페이지 나의 후기_J29
+		public List<CommentsVO> docReview();
 }

@@ -13,19 +13,34 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired BookingMapper bookingMapper;
 	
+	// 닥터 대쉬보드 메인 페이지 오늘의 예약_J
 	@Override
 	public List<BookingVO> getList() {
 		return bookingMapper.getList();
 	}
-
+	
+	// 닥터 대쉬보드 메인 페이지 진료내역_J
 	@Override
 	public List<BookingVO> getlatestapptList() {
 		return bookingMapper.getlatestapptList();
 	}
 
+	// 닥터 대쉬보드 예약관리 페이지_J
 	@Override
 	public List<BookingVO> apptList() {
 		return bookingMapper.apptList();
+	}
+
+//	s:0929 진료시간 5분전 매10초마다 테이블확인 to get rm Id
+	@Override
+	public List<BookingVO> getRoomId() {
+		return bookingMapper.getRoomId();
+	}
+
+	@Override
+	public List<BookingVO> apptHistoryList() {
+		return bookingMapper.apptHistoryList();
+
 	}
 
 }
