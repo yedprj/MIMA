@@ -62,7 +62,7 @@ public class ApiExplorer {
          * JSONObject firstJson = new JSONObject(value);
          * String bodyValue = firstJson.get("body").toString();
          * JSONObject twoJson = new JSONObject(bodyValue);
-         * JSONArray jArry = towJson.getJSONArray("items");
+         * JSONArray jArry = twoJson.getJSONArray("items");
          * System.out.println(jArry.getJSONObject(0));
 		 * System.out.println("******************배열안에******************");
 		 * System.out.println(jArry.getJSONObject(0).get("entpName"));
@@ -79,13 +79,13 @@ public class ApiExplorer {
 			if(!JO.isNull("itemSeq")) { pill.setItemSeq(Integer.parseInt(JO.get("itemSeq").toString())); }
 			if(!JO.isNull("efcyQesitm")) { pill.setEfcyQesitm(String.valueOf(JO.get("efcyQesitm"))); }
 			if(!JO.isNull("useMethodQesitm")) { pill.setUseMethodQesitm(String.valueOf(JO.get("useMethodQesitm"))); }
-			if(!JO.isNull("atpnWarnQesit")) { pill.setAtpnWarnQesit(String.valueOf(JO.get("atpnWarnQesit"))); }
+			if(!JO.isNull("atpnWarnQesit")) { pill.setAtpnWarnQesitm(String.valueOf(JO.get("atpnWarnQesit"))); }
 			if(!JO.isNull("atpnQesitm")) { pill.setAtpnQesitm(String.valueOf(JO.get("atpnQesitm"))); }
 			if(!JO.isNull("seQesitm")) { pill.setSeQesitm(String.valueOf(JO.get("seQesitm"))); }
 			if(!JO.isNull("depositMethodQesitm")) { pill.setDepositMethodQesitm(String.valueOf(JO.get("depositMethodQesitm"))); }
 			if(!JO.isNull("openDe")) { pill.setOpenDe(String.valueOf(JO.get("openDe"))); }
 			if(!JO.isNull("updateDe")) { pill.setUpdateDe(String.valueOf(JO.get("updateDe"))); }
-			if(!JO.isNull("itemImage")) { pill.setItemlmage(String.valueOf(JO.get("itemImage"))); }
+			if(!JO.isNull("itemImage")) { pill.setItemImage(String.valueOf(JO.get("itemImage"))); }
 			pList.add(pill);
 		}
 		System.out.println("!!!!!!!!!!!!!최종 리스트!!!!!!!!!!!!!!!!!");

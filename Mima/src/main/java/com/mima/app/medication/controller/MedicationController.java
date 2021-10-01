@@ -14,7 +14,10 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mima.app.medication.domain.PillSearchVO;
 
@@ -25,22 +28,44 @@ import lombok.extern.java.Log;
 @RequestMapping("/medication/*")
 public class MedicationController {
 	
-	// 약검색 페이지 [K]210929
+	// 약검색 페이지 [K]211001
 	@GetMapping("/pillSearch")
-	public void pillSearch() {
-		
-	}
+	public void pillSearch(Model model) {	}
 	
 	// 약 API 연결 페이지 [K]210929
-	@RequestMapping("/pill")
-	public void search(Model model) throws IOException { 		
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"); /*URL*/
+	@PostMapping("/pill")
+	@ResponseBody
+	public List<PillSearchVO> search(@RequestBody PillSearchVO pvo, Model model) throws IOException { 
+		System.out.println(pvo.getItemName());
+		System.out.println(pvo.getItemSeq());
+		System.out.println(pvo.getEfcyQesitm());
+		System.out.println(pvo.getIntrcQesitm());
+		String str = "";
+		
+		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("인증키(url encode)", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("entpName","UTF-8") + "=" + URLEncoder.encode("한미약품(주)", "UTF-8")); /*업체명*/
-        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*응답데이터 형식(xml/json) Default:xml*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+        
+        if(pvo.getItemName() != null) { 
+        	str = pvo.getItemName();
+        	urlBuilder.append("&" + URLEncoder.encode("itemName","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*제품명*/
+		}
+        else if (pvo.getItemSeq() != 0 ) {
+			str = String.valueOf(pvo.getItemSeq());
+			urlBuilder.append("&" + URLEncoder.encode("itemSeq","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*품목기준코드*/
+		}
+        else if (pvo.getEfcyQesitm() != null ) {
+			str = pvo.getEfcyQesitm();
+			urlBuilder.append("&" + URLEncoder.encode("efcyQesitm","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*이 약의 효능은 무엇입니까?*/
+		}
+        else if (pvo.getIntrcQesitm() != null ) {
+			str = pvo.getIntrcQesitm();
+			urlBuilder.append("&" + URLEncoder.encode("intrcQesitm","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*이 약을 사용하는 동안 주의해야 할 약 또는 음식은 무엇입니까?*/
+		}
+        
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); 
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -62,7 +87,15 @@ public class MedicationController {
         conn.disconnect();
         
         // String -> JSON 변환
-        JSONArray jArry = new JSONObject(new JSONObject(sb.toString()).get("body").toString()).getJSONArray("items");
+        
+        String value = sb.toString();
+        JSONObject firstJson = new JSONObject(value);
+        String bodyValue = firstJson.get("body").toString();
+        JSONObject twoJson = new JSONObject(bodyValue);
+        
+        
+        
+        JSONArray jArry = twoJson.getJSONArray("items");
         
         List<PillSearchVO> pList = new ArrayList<PillSearchVO>();
 		// 객채에 담음
@@ -74,16 +107,17 @@ public class MedicationController {
 			if(!JO.isNull("itemSeq")) { pill.setItemSeq(Integer.parseInt(JO.get("itemSeq").toString())); }
 			if(!JO.isNull("efcyQesitm")) { pill.setEfcyQesitm(String.valueOf(JO.get("efcyQesitm"))); }
 			if(!JO.isNull("useMethodQesitm")) { pill.setUseMethodQesitm(String.valueOf(JO.get("useMethodQesitm"))); }
-			if(!JO.isNull("atpnWarnQesit")) { pill.setAtpnWarnQesit(String.valueOf(JO.get("atpnWarnQesit"))); }
+			if(!JO.isNull("atpnWarnQesit")) { pill.setAtpnWarnQesitm(String.valueOf(JO.get("atpnWarnQesit"))); }
 			if(!JO.isNull("atpnQesitm")) { pill.setAtpnQesitm(String.valueOf(JO.get("atpnQesitm"))); }
 			if(!JO.isNull("seQesitm")) { pill.setSeQesitm(String.valueOf(JO.get("seQesitm"))); }
 			if(!JO.isNull("depositMethodQesitm")) { pill.setDepositMethodQesitm(String.valueOf(JO.get("depositMethodQesitm"))); }
 			if(!JO.isNull("openDe")) { pill.setOpenDe(String.valueOf(JO.get("openDe"))); }
 			if(!JO.isNull("updateDe")) { pill.setUpdateDe(String.valueOf(JO.get("updateDe"))); }
-			if(!JO.isNull("itemImage")) { pill.setItemlmage(String.valueOf(JO.get("itemImage"))); }
+			if(!JO.isNull("itemImage")) { pill.setItemImage(String.valueOf(JO.get("itemImage"))); }
 			pList.add(pill);
-		}
-		model.addAttribute("plist", pList);
+		} 
+
+		return pList;
         
     }
 	
