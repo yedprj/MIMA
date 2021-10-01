@@ -12,7 +12,7 @@ public class LoginController {
 	public String loginForm(String error, String logout, Model model) {
 		
 		if (error != null) {
-			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
+			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸거나 아직 승인되지 않았습니다.");
 		}
 		
 		if (logout != null) {
