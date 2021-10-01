@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.session.mapper.ConsultationMapper">
 
-//s:10/01 진료시 환자정보 요청하면 찾는것
 <select id="getPtInformation" resultType="com.mima.app.session.domain.PtInfoVO">
 	select 
 	    a.MEMBER_NO,
