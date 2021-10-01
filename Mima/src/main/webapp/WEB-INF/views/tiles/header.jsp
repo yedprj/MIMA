@@ -54,26 +54,22 @@
 								<!-- 홈 nav 끝 -->
 								
 								<!-- 진료예약 nav 시작 -->
-								<li class="dropdown"><a href="index.html">진료예약</a>
+								<li class="dropdown"><a href="${pageContext.request.contextPath}/reservationForm">진료예약</a>
 									<ul>
 										<li class="dropdown"><a href="doctors-dashboard.html">진료과목</a>
 											<ul>
-												<li><a href="doctors-dashboard.html">Dashboard</a></li>
-												<li><a href="appointment.html">Appointments</a></li>
-												<li><a href="my-patients.html">My Patients</a></li>
-												<li><a href="add-listing.html">Add Listing</a></li>
-												<li><a href="schedule-timing.html">Schedule Timing</a></li>
-												<li><a href="review.html">Reviews</a></li>
-												<li><a href="message.html">Messages</a></li>
-												<li><a href="my-profile.html">My Profile</a></li>
-												<li><a href="change-password.html">Change Password</a></li>
-												<li><a href="login.html">Logout</a></li>
+												<li><a href="doctors-dashboard.html">정신분석 / 정신치료</a></li>
+												<li><a href="appointment.html">스트레스 / 트라우마 </a></li>
+												<li><a href="my-patients.html">기분장애 / 공황 • 불안장애</a></li>
+												<li><a href="add-listing.html">신경증 / 성격장애</a></li>
+												<li><a href="schedule-timing.html">직장인 정신건강</a></li>
+												<li><a href="review.html">중독장애</a></li>
+												<li><a href="message.html">노인장애</a></li>
+												<li><a href="my-profile.html">해리장애(다중인격)</a></li>
 											</ul></li>
 										<li><a href="doctors-1.html">빠른 진료상담</a></li>
 										<li><a href="doctors-2.html">추천의사</a></li>
 										<li><a href="doctors-3.html">의사검색</a></li>
-										<li><a href="doctors-4.html">Doctors Page 04</a></li>
-										<li><a href="doctors-details.html">Doctors Details</a></li>
 									</ul>
 								</li>
 								<!-- 진료예약 nav 끝 -->

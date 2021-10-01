@@ -10,7 +10,6 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
 <title>Docpro - HTML 5 Template Preview</title>
-
 <!-- Fav Icon -->
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/assets/images/favicon.ico"
@@ -58,6 +57,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>	
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 </head>
 
 
