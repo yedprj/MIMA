@@ -15,7 +15,7 @@ public class FileCheckTask {
 	
 	@Autowired PostService postService;
 	
-	@Scheduled(cron="0 0 0 * * *")
+	@Scheduled(cron="0 * * * * *")
 	public void checkFiles() throws Exception{
 		
 		log.info("지난 날짜 삭제 확인");
