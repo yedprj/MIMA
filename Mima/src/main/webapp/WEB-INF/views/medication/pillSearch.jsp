@@ -13,6 +13,10 @@
 	cursor : pointer;
  	width: 500px;  	
 }
+.nice-select {
+	padding: 0px 0px;
+	padding-left : 17px;
+}
 </style>
 
 <!-- sidebar-page-container -->

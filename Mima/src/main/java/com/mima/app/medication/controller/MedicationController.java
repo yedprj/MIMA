@@ -87,35 +87,38 @@ public class MedicationController {
         conn.disconnect();
         
         // String -> JSON 변환
-        
+        List<PillSearchVO> pList = new ArrayList<PillSearchVO>();
+        System.out.println(sb.toString());
         String value = sb.toString();
         JSONObject firstJson = new JSONObject(value);
         String bodyValue = firstJson.get("body").toString();
         JSONObject twoJson = new JSONObject(bodyValue);
         
-        
+        if(twoJson.getInt("totalCount") == 0) {
+        	pList = null;
+        } else { 
         
         JSONArray jArry = twoJson.getJSONArray("items");
         
-        List<PillSearchVO> pList = new ArrayList<PillSearchVO>();
 		// 객채에 담음
-		for (int i=0; i<jArry.length(); i++) {
-			JSONObject JO = jArry.getJSONObject(i);
-			PillSearchVO pill = new PillSearchVO();
-			if(!JO.isNull("entpName")) { pill.setEntpName(String.valueOf(JO.get("entpName")));  }
-			if(!JO.isNull("itemName")) { pill.setItemName(String.valueOf(JO.get("itemName"))); }
-			if(!JO.isNull("itemSeq")) { pill.setItemSeq(Integer.parseInt(JO.get("itemSeq").toString())); }
-			if(!JO.isNull("efcyQesitm")) { pill.setEfcyQesitm(String.valueOf(JO.get("efcyQesitm"))); }
-			if(!JO.isNull("useMethodQesitm")) { pill.setUseMethodQesitm(String.valueOf(JO.get("useMethodQesitm"))); }
-			if(!JO.isNull("atpnWarnQesit")) { pill.setAtpnWarnQesitm(String.valueOf(JO.get("atpnWarnQesit"))); }
-			if(!JO.isNull("atpnQesitm")) { pill.setAtpnQesitm(String.valueOf(JO.get("atpnQesitm"))); }
-			if(!JO.isNull("seQesitm")) { pill.setSeQesitm(String.valueOf(JO.get("seQesitm"))); }
-			if(!JO.isNull("depositMethodQesitm")) { pill.setDepositMethodQesitm(String.valueOf(JO.get("depositMethodQesitm"))); }
-			if(!JO.isNull("openDe")) { pill.setOpenDe(String.valueOf(JO.get("openDe"))); }
-			if(!JO.isNull("updateDe")) { pill.setUpdateDe(String.valueOf(JO.get("updateDe"))); }
-			if(!JO.isNull("itemImage")) { pill.setItemImage(String.valueOf(JO.get("itemImage"))); }
-			pList.add(pill);
-		} 
+			for (int i=0; i<jArry.length(); i++) {
+				JSONObject JO = jArry.getJSONObject(i);
+				PillSearchVO pill = new PillSearchVO();
+				if(!JO.isNull("entpName")) { pill.setEntpName(String.valueOf(JO.get("entpName")));  }
+				if(!JO.isNull("itemName")) { pill.setItemName(String.valueOf(JO.get("itemName"))); }
+				if(!JO.isNull("itemSeq")) { pill.setItemSeq(Integer.parseInt(JO.get("itemSeq").toString())); }
+				if(!JO.isNull("efcyQesitm")) { pill.setEfcyQesitm(String.valueOf(JO.get("efcyQesitm"))); }
+				if(!JO.isNull("useMethodQesitm")) { pill.setUseMethodQesitm(String.valueOf(JO.get("useMethodQesitm"))); }
+				if(!JO.isNull("atpnWarnQesit")) { pill.setAtpnWarnQesitm(String.valueOf(JO.get("atpnWarnQesit"))); }
+				if(!JO.isNull("atpnQesitm")) { pill.setAtpnQesitm(String.valueOf(JO.get("atpnQesitm"))); }
+				if(!JO.isNull("seQesitm")) { pill.setSeQesitm(String.valueOf(JO.get("seQesitm"))); }
+				if(!JO.isNull("depositMethodQesitm")) { pill.setDepositMethodQesitm(String.valueOf(JO.get("depositMethodQesitm"))); }
+				if(!JO.isNull("openDe")) { pill.setOpenDe(String.valueOf(JO.get("openDe"))); }
+				if(!JO.isNull("updateDe")) { pill.setUpdateDe(String.valueOf(JO.get("updateDe"))); }
+				if(!JO.isNull("itemImage")) { pill.setItemImage(String.valueOf(JO.get("itemImage"))); }
+				pList.add(pill);
+			} 
+		}
 
 		return pList;
         
