@@ -206,8 +206,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 						</div>
 					</div>
 					<div></div>
-					<div class="d-grid gap-2">
-					  <button style="height: 100%; width: 100%" class="theme-btn-one" type="button" id="addBtn">더보기+</button>
+					<div class="d-grid gap-2" id="btnContents">
+					  <!--더보기 버튼  -->
 					</div>
 					<br><br>
 				</div>
@@ -506,7 +506,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	} // 포스트 등록 end	
 
 
-	// POST 더보기 클릭시 포스트잇 추가(페이징처리)
+	// POST 더보기 클릭시 포스트잇 추가(페이징처리) - 최신순 리스트
 	$(document).on("click","#addBtn",function(){
 				
 		var divCount = $(".postContents #post").length;
@@ -548,7 +548,6 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					}); // each end	
 			} // success end
 		}); //ajax end
-		$("<button id='addBtn' />").html("더보기");
 		console.log(pageNum);
 		console.log(Math.ceil(postCount/9));
 		if (pageNum == Math.ceil(postCount/9) ){
@@ -562,7 +561,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	
 	//페이지 목록 조회
 	function postList() {
-	
+		$("#rdBtn").remove();
 		//addBtn(pageNum, amount);
 		pageNum = 1;
 		amount = 9;
@@ -604,7 +603,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					}); // each end	
 			} // success end
 		}) //ajax end
-		$("<button id='addBtn' />").html("더보기");
+		$("#btnContents").append($("<button style='height: 100%; width: 100%' class='theme-btn-one' type='button' id='addBtn'>더보기+</button>"));
 	} // 페이지목록 조회 end
 	
 	// 객체 생성
@@ -613,6 +612,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	//랜덤 페이지 목록 조회
 	$(document).on("click", "#random", function randomList() {
 		arry =[];
+		$("#addBtn").remove();
 		$.ajax({
 			url : "randomList",
 			method : "get",
@@ -624,20 +624,12 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				$(".postContents").empty();
 				$.each(datas,function(i, data) {
 					var myObj = { 
-							postNo : data.postNo,
-							memberNo : data.memberNo,
-							postDate : data.postDate,
-							contents : data.contents,
-							postLike : data.postLike,
-							postColor :data.postColor,
-							reportMno : data.reportMno,
-							likesNo : data.likesNo
+							postNo : data.postNo,memberNo : data.memberNo,postDate : data.postDate,	contents : data.contents,
+							postLike : data.postLike,postColor :data.postColor,	reportMno : data.reportMno,likesNo : data.likesNo
 						}
 					arry.push(myObj);	
 				}); // each end
-				console.log(arry);
 				for	(var i=0; i < 9; i++ ){
-					console.log(i , arry[i]);
 					if(arry[i].reportMno == 1){ angryStr = 'background-color: #061a3a;'; }else {
 						angryStr = '';	}
 					if(arry[i].likesNo == 1){ heartStr = 'background-color: #061a3a;'; }else {
@@ -656,11 +648,44 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							+ '</h4></div>'
 							+ '</div></figure></div></div>')
 						.appendTo($(".postContents"));
-					
-				}	
-			} // success end
-		}) //ajax end
+				} // for문 end	
+				//$("<button id='rdBtn' />").val("더보기").appendTo($(".postContents"));
+				$("#btnContents").append($("<button style='height: 100%; width: 100%' class='theme-btn-one' type='button' id='rdBtn'>더보기+</button>"));
+				
+			} // success end			
+		}); //ajax end
 	}); // 랜덤 페이지목록 조회 end
+	
+	$(document).on("click","#rdBtn",function(){
+		var cnt = $(".postContents #post").length; // 현재 포스트 갯수 구하기
+		var arryLen = arry.length;
+		console.log("리스트"+ Math.ceil(arryLen/9));
+		console.log("현재갯수"+(cnt/9));
+		if( (cnt/9) ==  Math.ceil(arryLen/9)-1  ){
+			$("#rdBtn").remove();
+		}
+		for	(var i=0; i < 9; i++ ){
+			if(arry[i+cnt].reportMno == 1){ angryStr = 'background-color: #061a3a;'; }else {
+				angryStr = '';	}
+			if(arry[i+cnt].likesNo == 1){ heartStr = 'background-color: #061a3a;'; }else {
+				heartStr = '';	}
+			$("<div id='post' data-postNo='"+arry[i+cnt].postNo+"' data-memberNo='"+arry[i+cnt].memberNo+"' class='col-lg-4 col-md-6 col-sm-12 team-block'>")
+				.append(
+					"<div class='team-block-three'>"
+					+ '<div class="inner-box">'
+					+ '<figure class="image-box">'
+					+ '<img src="${pageContext.request.contextPath}/resources/assets/images/post/'+arry[i+cnt].postColor+'" alt=""> '
+					+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
+					+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
+					+ '<div class="textBox">'
+					+ '<div><h4>'
+					+ arry[i+cnt].contents
+					+ '</h4></div>'
+					+ '</div></figure></div></div>')
+				.appendTo($(".postContents"));
+		} // for문 end 
+		
+	});
 	
 	$(document).on("click", "#last", function randomList() {
 		postList();
