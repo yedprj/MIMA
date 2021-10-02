@@ -18,7 +18,9 @@
 								<h3>신고글 조회</h3>
 							</div>
 							<div class="btn-box pull-right">
-								<form action="my-patients.html" method="post"
+							<!-- e.2 -->
+							<!-- 검색기능 -->
+								<form action="rplist" method="post"
 									class="search-form">
 									<div class="form-group">
 										<input type="search" name="search-field" placeholder="Search"
@@ -28,6 +30,7 @@
 										</button>
 									</div>
 								</form>
+							<!-- 검색기능 end -->
 							</div>
 						</div>
 						<div class="doctors-list">
@@ -71,39 +74,6 @@
 					</div>
 					<!-- e.1 -->
 					<!-- pagination  -->
-					
-					<form id="actionForm" action="rplist" method="get">
-						<select name="type">
-						<option value=""
-							<c:out value="${pageMaker.cri.type == null ? 'selected':'' }"/>
-						>선택</option>
-						<option value="T" 
-							<c:out value="${pageMaker.cri.type eq 'T'? 'selected':'' }"/>
-						>제목</option>
-						<option value="C"
-							<c:out value="${pageMaker.cri.type eq 'C'? 'selected':'' }"/>
-						>내용</option>
-						<option value="W"
-							<c:out value="${pageMaker.cri.type eq 'W'? 'selected':'' }"/>
-						>작성자</option>
-						<option value="TC"
-							<c:out value="${pageMaker.cri.type eq 'TC'? 'selected':'' }"/>
-						>제목 or 내용</option>
-						<option value="TW" 
-							<c:out value="${pageMaker.cri.type eq 'TW'? 'selected':'' }"/>
-						>제목 or 작성자</option>
-						<option value="TWC"
-							<c:out value="${pageMaker.cri.type eq 'TWC'? 'selected':'' }"/>
-						>제목 or 내용 or 작성자</option>
-						</select>
-						<input type="text" name="keyword" value="${pageMaker.cri.keyword }">
-
-		               <input type="hidden" id="pageNum" name="pageNum" value="1">
-		               <input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
-		            	<button class='btn btn-default'>Search</button>
-		            </form>
-					
-					
 					<div class="pagination-wrapper" align="center">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev }">
