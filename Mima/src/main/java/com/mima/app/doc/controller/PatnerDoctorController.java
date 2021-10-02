@@ -10,6 +10,8 @@ import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.service.CscService;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
+import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
 
@@ -20,6 +22,7 @@ public class PatnerDoctorController {
 	@Autowired BookingService bookingService;
 	@Autowired CommentsService commentsService;
 	@Autowired CscService cscService;
+	@Autowired PartnerDoctorService doctorService;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("docMain")
@@ -56,6 +59,12 @@ public class PatnerDoctorController {
 	@GetMapping("docQna")
 	public void docQna(Model model, CscVO cscvo) {
 		model.addAttribute("docQna", cscService.docQna());
+	}
+	
+	// 닥터 대쉬보드 프로필 페이지_J02
+	@GetMapping("docProfile")
+	public void docProfile(Model model, PartnerDoctorVO docvo) {
+		model.addAttribute("docProfile", doctorService.docProfile());
 	}
 	
 	/*
