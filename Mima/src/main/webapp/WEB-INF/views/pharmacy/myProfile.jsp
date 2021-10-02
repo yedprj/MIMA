@@ -169,8 +169,75 @@
 <!-- doctors-dashboard -->
         
 <script>
+
+	// 이미지 파일 넣기 테스트
+	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var maxSize = 5242880; //5MB
+
+		function checkExtension(fileName, fileSize) {
+
+			if (fileSize >= maxSize) {
+				alert("파일 사이즈 초과");
+				return false;
+			}
+
+			if (regex.test(fileName)) {
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
+				
+		$("#uploadBtn").on("click", function(){ //업로드 버튼
+			var formData = new FormData(document.frm);
+
+			var inputFile = $("input[name='upLoadFile']");
+			var files = inputFile[0].files;
+			for(i=0; i<files.length; i++){
+				if( !checkExtension(files[i].name, files[i].size) )
+					return;				
+				formData.append("upLoadFile", files[i]);
+			} 
+			//formData
+			$.ajax({
+				processData : false,
+				contentType : false,
+				url : "../uploadAjaxAction",
+				method : "post",
+				data : formData ,
+				success : function(datas){
+					var str = "";
+					for(i=0; i<datas.length; i++){
+						var obj= datas[i];
+						var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
+					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					      
+						str += "<li "
+						str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>";
+						str += "<span> "+ obj.fileName+"</span>";
+						str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
+						str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+						str += "<img src='../resources/img/attach.png'></a>";
+						str += "</div>";
+						str +"</li>";
+						
+						
+					}
+					$("#uploaded").html(str);
+					alert("uploaded");
+				}
+			}) // ajax end
+			
+			
+			
+		}); // btn end	
+
+
+
+
 // 파일 이미지 넣기
-$(document).ready(function(){
+/* $(document).ready(function(){
 
     var fileTarget = $('.file-upload .upload-hidden');
 
@@ -219,7 +286,7 @@ imgTarget.on('change', function(){
     }
 });
 //파일 이미지 넣기 끝 
-
+ */
 
 $(function() {
 	var memberNo = ${profile.memberNo};

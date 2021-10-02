@@ -1,15 +1,14 @@
 package com.mima.app.pharmacy.controller;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 
-import javax.xml.parsers.DocumentBuilderFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,15 +19,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
+import com.mima.app.pharmacy.domain.PhaDataVO;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
+
 
 @Controller
 @RequestMapping("/pharmacy/*")
@@ -81,38 +80,64 @@ public class PartnerPharmacyController {
 		return  memberSerivce.memberLogin(vo);
 	}
 	
-	@RequestMapping("/pharmacyApi")
-	public void pharmacyApi() throws IOException { 
-		
-		String url ="http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyFullDown";
-		String serviceKey = "kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D";
-		String decodeServiceKey = URLDecoder.decode(serviceKey,"UTF-8");
-		String pageNo = "1";
-		String numbOfRows = "23414";
-		
-		try {
-		Document documentInfo = DocumentBuilderFactory.newInstance()
-													  .newDocumentBuilder()
-													  .parse(url + "?serviceKey=" + serviceKey + "&pageNo="+ pageNo + "&numOfRows=" + numbOfRows);
-		
-		documentInfo.getDocumentElement().normalize();
-		
-		// 파싱 
-		NodeList nList = documentInfo.getElementsByTagName("item");
-		for(int temp=0; temp < nList.getLength(); temp++) {
-			Node nNode = nList.item(temp);
-			if(nNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element eElement = (Element) nNode;
-				System.out.println("약국주소:"+getTagValue("dutyAddr",eElement));
-				
-				System.out.println("약국주소:"+getTagValue("dutyTel1",eElement));
-				System.out.println("좌표1:"+getTagValue("wgs84Lat",eElement));
-				System.out.println("좌표2:"+getTagValue("wgs84Lon",eElement));
-				}
+	
+	
+	// 파일 
+	
+	// Ajax
+	@PostMapping("/uploadAjaxAction")
+	@ResponseBody
+	public List<PhaDataVO> uploadAjaxAction(MultipartFile[] upLoadFile, PhaDataVO vo) throws IllegalStateException, IOException{
+		// 첨부파일 부분
+		List<PhaDataVO> list = new ArrayList<PhaDataVO>();
+		String path = "c:/upload";
+		for (int i = 0; i < upLoadFile.length; i++) {
+			MultipartFile ufile = upLoadFile[i];
+			if (!ufile.isEmpty() && ufile.getSize() > 0) {
+				String fileName = ufile.getOriginalFilename();
+				UUID uuid = UUID.randomUUID();
+				File file = new File(path, uuid + fileName);
+				ufile.transferTo(file); // 실제위치로 전송
+				// 파일정보
+				PhaDataVO attachvo = new PhaDataVO();
+				/*
+				 * attachvo.setid.toString()); 
+				 * attachvo.setFileName(fileName);
+				 * attachvo.setUploadPath(path); 
+				 * list.add(attachvo);
+				 */
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		return list;
+	}
+	
+	/*
+	 * @RequestMapping("/pharmacyApi") public void pharmacyApi() throws IOException
+	 * {
+	 * 
+	 * String url
+	 * ="http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyFullDown";
+	 * String serviceKey =
+	 * "kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D";
+	 * String decodeServiceKey = URLDecoder.decode(serviceKey,"UTF-8"); String
+	 * pageNo = "1"; String numbOfRows = "23414";
+	 * 
+	 * try { Document documentInfo = DocumentBuilderFactory.newInstance()
+	 * .newDocumentBuilder() .parse(url + "?serviceKey=" + serviceKey + "&pageNo="+
+	 * pageNo + "&numOfRows=" + numbOfRows);
+	 * 
+	 * documentInfo.getDocumentElement().normalize();
+	 * 
+	 * // 파싱 NodeList nList = documentInfo.getElementsByTagName("item"); for(int
+	 * temp=0; temp < nList.getLength(); temp++) { Node nNode = nList.item(temp);
+	 * if(nNode.getNodeType() == Node.ELEMENT_NODE) { Element eElement = (Element)
+	 * nNode; System.out.println("약국주소:"+getTagValue("dutyAddr",eElement));
+	 * 
+	 * System.out.println("약국주소:"+getTagValue("dutyTel1",eElement));
+	 * System.out.println("좌표1:"+getTagValue("wgs84Lat",eElement));
+	 * System.out.println("좌표2:"+getTagValue("wgs84Lon",eElement)); } } } catch
+	 * (Exception e) { e.printStackTrace(); }
+	 */
 
 		
         
@@ -157,15 +182,15 @@ public class PartnerPharmacyController {
         */
         
         
-	}
+//	}
 
-	private String getTagValue(String tag, Element eElement) {
-		// TODO Auto-generated method stub
-		NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-		Node nValue = (Node) nlList.item(0);
-		if(nValue == null) return null;
-		return nValue.getNodeValue();
-	}
+//	private String getTagValue(String tag, Element eElement) {
+//		// TODO Auto-generated method stub
+//		NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
+//		Node nValue = (Node) nlList.item(0);
+//		if(nValue == null) return null;
+//		return nValue.getNodeValue();
+//	}
 	
 
 	
