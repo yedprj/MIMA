@@ -69,23 +69,54 @@
 							</div>
 						</div>
 					</div>
-					<!-- e.30 -->
+					<!-- e.1 -->
 					<!-- pagination  -->
+					
+					<form id="actionForm" action="rplist" method="get">
+						<select name="type">
+						<option value=""
+							<c:out value="${pageMaker.cri.type == null ? 'selected':'' }"/>
+						>선택</option>
+						<option value="T" 
+							<c:out value="${pageMaker.cri.type eq 'T'? 'selected':'' }"/>
+						>제목</option>
+						<option value="C"
+							<c:out value="${pageMaker.cri.type eq 'C'? 'selected':'' }"/>
+						>내용</option>
+						<option value="W"
+							<c:out value="${pageMaker.cri.type eq 'W'? 'selected':'' }"/>
+						>작성자</option>
+						<option value="TC"
+							<c:out value="${pageMaker.cri.type eq 'TC'? 'selected':'' }"/>
+						>제목 or 내용</option>
+						<option value="TW" 
+							<c:out value="${pageMaker.cri.type eq 'TW'? 'selected':'' }"/>
+						>제목 or 작성자</option>
+						<option value="TWC"
+							<c:out value="${pageMaker.cri.type eq 'TWC'? 'selected':'' }"/>
+						>제목 or 내용 or 작성자</option>
+						</select>
+						<input type="text" name="keyword" value="${pageMaker.cri.keyword }">
+
+		               <input type="hidden" id="pageNum" name="pageNum" value="1">
+		               <input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
+		            	<button class='btn btn-default'>Search</button>
+		            </form>
+					
+					
 					<div class="pagination-wrapper" align="center">
 						<ul class="pagination">
-						
 							<c:if test="${pageMaker.prev }">
-							<li><a href="${pageMaker.startPage-1 }" class="current">1</a></li>
+								<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">이전</a></li>
 							</c:if>
-							
+								
 							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-							<li><a href=""${num }">2</a></li>
+								<li class="paginate_button"><a href="${num }">${num }</a></li>
 							</c:forEach>
-							
-							<c:if test="${pageMaker.next }">							
-							<li><a href="${pageMaker.endPage+1 }"><i class="icon-Arrow-Right"></i></a></li>
+								
+							<c:if test="${pageMaker.next }">
+								<li class="paginate_button next"><a href="${pageMaker.endPage+1 }">다음</a></li>
 							</c:if>
-							
 						</ul>
 					</div>
 					<!-- pagination end -->
@@ -106,10 +137,40 @@
 	<!-- doctors-dashboard -->
 
 
+
 	<!--Scroll to top-->
 	<button class="scroll-top scroll-to-target" data-target="html">
 		<span class="fa fa-arrow-up"></span>
 	</button>
 </div>
 
+<script>
+	 $(document).ready(function() {
+		 var actionForm = $('#actionForm');
+		 
+		 //e.1
+		 //페이징
+		 $(".move").on('click', function(e){
+			 e.preventDefault();
+			 actionForm.append('<input type="hidden" id="bno" name="bno" value="'+ $(this).attr("href") +'">');
+			 actionForm.attr("action", "get");
+			 actionForm.submit();
+		 });
+		 
+		 
+		 //e.1
+		 //페이징 
+		 $("#pageButton a").on("click", function(e){
+			 e.preventDefault(); //a tag, submit
+			 console.log('clicked')
+			 var p=$(this).attr("href");
+			 $('[name="pageNum"]').val(p);
+			 
+			 actionForm.submit();
+		 });
 
+			/* $('#board').DataTable({
+	            responsive: true
+	        });*/
+	    });
+	</script>

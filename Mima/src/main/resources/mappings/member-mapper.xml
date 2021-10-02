@@ -47,7 +47,7 @@
 	
 	<!-- 회원 세션 유지를 위한 한건 조회 p.30 -->
 	<select id="getUserById" parameterType="String" resultType="MemberVO">
-		SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}	
+		SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} AND STATUS='y'
 	</select>
 	
 	<!-- 회원가입 -->

@@ -36,11 +36,13 @@ public class ReportController {
 			List<RmemberVO> list = new ArrayList<RmemberVO>();
 			list = reportService.rmemberReportSelectList();
 			model.addAttribute("list", list);
+
 		}else{
 			//페이지 눌러서 들어간 경우
 			model.addAttribute("list", reportService.getList(cri));
 			int total =  reportService.getTotalCount(cri);
 			model.addAttribute("pageMaker", new PageVO(cri,total));
+			System.out.println("" + total + reportService.getList(cri));
 		}
 	}
 	
