@@ -1,265 +1,208 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<style>
-.file-upload label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #999;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #fdfdfd;
-    cursor: pointer;
-    border: 1px solid #ebebeb;
-    border-bottom-color: #e2e2e2;
-    border-radius: .25em;
-}
-.file-upload input[type="file"] {  /* 파일 필드 숨기기 */
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0;
-}
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-.file-upload input[type="file"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0;
-}
-
-.file-upload label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #999;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #fdfdfd;
-    cursor: pointer;
-    border: 1px solid #ebebeb;
-    border-bottom-color: #e2e2e2;
-    border-radius: .25em;
-}
-
-/* named upload */
-.file-upload .upload-name {
-    display: inline-block;
-    padding: .5em .75em;  /* label의 패딩값과 일치 */
-    font-size: inherit;
-    font-family: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #f5f5f5;
-    border: 1px solid #ebebeb;
-    border-bottom-color: #e2e2e2;
-    border-radius: .25em;
-    -webkit-appearance: none; /* 네이티브 외형 감추기 */
-    -moz-appearance: none;
-    appearance: none;
-}
-/* imaged preview */
-.file-upload .upload-display {  /* 이미지가 표시될 지역 */
-    margin-bottom: 5px;
-}
-
-@media(min-width: 768px) { 
-    .file-upload .upload-display {
-        display: inline-block;
-        margin-right: 5px;
-        margin-bottom: 0;
-    }
-}
-
-.file-upload .upload-thumb-wrap {  /* 추가될 이미지를 감싸는 요소 */
-    display: inline-block;
-    width: 150px;
-    padding: 2px;
-    vertical-align: middle;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-.file-upload .upload-display img {  /* 추가될 이미지 */
-    display: block;
-    max-width: 100%;
-    width: 100% \9;
-}
-</style>
-    
-<section class="doctors-dashboard bg-color-3">
-	<!-- 사이드 메뉴바 연결 -->
-	
-	<div class="right-panel">
-        <div class="content-container">
-            <div class="outer-container">
-                <div class="add-listing my-profile">
-                    <div class="single-box">
-                        <div class="title-box">
-                            <h3>약국 프로필</h3>
-                        </div>
-                        <div class="inner-box">
-                            <div class="profile-title">
-                                <figure class="image-box"><img style="height:150px;" src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png" alt=""></figure>
-                                <div class="file-upload preview-image">
-								    <input type="text" class="upload-name" value="파일선택" disabled="disabled">
-								    <label for="input-file">업로드</label> 
-								    <input type="file" id="input-file" class="upload-hidden" name="pharmacyphoto"> 
-								    <br><span>프로필 이미지를 등록해주세요 ,최대 2MB(JPG, GIF, PNG)</span>
-								</div>
-								<br> 
-								<!-- <div class="form-group">
-									<input type="file"  id="upLoadFile" name="upLoadFile" multiple="multiple">
-									<button type="button" id="uploadBtn">첨부파일등록</button>
-								</div>
-								<div class="form-group">
-									<label>파일 목록</label> 
-									<ul id="uploaded"></ul>
-								</div> -->
-                            </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <label><b>약국명</b></label>
-                                        <input type="text" name="pharmacyInfo" value="${profile.pharmacyInfo}" >
-                                    </div>
-                                  
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <label><b>이메일</b></label>
-                                        <input type="email" name="pharmacyEmail" value="${profile.pharmacyEmail}">
-                                    </div>
-                                    
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <label><b>연락처</b></label>
-                                        <input type="text" name="pharmacyContact" value="${profile.pharmacyContact}">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                      <label><b>영업시간</b></label>
-                                      <input type="text" name="pharmacy" >
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                      <label><b>약국주소</b></label>
-                                      <input type="text" name="deliveryArea" value="${profile.deliveryArea}">
-                                  </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                        <label><b>간단 소개글</b></label>
-                                        <textarea name="profileContents" placeholder="약국 소개글을 간단하게 입력해주세요"></textarea>
-                                    </div>
-                              </div>
-                        </div>
-                    </div>
-                    <div class="btn-box">
-                        <a id="updateBtn" class="theme-btn-one">프로필 수정<i class="icon-Arrow-Right"></i></a>
+<!--page-title-two-->
+        <section class="page-title-two">
+            <div class="title-box centred bg-color-2">
+                <div class="pattern-layer">
+                    <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-70.png);"></div>
+                    <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-71.png);"></div>
+                </div>
+                <div class="auto-container">
+                    <div class="title">
+                        <h1>프로필 관리</h1>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!-- doctors-dashboard -->
-        
-<script>
-// 파일 이미지 넣기
-$(document).ready(function(){
-
-    var fileTarget = $('.file-upload .upload-hidden');
-
-    fileTarget.on('change', function(){  // 값이 변경되면
-         if(window.FileReader){  // modern browser
-              var filename = $(this)[0].files[0].name;
-         } 
-         else {  // old IE
-              var filename = $(this).val().split('/').pop().split('\\').pop();  // 파일명만 추출
-         }
-
-         // 추출한 파일명 삽입
-         $(this).siblings('.upload-name').val(filename);
-    });
-}); 
-
-//preview image 
-var imgTarget = $('.preview-image .upload-hidden');
-
-imgTarget.on('change', function(){
-    var parent = $(this).parent();
-    parent.children('.upload-display').remove();
-
-    if(window.FileReader){
-         //image 파일만
-         if (!$(this)[0].files[0].type.match(/image\//)) return;
-
-         var reader = new FileReader();
-         reader.onload = function(e){
-              var src = e.target.result;
-              //parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-              $(".image-box > img").attr("src",src);
-              
-         }
-         reader.readAsDataURL($(this)[0].files[0]);
-    }
-
-    else {
-         $(this)[0].select();
-         $(this)[0].blur();
-         var imgSrc = document.selection.createRange().text;
-         parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
-
-         var img = $(this).siblings('.image-box').find('img');
-         img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
-    }
-});
-//파일 이미지 넣기 끝 
+            <div class="lower-content">
+                <ul class="bread-crumb clearfix">
+                    <li><a href="${pageContext.request.contextPath}">Home</a></li>
+                    <li>프로필 관리</li>
+                </ul>
+            </div>
+        </section>
+        <!--page-title-two end-->
 
 
-$(function() {
-	var memberNo = ${profile.memberNo};
-	
-	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-	var maxSize = 5242880; //5MB
-
-	function checkExtension(fileName, fileSize) {
-		if (fileSize >= maxSize) {
-			alert("파일 사이즈 초과");
-			return false;
-		}
-		if (regex.test(fileName)) {
-			alert("해당 종류의 파일은 업로드할 수 없습니다.");
-			return false;
-		}
-		return true;
-	}
-		
-	// 수정버튼 클릭
-	$("#updateBtn").on("click", function(){
-		// 수정 ajax 호출
-		$.ajax({
-			url : "profileUpdate",
-			method : "put",
-			dataType : "json",
-			data : JSON.stringify({
-				memberNo : memberNo,
-				profilePhoto : $('input[name="pharmacyphoto"]').val(),
-				profileContents : $('input[name="profileContents"]').val(),
-				pharmacyContact : $('input[name="pharmacyContact"]').val(),
-				pharmacyEmail : $('input[name="pharmacyEmail"]').val(),
-				deliveryArea : $('input[name="deliveryArea"]').val()
-			}),
-			contentType : 'application/json',
-			success : function(data) {
-				alert("프로필 수정이 완료되었습니다.");
-			}// success end
-		}); //  ajax end
-		
-		
-	}); // updateBtn end
-	
-}); // $.function end
-</script>
+        <!-- doctors-dashboard -->
+        <section class="doctors-dashboard bg-color-3">
+            <div class="left-panel">
+                <div class="profile-box">
+                    <div class="upper-box">
+                        <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
+                        <div class="title-box centred">
+                            <div class="inner">
+                                <h3>Dr. Rex Allen</h3>
+                                <p>MDS - Periodontology</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <ul class="list clearfix">
+							<li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+							<li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
+							<li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
+							<li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
+							<li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
+							<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
+							<li><a href="docProfile"><i class="fas fa-user"></i>프로필 관리</a></li>
+							<li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
+							<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+						</ul>
+                    </div>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="content-container">
+                    <div class="outer-container">
+                        <div class="add-listing">
+                            <div class="single-box">
+                                <div class="title-box">
+                                    <h3>기본 정보</h3>
+                                </div>
+                                <div class="inner-box">
+                                    <form action="add-listing.html" method="post">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>이름</label>
+                                                <input type="text" name="name" placeholder="이름을 입력하세요." required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>연락처</label>
+                                                <input type="text" name="phone" placeholder="연락처를 입력하세요." required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>이메일</label>
+                                                <input type="email" name="email" placeholder="이메일을 입력하세요." required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>진료과목</label>
+                                                <input type="text" name="subject" placeholder="진료과목을 입력하세요." required="">
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                <label>프로필 사진</label>
+                                                <input type="file" name="uploaded_file">
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                <label>약력</label>
+                                                <textarea name="message" placeholder="약력을 입력하세요."></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="single-box">
+                                <div class="title-box">
+                                    <h3>진료기관 정보</h3>
+                                    <a href="add-listing.html" class="menu"><i class="icon-Dot-menu"></i></a>
+                           
+                                </div>
+                                <div class="inner-box">
+                                    <form action="add-listing.html" method="post">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>주소</label>
+                                                <input type="text" name="address" placeholder="Enter your City" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>연락처</label>
+                                                <input type="text" name="hphone" placeholder="Enter your Address" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>State</label>
+                                                <input type="text" name="state" placeholder="State" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>Zip code</label>
+                                                <input type="text" name="zip" placeholder="Zip code" required="">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="single-box">
+                                <div class="title-box">
+                                    <h3>Curriculum</h3>
+                                    <a href="add-listing.html" class="menu"><i class="icon-Dot-menu"></i></a>
+                                </div>
+                                <div class="inner-box">
+                                    <form action="add-listing.html" method="post">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                <label>Biography</label>
+                                                <textarea name="message" placeholder="Enter your name"></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="single-box">
+                                <div class="title-box">
+                                    <h3>Social Network Info</h3>
+                                    <a href="add-listing.html" class="menu"><i class="icon-Dot-menu"></i></a>
+                                    <a href="add-listing.html" class="theme-btn-one">Add More<i class="icon-image"></i></a>
+                                </div>
+                                <div class="inner-box">
+                                    <form action="add-listing.html" method="post">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>Facebook URL</label>
+                                                <input type="text" name="url" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>Twitter URL</label>
+                                                <input type="text" name="url2" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>Google Plus URL</label>
+                                                <input type="text" name="url3" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>Instagram URL</label>
+                                                <input type="text" name="url4" required="">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="single-box">
+                                <div class="title-box">
+                                    <h3>Pricing</h3>
+                                    <a href="add-listing.html" class="menu"><i class="icon-Dot-menu"></i></a>
+                                    <a href="add-listing.html" class="theme-btn-one">Add More<i class="icon-image"></i></a>
+                                </div>
+                                <div class="inner-box">
+                                    <form action="add-listing.html" method="post">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>Treatment</label>
+                                                <input type="text" name="treatment" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>PriceL</label>
+                                                <input type="text" name="price" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>Treatment</label>
+                                                <input type="text" name="treatment2" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>Price</label>
+                                                <input type="text" name="price2" required="">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="btn-box">
+                                <a href="add-listing.html" class="theme-btn-one">Save Change<i class="icon-Arrow-Right"></i></a>
+                                <a href="add-listing.html" class="cancel-btn">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- doctors-dashboard -->

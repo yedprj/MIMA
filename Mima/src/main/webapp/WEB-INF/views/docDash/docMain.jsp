@@ -53,8 +53,7 @@ th, td {
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a href="docMain" class="current"><i
-							class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
 					<li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
 					<li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
@@ -242,7 +241,7 @@ th, td {
 					<div class="title-box">
 						<h3>나의 후기</h3>
 						<div class="btn-box">
-							<a href="patient-dashboard.html" class="theme-btn-one">전체보기<i
+							<a href="docReview" class="theme-btn-one">전체보기<i
 								class="icon-Arrow-Right"></i></a>
 						</div>
 					</div>
