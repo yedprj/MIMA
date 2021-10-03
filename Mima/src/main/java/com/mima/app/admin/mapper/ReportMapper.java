@@ -23,7 +23,7 @@ public interface ReportMapper {
 	
 	//e.29
 	//관리자 신고당한사람 전체조회
-	public List<RmemberVO> rmemberReportSelect();
+	public List<RmemberVO> rmemberReportSelectList();
 	
 	//e.29
 	//관리자 신고당한사람 단건조회

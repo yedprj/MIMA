@@ -38,7 +38,30 @@
 		DELETE FROM REPORT
 		WHERE REPORT_NO=#{reportNo}
 	</delete>
+	
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
 
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							TEACHER_NAME LIKE '%'|| #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
 	<!-- e.30 -->
 	<!-- 페이징 -->
 	<select id="getList" resultType="RmemberVO">
@@ -139,36 +162,6 @@
 		</if>
 		ORDER BY A.REPORT_NO ASC
 	</select>
-
-	<!-- e.29 -->
-	<!-- 페이징 -->
-	<!-- trim 한 것 따로 빼 낸것... -->
-	<sql id="criteria">
-		<if test="category !=null and category!=''">
-			CATEGORY=#{category}
-			AND
-		</if>
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach collection="typeArr" item="type">
-				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
-				<trim prefix="or">
-					<choose>
-						<when test="type == 'T'.toString()">
-							TITLE LIKE '%'|| #{keyword} || '%'
-						</when>
-
-						<when test="type =='C'.toString()">
-							CONTENT LIKE '%'|| #{keyword} || '%'
-						</when>
-
-						<when test="type =='W'.toString()">
-							WRITER LIKE '%'|| #{keyword} || '%'
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-	</sql>
 
 	<!-- total count -->
 	<select id="getTotalCount" resultType="int">
