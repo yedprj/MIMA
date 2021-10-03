@@ -37,9 +37,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("session", auth.getPrincipal());
-		//MemberVO vo = (MemberVO) auth.getPrincipal();
-		log.info(session.getAttribute("session").toString());
 		
+		//MemberVO vo = (MemberVO) auth.getPrincipal();
+		
+		log.info("!!!!!!!!"+session.getAttribute("session").toString());
 		log.info("ROLE NAMES: " + roleNames);
 		
 		response.sendRedirect("/app");

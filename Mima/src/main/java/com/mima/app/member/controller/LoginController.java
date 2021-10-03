@@ -26,7 +26,7 @@ public class LoginController {
 		 * Cookie cookie = new Cookie("role", null); cookie.setComment("Role을 가지는 쿠키");
 		 * cookie.setMaxAge(60*60*24*365); response.addCookie(cookie);
 		 */
-		
+  
 		return "member/loginForm";
 	}
 }

@@ -1,6 +1,5 @@
 package com.mima.app.session.domain;
 
-import java.util.Date;
 
 import lombok.Data;
 
@@ -8,15 +7,15 @@ import lombok.Data;
 
 @Data
 public class PtInfoVO {
-	private int MEMBER_NO;
-	private String NAME;
-	private String IDENTIFY_NO;
-	private String GENDER;
-	private String ADDRESS;
-	private String EMAIL;
-	private String PHONE;
-	private String PAST_HX;
-	private String PRE_SELF_AX;
-	private String TOPIC;
-	private String MED_DELIVERY;
+	private int memberNo;
+	private String name;
+	private String identifyNo;
+	private String gender;
+	private String address;
+	private String email;
+	private String phone;
+	private String pastHx;
+	private String preSelfAx;
+	private String topic;
+	private String medDelivery;
 }

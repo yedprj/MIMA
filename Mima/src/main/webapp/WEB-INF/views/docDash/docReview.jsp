@@ -118,7 +118,6 @@ th, td {
              	</c:forEach>
              </ul>
              <p>${docReview.contents}</p>
-             <a href="review.html" class="replay-btn"><i class="fas fa-share"></i>이의신청</a>
          </div>
      </div>
     </c:forEach>
