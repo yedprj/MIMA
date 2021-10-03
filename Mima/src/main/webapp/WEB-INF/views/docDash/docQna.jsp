@@ -76,6 +76,7 @@ th, td {
            					<div class="comment" style="padding-left: 20px;">
                 				<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docQna.csDate}" pattern="yy-MM-dd"/></span>
 				                <p>${docQna.csTitle}</p>
+                             	<a href="review.html" class="replay-btn"><i class="fas fa-share"></i>이의신청</a>
             				</div>
         				</div>
        				</c:forEach>
