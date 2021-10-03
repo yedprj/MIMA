@@ -3,12 +3,17 @@ package com.mima.app.pharmacy.controller;
 
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,14 +26,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.domain.PhaDataVO;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
 
+import lombok.extern.java.Log;
 
+@Log
 @Controller
 @RequestMapping("/pharmacy/*")
 public class PartnerPharmacyController {
@@ -38,7 +44,13 @@ public class PartnerPharmacyController {
 	
 	// 약국 대쉬보드 [K]210929 
 	@GetMapping("/pharmacyDash")
-	public void pharmacyDash(PartnerPharmacyVO vo, Model model) {
+	public void pharmacyDash(PartnerPharmacyVO vo, Model model, HttpServletRequest request) {
+		/*
+		 * HttpSession session = request.getSession();
+		 * log.info(session.getAttribute("session").toString()); MemberVO mvo =
+		 * (MemberVO) session.getAttribute("session");
+		 * log.info("*************"+mvo.getName());
+		 */
 		model.addAttribute("profile", partPhaService.selectOne(vo));
 	}
 	
@@ -69,14 +81,16 @@ public class PartnerPharmacyController {
 
 	// 비밀번호 변경페이지 [K]210929
 	@GetMapping("/pwUpdate")
-	public void pwConfirmPage(PartnerPharmacyVO vo, Model model) {
+	public void pwConfirmPage(PartnerPharmacyVO vo, Model model, HttpServletRequest request) {
+		
 		model.addAttribute("memberNo", vo.getMemberNo());
 	}
 	
 	// 현재 비밀번호 확인페이지 [K]210929
 	@PostMapping("/pwConfirm")
 	@ResponseBody
-	public MemberVO pwConfirm(@RequestBody MemberVO vo, Model model) {
+	public MemberVO pwConfirm(@RequestBody MemberVO vo, Model model,HttpServletRequest request) {
+		
 		return  memberSerivce.memberLogin(vo);
 	}
 	
