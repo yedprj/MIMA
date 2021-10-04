@@ -20,6 +20,7 @@
 		<security:intercept-url pattern="/**" access="permitAll()"/>
 		<!-- 권한 admin만 접근 가능 -->
 		<security:intercept-url pattern="/admin/**" access="hasAuthority('ROLE_ADMIN')"/>
+
 		
 		<!--  <security:form-login/> -->
 		<security:form-login 
@@ -36,7 +37,7 @@
 			
 		<!-- 접근제한 -->
 		<security:access-denied-handler ref="customAccessDenied"/>
-		<security:csrf disabled="false"/>
+		<security:csrf disabled="true"/>
 	</security:http>
 	
 	<security:authentication-manager>
