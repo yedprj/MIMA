@@ -43,4 +43,7 @@ public interface MemberMapper {
 	
 	// 유저 세션 유지 위한 p.30
 	public MemberVO getUserById(String memberId);
+	
+	// 닥터 비밀번호 변경_J04
+	public int docPwChange(MemberVO vo);
 }

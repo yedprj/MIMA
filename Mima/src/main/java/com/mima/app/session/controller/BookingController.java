@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.mima.app.member.domain.MemberVO;
 import lombok.extern.java.Log;
 
-@Log
 @Controller
 public class BookingController {
 

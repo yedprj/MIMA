@@ -40,6 +40,10 @@
 	</delete>
 	
 	<sql id="criteria">
+		<if test="category !=null and category!=''">
+			CATEGORY=#{category}
+				AND
+	 	</if>
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach collection="typeArr" item="type">
 				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
@@ -61,6 +65,14 @@
 			</foreach>
 		</trim>
 	</sql>
+	
+	<!-- total count -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(*) FROM REPORT
+		WHERE
+		<include refid="criteria"></include>
+		REPORT_NO > 0
+	</select>
 	
 	<!-- e.30 -->
 	<!-- 페이징 -->
@@ -162,15 +174,4 @@
 		</if>
 		ORDER BY A.REPORT_NO ASC
 	</select>
-
-	<!-- total count -->
-	<select id="getTotalCount" resultType="int">
-		SELECT COUNT(*) FROM REPORT
-		WHERE
-		<include refid="criteria"></include>
-		REPORT_NO > 0
-	</select>
-
-
-
 </mapper>
