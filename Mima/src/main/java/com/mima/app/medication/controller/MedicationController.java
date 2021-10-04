@@ -13,14 +13,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.mima.app.medication.domain.DurDangerVO;
 import com.mima.app.medication.domain.DurVO;
 import com.mima.app.medication.domain.PillSearchVO;
 
@@ -127,7 +126,7 @@ public class MedicationController {
     }
 	
 	
-	// 약 API - DRUG 정보 조회 [K]211003
+	// 약 API - DRUG 정보 조회 [K]211004
 	@PostMapping("/dur")
 	@ResponseBody
 	public List<DurVO> search(@RequestBody DurVO dvo, Model model) throws IOException { 
@@ -211,6 +210,113 @@ public class MedicationController {
 		
 	}    
 	
+	// 약 병용금기 검색 페이지 [K]211004
+	@PostMapping("/durDanger")
+	@ResponseBody
+	public List<DurDangerVO> search(@RequestBody DurDangerVO ddvo, Model model) throws IOException {	
+		String str = "";
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1470000/DURPrdlstInfoService/getUsjntTabooInfoList"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D"); /*Service Key*/
+        
+        if(ddvo.getTypeName() != null) { 
+        	str = ddvo.getTypeName();
+        	urlBuilder.append("&" + URLEncoder.encode("typeName","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*DUR유형*/
+		}
+        else if (ddvo.getIngrCode() != null ) {
+			str = String.valueOf(ddvo.getIngrCode());
+			urlBuilder.append("&" + URLEncoder.encode("ingrCode","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*DUR성분코드*/
+		}
+        else if (ddvo.getItemName() != null ) {
+			str = ddvo.getItemName();
+			urlBuilder.append("&" + URLEncoder.encode("itemName","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*품목명*/
+        } 
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+        
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        log.info("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        
+        List<DurDangerVO> ddList = new ArrayList<DurDangerVO>();
+        log.info(sb.toString());
+        String value = sb.toString();
+        JSONObject firstJson = new JSONObject(value);
+        String bodyValue = firstJson.get("body").toString();
+        JSONObject twoJson = new JSONObject(bodyValue);
+        
+        if(twoJson.getInt("totalCount") == 0) {
+        	ddList = null;
+        } else { 
+        
+        JSONArray jArry = twoJson.getJSONArray("items");
+        
+		// 객채에 담음
+			for (int i=0; i<jArry.length(); i++) {
+				JSONObject JO = jArry.getJSONObject(i);
+				DurDangerVO dur = new DurDangerVO();
+				if(!JO.isNull("DUR_SEQ")) { dur.setDurSeq(String.valueOf(JO.get("DUR_SEQ"))); } 
+				if(!JO.isNull("TYPE_CODE")) { dur.setTypeCode(String.valueOf(JO.get("TYPE_CODE"))); }
+				if(!JO.isNull("TYPE_NAME")) { dur.setTypeName(String.valueOf(JO.get("TYPE_NAME"))); } 
+				if(!JO.isNull("MIX")) { dur.setMix(String.valueOf(JO.get("MIX"))); } 
+				if(!JO.isNull("INGR_CODE")) {dur.setIngrCode(String.valueOf(JO.get("INGR_CODE"))); }
+				if(!JO.isNull("INGR_KOR_NAME")) { dur.setIngrKorName(String.valueOf(JO.get("INGR_KOR_NAME"))); }
+				if(!JO.isNull("INGR_ENG_NAME")) { dur.setIngrEngName(String.valueOf(JO.get("INGR_ENG_NAME"))); }
+				if(!JO.isNull("MIX_INGR")) { dur.setMixIngr(String.valueOf(JO.get("MIX_INGR"))); }
+				if(!JO.isNull("ITEM_SEQ")) { dur.setItemSeq(String.valueOf(JO.get("ITEM_SEQ"))); }
+				if(!JO.isNull("ITEM_NAME")) { dur.setItemName(String.valueOf(JO.get("ITEM_NAME"))); }
+				if(!JO.isNull("ENTP_NAME")) { dur.setEntpName(String.valueOf(JO.get("ENTP_NAME"))); }
+				if(!JO.isNull("CHART")) { dur.setChart(String.valueOf(JO.get("CHART"))); }
+				if(!JO.isNull("FORM_CODE")) { dur.setFormCode(String.valueOf(JO.get("FORM_CODE"))); }
+				if(!JO.isNull("ETC_OTC_CODE")) { dur.setEtcOtcCode(String.valueOf(JO.get("ETC_OTC_CODE"))); }
+				if(!JO.isNull("CLASS_CODE")) { dur.setClassCode(String.valueOf(JO.get("CLASS_CODE"))); }
+				if(!JO.isNull("FORM_NAME")) { dur.setFormName(String.valueOf(JO.get("FORM_NAME"))); }
+				if(!JO.isNull("ETC_OTC_NAME")) { dur.setEtcOtcName(String.valueOf(JO.get("ETC_OTC_NAME"))); }
+				if(!JO.isNull("CLASS_NAME")) { dur.setClassName(String.valueOf(JO.get("CLASS_NAME"))); }
+				if(!JO.isNull("MAIN_INGR")) { dur.setMainIngr(String.valueOf(JO.get("MAIN_INGR"))); }
+				if(!JO.isNull("MIXTURE_DUR_SEQ")) { dur.setMixTureDurSeq(String.valueOf(JO.get("MIXTURE_DUR_SEQ"))); }
+				if(!JO.isNull("MIXTURE_MIX")) { dur.setMixTureMix(String.valueOf(JO.get("MIXTURE_MIX"))); }
+				if(!JO.isNull("MIXTURE_INGR_CODE")) { dur.setMixTureIngrCode(String.valueOf(JO.get("MIXTURE_INGR_CODE"))); }
+				if(!JO.isNull("MIXTURE_INGR_KOR_NAME")) { dur.setMixTureIngrKorName(String.valueOf(JO.get("MIXTURE_INGR_KOR_NAME"))); }
+				if(!JO.isNull("MIXTURE_INGR_ENG_NAME")) { dur.setMixTureIngrEngName(String.valueOf(JO.get("MIXTURE_INGR_ENG_NAME"))); }
+				if(!JO.isNull("MIXTURE_ITEM_SEQ")) { dur.setMixTureItemSeq(String.valueOf(JO.get("MIXTURE_ITEM_SEQ"))); }
+				if(!JO.isNull("MIXTURE_ITEM_NAME")) { dur.setMixTureItemName(String.valueOf(JO.get("MIXTURE_ITEM_NAME"))); }
+				if(!JO.isNull("MIXTURE_ENTP_NAME")) { dur.setMixTureEntpName(String.valueOf(JO.get("MIXTURE_ENTP_NAME"))); }
+				if(!JO.isNull("MIXTURE_FORM_CODE")) { dur.setMixTureFormCode(String.valueOf(JO.get("MIXTURE_FORM_CODE"))); }
+				if(!JO.isNull("MIXTURE_ETC_OTC_CODE")) { dur.setMixTureEtcOtcCode(String.valueOf(JO.get("MIXTURE_FORM_CODE"))); }
+				if(!JO.isNull("MIXTURE_CLASS_CODE")) { dur.setMixTureClassCode(String.valueOf(JO.get("MIXTURE_CLASS_CODE"))); }
+				if(!JO.isNull("MIXTURE_FORM_NAME")) { dur.setMixTureFormName(String.valueOf(JO.get("MIXTURE_FORM_NAME"))); }
+				if(!JO.isNull("MIXTURE_ETC_OTC_NAME")) { dur.setMixTureEtcOtcName(String.valueOf(JO.get("MIXTURE_ETC_OTC_NAME"))); }
+				if(!JO.isNull("MIXTURE_CLASS_NAME")) { dur.setMixTureClassName(String.valueOf(JO.get("MIXTURE_CLASS_NAME"))); }
+				if(!JO.isNull("MIXTURE_MAIN_INGR")) { dur.setMixTureMainIngr(String.valueOf(JO.get("MIXTURE_MAIN_INGR"))); }
+				if(!JO.isNull("NOTIFICATION_DATE")) { dur.setNotificationDate(String.valueOf(JO.get("NOTIFICATION_DATE"))); }
+				if(!JO.isNull("PROHBT_CONTENT")) { dur.setProhbtContent(String.valueOf(JO.get("PROHBT_CONTENT"))); }
+				if(!JO.isNull("REMARK")) { dur.setRemart(String.valueOf(JO.get("REMARK"))); }
+				if(!JO.isNull("ITEM_PERMIT_DATE")) { dur.setItemPermitDate(String.valueOf(JO.get("ITEM_PERMIT_DATE"))); }
+				if(!JO.isNull("MIXTURE_ITEM_PERMIT_DATE")) { dur.setMixTureItemPermitDate(String.valueOf(JO.get("MIXTURE_ITEM_PERMIT_DATE"))); } 
+				if(!JO.isNull("MIXTURE_CHART")) { dur.setMixTureChart(String.valueOf(JO.get("MIXTURE_CHART"))); }
+				ddList.add(dur);
+			} 
+		}
+
+		return ddList;
+        
+	}
 	
 	
 	
