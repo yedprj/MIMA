@@ -22,8 +22,6 @@
 }
 </style>
 
-
-
 	<div class="auto-container">
 		<div class="row clearfix">
 			<div class="col-lg-12 col-md-12 col-sm-12 sidebar-side">
@@ -85,8 +83,6 @@
                             </div> <!-- tab-_contents END -->
                         </div>
                     </div><!-- 검색결과 끝 -->
-                    
-                    
                     </div>
                 </div>
             </div>
@@ -484,16 +480,16 @@
 							}
 							// 제품명	
 							$(".accordion-box")
-								.append('<br><div class="title-box"><h6>품목명: '
-										+ data.itemName + '<span>품목기준코드: '+ data.itemSeq + '</span></h6></div>');
+								.append('<br><div class="title-box"><h6>병용금기품목명: '
+										+ data.mixtureItemName + '<span>병용금기전문일반구분코드['+ data.mixtureEtcOtcCode + ']  병용금기약효분류코드: '+ data.mixtureClassCode +'</span></h6></div>');
 							$('<ul class="accordion-inner">')
 								// 효능
 							.append('<li class="accordion block">'
 								+ '<div class="acc-btn"><div class="icon-outer"></div>'
 								+ '<h6><b> 병용금기 </b></h6></div>'
 	                            + '<div class="acc-content"><div class="text">'
-	                            + '<p><b>['+ data.etcOtcCode +']</b> 분류: '+data.classNo +' </p>'
-	                            + '<p> 성상:'+ data.chart +' </p>'
+	                            + '<p> 병용금기 DUR번호 : '+ data.mixtureDurSeq +', 병용금기DUR성분코드: '+data.mixtureIngrCode +' </p>'
+	                            + '<p> 병용금기DUR성분 : '+ data.mixtureIngrKorName +', 병용금기DUR성분(영문) : '+data.mixture +' </p>'
 	                        	+ '<a href="'+ str1 +'" target="_blank">'+ str1 +'</a></div></div></li>'
 	                        	// 용법용량
 	                         	+ '<li class="accordion block"><div class="acc-btn"><div class="icon-outer"></div>'
