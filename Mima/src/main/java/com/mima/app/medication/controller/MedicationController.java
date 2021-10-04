@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,10 +39,9 @@ public class MedicationController {
 	@PostMapping("/pill")
 	@ResponseBody
 	public List<PillSearchVO> search(@RequestBody PillSearchVO pvo, Model model) throws IOException { 
-		System.out.println(pvo.getItemName());
-		System.out.println(pvo.getItemSeq());
-		System.out.println(pvo.getEfcyQesitm());
-		System.out.println(pvo.getIntrcQesitm());
+		log.info(pvo.getItemName());
+		log.info(pvo.getEfcyQesitm());
+		log.info(pvo.getIntrcQesitm());
 		String str = "";
 		
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"); /*URL*/
@@ -72,14 +72,14 @@ public class MedicationController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+        log.info("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         }
-        System.out.println(rd);
+        log.info(rd.toString());
         StringBuilder sb = new StringBuilder();
         String line;
         while ((line = rd.readLine()) != null) {
@@ -90,7 +90,7 @@ public class MedicationController {
         
         // String -> JSON 변환
         List<PillSearchVO> pList = new ArrayList<PillSearchVO>();
-        System.out.println(sb.toString());
+        log.info(sb.toString());
         String value = sb.toString();
         JSONObject firstJson = new JSONObject(value);
         String bodyValue = firstJson.get("body").toString();
@@ -126,21 +126,31 @@ public class MedicationController {
         
     }
 	
+	
 	// 약 API - DRUG 정보 조회 [K]211003
-	@RequestMapping("/pillsearch2")
-	public void search2(DurVO vo) throws IOException {
-		
+	@PostMapping("/dur")
+	@ResponseBody
+	public List<DurVO> search(@RequestBody DurVO dvo, Model model) throws IOException { 
+		String str = "";
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1470000/DURPrdlstInfoService/getDurPrdlstInfoList"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("entpName","UTF-8") + "=" + URLEncoder.encode("(주)한국글로벌제약", "UTF-8")); /*업체명*/
-        urlBuilder.append("&" + URLEncoder.encode("itemName","UTF-8") + "=" + URLEncoder.encode("아스피도캡슐", "UTF-8")); /*품목명*/
+        if(dvo.getItemName() != null) { 
+        	str = dvo.getItemName();
+        	urlBuilder.append("&" + URLEncoder.encode("itemName","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*품목명*/
+		}
+        else if (dvo.getEntpName() != null ) {
+			str = String.valueOf(dvo.getEntpName());
+			urlBuilder.append("&" + URLEncoder.encode("entpName","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*업체명*/
+		}
+        
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과수*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과수*/
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
+        log.info("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -154,26 +164,136 @@ public class MedicationController {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
         
-        List<DurVO> pList = new ArrayList<DurVO>();
-        System.out.println(sb.toString());
+        List<DurVO> dList = new ArrayList<DurVO>();
+        log.info(sb.toString());
         String value = sb.toString();
         JSONObject firstJson = new JSONObject(value);
         String bodyValue = firstJson.get("body").toString();
         JSONObject twoJson = new JSONObject(bodyValue);
         
         if(twoJson.getInt("totalCount") == 0) {
-        	pList = null;
+        	dList = null;
         } else { 
         
         JSONArray jArry = twoJson.getJSONArray("items");
-        }
         
-    
-	}
+		// 객채에 담음
+			for (int i=0; i<jArry.length(); i++) {
+				JSONObject JO = jArry.getJSONObject(i);
+				DurVO dur = new DurVO();
+				if(!JO.isNull("ITEM_SEQ")) { dur.setItemSeq(String.valueOf(JO.get("ITEM_SEQ")));}
+				if(!JO.isNull("ITEM_NAME")) { dur.setItemName(String.valueOf(JO.get("ITEM_NAME")));}
+				if(!JO.isNull("ENTP_NAME")) { dur.setEntpName(String.valueOf(JO.get("ENTP_NAME")));}
+				if(!JO.isNull("ITEM_PERMIT_DATE")) { dur.setItemPermitDate(String.valueOf(JO.get("ITEM_PERMIT_DATE")));}
+				if(!JO.isNull("ETC_OTC_CODE")) { dur.setEtcOtcCode(String.valueOf(JO.get("ETC_OTC_CODE")));}
+				if(!JO.isNull("CLASS_NO")) { dur.setClassNo(String.valueOf(JO.get("CLASS_NO")));}
+				if(!JO.isNull("CHART")) { dur.setChart(String.valueOf(JO.get("CHART")));}
+				if(!JO.isNull("BAR_CODE")) { dur.setBarCode(String.valueOf(JO.get("BAR_CODE")));}
+				if(!JO.isNull("MATERIAL_NAME")) { dur.setMaterialName(String.valueOf(JO.get("MATERIAL_NAME")));}
+				if(!JO.isNull("EE_DOC_ID")) { dur.setEeDocId(String.valueOf(JO.get("EE_DOC_ID")));}
+				if(!JO.isNull("UD_DOC_ID")) { dur.setUdDocId(String.valueOf(JO.get("UD_DOC_ID")));}
+				if(!JO.isNull("NB_DOC_ID")) { dur.setNbDocId(String.valueOf(JO.get("NB_DOC_ID")));}
+				if(!JO.isNull("INSERT_FILE")) { dur.setInsertFile(String.valueOf(JO.get("INSERT_FILE")));}
+				if(!JO.isNull("STORAGE_METHOD")) { dur.setStorageMethod(String.valueOf(JO.get("STORAGE_METHOD")));}
+				if(!JO.isNull("VALID_TERM")) { dur.setValidTerm(String.valueOf(JO.get("VALID_TERM")));}
+				if(!JO.isNull("REEXAM_TARGET")) { dur.setReexamTarger(String.valueOf(JO.get("REEXAM_TARGET")));}
+				if(!JO.isNull("REEXAM_DATE")) { dur.setReexamDate(String.valueOf(JO.get("REEXAM_DATE")));}
+				if(!JO.isNull("PACK_UNIT")) { dur.setPackUnit(String.valueOf(JO.get("PACK_UNIT")));}
+				if(!JO.isNull("CANCEL_DATE")) { dur.setCancelDate(String.valueOf(JO.get("CANCEL_DATE")));}
+				if(!JO.isNull("CANCEL_NAME")) { dur.setCancelName(String.valueOf(JO.get("CANCEL_NAME")));}
+				if(!JO.isNull("CHANGE_DATE")) { dur.setChangeDate(String.valueOf(JO.get("CHANGE_DATE")));}
+				dList.add(dur);
+			} 
+		}
+
+		return dList;
 		
+	}    
 	
-	    
+	
+	
+	
+	
+	
+	
+	/*
+	 * if(!JO.isNull("DUR_SEQ")) { dur.setDurSeq(String.valueOf(JO.get("DUR_SEQ")));
+	 * } if(!JO.isNull("TYPE_CODE")) {
+	 * dur.setTypeCode(String.valueOf(JO.get("TYPE_CODE"))); }
+	 * if(!JO.isNull("TYPE_NAME")) {
+	 * dur.setTypeName(String.valueOf(JO.get("TYPE_NAME"))); } if(!JO.isNull("MIX"))
+	 * { dur.setMix(String.valueOf(JO.get("MIX"))); } if(!JO.isNull("INGR_CODE")) {
+	 * dur.setIngrCode(String.valueOf(JO.get("INGR_CODE"))); }
+	 * if(!JO.isNull("INGR_KOR_NAME")) {
+	 * dur.setIngrKorName(String.valueOf(JO.get("INGR_CODE"))); }
+	 * if(!JO.isNull("INGR_ENG_NAME")) {
+	 * dur.setIngrEngName(String.valueOf(JO.get("INGR_ENG_NAME"))); }
+	 * if(!JO.isNull("MIX_INGR")) {
+	 * dur.setMixIngr(String.valueOf(JO.get("MIX_INGR"))); }
+	 * if(!JO.isNull("ITEM_SEQ")) {
+	 * dur.setItemSeq(String.valueOf(JO.get("ITEM_SEQ"))); }
+	 * if(!JO.isNull("ITEM_NAME")) {
+	 * dur.setItemName(String.valueOf(JO.get("ITEM_NAME"))); }
+	 * if(!JO.isNull("ENTP_NAME")) {
+	 * dur.setEntpName(String.valueOf(JO.get("ENTP_NAME"))); }
+	 * if(!JO.isNull("CHART")) { dur.setChart(String.valueOf(JO.get("CHART"))); }
+	 * if(!JO.isNull("FORM_CODE")) {
+	 * dur.setFormCode(String.valueOf(JO.get("FORM_CODE"))); }
+	 * if(!JO.isNull("ETC_OTC_CODE")) {
+	 * dur.setEtcOtcCode(String.valueOf(JO.get("ETC_OTC_CODE"))); }
+	 * if(!JO.isNull("CLASS_CODE")) {
+	 * dur.setClassCode(String.valueOf(JO.get("CLASS_CODE"))); }
+	 * if(!JO.isNull("FORM_NAME")) {
+	 * dur.setFormName(String.valueOf(JO.get("FORM_NAME"))); }
+	 * if(!JO.isNull("ETC_OTC_NAME")) {
+	 * dur.setEtcOtcName(String.valueOf(JO.get("ETC_OTC_NAME"))); }
+	 * if(!JO.isNull("CLASS_NAME")) {
+	 * dur.setClassName(String.valueOf(JO.get("CLASS_NAME"))); }
+	 * if(!JO.isNull("MAIN_INGR")) {
+	 * dur.setMainIngr(String.valueOf(JO.get("MAIN_INGR"))); }
+	 * if(!JO.isNull("MIXTURE_DUR_SEQ")) {
+	 * dur.setMixTureDurSeq(String.valueOf(JO.get("MIXTURE_DUR_SEQ"))); }
+	 * if(!JO.isNull("MIXTURE_MIX")) {
+	 * dur.setMixTureMix(String.valueOf(JO.get("MIXTURE_MIX"))); }
+	 * if(!JO.isNull("MIXTURE_INGR_CODE")) {
+	 * dur.setMixTureIngrCode(String.valueOf(JO.get("MIXTURE_INGR_CODE"))); }
+	 * if(!JO.isNull("MIXTURE_INGR_KOR_NAME")) {
+	 * dur.setMixTureIngrKorName(String.valueOf(JO.get("MIXTURE_INGR_KOR_NAME"))); }
+	 * if(!JO.isNull("MIXTURE_INGR_ENG_NAME")) {
+	 * dur.setMixTureIngrEngName(String.valueOf(JO.get("MIXTURE_INGR_ENG_NAME"))); }
+	 * if(!JO.isNull("MIXTURE_ITEM_SEQ")) {
+	 * dur.setMixTureItemSeq(String.valueOf(JO.get("MIXTURE_ITEM_SEQ"))); }
+	 * if(!JO.isNull("MIXTURE_ITEM_NAME")) {
+	 * dur.setMixTureItemName(String.valueOf(JO.get("MIXTURE_ITEM_NAME"))); }
+	 * if(!JO.isNull("MIXTURE_ENTP_NAME")) {
+	 * dur.setMixTureEntpName(String.valueOf(JO.get("MIXTURE_ENTP_NAME"))); }
+	 * if(!JO.isNull("MIXTURE_FORM_CODE")) {
+	 * dur.setMixTureFormCode(String.valueOf(JO.get("MIXTURE_FORM_CODE"))); }
+	 * if(!JO.isNull("MIXTURE_ETC_OTC_CODE")) {
+	 * dur.setMixTureEtcOtcCode(String.valueOf(JO.get("MIXTURE_FORM_CODE"))); }
+	 * if(!JO.isNull("MIXTURE_CLASS_CODE")) {
+	 * dur.setMixTureClassCode(String.valueOf(JO.get("MIXTURE_CLASS_CODE"))); }
+	 * if(!JO.isNull("MIXTURE_FORM_NAME")) {
+	 * dur.setMixTureFormName(String.valueOf(JO.get("MIXTURE_FORM_NAME"))); }
+	 * if(!JO.isNull("MIXTURE_ETC_OTC_NAME")) {
+	 * dur.setMixTureEtcOtcName(String.valueOf(JO.get("MIXTURE_ETC_OTC_NAME"))); }
+	 * if(!JO.isNull("MIXTURE_CLASS_NAME")) {
+	 * dur.setMixTureClassName(String.valueOf(JO.get("MIXTURE_CLASS_NAME"))); }
+	 * if(!JO.isNull("MIXTURE_MAIN_INGR")) {
+	 * dur.setMixTureMainIngr(String.valueOf(JO.get("MIXTURE_MAIN_INGR"))); }
+	 * if(!JO.isNull("NOTIFICATION_DATE")) {
+	 * dur.setNotificationDate(String.valueOf(JO.get("NOTIFICATION_DATE"))); }
+	 * if(!JO.isNull("PROHBT_CONTENT")) {
+	 * dur.setProhbtContent(String.valueOf(JO.get("PROHBT_CONTENT"))); }
+	 * if(!JO.isNull("REMARK")) { dur.setRemart(String.valueOf(JO.get("REMARK"))); }
+	 * if(!JO.isNull("ITEM_PERMIT_DATE")) {
+	 * dur.setItemPermitDate(String.valueOf(JO.get("ITEM_PERMIT_DATE"))); }
+	 * if(!JO.isNull("MIXTURE_ITEM_PERMIT_DATE")) {
+	 * dur.setMixTureItemPermitDate(String.valueOf(JO.get("MIXTURE_ITEM_PERMIT_DATE"
+	 * ))); } if(!JO.isNull("MIXTURE_CHART")) {
+	 * dur.setMixTureChart(String.valueOf(JO.get("MIXTURE_CHART"))); }
+	 */
+	
 	
 }
