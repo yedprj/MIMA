@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!-- placeholder 및 input date, time 태그에 사용할 스타일 추가 p.01 -->
 <style>
 .good-date {
@@ -8,6 +10,17 @@
     border-radius: 30px;
     padding: 3px 20px;
     width : 75%;
+    color: #061a3a;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.good-select {
+	height: 44px;
+    border: 1px solid #e5eded !important;
+    border-radius: 30px;
+    padding: 3px 20px;
+    width: 75%;
     color: #061a3a;
     font-size: 14px;
     font-weight: 500;
@@ -77,16 +90,31 @@ input[type="time"]:valid::before {
 							<div class="information-form">
 								<form id="frm" name="frm">
 									<div class="row clearfix">
+									
+										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+											<label>의사</label>
+											<div class="select-box">
+												<select class="good-select wide" id="doctorSelect" name="doctorSelect">
+													<option data-display="의사를 선택해주세요">의사를 선택해주세요</option>
+													<c:forEach items="${doctors}" var="doc">
+														<option value="${doc.memberNo}">Dr. ${doc.name}</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+									
 										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 											<label>진료 날짜</label> 
 											<input type="date" id="date" name="date" class="good-date"
 												data-placeholder="진료 받고 싶은 날을 정해주세요" required="required">
+											<button type="button" id="selecttime" name="selecttime" class="theme-btn-one">조회</button>
 										</div>
+										
 										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 											<label>진료 시간</label> 
-											<input type="time" id="time" name="time" class="good-date"
-												data-placeholder="진료 받고 싶은 시간을 입력해 주세요" required="required">
+											<div id="addTime"></div>
 										</div>
+										
 										<div align="center" class="col-lg-12 col-md-12 col-sm-12 form-group">
 											<button type="button" id="checkTime" name="checkTime" 
 												class="theme-btn-one" style="width: 45%;">
@@ -188,6 +216,7 @@ input[type="time"]:valid::before {
 											<label>Note to the doctor (optional)</label>
 											<textarea name="message" placeholder="Write your not..."></textarea>
 										</div>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 									</div>
 								</form>
 							</div>
@@ -201,17 +230,63 @@ input[type="time"]:valid::before {
 <!-- appointment-section end -->
 
 <script>
+	
 	$(function() {
-		$("#checkTime").on("click", function(){
+		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
+		$("#selecttime").on("click", function() {
 			
-			var week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일');
-
+			var week = new Array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT');
 			var date = $("#date").val();
-			var time = $("#time").val();
 			var today = new Date(date).getDay();
 			var day = week[today];
+			var docNo = $("#doctorSelect option:selected").val();
+			console.log(day);
+			console.log(docNo);
 			
-			console.log(date + " 일: "+day+ " " +time);
+			$.ajax({
+				url : "selectDocTime",
+				type : "post",
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				data : JSON.stringify({day : day,
+									docNo : docNo}),
+				contentType : "application/json",
+				success : function(data){
+					console.log(data);
+					
+					for (i = 0; i < data.length; i++){
+						console.log(data[i]);
+						//makediv(data[i], i);
+						$("#addTime").append(makediv(data[i], i));
+					}
+				},
+				error : function(reject){
+					console.log(reject);
+				}
+			});
 		});
+		
+		function makediv(time, i){
+			let hTag = $("<h3 />").css("display", "inline");;
+			let aTag = $("<a />")
+					.addClass("mx-3")
+					.addClass("fs-3")
+					.attr("id","checkDocTime"+i)
+					.click(checkTime)
+					.attr("href", "#")
+					.text(time);
+					
+			$(hTag).append(aTag);
+			return hTag;
+		}
+		
+		function checkTime(e){
+			e.preventDefault();
+		}
 	});
+	
 </script>

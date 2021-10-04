@@ -87,6 +87,12 @@ public class MemberServiceImpl implements MemberService {
 		MemberVO mvo = memberMapper.getUserById(memberId);
 		return mvo;
 	}
+	
+	// status가 y인 의사 조회 p.10/04
+	@Override
+	public List<MemberVO> selectDoctorY() {
+		return memberMapper.selectDoctorY();
+	}
 
 	// 닥터 비밀번호 변경_J04
 	@Override
