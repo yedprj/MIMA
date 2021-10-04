@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CookieValue;
 
 import com.mima.app.member.domain.MemberVO;
 
@@ -37,11 +36,22 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("session", auth.getPrincipal());
-		
-		//MemberVO vo = (MemberVO) auth.getPrincipal();
-		
+
 		log.info("!!!!!!!!"+session.getAttribute("session").toString());
+
 		log.info("ROLE NAMES: " + roleNames);
+		
+		MemberVO mvo = (MemberVO) auth.getPrincipal();
+		log.info(mvo.toString());
+		
+		//s:1004 노드에서 사용할 쿠키굽기
+		Cookie cookie = new Cookie("userRole", mvo.getRole());	   
+		cookie.setMaxAge(60*60*24*30);
+		cookie.setPath("/");
+	    response.addCookie(cookie);
+	    System.out.println(cookie.getValue());
+	    System.out.println("++++++++++++++++++++");
+		
 		
 		response.sendRedirect("/app");
 	}

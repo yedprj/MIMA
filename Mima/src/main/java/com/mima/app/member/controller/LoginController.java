@@ -1,6 +1,5 @@
 package com.mima.app.member.controller;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -21,12 +20,7 @@ public class LoginController {
 		if (logout != null) {
 			model.addAttribute("logout", "로그아웃 하셨습니다.");
 		}
-		
-		/*
-		 * Cookie cookie = new Cookie("role", null); cookie.setComment("Role을 가지는 쿠키");
-		 * cookie.setMaxAge(60*60*24*365); response.addCookie(cookie);
-		 */
-  
+
 		return "member/loginForm";
 	}
 }

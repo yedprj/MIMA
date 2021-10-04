@@ -23,6 +23,17 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.getList();
 	}
 
+	//s:1004 self assessment extra info
+	@Override
+	public int update(PatientsVO vo) {
+		return patientsMapper.update(vo);
+	}
+	//s:1004 self assessment result
+	@Override
+	public int updateAx(PatientsVO vo) {
+		return patientsMapper.updateAx(vo);
+	}	
+	
 	//e.4
 	//전체조회
 	@Override
@@ -42,7 +53,7 @@ public class PatientsServiceImpl implements PatientsService {
 	@Override
 	public List<PatientsVO> ptgetList() {
 		return patientsMapper.ptgetList();
+
 	}
-	
 	
 }

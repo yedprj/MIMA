@@ -88,8 +88,16 @@
 
 					<div class="login-now">
 						<p>
-							Don’t have an account? <a
+							일반 회원가입을 원하시면?  <a
 								href="${pageContext.request.contextPath}/joinForm">Register
+								Now</a>
+						</p>
+					</div>
+					
+					<div class="login-now">
+						<p>
+							의사나 약사이신데 회원가입을 원하시면? <a
+								href="${pageContext.request.contextPath}/partnerJoinForm">Partner Register
 								Now</a>
 						</p>
 					</div>

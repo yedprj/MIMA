@@ -37,7 +37,7 @@ public class FileCheckTask {
 	//@Scheduled(cron="*/10 * * * * MON-FRI")
 
 	/*public void checkRoomId() {
-  
+
 		log.info("~~~~~진료를 위한 url을 확인중입니다...~~~~~~~~");
 		List<BookingVO> oldList = new ArrayList<BookingVO>();
 
@@ -53,4 +53,5 @@ public class FileCheckTask {
 		}
 		
 	}*/
+
 }
