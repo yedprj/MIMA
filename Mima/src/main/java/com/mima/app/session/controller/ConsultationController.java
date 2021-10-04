@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
@@ -49,10 +51,33 @@ public class ConsultationController {
 		}
 		
 		//s:1003 자가검진 페이지
-		@GetMapping("/preSelfAssessment")
+		@GetMapping("/preSelfAssessmentFrm")
 		public void preSelfAssessment(Model model, BookingVO vo, ConsultationVO consultationVo) {
 			
 		}
+		//s:1003 자가검진 페이지 ajax2
+		@PostMapping("/preSelfInfo")
+		public String preSelfInfo(@RequestBody PatientsVO vo, RedirectAttributes rttr) {
+			int result = patientsService.update(vo);
+			
+			if (result == 1) {
+				rttr.addFlashAttribute("result", "success");
+			}
+			//나중에 리턴=> 자기 메인페이지로
+			return "redirect:/consultation/preSelfAssessmentFrm";
+		}
+		//s:1003 자가검진 페이지 ajax1
+		@PostMapping("/preSelfAx")
+		public String preSelfAx(@RequestBody PatientsVO vo, RedirectAttributes rttr) {
+			int result = patientsService.updateAx(vo);
+			
+			if (result == 1) {
+				rttr.addFlashAttribute("result", vo.getPreSelfAx());
+			}
+
+			return "redirect:/consultation/preSelfAssessmentFrm";
+		}
+
 
 		//노드 화상진료에서 환자 정보 조회시
 		
@@ -75,9 +100,5 @@ public class ConsultationController {
 		return  vo;
 	}
 	
-	@PostMapping("/preSelfAx")
-	public void preSelfAx(PatientsVO vo) {
-		
-	}
-	
+
 }

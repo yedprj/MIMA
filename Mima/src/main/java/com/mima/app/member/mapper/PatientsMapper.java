@@ -12,5 +12,6 @@ public interface PatientsMapper {
 	
 	//s:1004 자가진단표+정보 입력
 	public int update(PatientsVO vo);
-
+	//s:1004 자가진단표
+	public int updateAx(PatientsVO vo);
 }

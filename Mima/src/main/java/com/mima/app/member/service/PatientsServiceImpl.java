@@ -21,10 +21,15 @@ public class PatientsServiceImpl implements PatientsService {
 	public List<PatientsVO> getList() {
 		return patientsMapper.getList();
 	}
-
+	//s:1004 self assessment extra info
 	@Override
 	public int update(PatientsVO vo) {
 		return patientsMapper.update(vo);
+	}
+	//s:1004 self assessment result
+	@Override
+	public int updateAx(PatientsVO vo) {
+		return patientsMapper.updateAx(vo);
 	}
 	
 	

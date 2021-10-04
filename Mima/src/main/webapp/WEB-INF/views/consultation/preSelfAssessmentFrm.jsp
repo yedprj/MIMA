@@ -377,29 +377,29 @@
                                     <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                        
                                         <br><label>이 전문의와 첫 진료인가요?</label>
-                                        <input type="text" name="isThisFirstSession" placeholder="네/아니오로 답해주세요." required="">
+                                        <input type="text" id="isThisFirstSession" name="isThisFirstSession" placeholder="네/아니오로 답해주세요." required="">
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                         <label>다른 곳에서 동일한 이유로 진료를 받은적이 있나요?</label>
                                         있다면 언제, 어느 병원/의사인지 알려주세요.
-                                        <input type="email" name="pastSession" placeholder="네/아니오로 답해주세요." required="">
+                                        <input type="text" name="pastSession" id="pastSession" placeholder="네/아니오로 답해주세요." required="">
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                         <label>이번에 진료를 예약하게된 계기가 무엇인가요? 자세히 알려주시면 진료에 도움이 될거예요.</label>
-                                        <input type="text" name="reason" placeholder="가능하면 구체적으로 알려주세요." required="">
+                                        <input type="text" id="reason" name="reason" placeholder="가능하면 구체적으로 알려주세요." required="">
                                     </div>
                                 
                                     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                         <label>과거에 진단받은 병명이 있나요?</label>
-                                        <input type="text" name="pastDiagnosis" required="">
+                                        <input type="text" id="pastDiagnosis" name="pastDiagnosis" required="">
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                         <label>현재 복용하고 있는 약이 있나요?</label>
-                                        <input type="text" name="currentMeds" required="">
+                                        <input type="text" name="currentMeds" id="currentMeds" required="">
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                         <label>미마님에 대해 알려주세요. 미마님을 알 수 있는 정보는 더 정확한 진료에 도움이 됩니다.</label>
-                                        <textarea name="currentStatus" placeholder="최근의 기분, 현재 상황, 어떤 점이 힘든지 등 무엇이든 좋아요."></textarea>
+                                        <textarea name="currentStatus" id="currentStatus" placeholder="최근의 기분, 현재 상황, 어떤 점이 힘든지 등 무엇이든 좋아요."></textarea>
                                     </div>
                                 </div>
                                 <div class="btn-box">
@@ -433,7 +433,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="selfTestBtn">Save changes</button>
+        <button type="button" class="btn btn-primary" id="selfTestBtn" data-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>
@@ -816,6 +816,7 @@ $(function(){
 	//버튼 누르면 자가스트레스 표 결과보기 -> 모달로>??? 
 	let result = "";
 	$('#calcResult').on('click', function(){
+		//이거 답변안한거 잇음 하라고 알람듸우는거
 		//sendit();
 		var sum = 0;
 		let inputs = [];
@@ -827,7 +828,6 @@ $(function(){
 				sum++;		
 			}
 		}
-		var result="";
 		if(sum >= 11){
 			result="중증 스트레스 상태로 몸과 마음에 대한 종합검진을 받을 필요가 있다"
 		}else if(sum>=5){
@@ -841,29 +841,55 @@ $(function(){
 	})		
 			
 			
-			
+	//멤버번호 하드코딩한거 나중에 고치기		
 	//그리고 그 모달 결과값을 테이블에 저장하기
 	$('#selfTestBtn').on('click', function(){
-		$('#resultSpan').val();
-		alert($('#resultSpan').val())
+		alert("저장되었습니다. 나머지 항목을 입력하고 저장해 주세요");
 		$.ajax({
 			url : '../consultation/preSelfAx',
 			method : "POST",
 			dataType : "json",
 			data : JSON.stringify({
-				preSelfAx : result
+				preSelfAx : result,
+				memberNo: 2
 			}),
 			 beforeSend : function(xhr) {
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 				},
 			contentType : 'application/json',
 			success : function(data) {
-				console.log(data)
+				console.log(data);
+			}// success end
+		})
+	})//그리고 그 모달 결과값을 테이블에 저장하기 끝
+	
+	// 두번째 폼 제출버튼 이벤트 -> 404 accessError
+	$("#form2SubmitBtn").on('click', function(){
+		alert("소중한 시간 감사해요 미마님. 진료 때 봽겠습니다.");
+		$.ajax({
+			url : '../consultation/preSelfInfo',
+			method : "POST",
+			dataType : "json",
+			data : JSON.stringify({
+				memberNo: 2,
+				pastHx: "$('#pastSession').val()",
+				sessionReason:"$('#reason').val()",
+				preDiagnosis:"$('#pastDiagnosis').val()",
+				currentMeds:"$('#currentMeds').val()",
+				moreInfo : "$('#currentStatus').val()"
+			}),
+			 beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+			contentType : 'application/json',
+			success : function(data) {
+				console.log(data);
 			}// success end
 		})
 		
-		
 	})
+	
+	
 	
 })//end of 페이지 온로드
 

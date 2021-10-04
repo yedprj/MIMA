@@ -80,8 +80,8 @@
 		<div class="sec-title centred">
 			<p>Category</p>
 			<h2>Browse by specialist</h2>
-			<!-- s:0929 진료시작 페이지 테스트 링크 이 페이지가 없어졌어요!! 와~~~ -->
-			<a class="theme-btn-one" href="${pageContext.request.contextPath}/consultation/preSelfAssessment">진료전 스트레스 자가검진</a>
+			<!-- s:1004 자가진단 폼페이지 -->
+			<a class="theme-btn-one" href="${pageContext.request.contextPath}/consultation/preSelfAssessmentFrm">진료전 스트레스 자가검진</a>
 			<!-- s:0930 진료시작 페이지 테스트 링크 -->
 			<a class="theme-btn-one" href="${pageContext.request.contextPath}/consultation/consultationStart2">진료시작페이지222</a>
 		</div>

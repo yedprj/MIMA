@@ -22,14 +22,20 @@
 	UPDATE PATIENTS
 		SET
 			PAST_HX =#{pastHx},
-			PRE_SELF_AX=#{preSelfAx},
 			SESSION_REASON=#{sessionReason},
 			PRE_DIAGNOSIS=#{preDiagnosis},
 			CURRENT_MEDS=#{currentMeds},
 			MORE_INFO=#{moreInfo} 
-		WHERE MEMBER_NO=#{memberNo};
+		WHERE MEMBER_NO=#{memberNo}
 	</update>
 
+<!-- s:1004 pt preScreening Ax result 머리가 쓰기 귀찮아서 그냥 이렇게 해 놓습니다... -->
+	<update id="updateAx">
+	UPDATE PATIENTS
+		SET
+			PRE_SELF_AX=#{preSelfAx}
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
 
 
 
