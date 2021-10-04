@@ -32,7 +32,8 @@ public class PatientsServiceImpl implements PatientsService {
 	@Override
 	public int updateAx(PatientsVO vo) {
 		return patientsMapper.updateAx(vo);
-
+	}	
+	
 	//e.4
 	//전체조회
 	@Override
