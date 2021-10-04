@@ -18,7 +18,7 @@
 								<h3>신고글 조회</h3>
 							</div>
 							<div class="btn-box pull-right">
-					<!-- e.2 -->
+					<!-- e.4 -->
 					<!-- 검색기능 -->
 					<!-- search -->				
 					<form id="actionForm" action="rplist" method="get" class="search-form">
@@ -104,7 +104,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- e.3 -->
+					<!-- e.4 -->
 					<!-- pagination  -->
 					<div class="pagination-wrapper" align="center">
 						<ul class="pagination">
@@ -154,7 +154,7 @@
 		 //페이징
 		 $(".move").on('click', function(e){
 			 e.preventDefault();
-			 actionForm.append('<input type="hidden" id="bno" name="bno" value="'+ $(this).attr("href") +'">');
+			 actionForm.append('<input type="hidden" id="reportNo" name="reportNo" value="'+ $(this).attr("href") +'">');
 			 actionForm.attr("action", "get");
 			 actionForm.submit();
 		 });

@@ -32,24 +32,10 @@ public class ReportController {
 	public void rplist(Model model, @ModelAttribute("cri") Criteria cri) {
 		System.out.println("cri============="+ cri);
 		
-		//int total = reportService.getTotalCount(cri);
-		
-		//model.addAttribute("list", reportService.getList(cri));
-		//model.addAttribute("pageMaker", new PageVO(cri, total));
-		//System.out.println(new PageVO(cri, total).toString());
-		
-		//if(cri == null) {
-			//처음 페이지 들어간 경우
-		//	List<RmemberVO> list = new ArrayList<RmemberVO>();
-		//	list = reportService.rmemberReportSelectList();
-		//	model.addAttribute("list", list);
-	//	}else{
-			//페이지 눌러서 들어간 경우
 			int total =  reportService.getTotalCount(cri);
 			model.addAttribute("list", reportService.getList(cri));
 			model.addAttribute("pageMaker", new PageVO(cri,total));
 			System.out.println("" + total + reportService.getList(cri));
-		//}
 	}
 	
 	
