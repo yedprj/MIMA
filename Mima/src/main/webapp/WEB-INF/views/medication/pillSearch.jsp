@@ -378,12 +378,12 @@
 	                            + '<div class="acc-content"><div class="text">'
 	                            + '<p><b>['+ data.etcOtcCode +']</b> 분류: '+data.classNo +' </p>'
 	                            + '<p> 성상:'+ data.chart +' </p>'
-	                        	+ '<a href="'+ str1 +'" target="_blank">'+ str1 +'</a></div></div></li>'
+	                        	+ '<a style="color:#007bff; cursor:pointer;" onClick="openWindow(\''+ str1 + '\')" target="_blank">'+ str1 +'</a></div></div></li>'
 	                        	// 용법용량
 	                         	+ '<li class="accordion block"><div class="acc-btn"><div class="icon-outer"></div>'
 	                            + '<h6><b> 용법용량 </b></h6></div>'
 	                        	+ '<div class="acc-content"><div class="text">'
-	                        	+ '<a href="'+ str2 +'" target="_blank">'+ str2 + '</a>'
+	                        	+ '<a style="color:#007bff; cursor:pointer;" onClick="openWindow(\''+ str2 + '\')" target="_blank">'+ str2 + '</a>'
 	                        	+ '<p>저장방법: '+data.storageMethod +'</p>'
 	                        	+ '<p>유효기간: '+data.validTerm +'</p>'
 	                        	+ '</div></div></li>'
@@ -396,7 +396,7 @@
 	                        	+ '<li class="accordion block"><div class="acc-btn"><div class="icon-outer"></div>'
 	                            + '<h6><b> 첨부문서 및 기타 </b><span></h6></div>'
 	                        	+ '<div class="acc-content"><div class="text">'
-	                        	+ '<a href="'+str4 +'" target="_blank">'+ str4 +'</a>'
+	                        	+ '<a style="color:#007bff; cursor:pointer;" onClick="openWindow(\''+ str4 + '\')" target="_blank">'+ str4 +'</a>'
 	                        	+ '<p>포장단위 : ' + data.packUnit + '</p>'
 	                        	+ '<p>보험코드 : ' + data.ediCode + '</p>'
 	                        	+ '</div></div></li>'
@@ -465,51 +465,28 @@
 						$.each(datas, function(i, data) {
 							// 이미지, 내용값 없는지 체크
 							console.log(data);
-							
-							if(data.eeDocId == null ){ str1 = '조회되는 내용이 없습니다.'; } else {
-								str1 = data.eeDocId;
-							}
-							if(data.udDocId == null ){ str2 = '조회되는 내용이 없습니다.' } else {
-								str2 = data.udDocId;
-							}
-							if(data.nbDocId == null ){ str3 = '조회되는 내용이 없습니다.' } else {
-								str3 = data.nbDocId;
-							}
-							if(data.insertFile == null ){ str4 = '조회되는 내용이 없습니다.' } else {
-								str4 = data.insertFile;
+							if(data.remart == null ){ str4 = '조회되는 내용이 없습니다.' } else {
+								str4 = data.remart;
 							}
 							// 제품명	
 							$(".accordion-box")
 								.append('<br><div class="title-box"><h6>병용금기품목명: '
-										+ data.mixtureItemName + '<span>병용금기전문일반구분코드['+ data.mixtureEtcOtcCode + ']  병용금기약효분류코드: '+ data.mixtureClassCode +'</span></h6></div>');
+										+ data.mixTureItemName + '<span>병용금기품목기준코드: '+ data.mixTureItemSeq + ' </span></h6></div>');
 							$('<ul class="accordion-inner">')
-								// 효능
+								// 병용금기
 							.append('<li class="accordion block">'
 								+ '<div class="acc-btn"><div class="icon-outer"></div>'
 								+ '<h6><b> 병용금기 </b></h6></div>'
 	                            + '<div class="acc-content"><div class="text">'
-	                            + '<p> 병용금기 DUR번호 : '+ data.mixtureDurSeq +', 병용금기DUR성분코드: '+data.mixtureIngrCode +' </p>'
-	                            + '<p> 병용금기DUR성분 : '+ data.mixtureIngrKorName +', 병용금기DUR성분(영문) : '+data.mixture +' </p>'
-	                        	+ '<a href="'+ str1 +'" target="_blank">'+ str1 +'</a></div></div></li>'
-	                        	// 용법용량
-	                         	+ '<li class="accordion block"><div class="acc-btn"><div class="icon-outer"></div>'
-	                            + '<h6><b> 용법용량 </b></h6></div>'
-	                        	+ '<div class="acc-content"><div class="text">'
-	                        	+ '<a href="'+ str2 +'" target="_blank">'+ str2 + '</a>'
-	                        	+ '<p>저장방법: '+data.storageMethod +'</p>'
-	                        	+ '<p>유효기간: '+data.validTerm +'</p>'
-	                        	+ '</div></div></li>'
-	                        	// 주의사항
-	                        	+ '<li class="accordion block"><div class="acc-btn"><div class="icon-outer"></div>'
-	                            + '<h6><b> 주의사항 </b><span></span></h6></div>'
-	                        	+ '</a></div></div></li>'
-	                        	// 첨부문서
-	                        	+ '<li class="accordion block"><div class="acc-btn"><div class="icon-outer"></div>'
-	                            + '<h6><b> 첨부문서 및 기타 </b><span></h6></div>'
-	                        	+ '<div class="acc-content"><div class="text">'
-	                        	+ '<a href="'+str4 +'" target="_blank">'+ str4 +'</a>'
-	                        	+ '<p>포장단위 : ' + data.packUnit + '</p>'
-	                        	+ '<p>보험코드 : ' + data.ediCode + '</p>'
+	                            + '<p><b> 복합체 </b> : '+ data.mix +' </p>'
+	                            + '<p><b> 병용금기 DUR번호 </b> : '+ data.mixTureDurSeq +' , <b> 병용금기 DUR성분코드 </b> : '+data.mixTureIngrCode +' </p>'
+	                            + '<p><b> 병용금기 DUR성분 </b> : '+ data.mixTureIngrKorName +' , <b> 병용금기 DUR성분(영문) </b> : '+data.mixTureIngrEngName +' </p>'
+	                        	+ '<p><b> 병용금기 제형 </b> : '+ data.mixTureFormName + ' , <b> 병용금기 전문/일반 </b> : '+ data.mixTureEtcOtcName +' </p>'
+	                        	+ '<p><b> 병용금기 제형구분코드 </b> : '+ data.mixTureFormCode +' </p>'
+	                        	+ '<p><b> 병용금기 약효분류 코드 </b> : '+ data.mixTureClassCode +' </p>'
+	                        	+ '<p><b> 병용금기 약효분류 </b> : '+ data.mixTureClassName + ' , <b> 병용금기 주성분 </b> : '+ data.mixTureMainIngr +' </p>'
+	                        	+ '<p><b> 금기 내용 </b> : '+ data.notificationDate + '</p>'
+	                        	+ '<p><b> 비고 </b> : '+ str4 + '</p>'
 	                        	+ '</div></div></li>'
 	                        	
 	                    	).appendTo($(".accordion-box"));

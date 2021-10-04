@@ -37,7 +37,7 @@ public class DurDangerVO {
 	private String mixTureIngrCode;	// 병용금기 DUR 성분코드
 	private String mixTureIngrKorName; 	// 병용금기 약 성분
 	private String mixTureIngrEngName;  // 병용금기 약 성분(영문)
-	private String mixTureItemSeq;			// 병용금기품목기준코드
+	private String mixTureItemSeq;		// 병용금기품목기준코드
 	private String mixTureItemName;		// 병용금기품목명
 	private String mixTureEntpName; 	// 병용금기 업체명
 	private String mixTureFormCode;		//병용금기 제형구분코드
