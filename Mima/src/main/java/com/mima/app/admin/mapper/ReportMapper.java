@@ -31,7 +31,7 @@ public interface ReportMapper {
 	
 	//e.29
 	//페이징
-	public List<ReportVO> getList(Criteria cri);
+	public List<RmemberVO> getList(Criteria cri);
 	
 	//e.29
 	//페이징

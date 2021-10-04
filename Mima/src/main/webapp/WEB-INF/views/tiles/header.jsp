@@ -155,6 +155,7 @@
 										<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
 										<li><a href="${pageContext.request.contextPath}/docDash/docMain">닥터 대쉬보드</a></li>
 										<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash?memberNo=11">약국 대쉬보드</a></li>
+										<li><a href="${pageContext.request.contextPath}/patients/ptMain">환자 대쉬보드</a></li>
 									</ul>
 								</li>
 							</ul>

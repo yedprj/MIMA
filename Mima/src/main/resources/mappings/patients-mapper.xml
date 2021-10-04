@@ -16,4 +16,74 @@
 	FROM PATIENTS
 </select> 
 
+<!-- e.4 -->
+<!-- 페이징 -->
+<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- total count -->
+	<select id="getTotalPatientsCount" resultType="int">
+		SELECT COUNT(*) FROM PATIENTS
+		WHERE
+		<include refid="criteria"></include>
+		MEMBER_NO > 0
+	</select>
+
+	<select id="getPatientsList" 
+		resultType="com.mima.app.member.domain.PatientsVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
+		ROWNUM RN, MEMBER_NO, PAST_HX, PRE_SELF_AX, TOPIC, MED_DELIVERY
+		FROM PATIENTS
+		where
+				
+		<include refid="criteria"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+<!-- 페이징 end -->
+
+<!-- e.4 -->
+<!--환자대쉬보드 Main 오늘의예약 -->
+<select id="ptgetList" resultType="PatientsVO">
+		<![CDATA[
+	    SELECT  P.MEMBER_NO,
+            P.PAST_HX,
+            P.PRE_SELF_AX,
+            P.TOPIC,
+            P.MED_DELIVERY,
+            P.REG_DATE,
+            P.PRE_DIAGNOSIS,
+            P.CURRENT_MEDS,
+            M.NAME
+	FROM PATIENTS P JOIN MEMBER M
+	ON P.MEMBER_NO=M.MEMBER_NO
+    WHERE P.REG_DATE>=TO_DATE(SYSDATE)
+    ORDER BY REG_DATE ASC
+    ]]>
+</select>
+
 </mapper>
