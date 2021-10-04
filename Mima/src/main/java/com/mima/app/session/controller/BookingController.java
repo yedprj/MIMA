@@ -19,7 +19,6 @@ import com.mima.app.member.service.MemberService;
 
 import lombok.extern.java.Log;
 
-@Log
 @Controller
 public class BookingController {
 

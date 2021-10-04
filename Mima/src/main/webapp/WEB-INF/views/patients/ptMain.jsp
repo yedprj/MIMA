@@ -21,14 +21,14 @@ th, td {
 		</div>
 		<div class="auto-container">
 			<div class="title">
-				<h1>닥터 대쉬보드</h1>
+				<h1>환자 대쉬보드</h1>
 			</div>
 		</div>
 	</div>
 	<div class="lower-content">
 		<ul class="bread-crumb clearfix">
 			<li><a href="${pageContext.request.contextPath}">Home</a></li>
-			<li>닥터 대쉬보드</li>
+			<li>환자 대쉬보드</li>
 		</ul>
 	</div>
 </section>
@@ -53,16 +53,15 @@ th, td {
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-	                <li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
-	                <li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
-	                <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
-	                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
-	                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
-	                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-	                <li><a href="docProfileForm"><i class="fas fa-user"></i>프로필 관리</a></li>
-	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-	                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-	            </ul>
+					<li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
+					<li><a href="patientList"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
+					<li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
+					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
+					<li><a href="docProfile"><i class="fas fa-user"></i>프로필 관리</a></li>
+					<li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
+					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -84,8 +83,8 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-3"></i>
 									</div>
-									<h3>9</h3>
-									<p>오늘의 환자 수</p>
+									<h3>3</h3>
+									<p>나의 예약 수</p>
 								</div>
 							</div>
 						</div>
@@ -101,8 +100,8 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-1"></i>
 									</div>
-									<h3>121</h3>
-									<p>담당 환자 수</p>
+									<h3>11</h3>
+									<p>총 세션 수<br><br></p>
 								</div>
 							</div>
 						</div>
@@ -118,8 +117,8 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-2"></i>
 									</div>
-									<h3>212</h3>
-									<p>나의 리뷰 수</p>
+									<h3>12</h3>
+									<p>나의 후기 수</p>
 								</div>
 							</div>
 						</div>

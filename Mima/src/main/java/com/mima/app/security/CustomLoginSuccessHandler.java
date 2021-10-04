@@ -36,7 +36,20 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		session.setAttribute("session", auth.getPrincipal());
 
 		log.info("!!!!!!!!"+session.getAttribute("session").toString());
+
 		log.info("ROLE NAMES: " + roleNames);
+		
+		MemberVO mvo = (MemberVO) auth.getPrincipal();
+		log.info(mvo.toString());
+		
+		//s:1004 노드에서 사용할 쿠키굽기
+		Cookie cookie = new Cookie("userRole", mvo.getRole());	   
+		cookie.setMaxAge(60*60*24*30);
+		cookie.setPath("/");
+	    response.addCookie(cookie);
+	    System.out.println(cookie.getValue());
+	    System.out.println("++++++++++++++++++++");
+		
 		
 		response.sendRedirect("/app");
 	}

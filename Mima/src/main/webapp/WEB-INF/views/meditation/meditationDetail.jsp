@@ -162,14 +162,22 @@
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       </div>
       <!-- /.modal -->
 
 
 
-
 <script src="../resources/assets/js/comments.js"></script>
 <script>
+
+
+
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
+
+
 /* 페이지 로드 이벤트 */
 
 let cmainCategory = "medit";
@@ -371,6 +379,9 @@ $(function(){
 						category:category,
 						memberNo : memberNo
 					}),
+					 beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
 					contentType : 'application/json',
 					success : function(data) {
 						
@@ -388,6 +399,9 @@ $(function(){
 						category:category,
 						memberNo : memberNo
 					}),
+					 beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
 					contentType : 'application/json',
 					success : function() {
 					},
@@ -406,6 +420,9 @@ $(function(){
 				data : JSON.stringify({
 					meditationNo : postNo
 				}),
+				 beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 				contentType : 'application/json',
 				success : function() {
 					if (likeAjaxUrl == "updateLike") {

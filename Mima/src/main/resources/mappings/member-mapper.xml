@@ -154,4 +154,11 @@
 		AND EMAIL = #{email}
 	</update>
 	
+	<!-- 닥터 대쉬보드 비밀번호 변경_J04 -->
+	<update id="docPwChange">
+		UPDATE MEMBER
+		SET PASSWORD = #{password}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
 </mapper>
