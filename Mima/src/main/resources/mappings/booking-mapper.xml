@@ -40,20 +40,19 @@
 <!-- 닥터 대쉬보드 예약관리 페이지_J -->
 <select id="apptList" resultType="BookingVO">
 	<![CDATA[
-	SELECT B.BOOKING_NO,
-		   B.PT_NO,
-		   B.DOC_NO,
-		   B.BOOKING_DATE,
-		   B.PRICE,
-		   B.PAY_STATUS,
-		   B.BOOKING_STATUS,
-		   B.CONSULT_DATE,
-		   B.CONSULT_TIME,
-		   M.NAME
-	FROM BOOKING B JOIN MEMBER M
-	ON B.PT_NO=M.MEMBER_NO
-    WHERE B.CONSULT_DATE>=TO_DATE(SYSDATE)
-	ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
+	    SELECT  P.MEMBER_NO,
+            P.PAST_HX,
+            P.PRE_SELF_AX,
+            P.TOPIC,
+            P.MED_DELIVERY,
+            P.REG_DATE,
+            P.PRE_DIAGNOSIS,
+            P.CURRENT_MEDS,
+            M.NAME
+	FROM PATIENTS P JOIN MEMBER M
+	ON P.MEMBER_NO=M.MEMBER_NO
+    WHERE P.REG_DATE>=TO_DATE(SYSDATE)
+    ORDER BY REG_DATE ASC
 	]]>
 </select>
 
