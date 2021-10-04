@@ -16,4 +16,22 @@
 	FROM PATIENTS
 </select> 
 
+
+<!-- s:1004 pt preScreening -->
+	<update id="update">
+	UPDATE PATIENTS
+		SET
+			PAST_HX =#{pastHx},
+			PRE_SELF_AX=#{preSelfAx},
+			SESSION_REASON=#{sessionReason},
+			PRE_DIAGNOSIS=#{preDiagnosis},
+			CURRENT_MEDS=#{currentMeds},
+			MORE_INFO=#{moreInfo} 
+		WHERE MEMBER_NO=#{memberNo};
+	</update>
+
+
+
+
+
 </mapper>

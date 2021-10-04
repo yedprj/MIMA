@@ -10,4 +10,8 @@ public interface PatientsService {
 	//관리자 회원정보조회
 	public List<PatientsVO> getList();
 	
+	//s:1004 자가진단표+정보 입력
+	public int update(PatientsVO vo);
+
+	
 }

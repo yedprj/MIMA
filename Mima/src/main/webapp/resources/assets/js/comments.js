@@ -1,4 +1,10 @@
 /*WebApp/resources/assets/js/comments.js*/
+
+
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
+
 let replyService =(function(){
 
 	//댓글 등록
@@ -6,6 +12,9 @@ let replyService =(function(){
 	  $.ajax({
 		  url:"../replies/",
 		  data:$("#replyForm").serialize(),
+		  beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 		  method:"post",
 		  dataType:"json",
 		  success:function(data){
@@ -31,6 +40,9 @@ let replyService =(function(){
 					cmainNo: cmainNo,
 					page:page
 					},
+					beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 			  dataType:"json",
 			  success: function(data){
 				console.log(data);
@@ -51,6 +63,9 @@ let replyService =(function(){
 			  url:"../replies/"+cno,
 			  method:"delete",
 			  dataType:"json",
+			  beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 			  success: function(data){
 				  if(callback){
 				   callback(data)
@@ -70,6 +85,9 @@ let replyService =(function(){
 			  url:"../replies/"+cno,
 			  method:"get",
 			  dataType:"json",
+			  beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 			  success: function(data){
 				  if(callback){
 				   callback(data)
@@ -87,6 +105,9 @@ let replyService =(function(){
 			  url:"../replies/"+editedReply.cno,
 			  method:"put",
 			  data: JSON.stringify(editedReply),
+			  beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 			  contentType:"application/json; charset=utf-8",
 			  success: function(data){
 				  if(callback){

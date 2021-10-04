@@ -12,10 +12,6 @@
     <!--page-title-two-->
     <section class="page-title-two">
         <div class="title-box centred bg-color-2">
-            <div class="pattern-layer">
-                <div class="pattern-1" style="background-image: url(assets/images/shape/shape-70.png);"></div>
-                <div class="pattern-2" style="background-image: url(assets/images/shape/shape-71.png);"></div>
-            </div>
             <div class="auto-container">
                 <div class="title">
                     <h1>진료전 자가검진표</h1>
@@ -44,10 +40,8 @@
                             <h3>스트레스 증상의 자가 점검표</h3>
                         </div>
                         <div class="inner-box">
-                            <form name="form1" method="post" action="sendit">
-                            <input type="hidden" name="flag" value="question_9">
+                            <form id="form1" name="form1" method="post" onsubmit="sendit(document.regiform)">
                             <h3>각 문항에 예/아니오로 답해 주세요.</h3>
-                        <input type="hidden" name="flag" value="question_9">
                         <table class="table" summary="스트레스 증상의 자가 점검표">
                             <tbody>
                                 <tr>
@@ -362,7 +356,7 @@
                             </tbody>
                         </table>
                         <div class="btn-box">
-                            <button type="button" class="theme-btn-one" id="selfTestBtn">제출하기<i class="icon-Arrow-Right"></i></button>
+                            <button type="button" id="calcResult" class="theme-btn-one" data-toggle="modal" data-target="#exampleModal">결과확인하기<i class="icon-Arrow-Right"></i></button>
                         </div>
                         </form>
                         </div>
@@ -409,7 +403,7 @@
                                     </div>
                                 </div>
                                 <div class="btn-box">
-                                    <a href="confirm.html" class="theme-btn-one">제출하기<i class="icon-Arrow-Right"></i></a>
+                                    <button id="form2SubmitBtn" class="theme-btn-one">제출하기<i class="icon-Arrow-Right"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -420,15 +414,41 @@
         </div>
     </section>
     <!-- appointment-section end -->
+    
+    
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">스트레스 상태 자가검사 결과</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        많은 항목을 꼼꼼히 읽어보고 답변해 주셔서 감사합니다.<br>
+        미마님의 현재 상태는...<br>
+        <span id="resultSpan"></span>입니다. 결과를 저장해 주시고 아래의 항목도 입력해 주세요.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="selfTestBtn">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
 </div>
 <script> 
 
 function sendit(){
- 	var sum=0;
+ 
     var j = 0;
     for(var i = 0; i < document.form1.q_1.length; i++) {
         if(document.form1.q_1[i].checked == true) {
-            sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -440,7 +460,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_2.length; i++) {
         if(document.form1.q_2[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -452,7 +472,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_3.length; i++) {
         if(document.form1.q_3[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -464,7 +484,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_4.length; i++) {
         if(document.form1.q_4[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -476,7 +496,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_5.length; i++) {
         if(document.form1.q_5[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -488,7 +508,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_6.length; i++) {
         if(document.form1.q_6[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -500,7 +520,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_7.length; i++) {
         if(document.form1.q_7[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -512,7 +532,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_8.length; i++) {
         if(document.form1.q_8[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -524,7 +544,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_9.length; i++) {
         if(document.form1.q_9[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -536,7 +556,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_10.length; i++) {
         if(document.form1.q_10[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -549,7 +569,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_11.length; i++) {
         if(document.form1.q_11[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -561,7 +581,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_12.length; i++) {
         if(document.form1.q_12[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -573,7 +593,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_13.length; i++) {
         if(document.form1.q_13[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -585,7 +605,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_14.length; i++) {
         if(document.form1.q_14[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -597,7 +617,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_15.length; i++) {
         if(document.form1.q_15[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -610,7 +630,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_16.length; i++) {
         if(document.form1.q_16[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -623,7 +643,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_17.length; i++) {
         if(document.form1.q_17[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -635,7 +655,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_18.length; i++) {
         if(document.form1.q_18[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -647,7 +667,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_19.length; i++) {
         if(document.form1.q_19[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -659,7 +679,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_20.length; i++) {
         if(document.form1.q_20[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -671,7 +691,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_21.length; i++) {
         if(document.form1.q_21[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -683,7 +703,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_22.length; i++) {
         if(document.form1.q_22[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -695,7 +715,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_23.length; i++) {
         if(document.form1.q_23[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -707,7 +727,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_24.length; i++) {
         if(document.form1.q_24[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -719,7 +739,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_25.length; i++) {
         if(document.form1.q_25[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -731,7 +751,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_26.length; i++) {
         if(document.form1.q_26[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -743,7 +763,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_27.length; i++) {
         if(document.form1.q_27[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -755,7 +775,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_28.length; i++) {
         if(document.form1.q_28[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -767,7 +787,7 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_29.length; i++) {
         if(document.form1.q_29[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
@@ -779,27 +799,70 @@ function sendit(){
     var j = 0;
     for(var i = 0; i < document.form1.q_30.length; i++) {
         if(document.form1.q_30[i].checked == true) {
-        	sum += 1;
+            j += 1;
         }
     }
     if(j == 0) {
         alert("30번 답변을 선택해주세요");
         return false;
     }
- 
-    console.log(sum)
-    
 }
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
 
 /* 페이지온로드 */
 $(function(){
-	//버튼 누르면 자가스트레스 표 결과보기 -> 모달로>??? 그리고 그 모달 결과값을 테이블에 저장하기
-	$('#selfTestBtn').on('click', function(){
-		alert('clicked');
+	//버튼 누르면 자가스트레스 표 결과보기 -> 모달로>??? 
+	let result = "";
+	$('#calcResult').on('click', function(){
+		//sendit();
 		var sum = 0;
-		var params = $("#form1").serialize();
-		console.log(params)
-		$('#form1').submit();
+		let inputs = [];
+		
+		inputs = $('#form1').find('input');
+		
+		for(let i=0; i < inputs.length;i++){
+			if(inputs[i].checked == true){
+				sum++;		
+			}
+		}
+		var result="";
+		if(sum >= 11){
+			result="중증 스트레스 상태로 몸과 마음에 대한 종합검진을 받을 필요가 있다"
+		}else if(sum>=5){
+			result="가벼운 스트레스 상태"
+		}else{
+			result="정상"
+		}
+		console.log(result);
+		$('#resultSpan').text(result);
+		
+	})		
+			
+			
+			
+	//그리고 그 모달 결과값을 테이블에 저장하기
+	$('#selfTestBtn').on('click', function(){
+		$('#resultSpan').val();
+		alert($('#resultSpan').val())
+		$.ajax({
+			url : '../consultation/preSelfAx',
+			method : "POST",
+			dataType : "json",
+			data : JSON.stringify({
+				preSelfAx : result
+			}),
+			 beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+			contentType : 'application/json',
+			success : function(data) {
+				console.log(data)
+			}// success end
+		})
+		
+		
 	})
 	
 })//end of 페이지 온로드

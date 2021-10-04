@@ -21,6 +21,11 @@ public class PatientsServiceImpl implements PatientsService {
 	public List<PatientsVO> getList() {
 		return patientsMapper.getList();
 	}
+
+	@Override
+	public int update(PatientsVO vo) {
+		return patientsMapper.update(vo);
+	}
 	
 	
 }
