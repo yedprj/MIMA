@@ -53,8 +53,8 @@ th, td {
                 <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
                 <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
                 <li><a href="docQna" class="current"><i class="fas fa-comments"></i>나의 문의</a></li>
-                <li><a href="my-profile.html"><i class="fas fa-user"></i>프로필 관리</a></li>
-                <li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
+                <li><a href="docProfileForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
                 <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
             </ul>
         </div>
@@ -76,12 +76,16 @@ th, td {
            					<div class="comment" style="padding-left: 20px;">
                 				<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docQna.csDate}" pattern="yy-MM-dd"/></span>
 				                <p>${docQna.csTitle}</p>
-                             	<a href="review.html" class="replay-btn"><i class="fas fa-share"></i>이의신청</a>
             				</div>
         				</div>
        				</c:forEach>
+       				
                 </div>
+                
+                
             </div>
+            
+            
             
 			<div class="pagination-wrapper">
 			    <ul class="pagination">

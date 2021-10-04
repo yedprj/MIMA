@@ -88,4 +88,10 @@ public class MemberServiceImpl implements MemberService {
 		return mvo;
 	}
 
+	// 닥터 비밀번호 변경_J04
+	@Override
+	public int docPwChange(MemberVO vo) {
+		return memberMapper.docPwChange(vo);
+	}
+
 }

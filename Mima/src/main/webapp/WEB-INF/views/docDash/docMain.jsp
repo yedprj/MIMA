@@ -53,16 +53,16 @@ th, td {
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
-					<li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
-					<li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
-					<li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-					<li><a href="docProfile"><i class="fas fa-user"></i>프로필 관리</a></li>
-					<li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-				</ul>
+	                <li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+	                <li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
+	                <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
+	                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
+	                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
+	                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
+	                <li><a href="docProfileForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
+	                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+	            </ul>
 			</div>
 		</div>
 	</div>
