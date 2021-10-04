@@ -56,6 +56,8 @@ public class ConsultationController {
 		model.addAttribute("pt", ptVo);
 	}
 	
+	//왜 이거 안생기지?????/올려야하는데????
+	
 	
 	// s:1003 노드에서 요청해서 예약기록 조회
 	@GetMapping("/getBookingInfo")
