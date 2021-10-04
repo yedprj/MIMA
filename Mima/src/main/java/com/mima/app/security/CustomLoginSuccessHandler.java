@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,9 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CookieValue;
 
-import com.mima.app.member.domain.MemberVO;
 
 import lombok.extern.java.Log;
 
@@ -37,9 +34,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("session", auth.getPrincipal());
-		
-		//MemberVO vo = (MemberVO) auth.getPrincipal();
-		
+
 		log.info("!!!!!!!!"+session.getAttribute("session").toString());
 		log.info("ROLE NAMES: " + roleNames);
 		

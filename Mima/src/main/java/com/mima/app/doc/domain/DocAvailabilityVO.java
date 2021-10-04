@@ -14,6 +14,7 @@ public class DocAvailabilityVO {
 	private String fri;		// 금요일
 	private String sat;		// 토요일
 	private String sun;		// 일요일
+	private String day;
 	private Date regDate;	// 등록일
 	private Date editDate;	// 수정일
 }
