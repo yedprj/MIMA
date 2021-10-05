@@ -84,6 +84,7 @@ input[type="time"]:valid::before {
 				<div class="appointment-information">
 					<div align="center" class="title-box">
 						<h3>진료 예약(medical appointment)</h3>
+						<div id="resTime"></div>
 					</div>
 					<div class="inner-box">
 						<div class="single-box">
@@ -114,109 +115,15 @@ input[type="time"]:valid::before {
 											<label>진료 시간</label> 
 											<div id="addTime"></div>
 										</div>
-										
+										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+											<div id="firstCheck"></div>
+										</div>
 										<div align="center" class="col-lg-12 col-md-12 col-sm-12 form-group">
 											<button type="button" id="checkTime" name="checkTime" 
 												class="theme-btn-one" style="width: 45%;">
 												진료 예약 체크
 											</button>
 										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					<div id="daycheckAfter" style="display: none;">
-						<div class="inner-box">
-							<div class="single-box">
-								<h3>Are You a New Patient?</h3>
-								<div class="custom-check-box">
-									<div class="custom-controls-stacked">
-										<label class="custom-control material-checkbox"> <input
-											type="checkbox" class="material-control-input" checked="">
-											<span class="material-control-indicator"></span> <span
-											class="description">Yes i have seen this doctor before</span>
-										</label>
-									</div>
-								</div>
-								<div class="custom-check-box">
-									<div class="custom-controls-stacked">
-										<label class="custom-control material-checkbox"> <input
-											type="checkbox" class="material-control-input"> <span
-											class="material-control-indicator"></span> <span
-											class="description">No i am a new patient</span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="single-box">
-								<h3>Please Specify Your Sex</h3>
-								<div class="custom-check-box">
-									<div class="custom-controls-stacked">
-										<label class="custom-control material-checkbox"> <input
-											type="checkbox" class="material-control-input" checked="">
-											<span class="material-control-indicator"></span> <span
-											class="description">Male</span>
-										</label>
-									</div>
-								</div>
-								<div class="custom-check-box">
-									<div class="custom-controls-stacked">
-										<label class="custom-control material-checkbox"> <input
-											type="checkbox" class="material-control-input"> <span
-											class="material-control-indicator"></span> <span
-											class="description">Female</span>
-										</label>
-									</div>
-								</div>
-							</div>
-							<div class="information-form">
-								<h3>Your Information:</h3>
-								<form action="book-appointment.html" method="post">
-									<div class="row clearfix">
-										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-											<label>Your name</label> <input type="text" name="name"
-												placeholder="Enter your name" required="">
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-											<label>Your email</label> <input type="email" name="email"
-												placeholder="Enter your email" required="">
-										</div>
-										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-											<label>Address</label> <input type="text" name="address"
-												placeholder="Address" required="">
-										</div>
-										<div class="col-lg-6 col-md-12 col-sm-12 form-group">
-											<label>City</label> <select class="wide">
-												<option data-display="Select City">Select City</option>
-												<option value="1">Select Text 01</option>
-												<option value="2">Select Text 02</option>
-												<option value="3">Select Text 03</option>
-												<option value="4">Select Text 04</option>
-											</select>
-										</div>
-										<div class="col-lg-6 col-md-12 col-sm-12 form-group">
-											<label>State</label> <select class="wide">
-												<option data-display="Select State">Select State</option>
-												<option value="1">Select Text 01</option>
-												<option value="2">Select Text 02</option>
-												<option value="3">Select Text 03</option>
-												<option value="4">Select Text 04</option>
-											</select>
-										</div>
-										<div class="col-lg-6 col-md-12 col-sm-12 form-group">
-											<label>Zip</label> <input type="text" name="zip"
-												placeholder="Zip" required="">
-										</div>
-										<div class="col-lg-6 col-md-12 col-sm-12 form-group">
-											<label>Birthday</label> <input type="text" name="birthday"
-												placeholder="Date" required="">
-										</div>
-										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-											<label>Note to the doctor (optional)</label>
-											<textarea name="message" placeholder="Write your not..."></textarea>
-										</div>
-										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 									</div>
 								</form>
 							</div>
@@ -257,12 +164,15 @@ input[type="time"]:valid::before {
 				contentType : "application/json",
 				success : function(data){
 					console.log(data);
+					$("#addTime").empty();
+					$("#firstCheck").empty();
 					
 					for (i = 0; i < data.length; i++){
 						console.log(data[i]);
 						//makediv(data[i], i);
 						$("#addTime").append(makediv(data[i], i));
 					}
+					$("#firstCheck").append(firstCheck());
 				},
 				error : function(reject){
 					console.log(reject);
@@ -270,8 +180,9 @@ input[type="time"]:valid::before {
 			});
 		});
 		
+		// 진료 가능 시간 추가 p.1003
 		function makediv(time, i){
-			let hTag = $("<h3 />").css("display", "inline");;
+			let hTag = $("<h3 />").css("display", "inline");
 			let aTag = $("<a />")
 					.addClass("mx-3")
 					.addClass("fs-3")
@@ -281,12 +192,69 @@ input[type="time"]:valid::before {
 					.text(time);
 					
 			$(hTag).append(aTag);
+			
 			return hTag;
 		}
 		
+		// 첫 진료 여부 체크 박스 추가 p.10/05
+		function firstCheck(){
+			return "<h3>Are You a New Patient?</h3>"
+				 + "<div class='custom-check-box'>"
+				 + "	<div class='custom-controls-stacked'>"
+				 + "		<label class='custom-control material-checkbox'>"
+				 + "			<input type='checkbox' class='material-control-input' "
+				 + "				id='chooseFirst' name='chooseFirst' value='y'>"
+				 + "			<span class='material-control-indicator'></span> "
+				 + "			<span class='description'>"+"Yes i have seen this doctor before"+"</span>"
+				 + "		</label>"
+				 + "		<label class='custom-control material-checkbox'>"
+				 + "			<input type='checkbox' class='material-control-input'"
+				 + "				id='chooseFirst' name='chooseFirst' value='n'>"
+				 + "			<span class='material-control-indicator'></span>"
+				 + "			<span class='description'>No i am a new patient</span>"
+				 + "		</label>"
+				 + "	</div>"
+				 + "</div>"
+		}
+		
+		// 진료 예약 아래에 시간 확인 용 추가 코드 p.10/05 
 		function checkTime(e){
 			e.preventDefault();
+			
+			// div 자식요소 삭제 
+			$("#resTime").empty();
+			
+			var resTime = $(this).text();
+			var date = $("#date").val();
+			
+			date = new Date(date);
+			
+			var year = date.getFullYear();	// 년도
+			var month = date.getMonth();	// 월
+			var day = date.getDate();		// 일
+			
+			var time = year + "년 " + month + "월 " + day + "일"
+			console.log(resTime);
+			console.log(date);
+			
+			let hTag = $("<h4/>").addClass("mt-3")
+								 .css("color", "white");
+			let sTag = $("<span/>").text(time + " " + resTime);
+			$(hTag).append(sTag);
+			$("#resTime").append(hTag);
 		}
+		
+		// 체크 박스 하나만 클릭 p.10/05
+		$(document).on("click", 'input[type="checkbox"][name="chooseFirst"]', function(){
+			
+			// 체크박스가 클릭 되었을 때
+			if($(this).prop('checked')){
+				
+				$('input[type="checkbox"][name="chooseFirst"]').prop('checked', false);
+				$(this).prop('checked', true);
+			}
+		});
+		
 	});
 	
 </script>
