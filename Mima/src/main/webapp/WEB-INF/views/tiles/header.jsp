@@ -93,7 +93,16 @@
 												<li><a href="login-2.html">Logout</a></li>
 											</ul>
 										</li>
-										<li><a href="submit.html">Submit Review</a></li>
+										<li class="dropdown"><a href="submit.html">의사 프로필 테스트</a>
+										<!-- s:1005 의사프로필 페이지/리뷰페이지 테스트 링크 -->
+											<ul>
+												<li><a href="${pageContext.request.contextPath}/docDash/docMain">대시보드</a></li>
+												<li><a href="${pageContext.request.contextPath}/docDash/docProfileInsertForm">의사프로필 인서트 폼</a></li>
+												<li><a href="${pageContext.request.contextPath}/docDash/docProfileDetail">의사 프로필 상세페이지</a></li>
+												<li><a href="${pageContext.request.contextPath}/docDash/docReviewList">의사 리뷰 리스트 페이지</a></li>
+												<li><a href="${pageContext.request.contextPath}/docDash/docReviewDetail">의사 리뷰 상세페이지</a></li>
+											</ul>
+										</li>
 										<li><a href="book-appointment.html">Book Appointment</a></li>
 										<li><a href="register-page.html">Register Page</a></li>
 									</ul>
@@ -153,7 +162,9 @@
 										<li><a href="${pageContext.request.contextPath}/joinForm">일반 회원가입</a></li>
 										<li><a href="${pageContext.request.contextPath}/partnerJoinForm">파트너 회원가입</a></li>
 										<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
-										<li><a href="${pageContext.request.contextPath}/docDash/docMain">닥터 대쉬보드</a></li>
+										<li><a href="${pageContext.request.contextPath}/docDash/docMain">닥터 대쉬보드</a>
+										
+										</li>
 										<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash?memberNo=11">약국 대쉬보드</a></li>
 									</ul>
 								</li>

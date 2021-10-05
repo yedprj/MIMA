@@ -74,4 +74,14 @@ public class PatnerDoctorController {
 	 * map.put("canceled", deptService.getDeptList()); return map; }
 	 */
 	
+	//s:1005 docProfileInsertFrm
+	@GetMapping("/docProfileInsertForm")
+	public void docProfileInsertForm() {
+		
+	}
+	
+	
+	
+	
+	
 }
