@@ -8,7 +8,7 @@
 		WHERE DOC_NO = #{docNo}
 	</select>
 	
-	
+	<!-- s:1005 진료 가능 시간 요일 입력 --> 
 	<insert id="insert">
 		insert into doc_availability
 			(

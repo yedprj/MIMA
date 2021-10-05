@@ -158,34 +158,34 @@
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료명1</label>
-                                                <input type="text" name="treatment" required="">
+                                                <input type="text" id="category1" name="category1" required="required">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>금액</label>
-                                                <input type="text" name="price" required="">
+                                                <input type="text" id="price1" name="price1" required="required">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료명2</label>
-                                                <input type="text" name="treatment2" required="">
+                                                <input type="text" id="category2" name="category2" required="">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>금액</label>
-                                                <input type="text" name="price2" required="">
+                                                <input type="text" id="price2" name="price2" required="">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료명3</label>
-                                                <input type="text" name="treatment2" required="">
+                                                <input type="text"id="category3" name="category3" required="">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>금액</label>
-                                                <input type="text" name="price2" required="">
+                                                <input type="text"  id="price3" name="price3" required="">
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                  <div class="btn-box d-flex flex-row-reverse" style="padding:10px">
-	                                <a href="add-listing.html" class="cancel-btn">취소</a>
-	                                <a href="add-listing.html" class="theme-btn-one" style="margin-left:10px">저장하기<i class="icon-Arrow-Right"></i></a>
+	                                <button type="reset" class="cancel-btn">취소</button>
+	                                <button id="subjectPriceInsertBtn" name="subjectPriceInsertBtn" class="theme-btn-one" style="margin-left:10px">저장하기<i class="icon-Arrow-Right"></i></button>
 	                            </div>
                             </div>
                             
@@ -255,10 +255,10 @@ $(function(){
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";
 
+	let docNo = ${session.memberNo};
 	
 	//진료가능시간 등록 버튼 이벤트
 	$("#saveAvailBtn").on('click', function(){
-		 let docNo = ${session.memberNo};
 		
 		//ajax start
 		$.ajax({
@@ -280,7 +280,9 @@ $(function(){
 					//xhr.setRequestHeader("aa", "bb");
 			},
 			success : function(data) {
-				console.log(data)
+				alert("진료가능 요일, 시간이 성공적으로 저장되었습니다.");
+				//버튼 없애는게 나을까여??? s:1005
+				$('#saveAvailBtn').attr('disabled', true);
 			},// success end
 			error: function(err){
 				console.error(err);
@@ -290,7 +292,40 @@ $(function(){
 		
 	})	//진료가능시간 등록 버튼 이벤트 끝
 	
-	
+	//진료 과목과 가격 등록 버튼 이벤트
+	$("#subjectPriceInsertBtn").on('click', function(){
+		
+		//ajax start
+		$.ajax({
+			url : '../subject/insertSub',
+			method : "POST",
+			data : {
+				docNo: docNo,
+				category1 : $('#category1').val(),
+				price1 : $('#price1').val(),
+				category2 : $('#category2').val(),
+				price2 : $('#price2').val(),
+				category3 : $('#category3').val(),
+				price3 : $('#price3').val(),
+			},
+			beforeSend : function(xhr) {
+				console.log(csrfHeaderName + " and " + csrfTokenValue);
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					//xhr.setRequestHeader("aa", "bb");
+			},
+			success : function(data) {
+				alert("진료과목과 가격이 성공적으로 저장되었습니다.");
+				
+				$('#saveAvailBtn').attr('disabled', true);
+				
+			},// success end
+			error: function(err){
+				console.error(err);
+			}
+		})
+		//  ajax end
+		
+	})//진료 과목과 가격 등록 버튼 이벤트 끝 
 	
 	
 	
