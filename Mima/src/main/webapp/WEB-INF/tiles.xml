@@ -10,9 +10,9 @@
 	</definition>
 	
 	<!-- 타일스 안타고 싶을 때 -->
-	<!-- <definition name="no/*/*" extends="/WEB-INF/views/tiles/nolayout.jsp">
+	<definition name="no/*/*" extends="/WEB-INF/views/tiles/nolayout.jsp">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
-	</definition> -->
+	</definition>
 	
 	<!-- content 부분 -->
 	<definition name="*/*" extends="mainTemplate">

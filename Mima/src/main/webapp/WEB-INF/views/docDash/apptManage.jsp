@@ -6,8 +6,14 @@
 <style>
 th, td {
 	text-align: center;
-	span: center;
 }
+.doctors-appointment .doctors-table tr td .status.pending {
+    margin-right: 30px;
+}
+.doctors-appointment .doctors-table tr td .status {
+	margin-right: 30px;
+}
+
 </style>
 
 <!--page-title-two-->
@@ -80,8 +86,8 @@ th, td {
 						<div class="select-box pull-right">
 							<select class="wide">
 								<option data-display="모두보기">모두보기</option>
-								<option value="1">예약된 접수</option>
-								<option value="2">취소된 접수</option>
+								<option value="apptManage?category=예정된 접수">예정된 접수</option>
+								<option value="apptManage?category=취소된 접수">취소된 접수</option>
 							</select>
 						</div>
 					</div>
@@ -96,7 +102,6 @@ th, td {
 											<th>진료일</th>
 											<th>예약일</th>
 											<th>결제금액</th>
-											<th>결제여부</th>
 											<th>예약상태</th>
 										</tr>
 									</thead>
@@ -105,6 +110,9 @@ th, td {
 											<tr>
 												<td>
 													<div class="name-box">
+														<figure class="image">
+															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+														</figure>
 														<h5>${apptList.name}</h5>
 														<span class="ptno">#${apptList.ptNo}</span>
 													</div>
@@ -117,17 +125,22 @@ th, td {
 														pattern="yy-MM-dd" /></td>
 												<td><fmt:setLocale value="ko_KR" />
 													<fmt:formatNumber type="currency" value="${apptList.price}" /></td>
-												<td>${apptList.payStatus}</td>
-												<td><c:if test="${apptList.bookingStatus eq 'y'}">
-														<span class="status">접수완료</span>
-													</c:if> <c:if test="${apptList.bookingStatus eq 'c'}">
-														<span class="status pending">취소완료</span>
-													</c:if></td>
-												<td><c:if test="${apptList.bookingStatus eq 'y'}">
-														<button class="status cancel">
-															<i class="fas fa-times"></i>취소하기
-														</button>
-													</c:if></td>
+												<td>
+													<c:if test="${apptList.bookingStatus eq 'p'}">
+														<span class="status">결제완료</span>
+													</c:if>
+													<c:if test="${apptList.bookingStatus eq 'y'}">
+														<span class="status pending">예약완료</span>
+													</c:if>
+													<c:if test="${apptList.bookingStatus eq 'c'}">
+														<span class="status cancel">취소완료</span>
+													</c:if>
+												</td>
+												<td>
+													<c:if test="${apptList.bookingStatus == 'y' || apptList.bookingStatus == 'p'}">
+                                                    	<button class="cancel"><i class="fas fa-times"></i>Cancel</button>
+													</c:if>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>

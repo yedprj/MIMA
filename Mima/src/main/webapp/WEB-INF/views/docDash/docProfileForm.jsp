@@ -139,17 +139,18 @@
                                                 <label>약력</label>
                                                 <textarea name="profileCareer" placeholder="${placeholder}"></textarea>
                                             </div>
+                                            
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>진료과목</label>
-                                                <select class="wide">
-                                                	<option data-display="진료과목">진료과목</option>
-                                                	<option value="1">진료과목</option>
-                                                	<option value="2">진료과목</option>
-                                                	<option value="3">진료과목</option>
-                                                	<option value="4">진료과목</option>
-                                                </select>
-                                                <select name="profileContents" placeholder="${placeholder}"></select>
-                                            </div>
+												<label>진료과목</label>
+												<div class="select-box">
+													<select class="good-select wide" id="subject" name="subject">
+														<option data-display="진료과목">진료과목</option>
+														<option value="1">진료과목</option>
+														<option value="2">진료과목</option>
+													</select>
+												</div>
+											</div>
+                                            
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료기관 전화번호</label>
                                                 <input type="text" name="clinicPhone" placeholder="${placeholder}"></input>

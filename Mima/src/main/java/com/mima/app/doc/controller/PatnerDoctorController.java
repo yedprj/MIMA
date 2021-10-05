@@ -101,6 +101,12 @@ public class PatnerDoctorController {
 		return "redirect:/docPwChange";
 	}
 	
+	// 닥터 진료노트_J05
+	@RequestMapping("cnote")
+	public String cnote() {
+		return "no/docDash/cnote";
+	}
+	
 	/*
 	 * @ModelAttribute("option") public Map<String, Object> jobs(){ Map<String,
 	 * Object> map = new HashMap<String, Object>(); map.put("contentAll",
