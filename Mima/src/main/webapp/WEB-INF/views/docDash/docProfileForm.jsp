@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -47,7 +46,9 @@
 			                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
 			                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
 			                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-			                <li><a href="docProfileForm" class="current"><i class="fas fa-user"></i>프로필 관리</a></li>
+			                <!-- s:1005 insertForm, subject Form -->
+			                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+			                <li><a href="docSubjectForm" class="current"><i class="fas fa-user"></i>진료 시간, 진료과목 등록</a></li>
 			                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 			                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 			            </ul>
@@ -58,193 +59,105 @@
                 <div class="content-container">
                     <div class="outer-container">
                         <div class="add-listing my-profile">
-                            <div class="single-box">
-                                <div class="title-box">
-                                    <h3>기본정보</h3>
-                                </div>
-                                <div class="inner-box">
-                                    <div class="profile-title">
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png" alt=""></figure>
-                                        <div class="upload-photo">
-                                            <a href="my-profile.html"><i class="icon-Upload"></i>프로필 사진 업로드</a>
-                                            <span>최대 2MB의 JPG, GIF 혹은 PNG 파일을 업로드 해주세요.</span>
-                                        </div>
-                                    </div>
-                                    <form action="add-listing.html" method="post">
-                                        <div class="row clearfix">
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>아이디</label>
-                                                <input type="text" name="memberId" placeholder="${placeholder}" required="" readonly>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>닉네임</label>
-                                                <input type="text" name="nickname" placeholder="${placeholder}" required="">
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>이름</label>
-                                                <input type="text" name="name" placeholder="${placeholder}" required="" readonly>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>성별</label>
-                                                <input type="text" name="gender" placeholder="${placeholder}" required="" readonly>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>전화번호</label>
-                                                <input type="text" name="phone" placeholder="${placeholder}" required="">
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>이메일</label>
-                                                <input type="email" name="email" placeholder="${placeholder}" required="" readonly>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                            	<label>우편번호</label>
-												<input type="hidden" id="confmKey" name="confmKey" value="" >
-												<input type="text" class="form-control form-control-user"
-													id="postcode" name="postcode" placeholder="${placeholder}" readonly>
-											</div>
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group" style="margin-top: 30px;">
-												<button type="button" onclick="execDaumPostcode();" class="theme-btn-one">
-													주소검색</button>
-											</div>
-											<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-												<label>주소</label>
-												<input type="text" class="form-control" id="address"
-													name="address" placeholder="${placeholder}">
-											</div>
-											
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>상세주소</label>
-												<input type="text" class="form-control" id="detailAddress"
-												name="detailAddress" placeholder="${placeholder}">
-											</div>
-											
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>참고사항</label>
-												<input type="text" class="form-control" id="extraAddress"
-													name="extraAddress" placeholder="${placeholder}">
-											</div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="single-box">
-                                <div class="title-box">
-                                    <h3>진료정보</h3>
-                                    
-                                </div>
-                                <div class="inner-box">
-                                    <form action="add-listing.html" method="post">
-                                        <div class="row clearfix">
-                                        	<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                                <label>약력</label>
-                                                <textarea name="profileCareer" placeholder="${placeholder}"></textarea>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>진료과목</label>
-                                                <select class="wide">
-                                                	<option data-display="진료과목">진료과목</option>
-                                                	<option value="1">진료과목</option>
-                                                	<option value="2">진료과목</option>
-                                                	<option value="3">진료과목</option>
-                                                	<option value="4">진료과목</option>
-                                                </select>
-                                                <select name="profileContents" placeholder="${placeholder}"></select>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>진료기관 전화번호</label>
-                                                <input type="text" name="clinicPhone" placeholder="${placeholder}"></input>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                            	<label>우편번호</label>
-												<input type="hidden" id="confmKey" name="confmKey" value="" >
-												<input type="text" class="form-control form-control-user"
-													id="postcode" name="postcode" placeholder="${placeholder}" readonly>
-											</div>
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<button type="button" onclick="execDaumPostcode();" class="theme-btn-one" style="margin-top: 30px;">
-													주소검색</button>
-											</div>
-											<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-												<label>주소</label>
-												<input type="text" class="form-control" id="address"
-													name="address" placeholder="${placeholder}">
-											</div>
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>상세주소</label>
-												<input type="text" class="form-control" id="detailAddress"
-												name="detailAddress" placeholder="${placeholder}">
-											</div>
-											
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>참고사항</label>
-												<input type="text" class="form-control" id="extraAddress"
-													name="extraAddress" placeholder="${placeholder}">
-											</div>
-											<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                                <label>진료기관 사진 업로드 (선택)</label>
-                                                <input type="file" name="upload_file">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="single-box">
-                                <div class="title-box">
+                        <div class="single-box">
+                               <div class="title-box">
                                     <h3>진료가능시간 설정</h3>
-                                    <a href="add-listing.html" class="theme-btn-one" style="margin-right:-50px;">Add More<i class="icon-image"></i></a>
                                 </div>
                                 <div class="inner-box">
-                                    <form action="add-listing.html" method="post">
-	                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        	<div class="form-check form-check-inline">
-											  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-											  <label class="form-check-label" for="inlineCheckbox1">월</label>
-											</div>
-											<div class="form-check form-check-inline">
-											  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-											  <label class="form-check-label" for="inlineCheckbox2">화</label>
-											</div>
-											<div class="form-check form-check-inline">
-											  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2">
-											  <label class="form-check-label" for="inlineCheckbox3">수</label>
-											</div>
-											<div class="form-check form-check-inline">
-											  <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2">
-											  <label class="form-check-label" for="inlineCheckbox4">목</label>
-											</div>
-											<div class="form-check form-check-inline">
-											  <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option2">
-											  <label class="form-check-label" for="inlineCheckbox5">금</label>
-											</div>
-											<div class="form-check form-check-inline">
-											  <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option2">
-											  <label class="form-check-label" for="inlineCheckbox6">토</label>
-											</div>
-											<div class="form-check form-check-inline">
-											  <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option2">
-											  <label class="form-check-label" for="inlineCheckbox7">일</label>
-											</div>
-	                                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-	                                        	<label>시작시간</label>
-	                                            <input type="text" name="" placeholder="${placeholder}" required="">
-	                                        	<label>마감시간</label>
-	                                            <input type="text" name="" placeholder="${placeholder}" required="">
-	                                        </div>
+                                    <form action="insertAvailable" method="post" id="availableFrm">
+                                    <!-- row start -->
+                                        <div class="row clearfix" id="addEpxDiv">
+                                        <!-- 월화수목금토일 시간설정 -->
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+	                                             <div class="form-check form-check-inline">
+													  <input class="form-check-input" type="checkbox" id="mon" value="mon">
+													  <label class="form-check-label" for="inlineCheckbox1">월</label>
+												</div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-6 col-sm-12 form-group">
+                                                <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
+	                                            <input type="text" name="mon_time" id="mon_time" placeholder="${placeholder}" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <div class="form-check form-check-inline">
+												  <input class="form-check-input" type="checkbox" id="tue" value="tue">
+												  <label class="form-check-label" for="inlineCheckbox2">화</label>
+												</div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-6 col-sm-12 form-group">
+                                                <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
+	                                            <input type="text" id="tue_time" name="tue_time" placeholder="${placeholder}" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <div class="form-check form-check-inline">
+												  <input class="form-check-input" type="checkbox" id="wed" value="wed">
+												  <label class="form-check-label" for="inlineCheckbox3">수</label>
+												</div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-6 col-sm-12 form-group">
+                                                <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
+	                                            <input type="text"  id="wed_time" name="wed_time" placeholder="${placeholder}" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+	                                             <div class="form-check form-check-inline">
+													  <input class="form-check-input" type="checkbox" id="thu" value="thu">
+													  <label class="form-check-label" for="inlineCheckbox1">목</label>
+												</div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-6 col-sm-12 form-group">
+                                                <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
+	                                            <input type="text" id="thu_time" name="thu_time" placeholder="${placeholder}" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <div class="form-check form-check-inline">
+												  <input class="form-check-input" type="checkbox" id="fri" value="fri">
+												  <label class="form-check-label" for="inlineCheckbox2">금</label>
+												</div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-6 col-sm-12 form-group">
+                                                <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
+	                                            <input type="text" id="fri_time" name="fri_time" placeholder="${placeholder}" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <div class="form-check form-check-inline">
+												  <input class="form-check-input" type="checkbox" id="sat" value="sat">
+												  <label class="form-check-label" for="inlineCheckbox2">토</label>
+												</div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-6 col-sm-12 form-group">
+                                                <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
+	                                            <input type="text" id="sat_time" name="sat_time" placeholder="${placeholder}" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <div class="form-check form-check-inline">
+												  <input class="form-check-input" type="checkbox" id="sun" value="sun">
+												  <label class="form-check-label" for="inlineCheckbox2">일</label>
+												</div>
+                                            </div>
+                                            <div class="col-lg-9 col-md-6 col-sm-12 form-group">
+                                                <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
+	                                            <input type="text" id="sun_time" name="sun_time" placeholder="${placeholder}" required="">
+                                            </div>
+											<!-- 날짜, 시간 선택 끝 -->                                           
                                         </div>
+                                        <!-- end of row -->
+                                <div class="btn-box d-flex flex-row-reverse"style="padding-top:10px">
+	                                <button type="reset" class="cancel-btn">취소</button>
+	                                <button id="saveAvailBtn" type="button" class="theme-btn-one" style="margin-left:10px">저장하기<i class="icon-Arrow-Right"></i></button>
+	                            </div>
                                     </form>
                                 </div>
                             </div>
-                            
+                        
                             <div class="single-box">
                                 <div class="title-box">
                                     <h3>진료비 책정</h3>
-                                    <a href="add-listing.html" class="theme-btn-one" style="margin-right:-50px;">Add More<i class="icon-image"></i></a>
                                 </div>
-                                <div class="inner-box">
+                                <div class="inner-box" style="padding-bottom:20px">
                                     <form action="add-listing.html" method="post">
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>진료명</label>
+                                                <label>진료명1</label>
                                                 <input type="text" name="treatment" required="">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
@@ -252,7 +165,15 @@
                                                 <input type="text" name="price" required="">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>진료명</label>
+                                                <label>진료명2</label>
+                                                <input type="text" name="treatment2" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>금액</label>
+                                                <input type="text" name="price2" required="">
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>진료명3</label>
                                                 <input type="text" name="treatment2" required="">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
@@ -262,12 +183,13 @@
                                         </div>
                                     </form>
                                 </div>
+                                 <div class="btn-box d-flex flex-row-reverse" style="padding:10px">
+	                                <a href="add-listing.html" class="cancel-btn">취소</a>
+	                                <a href="add-listing.html" class="theme-btn-one" style="margin-left:10px">저장하기<i class="icon-Arrow-Right"></i></a>
+	                            </div>
                             </div>
                             
-                            <div class="btn-box">
-                                <a href="add-listing.html" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
-                                <a href="add-listing.html" class="cancel-btn">취소</a>
-                            </div>
+                           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                         </div>
                     </div>
                 </div>
@@ -276,6 +198,7 @@
         <!-- doctors-dashboard -->
         
 <script>
+
 //주소 API 연결
 function execDaumPostcode() {
     new daum.Postcode({
@@ -323,5 +246,56 @@ function execDaumPostcode() {
             document.getElementById("detailAddress").focus();
         }
     }).open();
-}
+}//End of 주소 API 연결	
+
+
+/* 페이지 온 로드 */
+$(function(){
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+
+	
+	//진료가능시간 등록 버튼 이벤트
+	$("#saveAvailBtn").on('click', function(){
+		 let docNo = ${session.memberNo};
+		
+		//ajax start
+		$.ajax({
+			url : '../docAvail/insertAvail',
+			method : "POST",
+			data : {
+				docNo: docNo,
+				mon : $('#mon_time').val(),
+				tue : $('#tue_time').val(),
+				wed : $('#wed_time').val(),
+				thu : $('#thu_time').val(),
+				fri : $('#fri_time').val(),
+				sat : $('#sat_time').val(),
+				sun : $('#sun_time').val()
+			},
+			beforeSend : function(xhr) {
+				console.log(csrfHeaderName + " and " + csrfTokenValue);
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					//xhr.setRequestHeader("aa", "bb");
+			},
+			success : function(data) {
+				console.log(data)
+			},// success end
+			error: function(err){
+				console.error(err);
+			}
+		})
+		//  ajax end
+		
+	})	//진료가능시간 등록 버튼 이벤트 끝
+	
+	
+	
+	
+	
+
+
+
+})/* end of 페이지 온 로드 */
 </script>

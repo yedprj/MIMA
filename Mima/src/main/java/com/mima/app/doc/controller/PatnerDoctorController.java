@@ -12,14 +12,12 @@ import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.service.CscService;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
-import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
-
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/docDash/*")
@@ -30,6 +28,7 @@ public class PatnerDoctorController {
 	@Autowired CscService cscService;
 	@Autowired PartnerDoctorService doctorService;
 	@Autowired MemberService memberService;
+	
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("docMain")
@@ -73,19 +72,9 @@ public class PatnerDoctorController {
 	 * @GetMapping("docProfileFrom") public String docProfile() {
 	 * return"docDash/docProfile"; }
 	 */
+
 	
-	// 닥터 대쉬보드 프로필 페이지 등록 폼 INSERT_J04
-	@GetMapping("docProfileForm")
-	public void docProfileInsert() {
-		
-	}
 	
-	// 닥터 대쉬보드 프로필 페이지 등록 처리 INSERT_J04
-	@PostMapping("docProfileForm")
-	public String docProfile(Model model, PartnerDoctorVO vo) {
-		doctorService.docProfileInsert(vo);
-		return "docProfileForm";
-	}
 	
 	// 닥터 대쉬보드 패스워드 변경 페이지 수정 폼_J04
 	@GetMapping("docPwChangeForm")
@@ -114,6 +103,10 @@ public class PatnerDoctorController {
 		
 	}
 	
+	
+	// 닥터 진료가능 요일 시간 등록 폼 여는 맵핑 INSERT_J04 S:1005
+	@GetMapping("/docProfileForm")
+	public void docProfileFrom(Model model, DocAvailabilityVO vo) {}
 	
 	
 	

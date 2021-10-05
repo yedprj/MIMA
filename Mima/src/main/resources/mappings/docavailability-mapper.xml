@@ -7,4 +7,32 @@
 		FROM DOC_AVAILABILITY
 		WHERE DOC_NO = #{docNo}
 	</select>
+	
+	
+	<insert id="insert">
+		insert into doc_availability
+			(
+				DOC_NO,
+				MON,
+				TUE,
+				WED,
+				THU,
+				FRI,
+				SAT,
+				SUN,
+				REG_DATE
+			)
+		values(
+			#{docNo},
+			#{mon},
+			#{tue},
+			#{wed},
+			#{thu},
+			#{fri},
+			#{sat},
+			#{sun},
+			sysdate
+			)
+	</insert>
+	
 </mapper>

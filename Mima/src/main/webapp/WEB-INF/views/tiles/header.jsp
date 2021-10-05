@@ -98,6 +98,7 @@
 											<ul>
 												<li><a href="${pageContext.request.contextPath}/docDash/docMain">대시보드</a></li>
 												<li><a href="${pageContext.request.contextPath}/docDash/docProfileInsertForm">의사프로필 인서트 폼</a></li>
+												<li><a href="${pageContext.request.contextPath}/docDash/docProfileForm">의사 진료시간 인서트 폼</a></li>
 												<li><a href="${pageContext.request.contextPath}/docDash/docProfileDetail">의사 프로필 상세페이지</a></li>
 												<li><a href="${pageContext.request.contextPath}/docDash/docReviewList">의사 리뷰 리스트 페이지</a></li>
 												<li><a href="${pageContext.request.contextPath}/docDash/docReviewDetail">의사 리뷰 상세페이지</a></li>

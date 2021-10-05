@@ -268,8 +268,8 @@
                                 </div>
                             </div>
                             <div class="btn-box d-flex flex-row-reverse">
-                                <a href="add-listing.html" class="theme-btn-one">Save Change<i class="icon-Arrow-Right"></i></a>
                                 <a href="add-listing.html" class="cancel-btn">Cancel</a>
+                                <a href="add-listing.html" class="theme-btn-one">Save Change<i class="icon-Arrow-Right"></i></a>
                             </div>
                         </div>
                     </div>
