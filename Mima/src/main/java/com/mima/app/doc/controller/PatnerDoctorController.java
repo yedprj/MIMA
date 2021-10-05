@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.service.CscService;
@@ -12,8 +14,12 @@ import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.doc.service.PartnerDoctorService;
+import com.mima.app.member.domain.MemberVO;
+import com.mima.app.member.service.MemberService;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/docDash/*")
@@ -23,6 +29,7 @@ public class PatnerDoctorController {
 	@Autowired CommentsService commentsService;
 	@Autowired CscService cscService;
 	@Autowired PartnerDoctorService doctorService;
+	@Autowired MemberService memberService;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("docMain")
@@ -61,10 +68,37 @@ public class PatnerDoctorController {
 		model.addAttribute("docQna", cscService.docQna());
 	}
 	
-	// 닥터 대쉬보드 프로필 페이지_J02
-	@GetMapping("docProfile")
-	public void docProfile(Model model, PartnerDoctorVO docvo) {
-		model.addAttribute("docProfile", doctorService.docProfile());
+	// 닥터 대쉬보드 프로필 페이지 수정폼_J04
+	/*
+	 * @GetMapping("docProfileFrom") public String docProfile() {
+	 * return"docDash/docProfile"; }
+	 */
+	
+	// 닥터 대쉬보드 프로필 페이지 등록 폼 INSERT_J04
+	@GetMapping("docProfileForm")
+	public void docProfileInsert() {
+		
+	}
+	
+	// 닥터 대쉬보드 프로필 페이지 등록 처리 INSERT_J04
+	@PostMapping("docProfileForm")
+	public String docProfile(Model model, PartnerDoctorVO vo) {
+		doctorService.docProfileInsert(vo);
+		return "docProfileForm";
+	}
+	
+	// 닥터 대쉬보드 패스워드 변경 페이지 수정 폼_J04
+	@GetMapping("docPwChangeForm")
+	public String pwUpdateForm() {
+		return "docDash/docPwChange";
+	}
+	
+	// 닥터 대쉬보드 패스워드 변경 페이지 수정 처리_J04
+	@PostMapping("docPwChange")
+	public String pwUpdate(RedirectAttributes rttr, MemberVO vo) {
+		memberService.docPwChange(vo);
+		rttr.addAttribute("pwUpdateResult", vo.getMemberId());
+		return "redirect:/docPwChange";
 	}
 	
 	/*

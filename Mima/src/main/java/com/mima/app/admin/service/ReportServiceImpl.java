@@ -57,7 +57,7 @@ public class ReportServiceImpl implements ReportService {
 	//e.29
 	//페이징
 	@Override
-	public List<ReportVO> getList(Criteria cri) {
+	public List<RmemberVO> getList(Criteria cri) {
 		return reportMapper.getList(cri);
 	}
 

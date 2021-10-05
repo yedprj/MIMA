@@ -29,6 +29,9 @@ public interface MemberMapper {
 	
 	// 파트너 회원가입 (의사/약사)
 	public int partnerMemberInsert(MemberVO vo);
+	
+	// status가 y인 의사 조회 p.10/04
+	public List<MemberVO> selectDoctorY();
 
 	//e.29
 	// 파트너 의사 / 약국 승인 유무 검색
@@ -43,4 +46,7 @@ public interface MemberMapper {
 	
 	// 유저 세션 유지 위한 p.30
 	public MemberVO getUserById(String memberId);
+	
+	// 닥터 비밀번호 변경_J04
+	public int docPwChange(MemberVO vo);
 }

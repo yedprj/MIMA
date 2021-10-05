@@ -13,4 +13,10 @@ public class PatientsVO {
 	private String medDelivery;	// 약배달유무
 	private Date regDate;		// 등록일
 	private Date editDate;		// 수정일
+	
+	//s:1004 --진료전 자가진단기록 위해 만든 칼럼
+	private String sessionReason; //진료예약이유
+	private String preDiagnosis;  //과거진단명
+	private String currentMeds;	  //현재 복용중인 약
+	private String moreInfo;	  //환자 본인 설명
 }

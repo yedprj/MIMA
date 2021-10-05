@@ -53,20 +53,16 @@ th, td {
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a href="docMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a href="apptManage" class="current"><i
-							class="fas fa-clock"></i>예약관리</a></li>
-					<li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
-					<li><a href="patientList"><i class="fas fa-wheelchair"></i>나의
-							환자들</a></li>
-					<li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-					<li><a href="my-profile.html"><i class="fas fa-user"></i>프로필
-							관리</a></li>
-					<li><a href="change-password.html"><i
-							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-				</ul>
+	                <li><a href="docMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
+	                <li><a href="apptManage" class="current"><i class="fas fa-clock"></i>예약관리</a></li>
+	                <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
+	                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
+	                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
+	                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
+	                <li><a href="docProfileForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
+	                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+	            </ul>
 			</div>
 		</div>
 	</div>
@@ -88,11 +84,7 @@ th, td {
 								<option value="2">취소된 접수</option>
 							</select>
 						</div>
-
-
-
 					</div>
-
 					<div class="doctors-appointment">
 						<div class="doctors-list">
 							<div class="table-outer">
@@ -143,21 +135,7 @@ th, td {
 							</div>
 						</div>
 					</div>
-
 				</div>
-			</div>
-
-			<div class="right-column pull-right">
-				<form name="search-form" action="schedule-timing.html" method="post"
-					class="search-form">
-					<div class="form-group">
-						<input type="search" name="search-field" placeholder="환자명을 입력하세요."
-							required="">
-						<button type="submit">
-							<i class="far fa-search"></i>
-						</button>
-					</div>
-				</form>
 			</div>
 
 			<div class="pagination-wrapper">

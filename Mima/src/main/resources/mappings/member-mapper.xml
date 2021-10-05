@@ -50,6 +50,14 @@
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} AND STATUS='y'
 	</select>
 	
+	<!-- 승인된 의사 조회 p.10/04 -->
+	<select id="selectDoctorY" resultType="MemberVO">
+		SELECT MEMBER_NO, NAME 
+		FROM MEMBER 
+		WHERE ROLE = 'doctor' 
+		AND STATUS = 'y'
+	</select>
+	
 	<!-- 회원가입 -->
 	<insert id="memberInsert">
 		<selectKey keyProperty="memberNo" resultType="int"
@@ -145,4 +153,12 @@
 		WHERE MEMBER_id = #{memberId}
 		AND EMAIL = #{email}
 	</update>
+	
+	<!-- 닥터 대쉬보드 비밀번호 변경_J04 -->
+	<update id="docPwChange">
+		UPDATE MEMBER
+		SET PASSWORD = #{password}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
 </mapper>

@@ -7,10 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.member.domain.MemberVO;
+import com.mima.app.member.domain.PatientsVO;
+import com.mima.app.member.service.PatientsService;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.domain.ConsultationVO;
 import com.mima.app.session.domain.PtInfoVO;
@@ -29,6 +34,9 @@ public class ConsultationController {
 	@Autowired ConsultationService consultationService;
 	//s:1003
 	@Autowired BookingService bookingService;
+	//s:1004
+	@Autowired PatientsService patientsService;
+	
 	
 	//s:0930 진료 시작 테스트 페이지로 이동
 	@GetMapping("/consultationStart2")
@@ -43,18 +51,44 @@ public class ConsultationController {
 		}
 		
 		//s:1003 자가검진 페이지
-		@GetMapping("/preSelfAssessment")
+		@GetMapping("/preSelfAssessmentFrm")
 		public void preSelfAssessment(Model model, BookingVO vo, ConsultationVO consultationVo) {
 			
 		}
+		//s:1003 자가검진 페이지 ajax2
+		@PostMapping("/preSelfInfo")
+		public String preSelfInfo(@RequestBody PatientsVO vo, RedirectAttributes rttr) {
+			int result = patientsService.update(vo);
+			
+			if (result == 1) {
+				rttr.addFlashAttribute("result", "success");
+			}
+			//나중에 리턴=> 자기 메인페이지로
+			return "redirect:/consultation/preSelfAssessmentFrm";
+		}
+		//s:1003 자가검진 페이지 ajax1
+		@PostMapping("/preSelfAx")
+		public String preSelfAx(@RequestBody PatientsVO vo, RedirectAttributes rttr) {
+			int result = patientsService.updateAx(vo);
+			
+			if (result == 1) {
+				rttr.addFlashAttribute("result", vo.getPreSelfAx());
+			}
+
+			return "redirect:/consultation/preSelfAssessmentFrm";
+		}
+
 
 		//노드 화상진료에서 환자 정보 조회시
+		
 	@GetMapping("/ptInformation")
 	public void ptInformation(Model model, BookingVO vo, PtInfoVO ptVo) {
+
 		ptVo=consultationService.getPtInformation(vo);
-		System.out.println(ptVo);
+		log.info("+++++++++++++"+ptVo.toString());
 		model.addAttribute("pt", ptVo);
 	}
+	
 	
 	
 	// s:1003 노드에서 요청해서 예약기록 조회
@@ -62,13 +96,9 @@ public class ConsultationController {
 	@ResponseBody
 	public BookingVO getBookingInfo(BookingVO vo, MemberVO memberSessionVo, HttpServletRequest requset) {
 		
-//		HttpSession session = requset.getSession();
-//	      log.info(session.getAttribute("session").toString());
-//	      MemberVO mvo = (MemberVO) session.getAttribute("session");
-//	      log.info(mvo.getName());
-		
 		vo=bookingService.getBookingInfo(vo);
 		return  vo;
 	}
 	
+
 }

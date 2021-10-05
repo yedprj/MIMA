@@ -34,8 +34,10 @@ public class FileCheckTask {
 
 	//s:0929 
 	//@Scheduled(cron="*/10 * 8-22 * * MON-FRI")
-	@Scheduled(cron="*/10 * * * * MON-FRI")
-	public void checkRoomId() {
+	//@Scheduled(cron="*/10 * * * * MON-FRI")
+
+	/*public void checkRoomId() {
+
 		log.info("~~~~~진료를 위한 url을 확인중입니다...~~~~~~~~");
 		List<BookingVO> oldList = new ArrayList<BookingVO>();
 
@@ -50,5 +52,6 @@ public class FileCheckTask {
 			System.out.println("nothing much");
 		}
 		
-	}
+	}*/
+
 }
