@@ -168,7 +168,7 @@ th, td {
 													pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${bookingList.price}" /></td>
-											<td>${bookingList.payStatus}</td>
+											<td>${bookingList.bookingStatus}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -222,7 +222,7 @@ th, td {
 													value="${getlatestapptList.bookingDate}" pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${getlatestapptList.price}" /></td>
-											<td>${getlatestapptList.payStatus}</td>
+											<td>${getlatestapptList.bookingStatus}</td>
 											<td><span class="print"><i class="fas fa-print"></i>처방전</span>
 											</td>
 											<td><span class="view"><i class="fas fa-eye"></i>진료노트</span>
