@@ -143,6 +143,7 @@
 		// 약 병용금기 검색 버튼
 		$("body").on("click","#durDangerBtn" , function(){
 			$(".accordion-box").empty();
+			$(".pagination").empty(); // 페이징 초기화
 			initVar();	// 초기화
 			$("#titleH3 h3").text("병용금기검색");
 			$('.btn-box .icon-Arrow-Right').remove();
@@ -169,6 +170,7 @@
 		// 약 정보검색
 		$("body").on("click","#durBtn" , function(){
 			$(".accordion-box").empty();
+			$(".pagination").empty(); // 페이징 초기화
 			initVar(); // 초기화
 			$("#titleH3 h3").text("약 정보검색");
 			$('.btn-box .icon-Arrow-Right').remove();
