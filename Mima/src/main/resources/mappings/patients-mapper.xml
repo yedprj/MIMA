@@ -89,23 +89,155 @@
 <!-- 페이징 end -->
 
 <!-- e.4 -->
-<!--환자대쉬보드 Main 오늘의예약 -->
-<select id="ptgetList" resultType="PatientsVO">
-		<![CDATA[
-	    SELECT  P.MEMBER_NO,
-            P.PAST_HX,
-            P.PRE_SELF_AX,
-            P.TOPIC,
-            P.MED_DELIVERY,
-            P.REG_DATE,
-            P.PRE_DIAGNOSIS,
-            P.CURRENT_MEDS,
-            M.NAME
-	FROM PATIENTS P JOIN MEMBER M
-	ON P.MEMBER_NO=M.MEMBER_NO
-    WHERE P.REG_DATE>=TO_DATE(SYSDATE)
-    ORDER BY REG_DATE ASC
-    ]]>
+<!--환자대쉬보드 Main 오늘의예약-->
+<select id="ptgetList" resultType="BookingVO">
+		SELECT B.BOOKING_NO,
+		   B.PT_NO,
+		   B.DOC_NO,
+		   B.BOOKING_DATE,
+		   B.PRICE,
+		   B.BOOKING_STATUS,
+		   B.CONSULT_DATE,
+		   B.CONSULT_TIME,
+		   M.NAME
+	FROM BOOKING B JOIN MEMBER M
+	ON B.PT_NO=M.MEMBER_NO
+	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE)
 </select>
+
+<!-- 환자대쉬보드 예약관리 페이지 e.5-->
+<select id="ptbmList" resultType="BookingVO">
+SELECT B.BOOKING_NO,
+		   B.PT_NO,
+		   B.DOC_NO,
+		   B.BOOKING_DATE,
+		   B.PRICE,
+		   B.BOOKING_STATUS,
+		   B.CONSULT_DATE,
+		   B.CONSULT_TIME,
+		   M.NAME
+	FROM BOOKING B JOIN MEMBER M
+	ON B.PT_NO=M.MEMBER_NO
+	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE)
+</select>
+
+<!-- 환자대쉬보드 Main 진료내역 e.5-->
+<select id="ptMainhisList" resultType="BookingVO">
+<![CDATA[
+	SELECT B.BOOKING_NO,
+		   B.PT_NO,
+		   B.DOC_NO,
+		   B.BOOKING_DATE,
+		   B.PRICE,
+		   B.BOOKING_STATUS,
+		   B.CONSULT_DATE,
+		   B.CONSULT_TIME,
+		   M.NAME
+    FROM BOOKING B JOIN MEMBER M
+    ON B.PT_NO=M.MEMBER_NO
+    WHERE ROWNUM < 6 AND CONSULT_DATE < TO_DATE(SYSDATE)
+    ORDER BY CONSULT_DATE DESC
+ ]]>
+</select>
+
+<!-- 환자대쉬보드 진료내역 페이지 e.5-->
+<select id="ptHistoryList" resultType="BookingVO">
+	<![CDATA[
+	SELECT B.BOOKING_NO,
+		   B.PT_NO,
+		   B.DOC_NO,
+		   B.BOOKING_DATE,
+		   B.PRICE,
+		   B.BOOKING_STATUS,
+		   B.CONSULT_DATE,
+		   B.CONSULT_TIME,
+		   M.NAME
+	FROM BOOKING B JOIN MEMBER M
+	ON B.PT_NO=M.MEMBER_NO
+    WHERE B.CONSULT_DATE<TO_DATE(SYSDATE) AND BOOKING_STATUS = 'y'
+	ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC
+	]]>
+</select>
+
+<!-- 환자대쉬보드 Main 나의후기 e.5-->
+<select id="ptMainreList" resultType="CommentsVO">
+	<![CDATA[
+		SELECT C.CMAIN_NO,
+               C.COMMENT_WRITER_NO,
+               C.CONTENTS,
+               C.REVIEW_POINT,
+               C.REG_DATE,
+               M.NICKNAME
+        FROM COMMENTS C JOIN MEMBER M
+        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
+        WHERE ROWNUM < 6
+        ORDER BY REG_DATE DESC
+		]]>
+</select>
+
+<!-- 환자대쉬보드 나의후기 페이지 e.5-->
+	<select id="ptReviewList" resultType="CommentsVO">
+		<![CDATA[
+		SELECT C.CMAIN_NO,
+               C.COMMENT_WRITER_NO,
+               C.CONTENTS,
+               C.REVIEW_POINT,
+               C.REG_DATE,
+               M.NICKNAME
+        FROM COMMENTS C JOIN MEMBER M
+        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
+        ORDER BY REG_DATE DESC
+		]]>
+	</select>
+
+<!-- 페이징 e.5-->
+<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criterias">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- total count -->
+	<select id="getTotalPtbmCount" resultType="int">
+		SELECT COUNT(*) FROM BOOKING
+		WHERE
+		<include refid="criterias"></include>
+		BOOKING_NO > 0
+	</select>
+
+	<select id="getPtbmList" 
+		resultType="com.mima.app.session.domain.BookingVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
+		ROWNUM RN, BOOKING_NO, PT_NO, DOC_NO, BOOKING_DATE, PRICE,
+		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME
+		FROM BOOKING
+		where
+				
+		<include refid="criterias"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+<!-- 페이징 end -->
 
 </mapper>

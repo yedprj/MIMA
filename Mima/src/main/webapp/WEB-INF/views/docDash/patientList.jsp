@@ -62,75 +62,78 @@ th, td {
 			</div>
 		</div>
 	</div>
-
+	
 	<div class="right-panel">
-		<div class="content-container">
-			<div class="outer-container">
-				<div class="appointment-list">
-					<div class="upper-box clearfix">
-						<div class="text pull-left">
-							<h3>나의 환자들</h3>
+        <div class="content-container">
+            <div class="outer-container">
+                <div class="doctors-appointment my-patients">
+                    <div class="title-box clearfix">
+                        <div class="text pull-left">
+                            <h3>나의 환자들</h3>
 							<span>담당 환자들을 확인할 수 있습니다.</span>
-						</div>
-
-						<div class="right-column pull-right">
-							<form name="search-form" action="schedule-timing.html"
-								method="post" class="search-form">
-								<div class="form-group">
-									<input type="search" name="search-field"
-										placeholder="환자명을 입력하세요." required="">
-									<button type="submit" onclick="getSearchList()">
-										<i class="far fa-search"></i>
-									</button>
-								</div>
-							</form>
-						</div>
-
-					</div>
-					<div class="single-item">
-						<figure class="image-box">
-							<img src="assets/images/resource/appointment-1.jpg" alt="">
-						</figure>
-						<div class="inner">
-							<h4>Mary Astor</h4>
-							<ul class="info-list clearfix">
-								<li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-								<li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham,
-									UK</li>
-								<li><i class="fas fa-hourglass-start"></i>Cardiology Test,
-									Diabetic Diagnose</li>
-								<li><i class="fas fa-envelope"></i><a
-									href="mailto:anna@example.com">anna@example.com</a></li>
-								<li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22)
-										65_458_856</a></li>
-							</ul>
-							<div class="confirm-list clearfix">
-								<button class="view">
-									<i class="fas fa-eye"></i>진료내역
-								</button>
-								<button class="print">
-									<i class="fas fa-print"></i>처방내역
-								</button>
-							</div>
-						</div>
-					</div>
-
+                        </div>
+                        <div class="btn-box pull-right">
+                            <form action="my-patients.html" method="post" class="search-form">
+                                <div class="form-group">
+                                    <input type="search" name="search-field" placeholder="Search" required="">
+                                    <button type="submit"><i class="far fa-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="doctors-list">
+                        <div class="table-outer">
+                            <table class="doctors-table">
+                                <thead class="table-header">
+                                    <tr>
+                                        <th>환자명</th>
+                                        <th>성별</th>
+                                        <th>주소</th>
+                                        <th>연락처</th>
+                                        <th>나의 약국</th>
+                                        <th>초진문진표</th>
+                                    </tr>    
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="name-box">
+                                                <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
+                                                <h5>환자명</h5>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p>Male</p>
+                                        </td>
+                                        <td>
+                                            <p>Flat 20, Reynolds Neck, NY</p>
+                                        </td>
+                                        <td>
+                                            <p>+(22) 65_458_856</p>
+                                        </td>
+                                        <td>
+                                            <p>29 Yrs</p>
+                                        </td>
+                                        <td>
+                                            <p>O+</p>
+                                        </td>
+                                    </tr>
+                                </tbody>    
+                            </table>
+                        </div>
+                    </div>
+                </div>
+				<div class="pagination-wrapper">
+					<ul class="pagination">
+						<li><a href="clinic-1.html" class="current">1</a></li>
+						<li><a href="clinic-1.html">2</a></li>
+						<li><a href="clinic-1.html">3</a></li>
+						<li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
+					</ul>
 				</div>
-			</div>
-
-
-
-			<div class="pagination-wrapper">
-				<ul class="pagination">
-					<li><a href="clinic-1.html" class="current">1</a></li>
-					<li><a href="clinic-1.html">2</a></li>
-					<li><a href="clinic-1.html">3</a></li>
-					<li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
-				</ul>
 			</div>
 		</div>
 	</div>
-
 </section>
 <!-- doctors-dashboard -->
 

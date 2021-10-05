@@ -60,31 +60,30 @@ th, td {
     </div>
 </div>
 
+
+
 <div class="right-panel">
-    <div class="content-container">
-        <div class="outer-container">
-            <div class="appointment-list">
-                <div class="upper-box clearfix">
-                    <div class="text pull-left">
-                        <h3>진료내역</h3>
-                        <span>지난 진료내역을 조회합니다. 목록은 최신순으로 보여집니다.</span>
+        <div class="content-container">
+            <div class="outer-container">
+                <div class="doctors-appointment my-patients">
+                    <div class="title-box clearfix">
+                        <div class="text pull-left">
+                            <h3>진료내역</h3>
+							<span>지난 진료내역을 조회합니다. 목록은 최신순으로 보여집니다.</span>
+                        </div>
+                        <div class="btn-box pull-right">
+                            <form action="my-patients.html" method="post" class="search-form">
+                                <div class="form-group">
+                                    <input type="search" name="search-field" placeholder="환자명을 입력하세요." required="">
+                                    <button type="submit"><i class="far fa-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    
-                    <div class="select-box pull-right">
-						<form name="search-form" action="apptHistory" method="post" class="search-form">
-						    <div class="form-group">
-						        <input type="search" name="search-field" placeholder="환자명을 입력하세요." required="">
-						        <button type="submit"><i class="far fa-search"></i></button>
-						    </div>
-						</form>
-       				</div>
-   				</div>
-   
-				<div class="doctors-appointment">
-				     <div class="doctors-list">
-				         <div class="table-outer">
-				             <table class="doctors-table">
-				               <thead class="table-header">
+                    <div class="doctors-list">
+                        <div class="table-outer">
+                            <table class="doctors-table">
+                                <thead class="table-header">
 				                   <tr>
 				                       <th>환자명</th>
 				                       <th>예약번호</th>
@@ -110,12 +109,12 @@ th, td {
 										</td>
 										<td><fmt:formatDate value="${apptHistoryList.bookingDate}" pattern="yy-MM-dd"/></td>
 										<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${apptHistoryList.price}" /></td>
-										<td>${apptHistoryList.payStatus}</td>
+										<td>${apptHistoryList.bookingStatus}</td>
 	                                    <td>
-	                                        <button class="view"><i class="fas fa-eye"></i>진료노트</button>
+	                                        <button class="view" id="cnote"><i class="fas fa-eye"></i>진료노트</button>
 	                                    </td>
 										<td>
-	                                      	<button class="print"><i class="fas fa-print"></i>처방전</button>
+	                                      	<button class="print" id="prescription"><i class="fas fa-print"></i>처방전</button>
 	                                    </td>
 									</tr>
 								</c:forEach>
@@ -125,7 +124,6 @@ th, td {
                       </div>
                   </div>
                 </div>
-            </div>
             <div class="pagination-wrapper">
                 <ul class="pagination">
                     <li><a href="clinic-1.html" class="current">1</a></li>
@@ -134,8 +132,8 @@ th, td {
                     <li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
                 </ul>
             </div>
+            </div>
         </div>
-    </div>
 </section>
 <!-- doctors-dashboard -->
 
@@ -143,3 +141,14 @@ th, td {
 <button class="scroll-top scroll-to-target" data-target="html">
     <span class="fa fa-arrow-up"></span>
 </button>
+
+<script>
+	$(function(){
+		$('#cnote').on('click', function(){
+			window.open('http://localhost/app/docDash/cnote', '진료노트', 'width=1200, height=900, scrollbars=yes');
+		});
+		$('prescription').on('click', function(){
+			window.open('http://localhost:3000/?bookingNo=', '처방전', 'width=1200, height=900, scrollbars=yes');
+		});
+	});
+</script>

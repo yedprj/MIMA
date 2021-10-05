@@ -110,6 +110,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 .team-block-three .inner-box .image-box a:hover {
 	background: #eaf8f6;
 }
+
 </style>
 
 <div class="boxed_wrapper">

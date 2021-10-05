@@ -104,6 +104,7 @@
 													  <label class="form-check-label" for="inlineCheckbox1">목</label>
 												</div>
                                             </div>
+
                                             <div class="col-lg-9 col-md-6 col-sm-12 form-group">
                                                 <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
 	                                            <input type="text" id="thu_time" name="thu_time" placeholder="${placeholder}" required="">
@@ -113,6 +114,7 @@
 												  <input class="form-check-input" type="checkbox" id="fri" value="fri">
 												  <label class="form-check-label" for="inlineCheckbox2">금</label>
 												</div>
+
                                             </div>
                                             <div class="col-lg-9 col-md-6 col-sm-12 form-group">
                                                 <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
