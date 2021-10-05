@@ -53,10 +53,10 @@ th, td {
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
+					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
 					<li><a href="patientList"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
-					<li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
+					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
 					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 					<li><a href="docProfile"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
@@ -128,7 +128,7 @@ th, td {
 					<div class="title-box">
 						<h3>오늘의 예약</h3>
 						<div class="btn-box">
-							<a href="apptManage" class="theme-btn-one">예약관리<i
+							<a href="ptBookManage" class="theme-btn-one">예약관리<i
 								class="icon-Arrow-Right"></i></a>
 						</div>
 					</div>
@@ -146,7 +146,7 @@ th, td {
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${bookingList}" var="bookingList">
+									<c:forEach items="${list}" var="list">
 										<tr>
 											<td>
 												<div class="name-box">
@@ -155,19 +155,19 @@ th, td {
 															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
 															alt="">
 													</figure>
-													<h5>${bookingList.name}</h5>
-													<span class="ptno">#${bookingList.ptNo}</span>
+													<h5>${list.name}</h5>
+													<span class="ptno">#${list.ptNo}</span>
 												</div>
 											</td>
-											<td>${bookingList.bookingNo}</td>
-											<td><fmt:formatDate value="${bookingList.consultDate}"
-													pattern="yy-MM-dd" /> <span class="time">${bookingList.consultTime}</span>
+											<td>${list.bookingNo}</td>
+											<td><fmt:formatDate value="${list.consultDate}"
+													pattern="yy-MM-dd" /> <span class="time">${list.consultTime}</span>
 											</td>
-											<td><fmt:formatDate value="${bookingList.bookingDate}"
+											<td><fmt:formatDate value="${list.bookingDate}"
 													pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
-													type="currency" value="${bookingList.price}" /></td>
-											<td>${bookingList.payStatus}</td>
+													type="currency" value="${list.price}" /></td>
+											<td>${list.payStatus}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -182,7 +182,7 @@ th, td {
 					<div class="title-box">
 						<h3>진료내역</h3>
 						<div class="btn-box">
-							<a href="apptHistory" class="theme-btn-one">전체보기<i
+							<a href="ptHistory" class="theme-btn-one">전체보기<i
 								class="icon-Arrow-Right"></i></a>
 						</div>
 					</div>
@@ -200,7 +200,7 @@ th, td {
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${getlatestapptList}" var="getlatestapptList">
+									<c:forEach items="${ptMainhisList}" var="ptMainhisList">
 										<tr>
 											<td>
 												<div class="name-box">
@@ -209,19 +209,19 @@ th, td {
 															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
 															alt="">
 													</figure>
-													<h5>${getlatestapptList.name}</h5>
-													<span class="ptno">#${getlatestapptList.ptNo}</span>
+													<h5>${ptMainhisList.name}</h5>
+													<span class="ptno">#${ptMainhisList.ptNo}</span>
 												</div>
 											</td>
-											<td>${getlatestapptList.bookingNo}</td>
+											<td>${ptMainhisList.bookingNo}</td>
 											<td><fmt:formatDate
-													value="${getlatestapptList.consultDate}" pattern="yy-MM-dd" />
-												<span class="time">${getlatestapptList.consultTime}</span></td>
+													value="${ptMainhisList.consultDate}" pattern="yy-MM-dd" />
+												<span class="time">${ptMainhisList.consultTime}</span></td>
 											<td><fmt:formatDate
-													value="${getlatestapptList.bookingDate}" pattern="yy-MM-dd" /></td>
+													value="${ptMainhisList.bookingDate}" pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
-													type="currency" value="${getlatestapptList.price}" /></td>
-											<td>${getlatestapptList.payStatus}</td>
+													type="currency" value="${ptMainhisList.price}" /></td>
+											<td>${ptMainhisList.payStatus}</td>
 											<td><span class="print"><i class="fas fa-print"></i>처방전</span>
 											</td>
 											<td><span class="view"><i class="fas fa-eye"></i>진료노트</span>
@@ -240,7 +240,7 @@ th, td {
 					<div class="title-box">
 						<h3>나의 후기</h3>
 						<div class="btn-box">
-							<a href="docReview" class="theme-btn-one">전체보기<i
+							<a href="ptReview" class="theme-btn-one">전체보기<i
 								class="icon-Arrow-Right"></i></a>
 						</div>
 					</div>
@@ -256,8 +256,8 @@ th, td {
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${getlatestreviewList}"
-										var="getlatestreviewList">
+									<c:forEach items="${ptMainreList}"
+										var="ptMainreList">
 										<tr>
 											<td>
 												<div class="name-box">
@@ -266,19 +266,19 @@ th, td {
 															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
 															alt="">
 													</figure>
-													<h5>${getlatestreviewList.nickname}</h5>
+													<h5>${ptMainreList.nickname}</h5>
 												</div>
 											</td>
 											<td><c:forEach var="i" begin="1"
-													end="${getlatestreviewList.reviewPoint}">
+													end="${ptMainreList.reviewPoint}">
 													<span style="color: #ffab01;"><i class="icon-Star"></i></span>
 												</c:forEach> <c:forEach var="i" begin="1"
-													end="${5-getlatestreviewList.reviewPoint}">
+													end="${5-ptMainreList.reviewPoint}">
 													<i class="icon-Star"></i>
 												</c:forEach></td>
 											<td><fmt:formatDate
-													value="${getlatestreviewList.regDate}" pattern="yy-MM-dd" /></td>
-											<td>${getlatestreviewList.contents}</td>
+													value="${ptMainreList.regDate}" pattern="yy-MM-dd" /></td>
+											<td>${ptMainreList.contents}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
