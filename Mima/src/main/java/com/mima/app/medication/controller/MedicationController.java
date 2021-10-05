@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.criteria.domain.PageVO;
+import com.mima.app.medication.domain.ApiPageVO;
 import com.mima.app.medication.domain.DurDangerVO;
 import com.mima.app.medication.domain.DurVO;
 import com.mima.app.medication.domain.PillSearchVO;
@@ -37,17 +41,18 @@ public class MedicationController {
 	// 약 API - e약은요 [K]210929
 	@PostMapping("/pill")
 	@ResponseBody
-	public List<PillSearchVO> search(@RequestBody PillSearchVO pvo, Model model) throws IOException { 
+	public HashMap<String, Object> search(@RequestBody PillSearchVO pvo, Model model) throws IOException { 
+		Criteria cri = new Criteria();
+		
 		log.info(pvo.getItemName());
 		log.info(pvo.getEfcyQesitm());
 		log.info(pvo.getIntrcQesitm());
 		String str = "";
+		cri.setPageNum(pvo.getPageNo());
 		
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("인증키(url encode)", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
         
         if(pvo.getItemName() != null) { 
         	str = pvo.getItemName();
@@ -64,8 +69,9 @@ public class MedicationController {
         else if (pvo.getIntrcQesitm() != null ) {
 			str = pvo.getIntrcQesitm();
 			urlBuilder.append("&" + URLEncoder.encode("intrcQesitm","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*이 약을 사용하는 동안 주의해야 할 약 또는 음식은 무엇입니까?*/
-		}
-        
+		}        
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(String.valueOf(cri.getPageNum()), "UTF-8")); /*페이지번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); 
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -87,6 +93,9 @@ public class MedicationController {
         rd.close();
         conn.disconnect();
         
+        
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        
         // String -> JSON 변환
         List<PillSearchVO> pList = new ArrayList<PillSearchVO>();
         log.info(sb.toString());
@@ -95,10 +104,22 @@ public class MedicationController {
         String bodyValue = firstJson.get("body").toString();
         JSONObject twoJson = new JSONObject(bodyValue);
         
+        // 페이징처리 2
+        PageVO pageVO = new PageVO(cri, twoJson.getInt("totalCount"));
+        
+        // 페이징처리
+        ApiPageVO apiPage = new ApiPageVO();
+        
         if(twoJson.getInt("totalCount") == 0) {
         	pList = null;
         } else { 
         
+        // 페이지 넘버랑 토탈 값 담기
+        apiPage.setPageNo(twoJson.getInt("pageNo"));
+        apiPage.setTotalCount(twoJson.getInt("totalCount"));
+        
+        
+        // 결과값
         JSONArray jArry = twoJson.getJSONArray("items");
         
 		// 객채에 담음
@@ -120,8 +141,10 @@ public class MedicationController {
 				pList.add(pill);
 			} 
 		}
-
-		return pList;
+        hashMap.put("list", pList);
+        hashMap.put("page", apiPage);
+        hashMap.put("pageMaker",pageVO);
+		return hashMap;
         
     }
 	
