@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.member.mapper.PatientsMapper;
+import com.mima.app.session.domain.BookingVO;
 
 
 @Service
@@ -51,9 +53,39 @@ public class PatientsServiceImpl implements PatientsService {
 	//e.4
 	//환자대쉬보드 Main 오늘의예약
 	@Override
-	public List<PatientsVO> ptgetList() {
+	public List<BookingVO> ptgetList() {
 		return patientsMapper.ptgetList();
 
+	}
+
+	//환자대쉬보드 예약관리 페이지 e.5
+	@Override
+	public List<BookingVO> ptbmList() {
+		return patientsMapper.ptbmList();
+	}
+
+	//환자대쉬보드 Main 진료내역 e.5
+	@Override
+	public List<BookingVO> ptMainhisList() {
+		return patientsMapper.ptMainhisList();
+	}
+
+	//환자대쉬보드 진료내역 페이지 e.5
+	@Override
+	public List<BookingVO> ptHistoryList() {
+		return patientsMapper.ptHistoryList();
+	}
+
+	//환자대쉬보드 Main 나의후기 e.5
+	@Override
+	public List<CommentsVO> ptMainreList() {
+		return patientsMapper.ptMainreList();
+	}
+
+	//환자대쉬보드 나의후기 페이지 e.5
+	@Override
+	public List<CommentsVO> ptReviewList() {
+		return patientsMapper.ptReviewList();
 	}
 	
 }

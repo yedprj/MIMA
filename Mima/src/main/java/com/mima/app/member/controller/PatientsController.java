@@ -32,12 +32,34 @@ public class PatientsController {
 	}
 	
 	//e.4
-	//환자대쉬보드 Main 오늘의예약
+	//환자대쉬보드 메인 페이지
 	@GetMapping("/ptMain")
-	public String list(Model model) {
-		model.addAttribute("list",patientsService.ptgetList());
+	public String ptMain(Model model) {
+		model.addAttribute("list", patientsService.ptgetList());
+		model.addAttribute("ptMainhisList", patientsService.ptMainhisList());
+		model.addAttribute("ptMainreList", patientsService.ptMainreList());
 		return "patients/ptMain";
 	}
 	
-
+	//환자대쉬보드 예약관리 페이지 e.5
+	@GetMapping("/ptBookManage")
+	public String ptBookManage(Model model) {
+		model.addAttribute("ptbmList", patientsService.ptbmList());
+		return "patients/ptBookManage";
+	}
+	
+	//환자대쉬보드 진료내역 페이지 e.5
+	@GetMapping("/ptHistory")
+	public String ptHistory(Model model) {
+		model.addAttribute("ptHistoryList", patientsService.ptHistoryList());
+		return "patients/ptHistory";
+	}
+	
+	//환자대쉬보드 나의후기 페이지 e.5
+	@GetMapping("/ptReview")
+	public String ptReview(Model model) {
+		model.addAttribute("ptReviewList", patientsService.ptReviewList());
+		return "patients/ptReview";
+	}
+	
 }

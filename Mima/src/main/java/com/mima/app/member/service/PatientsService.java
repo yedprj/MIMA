@@ -2,8 +2,10 @@ package com.mima.app.member.service;
 
 import java.util.List;
 
+import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.member.domain.PatientsVO;
+import com.mima.app.session.domain.BookingVO;
 
 public interface PatientsService {
 	
@@ -26,6 +28,20 @@ public interface PatientsService {
 	
 	//e.4
 	//환자대쉬보드 Main 오늘의예약
-	public List<PatientsVO> ptgetList();
+	public List<BookingVO> ptgetList();
 
+	//환자대쉬보드 예약관리 페이지 e.5
+	public List<BookingVO> ptbmList();
+	
+	//환자대쉬보드 Main 진료내역 e.5
+	public List<BookingVO> ptMainhisList();
+	
+	//환자대쉬보드 진료내역 페이지 e.5
+	public List<BookingVO> ptHistoryList();
+	
+	//환자대쉬보드 Main 나의후기 e.5
+	public List<CommentsVO> ptMainreList();
+	
+	//환자대쉬보드 나의후기 페이지 e.5
+	public List<CommentsVO> ptReviewList();
 }
