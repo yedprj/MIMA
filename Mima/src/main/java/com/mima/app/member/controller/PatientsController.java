@@ -43,8 +43,12 @@ public class PatientsController {
 	
 	//환자대쉬보드 예약관리 페이지 e.5
 	@GetMapping("/ptBookManage")
-	public String ptBookManage(Model model) {
+	public String ptBookManage(Model model, @ModelAttribute("cri")Criteria cri) {
+		int total = patientsService.getTotalPtbmCount(cri);
+		
 		model.addAttribute("ptbmList", patientsService.ptbmList());
+		model.addAttribute("getPtbmList", patientsService.getPtbmList(cri));
+		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptBookManage";
 	}
 	

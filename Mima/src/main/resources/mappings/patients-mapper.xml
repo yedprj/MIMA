@@ -190,4 +190,54 @@ SELECT B.BOOKING_NO,
 		]]>
 	</select>
 
+<!-- 페이징 e.5-->
+<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criterias">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- total count -->
+	<select id="getTotalPtbmCount" resultType="int">
+		SELECT COUNT(*) FROM BOOKING
+		WHERE
+		<include refid="criterias"></include>
+		BOOKING_NO > 0
+	</select>
+
+	<select id="getPtbmList" 
+		resultType="com.mima.app.session.domain.BookingVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
+		ROWNUM RN, BOOKING_NO, PT_NO, DOC_NO, BOOKING_DATE, PRICE,
+		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME
+		FROM BOOKING
+		where
+				
+		<include refid="criterias"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+<!-- 페이징 end -->
+
 </mapper>

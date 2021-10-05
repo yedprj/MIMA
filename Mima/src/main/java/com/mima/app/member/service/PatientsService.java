@@ -33,6 +33,12 @@ public interface PatientsService {
 	//환자대쉬보드 예약관리 페이지 e.5
 	public List<BookingVO> ptbmList();
 	
+	//전체조회 페이징 e.5
+	public List<BookingVO> getPtbmList(Criteria cri);
+	
+	//전체 데이터 수 조회 페이징 e.5
+	public int getTotalPtbmCount(Criteria cri);
+	
 	//환자대쉬보드 Main 진료내역 e.5
 	public List<BookingVO> ptMainhisList();
 	

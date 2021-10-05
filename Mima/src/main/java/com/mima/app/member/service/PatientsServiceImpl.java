@@ -64,6 +64,18 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptbmList();
 	}
 
+	//전체조회 페이징 e.5
+	@Override
+	public List<BookingVO> getPtbmList(Criteria cri) {
+		return patientsMapper.getPtbmList(cri);
+	}
+
+	//전체 데이터 수 조회 페이징 e.5
+	@Override
+	public int getTotalPtbmCount(Criteria cri) {
+		return patientsMapper.getTotalPtbmCount(cri);
+	}
+	
 	//환자대쉬보드 Main 진료내역 e.5
 	@Override
 	public List<BookingVO> ptMainhisList() {
@@ -87,5 +99,6 @@ public class PatientsServiceImpl implements PatientsService {
 	public List<CommentsVO> ptReviewList() {
 		return patientsMapper.ptReviewList();
 	}
+
 	
 }
