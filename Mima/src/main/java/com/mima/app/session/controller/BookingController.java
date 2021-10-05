@@ -1,5 +1,6 @@
 package com.mima.app.session.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,10 +41,15 @@ public class BookingController {
 		System.out.println("============"+docVO.getDay());
 		System.out.println("============"+docVO.getDocNo());
 		String time = docAvailabilityService.selectDocTime(docVO.getDay(), docVO.getDocNo());
+		List<String> list = new ArrayList<String>();
 		
-		List<String> list = Arrays.asList(time.split(" "));
-		log.info(list.toString());
-		
+		if (time != null) {
+			list = Arrays.asList(time.split(" "));
+			log.info(list.toString());	
+		} else {
+			list.add("의사 선생님의 진료일이 아닙니다.");
+			log.info(list.toString());
+		}
 		return list;
 	}
 }

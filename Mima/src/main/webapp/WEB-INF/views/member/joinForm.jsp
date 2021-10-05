@@ -139,18 +139,18 @@
 							
 						
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-								<input type="text" class="form-control" id="address"
-									name="address" placeholder="주소">
+								<input type="text" class="form-control" id="addr1"
+									name="addr1" placeholder="주소">
 							</div>
 							
 							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-								<input type="text" class="form-control" id="detailAddress"
-								name="detailAddress" placeholder="상세주소">
+								<input type="text" class="form-control" id="addr2"
+								name="addr2" placeholder="상세주소">
 							</div>
 							
 							<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-								<input type="text" class="form-control" id="extraAddress"
-									name="extraAddress" placeholder="참고항목">
+								<input type="text" class="form-control" id="addr3"
+									name="addr3" placeholder="참고항목">
 							</div>
 							
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
@@ -184,7 +184,7 @@
 					</form>
 					<div class="login-now">
 						<p>
-							Already have an account? <a href="register-page.html">Login
+							Already have an account? <a href="${pageContext.request.contextPath}/login">Login
 								Now</a>
 						</p>
 					</div>
@@ -209,34 +209,38 @@
 			
 			var memberId = $("#memberId").val();
 			
-			$.ajax({
-				url : "IdCheck",
-				type : "post",
-				data : JSON.stringify({memberId : memberId}),
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				dataType : "json",
-				contentType : "application/json",
-				success : function(data){
-					console.log(data);
-					if (data == 0){
-						alert("사용할 수 있는 아이디 입니다.");
-						$('#memberId').removeClass('is-invalid')
-									  .addClass('is-valid');
-						$('#password').focus();
-					} else {
-						alert("중복된 아이디 입니다. 다른 아이디를 입력해 주세요.");
-						$('#memberId').removeClass('is-valid')
-									  .addClass('is-invalid');
-						$('#memberId').val('')
-									  .focus();
+			if (memberId != ''){
+				$.ajax({
+					url : "IdCheck",
+					type : "post",
+					data : JSON.stringify({memberId : memberId}),
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					dataType : "json",
+					contentType : "application/json",
+					success : function(data){
+						console.log(data);
+						if (data == 0){
+							alert("사용할 수 있는 아이디 입니다.");
+							$('#memberId').removeClass('is-invalid')
+										  .addClass('is-valid');
+							$('#password').focus();
+						} else {
+							alert("중복된 아이디 입니다. 다른 아이디를 입력해 주세요.");
+							$('#memberId').removeClass('is-valid')
+										  .addClass('is-invalid');
+							$('#memberId').val('')
+										  .focus();
+						}
+					},
+					error: function(){
+						alert("비교 실패");
 					}
-				},
-				error: function(){
-					alert("비교 실패");
-				}
-			});
+				});
+			} else {
+				alert("아이디를 입력해 주세요");
+			}
 		});
 	});
 	
@@ -251,7 +255,10 @@
 		var name = $("#name").val();
 		var identifyNo = $("#identifyNo").val();
 		var gender = $("#gender").val();
-		var address = $("#address").val();
+		var postcode = $("#postcode").val();
+		var addr1 = $("#addr1").val();
+		var addr2 = $("#addr2").val();
+		var addr3 = $("#addr3").val();
 		var email = $("#email").val();
 		var phone = $("#phone").val();
 		var ptProfilePhoto = $("#ptProfilePhoto").val();
@@ -275,7 +282,10 @@
 									   name : name,
 									   identifyNo : identifyNo,
 									   gender : gender,
-									   address : address,
+									   postcode : postcode,
+									   addr1 : addr1,
+									   addr2 : addr2,
+									   addr3 : addr3,
 									   email : email,
 									   phone : phone,
 									   status : status,
@@ -283,10 +293,10 @@
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data) {
-					console.log(data);
+					//console.log(data);
 					if (data == 1) {
-						alert("회원가입 성공!");
-						window.location.href = "loginForm";
+						alert("회원가입이 완료되었습니다!");
+						window.location.href = "login";
 					} else {
 						alert("회원가입 실패!")
 					}
@@ -475,61 +485,71 @@
 	// 회원 가입 시 전체 체크 function
 	function allCheck() {
 		// 아이디 입력 했는지 체크
-		if (frm.memberId.val == "") {
+		if (frm.memberId.val == '') {
 			alert("아이디를 입력해 주세요.");
 			return false;
 		}
 		
 		// 비밀번호를 입력 했는지 체크
-		if (frm.password.val == ""){
+		if (frm.password.val == ''){
 			alert("비밀번호를 입력해주세요.");
 			return false;
 		}
 		
 		// 닉네임 입력 했는지 체크
-		if (frm.nickname.val == "") {
+		if (frm.nickname.val == '') {
 			alert("닉네임을 입력해주세요.");
 			return false;
 		}
 		
 		// 이름 입력 했는지 체크
-		if (frm.name.val == "") {
+		if (frm.name.val == '') {
 			alert("이름을 입력해주세요.");
 			return false;
 		}
 		
 		// 주민등록번호를 입력 했는지 체크
-		if (frm.identifyNo.val == "") {
+		if (frm.identifyNo.val == '') {
 			alert("주민등록번호를 입력해주세요.");
 			return false;
 		}
 		
 		// 휴대폰 확인 했는지 체크
-		if (frm.phone.val == "") {
+		if (frm.phone.val == '') {
 			alert("휴대폰 본인인증을 해주세요.");
 			return false;
 		}
 		
 		// 성별을 입력 했는지 체크
-		if (frm.gender.val == "") {
+		if (frm.gender.val == '') {
 			alert("성별을 입력해주세요.");
 			return false;
 		}
 		
 		// 이메일을 입력 했는지 체크
-		if (frm.email.val == "") {
+		if (frm.email.val == '') {
 			alert("이메일을 입력해주세요.");
 			return false;
 		}
 		
 		// 주소 api 사용 유무 체크
-		if (frm.address.val == "") {
+		if (frm.addr1.val == '') {
+			alert("주소 검색을 사용해 입력해 주세요.");
+			return false;
+		}
+		
+		if (frm.addr2.val == '') {
+			alert("주소 검색을 사용해 입력해 주세요.");
+			return false;
+		}
+		
+		if (frm.addr3.val == '') {
 			alert("주소 검색을 사용해 입력해 주세요.");
 			return false;
 		}
 		
 		// 프로필 등록 체크
-		if (frm.ptProfilePhoto.val == "") {
+		if (frm.ptProfilePhoto.val == '') {
 			alert("프로필 등록할 사진을 업로드 해주세요.");
 			return false;
 		}
@@ -570,17 +590,17 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("extraAddress").value = extraAddr;
+                    document.getElementById("addr3").value = extraAddr;
                 
                 } else {
-                    document.getElementById("extraAddress").value = '';
+                    document.getElementById("addr3").value = '';
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('postcode').value = data.zonecode;
-                document.getElementById("address").value = addr;
+                document.getElementById("addr1").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("detailAddress").focus();
+                document.getElementById("addr2").focus();
             }
         }).open();
     }
