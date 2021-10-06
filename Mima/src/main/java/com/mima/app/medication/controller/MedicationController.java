@@ -107,16 +107,9 @@ public class MedicationController {
         // 페이징처리 2
         PageVO pageVO = new PageVO(cri, twoJson.getInt("totalCount"));
         
-        // 페이징처리
-        ApiPageVO apiPage = new ApiPageVO();
-        
         if(twoJson.getInt("totalCount") == 0) {
         	pList = null;
         } else { 
-        
-        // 페이지 넘버랑 토탈 값 담기
-        apiPage.setPageNo(twoJson.getInt("pageNo"));
-        apiPage.setTotalCount(twoJson.getInt("totalCount"));
         
         
         // 결과값
@@ -142,7 +135,6 @@ public class MedicationController {
 			} 
 		}
         hashMap.put("list", pList);
-        hashMap.put("page", apiPage);
         hashMap.put("pageMaker",pageVO);
 		return hashMap;
         
@@ -152,7 +144,9 @@ public class MedicationController {
 	// 약 API - DRUG 정보 조회 [K]211004
 	@PostMapping("/dur")
 	@ResponseBody
-	public List<DurVO> search(@RequestBody DurVO dvo, Model model) throws IOException { 
+	public HashMap<String, Object> search(@RequestBody DurVO dvo, Model model) throws IOException {
+		Criteria cri = new Criteria();
+		cri.setPageNum(dvo.getPageNo());
 		String str = "";
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1470000/DURPrdlstInfoService/getDurPrdlstInfoList"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D"); /*Service Key*/
@@ -165,7 +159,7 @@ public class MedicationController {
 			urlBuilder.append("&" + URLEncoder.encode("entpName","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*업체명*/
 		}
         
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(String.valueOf(cri.getPageNum()), "UTF-8")); /*페이지 번호*/
         urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과수*/
         urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
         URL url = new URL(urlBuilder.toString());
@@ -193,6 +187,10 @@ public class MedicationController {
         JSONObject firstJson = new JSONObject(value);
         String bodyValue = firstJson.get("body").toString();
         JSONObject twoJson = new JSONObject(bodyValue);
+        
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        
+        PageVO pageVO = new PageVO(cri, twoJson.getInt("totalCount"));
         
         if(twoJson.getInt("totalCount") == 0) {
         	dList = null;
@@ -229,14 +227,18 @@ public class MedicationController {
 			} 
 		}
 
-		return dList;
+        hashMap.put("list", dList);
+        hashMap.put("pageMaker",pageVO);
+		return hashMap;
 		
 	}    
 	
 	// 약 병용금기 검색 페이지 [K]211004
 	@PostMapping("/durDanger")
 	@ResponseBody
-	public List<DurDangerVO> search(@RequestBody DurDangerVO ddvo, Model model) throws IOException {	
+	public HashMap<String, Object> search(@RequestBody DurDangerVO ddvo, Model model) throws IOException {	
+		Criteria cri = new Criteria();
+		cri.setPageNum(ddvo.getPageNo());
 		String str = "";
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1470000/DURPrdlstInfoService/getUsjntTabooInfoList"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=kOfUtJpoB2nNx7jaI6XEcYuKUkswBceaC1lOvwdoLaEHRjjQvgNkQwOs%2Fh3MhO%2FWHv8%2BuL0zs6LKHuXP%2Bs2qhQ%3D%3D"); /*Service Key*/
@@ -253,8 +255,8 @@ public class MedicationController {
 			str = ddvo.getItemName();
 			urlBuilder.append("&" + URLEncoder.encode("itemName","UTF-8") + "=" + URLEncoder.encode(str, "UTF-8")); /*품목명*/
         } 
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(String.valueOf(cri.getPageNum()), "UTF-8")); /*페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
         
         URL url = new URL(urlBuilder.toString());
@@ -277,11 +279,17 @@ public class MedicationController {
         conn.disconnect();
         
         List<DurDangerVO> ddList = new ArrayList<DurDangerVO>();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        
+        
         log.info(sb.toString());
         String value = sb.toString();
         JSONObject firstJson = new JSONObject(value);
         String bodyValue = firstJson.get("body").toString();
         JSONObject twoJson = new JSONObject(bodyValue);
+        
+        
+        PageVO pageVO = new PageVO(cri, twoJson.getInt("totalCount"));
         
         if(twoJson.getInt("totalCount") == 0) {
         	ddList = null;
@@ -337,7 +345,9 @@ public class MedicationController {
 			} 
 		}
 
-		return ddList;
+        hashMap.put("list", ddList);
+        hashMap.put("pageMaker",pageVO);
+		return hashMap;
         
 	}
 	
