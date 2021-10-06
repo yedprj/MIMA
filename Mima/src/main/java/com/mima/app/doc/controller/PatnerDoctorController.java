@@ -31,8 +31,9 @@ import com.mima.app.member.service.MemberService;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
 
+// 타일스 때문에 RequestMapping제거 p.10/06
+// 타일스로 인해 아래 맵핑 해주는 클래스 String으로 수정 return으로 페이지 이동 p.10/06
 @Controller
-@RequestMapping("/docDash/*")
 public class PatnerDoctorController {
 	
 	@Autowired BookingService bookingService;
@@ -43,48 +44,59 @@ public class PatnerDoctorController {
 	
 	
 	// 닥터 대쉬보드 메인 페이지_J
-	@GetMapping("docMain")
-	public void docMain(Model model, BookingVO bookingvo, CommentsVO commentsvo) {
+	@GetMapping("/docMain")
+	public String docMain(Model model, BookingVO bookingvo, CommentsVO commentsvo) {
 		model.addAttribute("bookingList", bookingService.getList());
 		model.addAttribute("getlatestapptList", bookingService.getlatestapptList());
 		model.addAttribute("getlatestreviewList", commentsService.getlatestreviewList());
+		
+		return "docDash/docMain";
 	}
 	
 	// 닥터 대쉬보드 예약관리 페이지_J
 	@GetMapping("apptManage")
-	public void apptManage(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
+	public String apptManage(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
 		int total = bookingService.apptListCount(cri);
 		
 		model.addAttribute("apptList", bookingService.apptList());
 		model.addAttribute("apptListPage", bookingService.apptListPage(cri));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
+    
+    return "docDash/apptManage";
 	}
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
 	@GetMapping("apptHistory")
-	public void apptHistory(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
+	public String apptHistory(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
 		int total = bookingService.apptListCount(cri);
 		
 		model.addAttribute("apptHistoryList", bookingService.apptHistoryList());
 		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
+    
+    return "docDash/apptHistory";
 	}
 	
 	// 닥터 대쉬보드 나의 환자들 페이지_J29
-	@GetMapping("patientList")
-	public void patientList() {
+	@GetMapping("/patientList")
+	public String patientList() {
 		
+		return "docDash/patientList";
 	}
 	
 	// 닥터 대쉬보드 나의 후기 페이지_J29
-	@GetMapping("docReview")
-	public void docReview(Model model, CommentsVO commentsvo) {
+	@GetMapping("/docReview")
+	public String docReview(Model model, CommentsVO commentsvo) {
 		model.addAttribute("docReview", commentsService.docReview());
+		
+		return "docDash/docReview";
 	}
 	
-	@GetMapping("docQna")
-	public void docQna(Model model, CscVO cscvo) {
+	@GetMapping("/docQna")
+	public String docQna(Model model, CscVO cscvo) {
 		model.addAttribute("docQna", cscService.docQna());
+		
+		return "docDash/docQna";
 	}
 	
 	// 닥터 대쉬보드 프로필 페이지 수정폼_J04
@@ -94,23 +106,25 @@ public class PatnerDoctorController {
 	 */
 	
 	// 닥터 대쉬보드 패스워드 변경 페이지 수정 폼_J04
-	@GetMapping("docPwChangeForm")
+	@GetMapping("/docPwChangeForm")
 	public String pwUpdateForm() {
+		
 		return "docDash/docPwChange";
 	}
 	
 	// 닥터 대쉬보드 패스워드 변경 페이지 수정 처리_J04
-	@PostMapping("docPwChange")
+	@PostMapping("/docPwChange")
 	public String pwUpdate(RedirectAttributes rttr, MemberVO vo) {
 		memberService.docPwChange(vo);
 		rttr.addAttribute("pwUpdateResult", vo.getMemberId());
 		return "redirect:/docPwChange";
 	}
 	
-	// 닥터 진료노트 새창_J05
-	@RequestMapping("cnote")
+	// 닥터 진료노트_J05
+	@GetMapping("cnote")
 	public String cnote() {
-		return "no/docDash/cnote";
+		
+		return "docDash/cnote";
 	}
 
 	// 닥터 처방전 새창_J06
@@ -129,14 +143,20 @@ public class PatnerDoctorController {
 	
 	//s:1005 docProfileInsertFrm
 	@GetMapping("/docProfileInsertForm")
-	public void docProfileInsertForm() {}
+	public String docProfileInsertForm() {
+		
+		return "docDash/docProfileInsertForm";
+	}
+
 	
 	
 	// 닥터 진료가능 요일 시간 등록 폼 페이지 S:1005
 	@GetMapping("/docProfileForm")
-	public void docProfileFrom(Model model, DocAvailabilityVO vo) {}
-	
-	
+	public String docProfileFrom(Model model, DocAvailabilityVO vo) {
+		
+		return "docDash/docProfileForm";
+	}
+		
 	//s:1006 의사프로필등록
 	@PostMapping("/register")
 	public String register(PartnerDoctorVO vo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
@@ -146,7 +166,6 @@ public class PatnerDoctorController {
 		rttr.addFlashAttribute("result", vo.getMemberNo());
 		return "redirect:/docDash/docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
 	}
-	
 	
 	
 	//s:1006 첨부파일 등록 폼---의사 프로필사진
@@ -177,8 +196,5 @@ public class PatnerDoctorController {
 			System.out.println(attachVo);
 		}
 		return attachVo;
-	}
-
-	
-	
+	}	
 }

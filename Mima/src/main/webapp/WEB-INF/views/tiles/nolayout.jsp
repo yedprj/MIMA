@@ -63,16 +63,13 @@
 
 <!-- page wrapper -->
 <body>
-
+		
 	<div class="boxed_wrapper">
-
-
 		<div>
-			<tiles:insertAttribute name="content" />
+			<tiles:insertAttribute name="content"/>
 		</div>
-
-
 	</div>
+
 
 
 	<!-- jequery plugins -->

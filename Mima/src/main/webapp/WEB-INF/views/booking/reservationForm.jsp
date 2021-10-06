@@ -150,6 +150,7 @@ input[type="time"]:valid::before {
 			var today = new Date(date).getDay();
 			var day = week[today];
 			var docNo = $("#doctorSelect option:selected").val();
+			console.log(date);
 			console.log(day);
 			console.log(docNo);
 			
@@ -198,20 +199,20 @@ input[type="time"]:valid::before {
 		
 		// 첫 진료 여부 체크 박스 추가 p.10/05
 		function firstCheck(){
-			return "<h3>Are You a New Patient?</h3>"
+			return "<h3>이 전문의와 첫번째 진료이신가요?</h3>"
 				 + "<div class='custom-check-box'>"
 				 + "	<div class='custom-controls-stacked'>"
 				 + "		<label class='custom-control material-checkbox'>"
 				 + "			<input type='checkbox' class='material-control-input' "
 				 + "				id='chooseFirst' name='chooseFirst' value='y'>"
 				 + "			<span class='material-control-indicator'></span> "
-				 + "			<span class='description'>"+"Yes i have seen this doctor before"+"</span>"
+				 + "			<span class='description'>"+"예. 첫번째 진료입니다"+"</span>"
 				 + "		</label>"
 				 + "		<label class='custom-control material-checkbox'>"
 				 + "			<input type='checkbox' class='material-control-input'"
 				 + "				id='chooseFirst' name='chooseFirst' value='n'>"
 				 + "			<span class='material-control-indicator'></span>"
-				 + "			<span class='description'>No i am a new patient</span>"
+				 + "			<span class='description'>아니요.</span>"
 				 + "		</label>"
 				 + "	</div>"
 				 + "</div>"
