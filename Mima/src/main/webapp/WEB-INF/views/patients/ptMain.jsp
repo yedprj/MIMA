@@ -101,7 +101,7 @@ th, td {
 										<i class="icon-Dashboard-1"></i>
 									</div>
 									<h3>11</h3>
-									<p>총 세션 수<br><br></p>
+									<p>진료 내역 수</p>
 								</div>
 							</div>
 						</div>

@@ -28,28 +28,38 @@ public interface PatientsMapper {
 	
 	//e.4
 	//환자대쉬보드 Main 오늘의예약
-	public List<BookingVO> ptgetList();
+	public List<BookingVO> ptgetList(int memberNo);
 
 	//환자대쉬보드 예약관리 페이지 e.5
-	public List<BookingVO> ptbmList();
+	public List<BookingVO> ptbmList(int memberNo);
 	
-	//전체조회 페이징 e.5
+	//전체조회 예약관리 페이징 e.5
 	public List<BookingVO> getPtbmList(Criteria cri);
 	
-	//전체 데이터 수 조회 페이징 e.5
+	//전체 데이터 수 조회 예약관리 페이징 e.5
 	public int getTotalPtbmCount(Criteria cri);
 	
 	//환자대쉬보드 Main 진료내역 e.5
-	public List<BookingVO> ptMainhisList();
+	public List<BookingVO> ptMainhisList(int memberNo);
 	
 	//환자대쉬보드 진료내역 페이지 e.5
-	public List<BookingVO> ptHistoryList();
+	public List<BookingVO> ptHistoryList(int memberNo);
+	
+	//전체조회 진료내역 페이징 e.6
+	public List<BookingVO> getPthList(Criteria cri);
+	
+	//전체 데이터 수 조회 진료내역 페이징 e.6
+	public int getTotalPthCount(Criteria cri);
 	
 	//환자대쉬보드 Main 나의후기 e.5
-	public List<CommentsVO> ptMainreList();
+	public List<CommentsVO> ptMainreList(int memberNo);
 
 	//환자대쉬보드 나의후기 페이지 e.5
-	public List<CommentsVO> ptReviewList();
+	public List<CommentsVO> ptReviewList(int memberNo);
 	
-
+	//전체조회 나의후기 페이징 e.6
+	public List<CommentsVO> getPtrvList(Criteria cri);
+	
+	//전체 데이터 수 조회 나의후기 페이징 e.6
+	public int getTotalPtrvCount(Criteria cri);
 }
