@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -12,6 +13,8 @@ import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.service.CscService;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
+import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.member.domain.MemberVO;
@@ -40,14 +43,22 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 예약관리 페이지_J
 	@GetMapping("apptManage")
-	public void apptManage(Model model, BookingVO bookingvo) {
+	public void apptManage(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
+		int total = bookingService.apptListCount(cri);
+		
 		model.addAttribute("apptList", bookingService.apptList());
+		model.addAttribute("apptListPage", bookingService.apptListPage(cri));
+		model.addAttribute("pageMaker", new PageVO(cri, total));
 	}
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
 	@GetMapping("apptHistory")
-	public void apptHistory(Model model, BookingVO bookingvo) {
+	public void apptHistory(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
+		int total = bookingService.apptListCount(cri);
+		
 		model.addAttribute("apptHistoryList", bookingService.apptHistoryList());
+		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri));
+		model.addAttribute("pageMaker", new PageVO(cri, total));
 	}
 	
 	// 닥터 대쉬보드 나의 환자들 페이지_J29
@@ -72,9 +83,6 @@ public class PatnerDoctorController {
 	 * @GetMapping("docProfileFrom") public String docProfile() {
 	 * return"docDash/docProfile"; }
 	 */
-
-	
-	
 	
 	// 닥터 대쉬보드 패스워드 변경 페이지 수정 폼_J04
 	@GetMapping("docPwChangeForm")
@@ -90,10 +98,16 @@ public class PatnerDoctorController {
 		return "redirect:/docPwChange";
 	}
 	
-	// 닥터 진료노트_J05
+	// 닥터 진료노트 새창_J05
 	@RequestMapping("cnote")
 	public String cnote() {
 		return "no/docDash/cnote";
+	}
+
+	// 닥터 처방전 새창_J06
+	@RequestMapping("prescription")
+	public String prescription() {
+		return "/docDash/prescription";
 	}
 	
 	/*

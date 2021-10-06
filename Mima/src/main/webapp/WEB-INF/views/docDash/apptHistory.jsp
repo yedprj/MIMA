@@ -74,7 +74,7 @@ th, td {
                         <div class="btn-box pull-right">
                             <form action="my-patients.html" method="post" class="search-form">
                                 <div class="form-group">
-                                    <input type="search" name="search-field" placeholder="환자명을 입력하세요." required="">
+                                    <input type="search" id="nameSearch" name="nameSearch" onKeypress="enter();" placeholder="환자명을 입력하세요.">
                                     <button type="submit"><i class="far fa-search"></i></button>
                                 </div>
                             </form>
@@ -98,6 +98,9 @@ th, td {
 									<tr>
 										<td>
 											<div class="name-box">
+												<figure class="image">
+														<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+												</figure>
 	                                             <h5>${apptHistoryList.name}</h5>
 	                                            <span class="ptno">#${apptHistoryList.ptNo}</span>
 	                                        </div>
@@ -124,14 +127,25 @@ th, td {
                       </div>
                   </div>
                 </div>
-            <div class="pagination-wrapper">
-                <ul class="pagination">
-                    <li><a href="clinic-1.html" class="current">1</a></li>
-                    <li><a href="clinic-1.html">2</a></li>
-                    <li><a href="clinic-1.html">3</a></li>
-                    <li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
-                </ul>
-            </div>
+            
+				<!-- pagination  -->
+				<div class="pagination-wrapper">
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev}">
+							<li class="paginate_button previous"><a href="../docDash/apptHistory?pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+							
+						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage }" var="num">
+							<li class="paginate_button"><a href="../docDash/apptHistory?pageNum=${num}">${num}</a></li>
+						</c:forEach>
+							
+						<c:if test="${pageMaker.next}">
+							<li class="paginate_button next"><a href="../docDash/apptHistory?pageNum=${pageMaker.endPage+1}">다음</a></li>
+						</c:if>
+					</ul>
+				</div>
+				<!-- pagination end -->
+
             </div>
         </div>
 </section>
@@ -145,10 +159,20 @@ th, td {
 <script>
 	$(function(){
 		$('#cnote').on('click', function(){
-			window.open('http://localhost/app/docDash/cnote', '진료노트', 'width=1200, height=900, scrollbars=yes');
+			window.open('${pageContext.request.contextPath}/docDash/cnote', '진료노트', 'width=1200, height=900, scrollbars=yes');
 		});
-		$('prescription').on('click', function(){
-			window.open('http://localhost:3000/?bookingNo=', '처방전', 'width=1200, height=900, scrollbars=yes');
+		
+		$('#prescription').on('click', function(){
+			window.open('${pageContext.request.contextPath}/docDash/prescription', '처방전', 'width=1200, height=900, scrollbars=yes');
 		});
+		
+		$('#nameSearch');
+		
+		$(enter(event){
+			if(event.keyCode == 13){
+				
+			}
+		})
+		
 	});
 </script>
