@@ -15,7 +15,7 @@
 			<div class="outer-box">
 				<div class="logo-box">
 					<figure class="logo">
-						<a href="index.html"><img src="${pageContext.request.contextPath}/resources/assets/images/logo-3.png"
+						<a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/assets/images/logo-3.png"
 							alt=""></a>
 					</figure>
 				</div>
@@ -32,7 +32,7 @@
 							
 								<!-- li 부분 더 필요하면 만들어서 사용하면 됨 -->
 								<!-- 홈 nav 시작 -->
-								<li class="current dropdown"><a href="index.html">홈</a>
+								<li class="current dropdown"><a href="${pageContext.request.contextPath}/">홈</a>
 									<ul>
 										<li><a href="index.html">Home Page 01</a></li>
 										<li><a href="index-2.html">Home Page 02</a></li>
@@ -95,13 +95,14 @@
 										</li>
 										<li class="dropdown"><a href="submit.html">의사 프로필 테스트</a>
 										<!-- s:1005 의사프로필 페이지/리뷰페이지 테스트 링크 -->
+										<!-- p.10/06 컨트롤러 수정으로 페이지 링크 수정 -->
 											<ul>
-												<li><a href="${pageContext.request.contextPath}/docDash/docMain">대시보드</a></li>
-												<li><a href="${pageContext.request.contextPath}/docDash/docProfileInsertForm">의사프로필 인서트 폼</a></li>
-												<li><a href="${pageContext.request.contextPath}/docDash/docProfileForm">의사 진료시간 인서트 폼</a></li>
-												<li><a href="${pageContext.request.contextPath}/docDash/docProfileDetail">의사 프로필 상세페이지</a></li>
-												<li><a href="${pageContext.request.contextPath}/docDash/docReviewList">의사 리뷰 리스트 페이지</a></li>
-												<li><a href="${pageContext.request.contextPath}/docDash/docReviewDetail">의사 리뷰 상세페이지</a></li>
+												<li><a href="${pageContext.request.contextPath}/docMain">대시보드</a></li>
+												<li><a href="${pageContext.request.contextPath}/docProfileInsertForm">의사프로필 인서트 폼</a></li>
+												<li><a href="${pageContext.request.contextPath}/docProfileForm">의사 진료시간 인서트 폼</a></li>
+												<li><a href="${pageContext.request.contextPath}/docProfileDetail">의사 프로필 상세페이지</a></li>
+												<li><a href="${pageContext.request.contextPath}/docReviewList">의사 리뷰 리스트 페이지</a></li>
+												<li><a href="${pageContext.request.contextPath}/docReviewDetail">의사 리뷰 상세페이지</a></li>
 											</ul>
 										</li>
 										<li><a href="book-appointment.html">Book Appointment</a></li>
@@ -163,7 +164,8 @@
 										<li><a href="${pageContext.request.contextPath}/joinForm">일반 회원가입</a></li>
 										<li><a href="${pageContext.request.contextPath}/partnerJoinForm">파트너 회원가입</a></li>
 										<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
-										<li><a href="${pageContext.request.contextPath}/docDash/docMain">닥터 대쉬보드</a>
+										<!-- 링트 수정 p.10/06 -->
+										<li><a href="${pageContext.request.contextPath}/docMain">닥터 대쉬보드</a>
 										
 										</li>
 										<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash?memberNo=11">약국 대쉬보드</a></li>
@@ -200,7 +202,7 @@
 			<div class="outer-box">
 				<div class="logo-box">
 					<figure class="logo">
-						<a href="index.html"><img src="${pageContext.request.contextPath}/resources/assets/images/small-logo.png"
+						<a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/resources/assets/images/small-logo.png"
 							alt=""></a>
 					</figure>
 				</div>
@@ -210,8 +212,19 @@
 					</nav>
 				</div>
 				<div class="btn-box">
-					<a href="register-page.html" class="theme-btn-one"><i
-						class="icon-image"></i>Join Now</a>
+					<sec:authorize access="isAnonymous()">
+						<a href="${pageContext.request.contextPath}/login" class="theme-btn-one"><i
+							class="icon-image"></i>Login Now</a>
+					</sec:authorize>
+					
+					<sec:authorize access="isAuthenticated()">
+						${session.name }님
+						<form id="logOutfrm" name="logOutfrm" action="${pageContext.request.contextPath}/logout" method="post">
+							<a href="#" id="logoutBtn" class="theme-btn-one mx-3"><i class="icon-image"></i>Logout</a>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}">
+						</form>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

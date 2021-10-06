@@ -111,7 +111,10 @@ th, td {
 										<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${apptHistoryList.price}" /></td>
 										<td>${apptHistoryList.bookingStatus}</td>
 	                                    <td>
-	                                        <button class="view" id="cnote"><i class="fas fa-eye"></i>진료노트</button>
+	                                        <button class="view" id="cnote"
+	                                        	onclick="window.open('cnote', '진료노트', 'width=1200, height=900, scrollbars=yes')">
+	                                        	<i class="fas fa-eye"></i>진료노트
+	                                        </button>
 	                                    </td>
 										<td>
 	                                      	<button class="print" id="prescription"><i class="fas fa-print"></i>처방전</button>
@@ -144,9 +147,9 @@ th, td {
 
 <script>
 	$(function(){
-		$('#cnote').on('click', function(){
-			window.open('http://localhost/app/docDash/cnote', '진료노트', 'width=1200, height=900, scrollbars=yes');
-		});
+		/* $('#cnote').on('click', function(){
+			//window.open('${pageContext.request.contextPath}/docDash/cnote', '진료노트', 'width=1200, height=900, scrollbars=yes');
+		}); */
 		$('prescription').on('click', function(){
 			window.open('http://localhost:3000/?bookingNo=', '처방전', 'width=1200, height=900, scrollbars=yes');
 		});
