@@ -94,9 +94,8 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/06
-	@GetMapping("/phaSearch")
+	@GetMapping("phaSearch")
 	public String phaSearch() {
-	
 		return "patients/phaSearch";
 	}
 	

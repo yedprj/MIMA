@@ -7,11 +7,11 @@
 th, td {
 	text-align: center;
 }
-label b {
+/*label b {
  	color : #00224f;
  	font-weight : 900;
-}
-#searchBtn, #modalSearchBtn {
+}*/
+#searchBtn, #modalSearchBtn, #jusoBtn {
 	position: relative;
     display: inline-block;
     font-size: 15px;
@@ -74,6 +74,10 @@ label b {
 
 .add-listing .single-box {
 	border : 0px;
+}
+input::placeholder {
+  color: #d9d9d9;
+  font-style: italic;
 }
 </style>
 
@@ -141,29 +145,41 @@ label b {
                         <div class="add-listing">
                             <div class="single-box">
                                 <div class="title-box">
-                                    <h3>약 배달 신청 주소</h3>
+                                    <h3>약 배달 신청</h3>
                                     <a href="add-listing.html" class="menu"><i class="icon-Dot-menu"></i></a>
                                 </div>
                                 <div class="inner-box">
                                     <form action="add-listing.html" method="post">
                                         <div class="row clearfix">
+                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                                <label>배달지 주소</label>
+                                                <input id="addr1" name="addr1" placeholder="주소" type="text" >
+                                            </div>
+                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                            	<label> &nbsp;&nbsp;&nbsp;</label>
+												<input type="text" id="addr3" name="addr3" placeholder="도로명주소">
+											</div>
+                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                                <label>상세주소</label>
+                                                <input id="addr2" name="addr2" type="text" >
+                                            </div>
+                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                                <label>우편번호</label>
+                                                <input id="postcode" name="postcode" type="text" placeholder="우편번호" readonly>
+                                            </div>
+                                            <div class="col-lg-2 col-md-12 col-sm-12 form-group" >
+													<button type="button" id="jusoBtn" onclick="execDaumPostcode();" >주소검색</button>
+												</div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label><b>신청할 주소</b></label>
-                                                <input type="text" name="city" placeholder="신청한 주소가 존재하지 않습니다" >
+                                                <label>신청 약국</label>
+                                                <input type="text" name="state" >
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												                                             	
+												<button id="searchBtn" type="button" onclick="window.open('phaSearch', '약국찾기', 'top=100px, left=300, width=600px, height=700px , scrollbars=yes');">검색</button>                                             	
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label><b>신청 약국</b></label>
-                                                <input type="text" name="state" placeholder="State" required="">
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<button id="searchBtn" type="button">검색</button>                                             	
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label><b>특이사항</b></label>
-                                                <textarea name="message" placeholder="Enter your name"></textarea>
+                                                <label>특이사항</label>
+                                                <textarea name="message" ></textarea>
                                             </div>
                                         </div>
                                         
@@ -173,7 +189,7 @@ label b {
                             <div class="btn-box">
                                 <a href="add-listing.html" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
                             </div>
-                            <div class="modal">
+                            <!-- <div class="modal">
 								<div class="modal_content" title="클릭하면 창이 닫힙니다.">
 								    <div class="single-box">
 		                                <div class="title-box">
@@ -203,9 +219,9 @@ label b {
 		                                </div>
 		                                <span class="accept insertBtn" style="float: right;"><i	class="fas fa-check"></i></span> 
 		                                <span class="cancel closeBtn" style="float: right;"><i class="fas fa-times"></i></span>
-		                            </div>   <!-- single box end -->
+		                            </div>   single box end
 								</div>
-							</div> <!-- modal end -->
+							</div> modal end -->
                         </div>
                     </div>
                 </div>
@@ -221,10 +237,59 @@ label b {
 
 
 <script>
+//주소 API 연결 s:1005
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                document.getElementById("addr3").value = extraAddr;
+            
+            } else {
+                document.getElementById("addr3").value = '';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('postcode').value = data.zonecode;
+            document.getElementById("addr1").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("addr2").focus();
+        }
+    }).open();
+}// 주소 api 끝
+
 $(function(){ 
 		
 	 
-	  $("#searchBtn").click(function(){
+	 /*  $("#searchBtn").click(function(){
 	    $(".modal").fadeIn();
 	  });
 	  
@@ -237,7 +302,7 @@ $(function(){
 		  
 		  // ajax 호출 검색
 		  
-	  });
+	  }); */
 	
 	  
 	});

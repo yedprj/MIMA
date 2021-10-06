@@ -58,6 +58,10 @@
 						<when test="type =='W'.toString()">
 							WRITER LIKE '%'|| #{keyword} || '%'
 						</when>
+						<when test="type =='delivery'.toString()">
+							DELIVERT_AREA LIKE '%'|| #{keyword} || '%'
+						</when>
+						
 					</choose>
 				</trim>
 			</foreach>
