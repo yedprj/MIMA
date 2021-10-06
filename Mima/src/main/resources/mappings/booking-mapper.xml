@@ -73,6 +73,100 @@
 	]]>
 </select>
 
+<!-- 페이징 -->
+<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- total count -->
+	
+		<!-- 닥터 대쉬보드 예약관리 페이징_J06 -->
+		<select id="apptListCount" resultType="int">
+			SELECT COUNT(*) FROM BOOKING
+			WHERE
+			<include refid="criteria"></include>
+			PT_NO > 0
+		</select>
+		
+		<!-- 닥터 대쉬보드 예약관리 페이징_J06 -->
+		<select id="apptListPage" resultType="com.mima.app.session.domain.BookingVO">
+			SELECT *
+			FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
+				ROWNUM RN,
+				BOOKING_NO,
+				PT_NO,
+				DOC_NO,
+				BOOKING_DATE,
+				PRICE,
+				BOOKING_STATUS,
+				CONSULT_DATE,
+				CONSULT_TIME,
+				EDIT_DATE,
+				ROOM_ID,
+				FIRST_SESSION,
+				SUBJECT
+			FROM BOOKING
+			WHERE <include refid="criteria"></include>
+					<![CDATA[
+					ROWNUM <= #{pageNum} * #{amount}				
+					)
+					WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+		</select>
+		
+		<!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
+		<select id="apptHistoryCount" resultType="int">
+			SELECT COUNT(*) FROM BOOKING
+			WHERE
+			<include refid="criteria"></include>
+			PT_NO > 0
+		</select>
+	
+		<!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
+		<select id="apptHistoryPage" resultType="com.mima.app.session.domain.BookingVO">
+			SELECT *
+			FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
+				ROWNUM RN,
+				BOOKING_NO,
+				PT_NO,
+				DOC_NO,
+				BOOKING_DATE,
+				PRICE,
+				BOOKING_STATUS,
+				CONSULT_DATE,
+				CONSULT_TIME,
+				EDIT_DATE,
+				ROOM_ID,
+				FIRST_SESSION,
+				SUBJECT
+			FROM BOOKING
+			WHERE <include refid="criteria"></include>
+					<![CDATA[
+					ROWNUM <= #{pageNum} * #{amount}				
+					)
+					WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+		</select>
+	<!-- 페이징 end -->
+
 
 <!-- s:0929 진료시간중 10초마다 진료경로 검색 -->
 <select id="getRoomId" resultType="BookingVO">
