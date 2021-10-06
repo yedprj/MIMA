@@ -6,6 +6,12 @@
 th, td {
 		text-align: center;
 		}
+.doctors-appointment .doctors-table tr td .status.pending {
+    margin-right: 30px;
+}
+.doctors-appointment .doctors-table tr td .status {
+	margin-right: 30px;
+}
 </style>
 
 <!-- doctors-dashboard -->
@@ -102,7 +108,7 @@ th, td {
 														<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
 												</figure>
 	                                             <h5>${apptHistoryList.name}</h5>
-	                                            <span class="ptno">#${apptHistoryList.ptNo}</span>
+	                                            <span class="ptno"># no.${apptHistoryList.ptNo}</span>
 	                                        </div>
 	                                    </td>
 										<td>${apptHistoryList.bookingNo}</td>
@@ -112,15 +118,26 @@ th, td {
 										</td>
 										<td><fmt:formatDate value="${apptHistoryList.bookingDate}" pattern="yy-MM-dd"/></td>
 										<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${apptHistoryList.price}" /></td>
-										<td>${apptHistoryList.bookingStatus}</td>
+										<td>
+											<c:if test="${apptHistoryList.bookingStatus eq 'p'}">
+												<span class="status">결제완료</span>
+											</c:if>
+											<c:if test="${apptHistoryList.bookingStatus eq 'y'}">
+												<span class="status pending">결제예정</span>
+											</c:if>
+											<c:if test="${apptHistoryList.bookingStatus eq 'c'}">
+												<span class="status cancel">취소완료</span>
+											</c:if>
+										</td>
 	                                    <td>
-	                                        <button class="view" id="cnote"
-	                                        	onclick="window.open('cnote', '진료노트', 'width=1200, height=900, scrollbars=yes')">
+	                                        <button class="view" id="cnote" onclick="window.open('cnote', '진료노트', 'width=1100, height=800, scrollbars=yes')">
 	                                        	<i class="fas fa-eye"></i>진료노트
 	                                        </button>
 	                                    </td>
 										<td>
-	                                      	<button class="print" id="prescription"><i class="fas fa-print"></i>처방전</button>
+	                                      	<button class="print" id="prescription" onclick="window.open('prescription', '처방전', 'width=1100, height=800, scrollbars=yes')">
+	                                      		<i class="fas fa-print"></i>처방전
+	                                      	</button>
 	                                    </td>
 									</tr>
 								</c:forEach>

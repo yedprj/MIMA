@@ -2,6 +2,7 @@ package com.mima.app.member.service;
 
 import java.util.List;
 
+import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
 
 public interface MemberService {
@@ -49,5 +50,8 @@ public interface MemberService {
 	
 	// 닥터 비밀번호 변경_J04
 	public int docPwChange(MemberVO vo);
+	
+	// 닥터 나의 환자들 조회_J06
+	public List<MemberBookingVO> patientList();
 	
 }
