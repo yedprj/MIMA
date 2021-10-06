@@ -2,6 +2,8 @@ package com.mima.app.doc.domain;
 
 import java.util.Date;
 
+import com.mima.app.meditation.domain.MeditAttachVO;
+
 import lombok.Data;
 
 @Data
@@ -15,4 +17,7 @@ public class PartnerDoctorVO {
 	private String clinicEmail;			// 클리닉 이메일
 	private Date regDate;				// 등록일
 	private Date editDate;				// 수정일
+	
+	//s:1006 의사에 들어가있는 첨부파일(프로파일 사진 -> meditAttachVO사용함.)
+	private MeditAttachVO attachFile;
 }
