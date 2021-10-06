@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.admin.domain.CscVO;
+import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.member.domain.PatientsVO;
@@ -122,6 +124,12 @@ public class PatientsServiceImpl implements PatientsService {
 	@Override
 	public int getTotalPtrvCount(Criteria cri) {
 		return patientsMapper.getTotalPtrvCount(cri);
+	}
+
+	//환자대쉬보드 나의문의 페이지 e.6
+	@Override
+	public List<QnaVO> ptQna(int memberNo) {
+		return patientsMapper.ptQna(memberNo);
 	}
 
 

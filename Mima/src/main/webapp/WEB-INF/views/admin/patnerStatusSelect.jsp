@@ -44,7 +44,7 @@
 									</ul>
 									<div class="location-box">
 										<p>
-											<i class="fas fa-map-marker-alt"></i>${member.address }</p>
+											<i class="fas fa-map-marker-alt"></i>${member.addr1 }</p>
 									</div>
 								</div>
 							</div>
