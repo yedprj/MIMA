@@ -19,24 +19,10 @@ import com.mima.app.member.service.PatientsService;
 
 
 @Controller
-@RequestMapping("/patients/*")
 public class PatientsController {
 	
 	@Autowired PatientsService patientsService;
-	
-	
-	//e.29
-	//관리자 회원정보조회
-	@GetMapping("/list")
-	public String list(Model model, @ModelAttribute("cri") Criteria cri) {
-		int total = patientsService.getTotalPatientsCount(cri);
-		
-		model.addAttribute("list",patientsService.getList());
-		model.addAttribute("list",patientsService.getPatientsList(cri));
-		model.addAttribute("pageMaker", new PageVO(cri,total));
-		return "admin/adlist";
-	}
-	
+
 	//e.4
 	//환자대쉬보드 메인 페이지
 	@GetMapping("/ptMain")
@@ -120,5 +106,11 @@ public class PatientsController {
 	
 		return "patients/ptMedelivery";
 	}
+	
+	//환자대쉬보드 약배달 페이지 K.10/06
+	@GetMapping("phaSearch")
+	public String phaSearch() {
+		return "patients/phaSearch";
+	}	
 
 }
