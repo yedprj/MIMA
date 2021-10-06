@@ -109,7 +109,7 @@
 		</select>
 		
 		<!-- 닥터 대쉬보드 예약관리 페이징_J06 -->
-		<select id="apptListPage" resultType="com.mima.app.session.domain.BookingVO">
+		<select id="apptListPage" resultType="BookingVO">
 			SELECT *
 			FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
 				ROWNUM RN,

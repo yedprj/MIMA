@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.mima.app.admin.domain.CscVO;
+import com.mima.app.admin.service.CscService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.member.domain.MemberVO;
@@ -19,9 +21,8 @@ import com.mima.app.member.service.PatientsService;
 @Controller
 public class PatientsController {
 	
-	@Autowired 	PatientsService patientsService;
-	
-	
+	@Autowired PatientsService patientsService;
+
 	//e.4
 	//환자대쉬보드 메인 페이지
 	@GetMapping("/ptMain")
@@ -86,6 +87,19 @@ public class PatientsController {
 		return "patients/ptReview";
 	}
 	
+	//환자대쉬보드 나의문의 페이지 e.6
+	@GetMapping("/ptQna")
+	public String ptQna(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		
+		model.addAttribute("ptQna", patientsService.ptQna(memberNo));
+		
+		return "patients/ptQna";
+	}
+	
 	//환자대쉬보드 약배달 페이지 K.10/06
 	@GetMapping("/ptMedelivery")
 	public String ptMedelivery(Model model) {
@@ -97,8 +111,6 @@ public class PatientsController {
 	@GetMapping("phaSearch")
 	public String phaSearch() {
 		return "patients/phaSearch";
-	}
-	
+	}	
 
-	
 }
