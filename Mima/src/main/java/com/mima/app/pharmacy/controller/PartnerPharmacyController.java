@@ -74,7 +74,12 @@ public class PartnerPharmacyController {
 	
 	// 리뷰페이지 [K]210929
 	@GetMapping("/review")
-	public void review() {}
+	public void review() {
+	}
+	
+	// 문의페이지 [K]211006
+	@GetMapping("/phaQna")
+	public void phaQna() {}
 
 	// 비밀번호 변경페이지 [K]210929
 	@GetMapping("/pwUpdate")

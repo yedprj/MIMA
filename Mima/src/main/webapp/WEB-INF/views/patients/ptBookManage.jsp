@@ -138,7 +138,7 @@ th, td {
 			</div>
 
 			<!-- pagination  -->
-					<div class="pagination-wrapper" align="center">
+					<div class="pagination-wrapper">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev }">
 								<li class="paginate_button previous"><a href="../patients/ptBookManage?pageNum=${pageMaker.startPage-1 }">이전</a></li>

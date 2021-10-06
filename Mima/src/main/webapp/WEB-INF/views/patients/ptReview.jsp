@@ -46,10 +46,10 @@ th, td {
         </div>
         <div class="profile-info">
             <ul class="list clearfix">
-               		<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+               		<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
 					<li><a href="patientList"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
-					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
+					<li><a href="ptReview" class="current"><i class="fas fa-star"></i>나의 후기</a></li>
 					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 					<li><a href="docProfile"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
@@ -72,10 +72,10 @@ th, td {
         </div>
         <div class="profile-info">
             <ul class="list clearfix">
-                	<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+                	<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
 					<li><a href="patientList"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
-					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
+					<li><a href="ptReview" class="current"><i class="fas fa-star"></i>나의 후기</a></li>
 					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 					<li><a href="docProfile"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
@@ -120,14 +120,23 @@ th, td {
     </c:forEach>
                     </div>
                 </div>
-                <div class="pagination-wrapper">
-                    <ul class="pagination">
-                        <li><a href="clinic-1.html" class="current">1</a></li>
-                        <li><a href="clinic-1.html">2</a></li>
-                        <li><a href="clinic-1.html">3</a></li>
-                        <li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
-                    </ul>
-                </div>
+                <!-- pagination  -->
+					<div class="pagination-wrapper">
+						<ul class="pagination">
+							<c:if test="${pageMaker.prev }">
+								<li class="paginate_button previous"><a href="../patients/ptReview?pageNum=${pageMaker.startPage-1 }">이전</a></li>
+							</c:if>
+								
+							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+								<li class="paginate_button"><a href="../patients/ptReview?pageNum=${num }">${num }</a></li>
+							</c:forEach>
+								
+							<c:if test="${pageMaker.next }">
+								<li class="paginate_button next"><a href="../patients/ptReview?pageNum=${pageMaker.endPage+1 }">다음</a></li>
+							</c:if>
+						</ul>
+					</div>
+					<!-- pagination end -->
             </div>
         </div>
     </div>
