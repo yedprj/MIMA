@@ -38,7 +38,7 @@ th, td {
 		<div class="profile-box">
 			<div class="upper-box">
 				<figure class="profile-image">
-					<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+					<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" >
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
@@ -75,7 +75,7 @@ th, td {
                         <div class="btn-box pull-right">
                             <form action="my-patients.html" method="post" class="search-form">
                                 <div class="form-group">
-                                    <input type="search" name="search-field" placeholder="Search" required="">
+                                    <input type="search" name="search-field" placeholder="Search">
                                     <button type="submit"><i class="far fa-search"></i></button>
                                 </div>
                             </form>
@@ -87,50 +87,44 @@ th, td {
                                 <thead class="table-header">
                                     <tr>
                                         <th>환자명</th>
+                                        <th>주민번호</th>
                                         <th>성별</th>
-                                        <th>주소</th>
                                         <th>연락처</th>
+                                        <th>주소</th>
                                         <th>나의 약국</th>
                                         <th>초진문진표</th>
                                     </tr>    
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="name-box">
-                                                <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
-                                                <h5>환자명</h5>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p>Male</p>
-                                        </td>
-                                        <td>
-                                            <p>Flat 20, Reynolds Neck, NY</p>
-                                        </td>
-                                        <td>
-                                            <p>+(22) 65_458_856</p>
-                                        </td>
-                                        <td>
-                                            <p>29 Yrs</p>
-                                        </td>
-                                        <td>
-                                            <p>O+</p>
-                                        </td>
-                                    </tr>
+                                	<c:forEach items="${patientList}" var="patientList">
+                                		<tr>
+	                                        <td>
+	                                            <div class="name-box">
+	                                                <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png"></figure>
+	                                                <h5>${patientList.name}</h5>
+	                                                <span class="ptno"># no.${patientList.ptNo}</span>
+	                                            </div>
+	                                        </td>
+	                                        <td>
+	                                            <p>${patientList.identifyNo}</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>${patientList.gender}</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>${patientList.phone}</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>${patientList.addr1}</p>
+	                                        </td>
+                                    	</tr>
+                                	</c:forEach>
                                 </tbody>    
                             </table>
                         </div>
                     </div>
                 </div>
-				<div class="pagination-wrapper">
-					<ul class="pagination">
-						<li><a href="clinic-1.html" class="current">1</a></li>
-						<li><a href="clinic-1.html">2</a></li>
-						<li><a href="clinic-1.html">3</a></li>
-						<li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
-					</ul>
-				</div>
+
 			</div>
 		</div>
 	</div>

@@ -173,4 +173,25 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
+	<!-- 닥터 대쉬보드 나의 환자들 조회_J06 -->
+	<select id="patientList" resultType="MemberBookingVO">
+		<![CDATA[
+		SELECT 	M.MEMBER_NO AS MMEMBER_NO,
+		        M.NAME AS MNAME,
+		        M.PT_PROFILE_PHOTO AS MPT_PROFILE_PHOTO,
+		        M.IDENTIFY_NO AS MIDENTIFY_NO,
+		        M.GENDER AS MGENDER,
+		        M.PHONE AS MPHONE,
+		        M.ADDR1 AS MADDR1,
+		        M.ADDR2 AS MADDR2,
+		        M.ADDR3 AS MADDR3,
+		        B.DOC_NO AS BDOC_NO,
+		        B.PT_NO AS BPT_NO
+	   FROM MEMBER M JOIN BOOKING B
+	   ON M.MEMBER_NO = B.PT_NO
+	   WHERE B.DOC_NO=6
+	   ]]>
+	</select>
+	
+	
 </mapper>

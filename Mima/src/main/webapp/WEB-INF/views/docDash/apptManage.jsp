@@ -114,7 +114,7 @@ th, td {
 															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
 														</figure>
 														<h5>${apptList.name}</h5>
-														<span class="ptno">#${apptList.ptNo}</span>
+														<span class="ptno"># no.${apptList.ptNo}</span>
 													</div>
 												</td>
 												<td>${apptList.bookingNo}</td>
@@ -130,7 +130,7 @@ th, td {
 														<span class="status">결제완료</span>
 													</c:if>
 													<c:if test="${apptList.bookingStatus eq 'y'}">
-														<span class="status pending">예약완료</span>
+														<span class="status pending">결제예정</span>
 													</c:if>
 													<c:if test="${apptList.bookingStatus eq 'c'}">
 														<span class="status cancel">취소완료</span>
@@ -154,20 +154,25 @@ th, td {
 			<!-- pagination  -->
 			<div class="pagination-wrapper">
 				<ul class="pagination">
-					<c:if test="${pageMaker.prev }">
-						<li class="paginate_button previous"><a href="../docDash/apptManage?pageNum=${pageMaker.startPage-1 }">이전</a></li>
+					<c:if test="${pageMaker.prev}">
+						<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/docDash/apptManage?pageNum=${pageMaker.startPage-1}">이전</a></li>
 					</c:if>
 						
-					<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-						<li class="paginate_button"><a href="../docDash/apptManage?pageNum=${num }">${num }</a></li>
+					<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+						<li class="paginate_button"><a href="${pageContext.request.contextPath}/docDash/apptManage?pageNum=${num}">${num}</a></li>
 					</c:forEach>
 						
-					<c:if test="${pageMaker.next }">
-						<li class="paginate_button next"><a href="../docDash/apptManage?pageNum=${pageMaker.endPage+1 }">다음</a></li>
+					<c:if test="${pageMaker.next}">
+						<li class="paginate_button next"><a href="${pageContext.request.contextPath}/docDash/apptManage?pageNum=${pageMaker.endPage+1}">다음</a></li>
 					</c:if>
 				</ul>
 			</div>
 			<!-- pagination end -->
+			
+			<form id='actionForm' action="${pageContext.request.contextPath}/docDash/apptManage" method='get'>
+				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>			
+			</form>
 			
 		</div>
 	</div>
@@ -181,3 +186,12 @@ th, td {
 </button>
 
 <!-- End of .page_wrapper -->
+
+<script>
+	$(".paginate_button a").on("click", function(e) {
+		e.preventDefault();
+		console.log('click');
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionForm.submit();
+		});
+</script>

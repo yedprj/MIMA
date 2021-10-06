@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,7 +24,7 @@ import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.meditation.domain.MeditAttachVO;
-import com.mima.app.meditation.domain.MeditationVO;
+import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.session.domain.BookingVO;
@@ -69,7 +68,6 @@ public class PatnerDoctorController {
 	@GetMapping("apptHistory")
 	public String apptHistory(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
 		int total = bookingService.apptListCount(cri);
-		
 		model.addAttribute("apptHistoryList", bookingService.apptHistoryList());
 		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
@@ -77,12 +75,13 @@ public class PatnerDoctorController {
     return "docDash/apptHistory";
 	}
 	
-	// 닥터 대쉬보드 나의 환자들 페이지_J29
+	// 닥터 대쉬보드 나의 환자들 페이지_J29. J06
 	@GetMapping("/patientList")
-	public String patientList() {
-		
+	public String patientList(Model model, MemberBookingVO memberbookingvo) {
+		model.addAttribute("patientList", memberService.patientList());
 		return "docDash/patientList";
 	}
+	
 	
 	// 닥터 대쉬보드 나의 후기 페이지_J29
 	@GetMapping("/docReview")
@@ -123,15 +122,15 @@ public class PatnerDoctorController {
 	// 닥터 진료노트_J05
 	@GetMapping("cnote")
 	public String cnote() {
-		
 		return "docDash/cnote";
 	}
 
 	// 닥터 처방전 새창_J06
-	@RequestMapping("prescription")
+	@GetMapping("prescription")
 	public String prescription() {
-		return "/docDash/prescription";
+		return "docDash/prescription";
 	}
+	
 	
 	/*
 	 * @ModelAttribute("option") public Map<String, Object> jobs(){ Map<String,
@@ -139,6 +138,8 @@ public class PatnerDoctorController {
 	 * jobService.getJobList()); map.put("booked", deptService.getDeptList());
 	 * map.put("canceled", deptService.getDeptList()); return map; }
 	 */
+	
+	
 	
 	
 	//s:1005 docProfileInsertFrm

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.mapper.MemberMapper;
 
@@ -98,6 +99,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int docPwChange(MemberVO vo) {
 		return memberMapper.docPwChange(vo);
+	}
+
+	// 닥터 나의 환자들 조회_J06
+	@Override
+	public List<MemberBookingVO> patientList() {
+		return memberMapper.patientList();
 	}
 
 }
