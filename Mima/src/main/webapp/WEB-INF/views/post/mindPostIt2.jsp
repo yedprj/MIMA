@@ -213,6 +213,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					<br><br>
 				</div>
 			</div>
+			<input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}">
 		</div>
 	</section>
 	<!-- clinic-section end -->
@@ -247,10 +248,15 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	<button class="scroll-top scroll-to-target" data-target="html">
 		<span class="fa fa-arrow-up"></span>
 	</button>
+	
 </div>
 
 <script>
-	var reportMno = 6; // 현재 회원번호
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+
+	var reportMno = ${ session.memberNo }; // 현재 회원번호
 	var pageNum = 0;
 	var amount = 0;
 	var angryStr ='';
@@ -358,6 +364,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					memberNo : reportMno,
 					category : "POST"
 				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				contentType : 'application/json',
 				success : function(data) {
 					console.log("Likes_기록취소_성공");
@@ -376,6 +385,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					memberNo : reportMno,
 					category : "POST"
 				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				contentType : 'application/json',
 				success : function() {
 					console.log("Likes 기록입력 성공!!");
@@ -392,6 +404,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			data : JSON.stringify({
 				postNo : postNo
 			}),
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			contentType : 'application/json',
 			success : function() {
 				if (urlJuso == "updateLike") {
@@ -425,6 +440,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				reportMno : reportMno,
 				postNo : postNo
 			}),
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			contentType : 'application/json',
 			success : function(data) {
 				if (data.report) {
@@ -438,6 +456,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							method : "delete",
 							dataType : "json",
 							contentType : 'application/json',
+							beforeSend : function(xhr) {
+								xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+							},
 							success : function(data) {
 								console.log("신고_취소_성공");
 								alert("신고 취소!!");
@@ -456,6 +477,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							memberNo : memberNo,
 							reportMno : reportMno
 						}),
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
 						contentType : 'application/json',
 						success : function() {
 							alert("신고 성공!!");
@@ -493,6 +517,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					contents : $("#contents").val(),
 					postColor : $(".pallet").find(".active").data("img")
 				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				contentType : 'application/json',
 				success : function(data) {
 					postList();
@@ -522,6 +549,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				reportMno : reportMno,
 				pageNum : pageNum,
 				amount : amount
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 			},
 			contentType : 'application/json',
 			success : function(datas) {

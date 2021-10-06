@@ -2,6 +2,7 @@ package com.mima.app.session.service;
 
 import java.util.List;
 
+import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.session.domain.BookingVO;
 
 public interface BookingService {
@@ -17,6 +18,20 @@ public interface BookingService {
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
 	public List<BookingVO> apptHistoryList();
+	
+	// 닥터 대쉬보드 예약관리 페이징_J06
+	public List<BookingVO> apptListPage(Criteria cri);
+	
+	// 닥터 대쉬보드 예약관리 페이징 데이터 수 전체조회_J06
+	public int apptListCount(Criteria cri);
+	
+	// 닥터 대쉬보드 진료내역 페이징_J06
+	public List<BookingVO> apptHistoryPage(Criteria cri);
+	
+	// 닥터 대쉬보드 진료내역 페이징 데이터 수 전체조회_J06
+	public int apptHistoryCount(Criteria cri);
+	
+	
 	
 	//s:0929 진료시간 5분 전 부터 매 10초마다 테이블 확인해서 방 아이디 확인
 	public List<BookingVO> getRoomId();

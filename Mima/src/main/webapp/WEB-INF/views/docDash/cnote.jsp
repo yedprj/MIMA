@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <style>
 div {
 	align: center;
 }
 </style>
+
 <section>
 	<div class="panel">
 		<div class="content-container">
@@ -61,9 +63,8 @@ div {
 						</div>
 					</div>
 					<div class="btn-box">
-						<a href="add-listing.html" class="theme-btn-one">저장하기<i
-							class="icon-Arrow-Right"></i></a> <a href="add-listing.html"
-							class="cancel-btn">새로 작성하기</a>
+						<a href="add-listing.html" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
+						<a href="add-listing.html" class="cancel-btn">새로 작성하기</a>
 					</div>
 				</div>
 			</div>

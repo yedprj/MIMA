@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.doc.mapper.PartnerDoctorMapper">
 
-<select id="docProfileRead">
-	SELECT
-</select>
+<!-- 닥터프로필인서트갑미다 s:1006 -->
+<insert id="docProfileInsert">
+	
+</insert>
 
 </mapper>
