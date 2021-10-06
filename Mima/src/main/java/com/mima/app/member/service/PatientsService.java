@@ -2,6 +2,8 @@ package com.mima.app.member.service;
 
 import java.util.List;
 
+import com.mima.app.admin.domain.CscVO;
+import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.member.domain.PatientsVO;
@@ -62,4 +64,7 @@ public interface PatientsService {
 	
 	//전체 데이터 수 조회 나의후기 페이징 e.6
 	public int getTotalPtrvCount(Criteria cri);
+	
+	//환자대쉬보드 나의문의 페이지 e.6
+	public List<QnaVO> ptQna(int memberNo);
 }
