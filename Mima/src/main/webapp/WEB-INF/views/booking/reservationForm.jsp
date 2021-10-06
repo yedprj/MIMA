@@ -119,7 +119,7 @@ input[type="time"]:valid::before {
 											<div id="firstCheck"></div>
 										</div>
 										<div align="center" class="col-lg-12 col-md-12 col-sm-12 form-group">
-											<button type="button" id="checkTime" name="checkTime" 
+											<button type="button" id="reservationTime" name="reservationTime" 
 												class="theme-btn-one" style="width: 45%;">
 												진료 예약 체크
 											</button>
@@ -225,7 +225,7 @@ input[type="time"]:valid::before {
 			// div 자식요소 삭제 
 			$("#resTime").empty();
 			
-			var resTime = $(this).text();
+			var resvTime = $(this).text();
 			var date = $("#date").val();
 			
 			date = new Date(date);
@@ -235,13 +235,18 @@ input[type="time"]:valid::before {
 			var day = date.getDate();		// 일
 			
 			var time = year + "년 " + month + "월 " + day + "일"
-			console.log(resTime);
-			console.log(date);
+			console.log(resvTime);
+			//console.log(date);
 			
 			let hTag = $("<h4/>").addClass("mt-3")
 								 .css("color", "white");
-			let sTag = $("<span/>").text(time + " " + resTime);
+			let sTag = $("<span/>").text(time + " " + resvTime);
+			
+			let iTag = $('<input/>').attr('type', 'hidden')
+									.attr('value', resvTime)
+									.attr('id', 'consultTime');
 			$(hTag).append(sTag);
+			$(hTag).append(iTag);
 			$("#resTime").append(hTag);
 		}
 		
@@ -255,6 +260,34 @@ input[type="time"]:valid::before {
 				$(this).prop('checked', true);
 			}
 		});
+		
+		// 진료 예약 체크 p.10/06
+		$(document).on('click', '#reservationTime', function(e){
+			e.preventDefault();
+			
+			var ptNo = ${session.memberNo};									// PT_NO 예약 환자 번호
+			var docNo = $("#doctorSelect option:selected").val();			// DOC_NO 의사 번호
+			var consultDate = $("#date").val();								// 실제 진료 날짜
+			var consultTime = $('#consultTime').val();						// 실제 진료 시간
+			var firstSession = $('input:checkbox[id=chooseFirst]').val();	// 체크박스 y or n
+			
+			console.log(consultDate);
+			console.log(consultTime);
+			
+			$.ajax({
+				url: "",
+				type : "post",
+				data : {ptNo : ptNo,
+						docNo : docNo,
+						},
+				success : function(data) {
+				
+				},
+				error : function(reject) {
+					console.log(reject);
+				}
+			});
+		}); 
 		
 	});
 	

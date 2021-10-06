@@ -38,5 +38,8 @@ public interface BookingService {
 
 	//s:1003 단일 예약정보 가져오기
 	public BookingVO getBookingInfo(BookingVO vo);
-
+	
+	//p.10/06 진료 예약
+	public int insertBookingDate(BookingVO vo);
+	
 }

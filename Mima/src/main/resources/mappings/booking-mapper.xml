@@ -188,5 +188,26 @@
 	WHERE a.BOOKING_NO=#{bookingNo}
 </select>
 
+<!-- 진료 예약 p.10/06 -->
+<insert id="insertBookingDate">
+	<selectKey keyProperty="bookingNo" resultType="int"
+		order="BEFORE">
+		SELECT SEQ_BOOKING.NEXTVAL FROM DUAL
+	</selectKey>
+	INSERT INTO BOOKING
+		(BOOKING_NO,
+		 PT_NO,
+		 DOC_NO,
+		 CONSULT_DATE,
+		 CONSULT_TIME,
+		 FIRST_SESSION)
+	VALUES
+		(#{bookingNo},
+		 #{ptNo},
+		 #{docNo},
+		 #{consultDate},
+		 #{consultTime},
+		 #{firstSession})
+</insert>
 
 </mapper>

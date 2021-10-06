@@ -265,7 +265,7 @@
 		
 		if (role == "환자"){
 			role = "pt";
-			var status = "Y";
+			var status = "y";
 		}
 		
 		if (allCheck() == true) {
