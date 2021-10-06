@@ -53,15 +53,15 @@ public class PatientsServiceImpl implements PatientsService {
 	//e.4
 	//환자대쉬보드 Main 오늘의예약
 	@Override
-	public List<BookingVO> ptgetList() {
-		return patientsMapper.ptgetList();
+	public List<BookingVO> ptgetList(int memberNo) {
+		return patientsMapper.ptgetList(memberNo);
 
 	}
 
 	//환자대쉬보드 예약관리 페이지 e.5
 	@Override
-	public List<BookingVO> ptbmList() {
-		return patientsMapper.ptbmList();
+	public List<BookingVO> ptbmList(int memberNo) {
+		return patientsMapper.ptbmList(memberNo);
 	}
 
 	//전체조회 페이징 e.5
@@ -78,27 +78,51 @@ public class PatientsServiceImpl implements PatientsService {
 	
 	//환자대쉬보드 Main 진료내역 e.5
 	@Override
-	public List<BookingVO> ptMainhisList() {
-		return patientsMapper.ptMainhisList();
+	public List<BookingVO> ptMainhisList(int memberNo) {
+		return patientsMapper.ptMainhisList(memberNo);
 	}
 
 	//환자대쉬보드 진료내역 페이지 e.5
 	@Override
-	public List<BookingVO> ptHistoryList() {
-		return patientsMapper.ptHistoryList();
+	public List<BookingVO> ptHistoryList(int memberNo) {
+		return patientsMapper.ptHistoryList(memberNo);
 	}
 
+	//전체조회 진료내역 페이징 e.6
+	@Override
+	public List<BookingVO> getPthList(Criteria cri) {
+		return patientsMapper.getPthList(cri);
+	}
+
+	//전체 데이터 수 조회 진료내역 페이징 e.6
+	@Override
+	public int getTotalPthCount(Criteria cri) {
+		return patientsMapper.getTotalPthCount(cri);
+	}
+	
 	//환자대쉬보드 Main 나의후기 e.5
 	@Override
-	public List<CommentsVO> ptMainreList() {
-		return patientsMapper.ptMainreList();
+	public List<CommentsVO> ptMainreList(int memberNo) {
+		return patientsMapper.ptMainreList(memberNo);
 	}
 
 	//환자대쉬보드 나의후기 페이지 e.5
 	@Override
-	public List<CommentsVO> ptReviewList() {
-		return patientsMapper.ptReviewList();
+	public List<CommentsVO> ptReviewList(int memberNo) {
+		return patientsMapper.ptReviewList(memberNo);
 	}
 
-	
+	//전체조회 나의후기 페이징 e.6
+	@Override
+	public List<CommentsVO> getPtrvList(Criteria cri) {
+		return patientsMapper.getPtrvList(cri);
+	}
+
+	//전체 데이터 수 조회 나의후기 페이징 e.6
+	@Override
+	public int getTotalPtrvCount(Criteria cri) {
+		return patientsMapper.getTotalPtrvCount(cri);
+	}
+
+
 }
