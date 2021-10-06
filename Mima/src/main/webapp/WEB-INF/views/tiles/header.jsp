@@ -169,7 +169,7 @@
 										
 										</li>
 										<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash?memberNo=${session.memberNo}">약국 대쉬보드</a></li>
-										<li><a href="${pageContext.request.contextPath}/patients/ptMain">환자 대쉬보드</a></li>
+										<li><a href="${pageContext.request.contextPath}/ptMain">환자 대쉬보드</a></li>
 									</ul>
 								</li>
 							</ul>

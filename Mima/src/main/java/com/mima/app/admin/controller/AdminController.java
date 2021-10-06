@@ -4,13 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
+import com.mima.app.member.service.PatientsService;
 
 
 @Controller
@@ -18,6 +22,19 @@ import com.mima.app.member.service.MemberService;
 public class AdminController {
 	
 	@Autowired MemberService memberService;
+	@Autowired PatientsService patientsService;
+	
+	//K 10/06 수정
+	//관리자 회원정보조회
+	@GetMapping("/list")
+	public String list(Model model, @ModelAttribute("cri") Criteria cri) {
+		int total = patientsService.getTotalPatientsCount(cri);
+		
+		model.addAttribute("list",patientsService.getList());
+		model.addAttribute("list",patientsService.getPatientsList(cri));
+		model.addAttribute("pageMaker", new PageVO(cri,total));
+		return "admin/adlist";
+	}
 	
 	//e.29
 	//관리자 메인페이지

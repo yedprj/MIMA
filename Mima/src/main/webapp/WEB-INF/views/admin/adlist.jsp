@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-
+<!-- K.10/06 -->
 	<div class="boxed_wrapper">
 
 		<!-- doctors-dashboard -->
@@ -23,7 +23,7 @@
 										class="search-form">
 										<div class="form-group">
 											<input type="search" name="search-field" placeholder="Search"
-												required="">
+												>
 											<button type="submit">
 												<i class="far fa-search"></i>
 											</button>
@@ -69,15 +69,15 @@
 					<div class="pagination-wrapper" align="center">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev }">
-								<li class="paginate_button previous"><a href="../patients/list?pageNum=${pageMaker.startPage-1 }">이전</a></li>
+								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/list?pageNum=${pageMaker.startPage-1 }">이전</a></li>
 							</c:if>
 								
 							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-								<li class="paginate_button"><a href="../patients/list?pageNum=${num }">${num }</a></li>
+								<li class="paginate_button"><a href="${pageContext.request.contextPath }/admin/list?pageNum=${num }">${num }</a></li>
 							</c:forEach>
 								
 							<c:if test="${pageMaker.next }">
-								<li class="paginate_button next"><a href="../patients/list?pageNum=${pageMaker.endPage+1 }">다음</a></li>
+								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/list?pageNum=${pageMaker.endPage+1 }">다음</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -86,7 +86,7 @@
 					<div align="center">
 						<div class="add-listing my-profile">
 							<div class="btn-box">
-								<a href="../admin/adMain" class="cancel-btn">목록</a>
+								<a href="${pageContext.request.contextPath }/admin/adMain" class="cancel-btn">목록</a>
 							</div>
 						</div>
 					</div>
