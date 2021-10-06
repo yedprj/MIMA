@@ -291,7 +291,7 @@
 		var ptProfilePhoto = $("#ptProfilePhoto").val();
 		
 		if (role == "doctor" || role == "pharmacy"){
-			var status = "N";
+			var status = "n";
 		}
 		
 		if (allCheck() == true) {

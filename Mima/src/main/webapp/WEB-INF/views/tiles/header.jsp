@@ -271,7 +271,7 @@
 <script>
 	$(function() {
 		$("#logoutBtn").on("click", function(){
-			logOutfrm.submit();
+			$('#logOutfrm').submit();
 		});
 	});
 </script>

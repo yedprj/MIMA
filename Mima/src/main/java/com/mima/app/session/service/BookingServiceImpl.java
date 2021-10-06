@@ -64,16 +64,22 @@ public class BookingServiceImpl implements BookingService {
 	
 	
 	
-//	s:0929 진료시간 5분전 매10초마다 테이블확인 to get rm Id
+	//	s:0929 진료시간 5분전 매10초마다 테이블확인 to get rm Id
 	@Override
 	public List<BookingVO> getRoomId() {
 		return bookingMapper.getRoomId();
 	}
 
-//s:1003 예약정보 가져오기(노드에서 요청)
+	//s:1003 예약정보 가져오기(노드에서 요청)
 	@Override
 	public BookingVO getBookingInfo(BookingVO vo) {
 		return bookingMapper.getBookingInfo(vo);
+	}
+
+	// p.10/06 진료 예약 
+	@Override
+	public int insertBookingDate(BookingVO vo) {
+		return bookingMapper.insertBookingDate(vo);
 	}
 
 
