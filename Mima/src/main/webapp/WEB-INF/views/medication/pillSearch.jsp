@@ -92,11 +92,13 @@
                     </div>
                 </div>
             </div>
+        <input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}">
         </div>
 <!-- sidebar-page-container end -->
 
 <script>
-
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	// pillSearch VO (e-약은요)
 	var itemName;
 	var itemSeq;
@@ -134,7 +136,7 @@
 		str2 = '' ; 
 		str3 = '' ; 
 		str4 = '' ; 
-
+		pageNum = 1;
 	}
 	
 	
@@ -262,6 +264,9 @@
 							intrcQesitm : intrcQesitm,
 							pageNo : pageNum
 						}),
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
 						contentType : 'application/json',
 						success : function(datas) {
 							console.log(datas);
@@ -270,7 +275,7 @@
 						
 							if(datas.pageMaker.prev){
 								$(".pagination").append(
-										'<li class="paginate_button previous"><a onclick="eDurAjax('+ (datas.pageMaker.startPage-1) +')">이전</a></li>'	
+										'<li class="paginate_button previous"><a onclick="eDurAjax('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
 								);
 							} 
 							for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
@@ -282,7 +287,7 @@
 							}
 							if (datas.pageMaker.next) {
 								$(".pagination").append(
-										'<li class="paginate_button next"><a onclick="eDurAjax('+ (datas.pageMaker.endPage+1) +',this)">다음</a></li>'	
+										'<li class="paginate_button next"><a onclick="eDurAjax('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
 										);
 							} 
 	                             
@@ -329,13 +334,16 @@
 						entpName : entpName,
 						pageNo : pageNum
 					}),
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 					contentType : 'application/json',
 					success : function(datas) {
 						if (datas == null){ alert("검색 되는 내용이 없습니다!"); } 
 						else			  { dur(datas.list) } // 함수 호출
 						if(datas.pageMaker.prev){
 							$(".pagination").append(
-									'<li class="paginate_button previous"><a onclick="eDurAjax('+ (datas.pageMaker.startPage-1) +')">이전</a></li>'	
+									'<li class="paginate_button previous"><a onclick="eDurAjax('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
 							);
 						} 
 						for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
@@ -347,7 +355,7 @@
 						}
 						if (datas.pageMaker.next) {
 							$(".pagination").append(
-									'<li class="paginate_button next"><a onclick="eDurAjax('+ (datas.pageMaker.endPage+1) +',this)">다음</a></li>'	
+									'<li class="paginate_button next"><a onclick="eDurAjax('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
 							);
 						} 
 						
@@ -396,13 +404,16 @@
 						ingrCode : ingrCode,
 						pageNo : pageNum
 					}),
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 					contentType : 'application/json',
 					success : function(datas) {
 						if (datas == null) { alert("검색 되는 내용이 없습니다!"); } 
 						else 			   { durDanger(datas.list) } // 함수 호출
 						if(datas.pageMaker.prev){
 							$(".pagination").append(
-									'<li class="paginate_button previous"><a onclick="eDurAjax('+ (datas.pageMaker.startPage-1) +')">이전</a></li>'	
+									'<li class="paginate_button previous"><a onclick="prev('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
 							);
 						} 
 						for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
@@ -414,7 +425,7 @@
 						}
 						if (datas.pageMaker.next) {
 							$(".pagination").append(
-									'<li class="paginate_button next"><a onclick="eDurAjax('+ (datas.pageMaker.endPage+1) +',this)">다음</a></li>'	
+									'<li class="paginate_button next"><a onclick="next('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
 							);
 						} 
 					},// success end
@@ -439,7 +450,253 @@
 		
 	}); // function end
 	
+	function prev(num){
+		var searText = $("#titleH3 h3").text();
+		$(".pagination").empty(); // 페이징 초기화
+		$(".accordion-box").empty();
+		if(searText == "e-약은요"){
+			$.ajax({
+				url : "pill",
+				method : "post",
+				dataType : "json",
+				data : JSON.stringify({
+					itemName : itemName,
+					itemSeq : itemSeq,
+					efcyQesitm : efcyQesitm,
+					intrcQesitm : intrcQesitm,
+					pageNo : num
+				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				contentType : 'application/json',
+				success : function(datas) {
+					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 
+					else 			  { eDur(datas.list);	} // 함수 호출
+					if(datas.pageMaker.prev){
+						$(".pagination").append(
+								'<li class="paginate_button previous"><a onclick="prev('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
+						);
+					} 
+					for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
+						if(i == datas.pageMaker.startPage){
+							$(".pagination").append( '<li><a class="current" id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}else {
+							$(".pagination").append( '<li><a id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}
+					}
+					if (datas.pageMaker.next) {
+						$(".pagination").append(
+								'<li class="paginate_button next"><a onclick="next('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
+						);
+					} 
+				}
+			}); // ajax end
+			$("#"+num).addClass("current");
+		}
+		else if(searText == "약 정보검색"){
+			$.ajax({
+				url : "dur",
+				method : "post",
+				dataType : "json",
+				data : JSON.stringify({
+					itemName : itemName,
+					entpName : entpName,
+					pageNo : num
+				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				contentType : 'application/json',
+				success : function(datas) {
+					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 
+					else 			  { dur(datas.list);	} // 함수 호출
+					if(datas.pageMaker.prev){
+						$(".pagination").append(
+								'<li class="paginate_button previous"><a onclick="prev('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
+						);
+					} 
+					for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
+						if(i == datas.pageMaker.startPage){
+							$(".pagination").append( '<li><a class="current" id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}else {
+							$(".pagination").append( '<li><a id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}
+					}
+					if (datas.pageMaker.next) {
+						$(".pagination").append(
+								'<li class="paginate_button next"><a onclick="next('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
+						);
+					} 
+				}
+			}); // ajax end
+			$("#"+num).addClass("current");
+			
+		} else if(searText == "병용금기검색"){
+			$.ajax({
+				url : "durDanger",
+				method : "post",
+				dataType : "json",
+				data : JSON.stringify({
+					itemName : itemName,
+					typeName : typeName,
+					ingrCode : ingrCode,
+					pageNo : num
+				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				contentType : 'application/json',
+				success : function(datas) {
+					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 
+					else 			  { durDanger(datas.list);	} // 함수 호출
+					if(datas.pageMaker.prev){
+						$(".pagination").append(
+								'<li class="paginate_button previous"><a onclick="prev('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
+						);
+					} 
+					for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
+						if(i == datas.pageMaker.startPage){
+							$(".pagination").append( '<li><a class="current" id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}else {
+							$(".pagination").append( '<li><a id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}
+					}
+					if (datas.pageMaker.next) {
+						$(".pagination").append(
+								'<li class="paginate_button next"><a onclick="next('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
+						);
+					} 
+				}
+			}); // ajax end
+			$("#"+num).addClass("current");
+		}
+	}
 	
+	function next(num){
+		var searText = $("#titleH3 h3").text();
+		$(".pagination").empty(); // 페이징 초기화
+		$(".accordion-box").empty();
+		if(searText == "e-약은요"){
+			$.ajax({
+				url : "pill",
+				method : "post",
+				dataType : "json",
+				data : JSON.stringify({
+					itemName : itemName,
+					itemSeq : itemSeq,
+					efcyQesitm : efcyQesitm,
+					intrcQesitm : intrcQesitm,
+					pageNo : num
+				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				contentType : 'application/json',
+				success : function(datas) {
+					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 
+					else 			  { eDur(datas.list);	} // 함수 호출
+					if(datas.pageMaker.prev){
+						$(".pagination").append(
+								'<li class="paginate_button previous"><a onclick="prev('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
+						);
+					} 
+					for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
+						if(i == datas.pageMaker.startPage){
+							$(".pagination").append( '<li><a class="current" id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}else {
+							$(".pagination").append( '<li><a id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}
+					}
+					if (datas.pageMaker.next) {
+						$(".pagination").append(
+								'<li class="paginate_button next"><a onclick="next('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
+						);
+					} 
+				}
+			}); // ajax end
+			$("#"+num).addClass("current");
+		}
+		else if(searText == "약 정보검색"){
+			$.ajax({
+				url : "dur",
+				method : "post",
+				dataType : "json",
+				data : JSON.stringify({
+					itemName : itemName,
+					entpName : entpName,
+					pageNo : num
+				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				contentType : 'application/json',
+				success : function(datas) {
+					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 
+					else 			  { dur(datas.list);	} // 함수 호출
+					if(datas.pageMaker.prev){
+						$(".pagination").append(
+								'<li class="paginate_button previous"><a onclick="prev('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
+						);
+					} 
+					for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
+						if(i == datas.pageMaker.startPage){
+							$(".pagination").append( '<li><a class="current" id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}else {
+							$(".pagination").append( '<li><a id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}
+					}
+					if (datas.pageMaker.next) {
+						$(".pagination").append(
+								'<li class="paginate_button next"><a onclick="next('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
+						);
+					} 
+				}
+			}); // ajax end
+			$("#"+num).addClass("current");
+			
+		} else if(searText == "병용금기검색"){
+			$.ajax({
+				url : "durDanger",
+				method : "post",
+				dataType : "json",
+				data : JSON.stringify({
+					itemName : itemName,
+					typeName : typeName,
+					ingrCode : ingrCode,
+					pageNo : num
+				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				contentType : 'application/json',
+				success : function(datas) {
+					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 
+					else 			  { durDanger(datas.list);	} // 함수 호출
+					if(datas.pageMaker.prev){
+						$(".pagination").append(
+								'<li class="paginate_button previous"><a onclick="prev('+ (datas.pageMaker.startPage-10) +')">이전</a></li>'	
+						);
+					} 
+					for(var i=datas.pageMaker.startPage; i <= datas.pageMaker.endPage; i++){
+						if(i == datas.pageMaker.startPage){
+							$(".pagination").append( '<li><a class="current" id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}else {
+							$(".pagination").append( '<li><a id="'+ i +'" onclick="eDurAjax('+ i +')">'+ i +'</a></li>'	);
+						}
+					}
+					if (datas.pageMaker.next) {
+						$(".pagination").append(
+								'<li class="paginate_button next"><a onclick="next('+ (datas.pageMaker.endPage+1) +')">다음</a></li>'	
+						);
+					} 
+				}
+			}); // ajax end
+			$("#"+num).addClass("current");
+		}
+	}
+	
+	// 숫자 페이징
 	function eDurAjax(num){
 		var searText = $("#titleH3 h3").text();
 		$(".pagination .current").removeClass();
@@ -456,6 +713,9 @@
 					intrcQesitm : intrcQesitm,
 					pageNo : num
 				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				contentType : 'application/json',
 				success : function(datas) {
 					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 
@@ -474,6 +734,9 @@
 					entpName : entpName,
 					pageNo : num
 				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				contentType : 'application/json',
 				success : function(datas) {
 					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 
@@ -493,6 +756,9 @@
 					ingrCode : ingrCode,
 					pageNo : num
 				}),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				contentType : 'application/json',
 				success : function(datas) {
 					if (datas == null){	alert("검색 되는 내용이 없습니다!");} 

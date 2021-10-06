@@ -279,6 +279,7 @@ public class MedicationController {
         conn.disconnect();
         
         List<DurDangerVO> ddList = new ArrayList<DurDangerVO>();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
         
         
         log.info(sb.toString());
@@ -287,7 +288,6 @@ public class MedicationController {
         String bodyValue = firstJson.get("body").toString();
         JSONObject twoJson = new JSONObject(bodyValue);
         
-        HashMap<String, Object> hashMap = new HashMap<String, Object>();
         
         PageVO pageVO = new PageVO(cri, twoJson.getInt("totalCount"));
         
