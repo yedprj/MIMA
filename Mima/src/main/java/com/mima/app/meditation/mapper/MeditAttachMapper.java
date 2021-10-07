@@ -16,4 +16,7 @@ public interface MeditAttachMapper {
 	public List<MeditAttachVO> getOldFiles();
 	
 	public MeditAttachVO read(String uuid);
+	
+	//s:1007 프로필 사진 업로드
+	public void insertImg(MeditAttachVO vo);
 }
