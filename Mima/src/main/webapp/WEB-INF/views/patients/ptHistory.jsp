@@ -130,15 +130,15 @@ th, td {
 					<div class="pagination-wrapper">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev }">
-								<li class="paginate_button previous"><a href="../patients/ptHistory?pageNum=${pageMaker.startPage-1 }">이전</a></li>
+								<li class="paginate_button previous"><a href="ptHistory?pageNum=${pageMaker.startPage-1 }">이전</a></li>
 							</c:if>
 								
 							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-								<li class="paginate_button"><a href="../patients/ptHistory?pageNum=${num }">${num }</a></li>
+								<li class="paginate_button"><a href="ptHistory?pageNum=${num }">${num }</a></li>
 							</c:forEach>
 								
 							<c:if test="${pageMaker.next }">
-								<li class="paginate_button next"><a href="../patients/ptHistory?pageNum=${pageMaker.endPage+1 }">다음</a></li>
+								<li class="paginate_button next"><a href="ptHistory?pageNum=${pageMaker.endPage+1 }">다음</a></li>
 							</c:if>
 						</ul>
 					</div>

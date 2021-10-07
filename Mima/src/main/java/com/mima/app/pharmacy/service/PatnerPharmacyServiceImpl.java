@@ -1,8 +1,11 @@
 package com.mima.app.pharmacy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.mapper.PartnerPharmacyMapper;
 
@@ -21,6 +24,12 @@ public class PatnerPharmacyServiceImpl implements PatnerPharmacyService {
 	@Override
 	public int profileUpdate(PartnerPharmacyVO vo) {
 		return partPhaMapper.profileUpdate(vo);
+	}
+
+	// [K] 211007 - 약국 검색
+	@Override
+	public List<PartnerPharmacyVO> pharmacySearch(Criteria cri) {
+		return partPhaMapper.pharmacySearch(cri);
 	}
 
 }

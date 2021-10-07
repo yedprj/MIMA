@@ -17,14 +17,14 @@
                 </div>
                 <div class="auto-container">
                     <div class="title">
-                        <h1>나의 프로필 입력/수정</h1>
+                        <h1>프로필 관리</h1>
                     </div>
                 </div>
             </div>
             <div class="lower-content">
                 <ul class="bread-crumb clearfix">
                     <li><a href="index.html">Home</a></li>
-                    <li>Partner_Doctor_내 프로필 입력/수정</li>
+                    <li>프로필 관리</li>
                 </ul>
             </div>
         </section>
@@ -39,25 +39,26 @@
                         <figure class="profile-image"><img src="${pageContext.request.contextPath}/assets/images/resource/profile-2.png" alt=""></figure>
                         <div class="title-box centred">
                             <div class="inner">
-                                <h3>Dr. ${session.name }</h3>
+                              
+                                <h3>${session.name}</h3>
+
                                 <p>MDS - Periodontology</p>
                             </div>
                         </div>
                     </div>
                     <div class="profile-info">
                         <ul class="list clearfix">
-                            <li><a href="doctors-dashboard.html"><i class="fas fa-columns"></i>Dashboard</a></li>
-                            <li><a href="appointment.html"><i class="fas fa-calendar-alt"></i>Appointments</a></li>
-                            <li><a href="my-patients.html"><i class="fas fa-wheelchair"></i>My Patients</a></li>
-                            <li><a href="add-listing.html"><i class="fas fa-plus-circle"></i>Add Listing</a></li>
-                            <li><a href="schedule-timing.html"><i class="fas fa-clock"></i>Schedule Timing</a></li>
-                            <li><a href="review.html"><i class="fas fa-star"></i>Reviews</a></li>
-                            <li><a href="message.html"><i class="fas fa-comments"></i>Messages</a><span>20</span></li>
-                            <li><a href="docProfileInsertForm" class="current"><i class="fas fa-user"></i>My Profile</a></li>
-			                <li><a href="docProfileForm" class="current"><i class="fas fa-user"></i>진료 시간, 진료과목 등록</a></li>
-                            <li><a href="change-password.html"><i class="fas fa-unlock-alt"></i>Change Password</a></li>
-                            <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
-                        </ul>
+			                <li><a href="docMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
+			                <li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
+			                <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
+			                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
+			                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
+			                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
+			                <li><a href="docProfileInsertForm" class="current"><i class="fas fa-user"></i>프로필 관리</a></li>
+			                <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
+			                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
+			                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+			            </ul>
                     </div>
                 </div>
             </div>

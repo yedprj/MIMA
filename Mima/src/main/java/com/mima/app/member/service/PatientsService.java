@@ -6,30 +6,41 @@ import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.member.domain.PatientsVO;
+import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.session.domain.BookingVO;
 
 public interface PatientsService {
 	
-	//e.29
-	//관리자 회원정보조회
-	public List<PatientsVO> getList();
 
 	//s:1004 자가정보 입력
 	public int update(PatientsVO vo);
 	//s:1004 자가진단표
 	public int updateAx(PatientsVO vo);
 
-	//e.4
-	//전체조회
+	//관리자 회원정보조회(환자) e.29
+	public List<PatientsVO> getptList();
+	
+	//관리자 회원정보조회(의사) e.7
+	public List<PartnerDoctorVO> getdocList();
+	
+	//관리자 회원정보조회(약국) e.7
+	public List<PartnerPharmacyVO> getpmList();
+	
+	//관리자 회원정보조회(환자) 페이징 e.4
 	public List<PatientsVO> getPatientsList(Criteria cri);
 
-	//e.4
-	//전체 데이터 수 조회
+	//관리자 회원정보조회(환자) 페이징 e.4
 	public int getTotalPatientsCount(Criteria cri);
 	
-	//e.4
-	//환자대쉬보드 Main 오늘의예약
+	//관리자 회원정보조회(의사) 전체조회 페이징 e.7
+	public List<PartnerDoctorVO> getdoctorList(Criteria cri);
+	
+	//관리자 회원정보조회(의사) 전체 데이터 수 조회 페이징 e.7
+	public int getTotaldoctorCount(Criteria cri);
+	
+	//환자대쉬보드 Main 오늘의예약 e.4
 	public List<BookingVO> ptgetList(int memberNo);
 
 	//환자대쉬보드 예약관리 페이지 e.5
@@ -67,4 +78,10 @@ public interface PatientsService {
 	
 	//환자대쉬보드 나의문의 페이지 e.6
 	public List<QnaVO> ptQna(int memberNo);
+	
+	//전체조회 나의문의 페이징 e.7
+	public List<QnaVO> getPtqList(Criteria cri);
+	
+	//전체 데이터 수 조회 나의문의 페이징 e.7
+	public int getTotalPtqCount(Criteria cri);
 }
