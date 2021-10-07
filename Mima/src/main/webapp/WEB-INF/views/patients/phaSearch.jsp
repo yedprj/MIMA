@@ -312,7 +312,15 @@
 	    			dataType : "json", 
 	    			contentType : "application/json",
 	    			success : function(datas){
-	    				console.log(datas);
+	    				if( datas == null) {
+	    					alert("검색결과 존재하지 않습니다");
+	    				}else {
+	    					$.each(datas,function(i, data) {
+	    						$(".accordion-box").append(
+	    						'<div><p>'+data.memberNo+'</p><p>'+data.pharmacyInfo+'</p><p>'+data.pharmacyContact+'</p></div><br>'		
+	    						);
+	    					}); // each end
+	    				}
 
 	    			}
 	    		});
