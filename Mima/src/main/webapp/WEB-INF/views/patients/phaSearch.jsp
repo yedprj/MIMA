@@ -1,7 +1,6 @@
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <style>
 	.nice-select {
 		padding: 0px 0px;
@@ -35,9 +34,10 @@
 								<div class="col-12 col-sm-4">
 									<div class="form-group categroyBox">
 										<select class="wide" name="category">
-											<option value="" data-display="카테고리 선택&nbsp;&nbsp;▼" class="option selected focus">검색 카테고리</option>
-											<option value="juso">주소검색</option>
-											<option value="phaName">약국명</option>
+											<option value=""  data-display="카테고리 선택&nbsp;&nbsp;▼" class="option selected focus" <c:out value="${pageMaker.cri.type==null ?'selected':''}"/>> 검색 카테고리</option>
+											<option value="D" <c:out value="${pageMaker.cri.type eq 'D' ?'selected':''}"/> >주소검색</option>
+											<option value="P" <c:out value="${pageMaker.cri.type eq 'P' ?'selected':''}"/> >약국명</option>
+											<option value="PD" <c:out value="${pageMaker.cri.type eq 'PD' ?'selected':''}"/> >약국명</option>
 										</select>
 									</div>
 								</div>
@@ -84,6 +84,9 @@
                                    <input type="search" name="search-field" placeholder="Search">
                                    <button id="searchBtn" type="button"><i class="fas fa-search"></i></button>
                                </div>
+                               <input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}">
+                               
                             </form>
 						</div>
 					</div> <!-- 약 검색 구간 END -->
@@ -111,7 +114,7 @@
                     </div>
                 </div>
             </div>
-        <input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}">
+       
         </div>
 <!-- sidebar-page-container end -->
 
@@ -119,6 +122,10 @@
 	
 
 	$(function() {
+		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
 		
 		// 주소 선택시
 		$("#cido").on("change",function(){
@@ -287,7 +294,7 @@
 			}
 			
 			// 주소검색일때
-			if(category == 'juso'){
+			if(category == 'D'){
 				var cido = $("select[name='cido']").val();
 				var ci = $("select[name='ci']").val();
 				var delJuso = cido + " " + ci ;
@@ -296,20 +303,23 @@
 	    			url : "pharmacy",
 	    			method : "post",
 	    			data : JSON.stringify({
-	    				
+	    				keyword : delJuso ,
+	    				type : category
 	    			}),
+	    			beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 	    			dataType : "json", 
 	    			contentType : "application/json",
-	    			success : function(data){
-	    				
-	    				alert("총 "+data.success +"/"+ data.total + "처리되었습니다.");
-	    				
+	    			success : function(datas){
+	    				console.log(datas);
+
 	    			}
 	    		});
 				
 				
 			}
-			else if (category == 'juso'){
+			else if (category == 'P'){
 				// 검색내용 체크
 				if( search == 'phaName'){
 					$("input[name='search-field']").attr("placeholder", "검색할 약국이름 or 상세주소를 입력하세요!");

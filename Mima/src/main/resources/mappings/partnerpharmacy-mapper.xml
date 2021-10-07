@@ -30,16 +30,16 @@
 	</select>
 	
 	<sql id="criteria">
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<trim prefix="(" suffix=") " prefixOverrides="OR">
 			<foreach collection="typeArr" item="type">
 				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
 				<trim prefix="or">
 					<choose>
-						<when test="type =='pharmacy'.toString()">
-							PHARMACY_INFO '%'|| #{keyword} || '%'
+						<when test="type =='P'.toString()">
+							PHARMACY_INFO LIKE '%'|| #{keyword} || '%'
 						</when>
-						<when test="type =='delivery'.toString()">
-							DELIVERY_AREA '%'|| #{keyword} || '%'
+						<when test="type =='D'.toString()">
+							DELIVERY_AREA LIKE '%'|| #{keyword} || '%'
 						</when>
 					</choose>
 				</trim>
