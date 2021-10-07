@@ -2,21 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.member.mapper.PatientsMapper">
 
-
-<!-- e.29 -->
-<!-- 관리자 회원정보조회 -->
-<select id="getList" resultType="PatientsVO"> 
-	SELECT MEMBER_NO
-			,PAST_HX
-			,PRE_SELF_AX
-			,TOPIC
-			,MED_DELIVERY
-			,REG_DATE
-			,EDIT_DATE
-	FROM PATIENTS
-</select> 
-
-  
 <!-- s:1004 pt preScreening -->
 	<update id="update">
 	UPDATE PATIENTS
@@ -37,9 +22,19 @@
 		WHERE MEMBER_NO=#{memberNo}
 	</update>
 
+<!-- 관리자 회원정보조회(환자) e.29-->
+	<select id="getptList" resultType="PatientsVO"> 
+		SELECT   MEMBER_NO
+				,PAST_HX
+				,PRE_SELF_AX
+				,TOPIC
+				,MED_DELIVERY
+				,REG_DATE
+				,EDIT_DATE
+		FROM PATIENTS
+	</select> 
 
-<!-- e.4 -->
-<!-- 페이징 -->
+<!--회원정보조회(환자) 페이징 e.4-->
 <!-- trim 한 것 따로 빼 낸것... -->
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
@@ -92,6 +87,82 @@
 	</select>
 <!-- 페이징 end -->
 
+<!-- 관리자 회원정보조회(의사) e.7 -->
+	<select id="getdocList" resultType="PartnerDoctorVO">
+		SELECT  MEMBER_NO,
+				PROFILE_EDUCATION,
+				CLINIC_INFO,
+				CLINIC_PHONE,
+				CLINIC_EMAIL,
+				REG_DATE,
+				EDIT_DATE
+		FROM PARTNER_DOCTOR
+	</select>
+
+<!--회원정보조회(의사) 페이징 e.7-->
+<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criteriasd">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+						<when test="type =='delivery'.toString()">
+							DELIVERT_AREA LIKE '%'|| #{keyword} || '%'
+						</when>
+						
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- total count -->
+	<select id="getTotaldoctorCount" resultType="int">
+		SELECT COUNT(*) FROM PARTNER_DOCTOR
+		WHERE
+		<include refid="criteriasd"></include>
+		MEMBER_NO > 0
+	</select>
+
+	<select id="getdoctorList" 
+		resultType="com.mima.app.member.domain.PatientsVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
+		ROWNUM RN, MEMBER_NO, PROFILE_EDUCATION, CLINIC_INFO, CLINIC_PHONE, CLINIC_EMAIL
+		FROM PARTNER_DOCTOR
+		WHERE	
+		<include refid="criteriasd"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+<!-- 페이징 end -->
+
+<!-- 관리자 회원정보조회(약국) e.7 -->
+	<select id="getpmList" resultType="PartnerPharmacyVO">
+		SELECT  MEMBER_NO,
+				PHARMACY_INFO,
+				PHARMACY_CONTACT,
+				PHARMACY_EMAIL,
+				DELIVERY_AREA,
+				REG_DATE,
+				EDIT_DATE
+		FROM PARTNER_PHARMACY
+	</select>
+	
 <!-- e.4 -->
 <!--환자대쉬보드 Main 오늘의예약-->
 <select id="ptgetList" resultType="BookingVO">
@@ -161,7 +232,7 @@
 	<select id="getPtbmList" 
 		resultType="com.mima.app.session.domain.BookingVO">
 		SELECT *
-		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
+		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
 		ROWNUM RN, BOOKING_NO, PT_NO, DOC_NO, BOOKING_DATE, PRICE,
 		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME,FIRST_SESSION, SUBJECT
 		FROM BOOKING
@@ -355,4 +426,56 @@
         WHERE C.MEMBER_NO=#{memberNo}
 	</select>
 
+	<!-- 나의문의 페이징 e.7-->
+	<!-- trim 한 것 따로 빼 낸것... -->
+		<sql id="criteriasc">
+			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+				<foreach collection="typeArr" item="type">
+					<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'T'.toString()">
+								TITLE LIKE '%'|| #{keyword} || '%'
+							</when>
+	
+							<when test="type =='C'.toString()">
+								CONTENT LIKE '%'|| #{keyword} || '%'
+							</when>
+	
+							<when test="type =='W'.toString()">
+								WRITER LIKE '%'|| #{keyword} || '%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		</sql>
+		
+		<!-- total count -->
+		<select id="getTotalPtqCount" resultType="int">
+			SELECT COUNT(*) FROM CSC
+			WHERE
+			<include refid="criteriasc"></include>
+			CS_NO > 0
+		</select>
+	
+		<select id="getPtqList" 
+			resultType="com.mima.app.admin.domain.QnaVO">
+			SELECT *
+			FROM( SELECT /*+INDEX_DESC(QNA QNA_PK) */
+				ROWNUM RN, C.CS_NO AS QNA_NO,
+                C.CS_TITLE AS QNA_TITLE,
+	            C.CS_DATE AS QNA_DATE,
+                M.NAME AS QNA_NAME
+			FROM CSC C JOIN MEMBER M
+	        ON (C.MEMBER_NO = M.MEMBER_NO)
+			WHERE
+			<include refid="criteriasc"></include>
+					<![CDATA[
+					ROWNUM <= #{pageNum} * #{amount}				
+					)
+			WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+		</select>
+		<!-- 페이징 end -->
+ 	
 </mapper>

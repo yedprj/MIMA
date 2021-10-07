@@ -7,6 +7,7 @@ import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.doc.mapper.PartnerDoctorMapper;
 import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.meditation.mapper.MeditAttachMapper;
+import com.mima.app.member.domain.MemberVO;
 
 @Service
 public class PartnerDoctorServiceImpl implements PartnerDoctorService {
@@ -30,9 +31,16 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 				MeditAttachVO attach =vo.getAttachFile();
 								
 				System.out.println("첨부파일 인서트 제발 좀 들어가-"+attach+"meditationServiceImpl");
-				attachMapper.insert(attach);
+				attachMapper.insertImg(attach);
 
 				return 1;
+	}
+
+
+	//s:1007 프로필 등록 시 주소 멤버 테이블에 업데이트
+	@Override
+	public int docAddrUpdate(MemberVO vo) {
+		return partnerDoctorMapper.docAddrUpdate(vo);
 	}
 
 	

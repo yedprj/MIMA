@@ -8,7 +8,7 @@
 		 a.NAME,
 		 a.IDENTIFY_NO,
 		 a.GENDER,
-		 a.ADDRESS,
+		 a.ADDR1,
 		 a.EMAIL,
 		 a.PHONE,
 		b.PAST_HX,

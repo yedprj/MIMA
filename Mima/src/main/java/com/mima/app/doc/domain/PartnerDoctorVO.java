@@ -10,8 +10,10 @@ import lombok.Data;
 public class PartnerDoctorVO {
 	private int memberNo;				// 의사번호
 	private String profilePhoto;		// 의사 프로필 사진
-	private String profileccontents;	// 의사 설명
-	private String profileCareer;		// 의사 경력
+	private String profileContents;		// 의사 설명
+
+	private String profileEducation;	// 의사 학력
+
 	private String clinicInfo;			// 클리닉 주소
 	private String clinicPhone;			// 클리닉 전화번호
 	private String clinicEmail;			// 클리닉 이메일

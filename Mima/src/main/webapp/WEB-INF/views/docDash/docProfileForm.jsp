@@ -33,7 +33,7 @@
                         <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
                         <div class="title-box centred">
                             <div class="inner">
-                                <h3>Dr. Rex Allen</h3>
+                                <h3>Dr. ${session.name }</h3>
                                 <p>MDS - Periodontology</p>
                             </div>
                         </div>

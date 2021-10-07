@@ -39,7 +39,7 @@
                         <figure class="profile-image"><img src="${pageContext.request.contextPath}/assets/images/resource/profile-2.png" alt=""></figure>
                         <div class="title-box centred">
                             <div class="inner">
-                                <h3>Dr. Rex Allen</h3>
+                                <h3>Dr. ${session.name }</h3>
                                 <p>MDS - Periodontology</p>
                             </div>
                         </div>
@@ -66,6 +66,7 @@
                     <div class="outer-container">
                         <div class="add-listing my-profile">
                            <form id="docProInsertFrm" method="post"  action="register">
+                           		<input type="hidden" id="memberNo" name="memberNo" value="${session.memberNo }">
 	                            <div class="single-box">
 	                                <div class="title-box">
 	                                    <h3>나의 정보</h3>
@@ -142,7 +143,7 @@
 	                                </div>
 	                                <!--s:1006 여기는 보의 리스트?를 보내서 그걸 입력하는 매퍼를 따로 만들어서 돌려야 할거 같은디요? -->
 	                                <div class="inner-box">
-	                                        <div class="row clearfix" >
+	                                        <div class="row clearfix" id="education">
 	                                        <!-- 학위1 -->
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Degree</label>
@@ -150,38 +151,38 @@
 	                                            </div>
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Institute</label>
-	                                                <input type="text" id="instute" name="instute" required="">
+	                                                <input type="text" id="institute" name="institute" required="">
 	                                            </div>
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Passing year</label>
-	                                                <input type="date" id="year" name="year" required="">
+	                                                <input type="date" id="degree1Year" name="degree1Year" required="">
 	                                            </div>
 	                                             <!-- 학위2 -->
-	                                           <!--  <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+	                                           <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Degree</label>
 	                                                <input type="text" id="degree2" name="degree2" required="">
 	                                            </div>
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Institute</label>
-	                                                <input type="text" id="instute2" name="instute2"  required="">
+	                                                <input type="text" id="institute2" name="institute2"  required="">
 	                                            </div>
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Passing year</label>
-	                                                <input type="date" id="year2" name="year2" required="">
-	                                            </div> -->
+	                                                <input type="date" id="degree2Year" name="degree2Year" required="">
+	                                            </div>
 	                                             <!-- 학위3 -->
-	                                            <!-- <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Degree</label>
 	                                                <input type="text" id="degree3" name="degree3" required="">
 	                                            </div>
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Institute</label>
-	                                                <input type="text" id="instute3" name="instute3" required="">
+	                                                <input type="text" id="institute3" name="institute3" required="">
 	                                            </div>
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Passing year</label>
-	                                                <input type="date" id="year3" name="year3" required="">
-	                                            </div> -->
+	                                                <input type="date" id="degree3Year" name="degree3Year" required="">
+	                                            </div>
 	                                        </div>
 	                                </div>
 	                            </div>
@@ -198,7 +199,7 @@
 	                                            </div>
 	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
 	                                                <label>직위</label>
-	                                                <input type="text" id="detail" name="detali" required="">
+	                                                <input type="text" id="detail" name="detail" required="">
 	                                            </div>
 	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
 	                                                <label>언제부터</label>
@@ -442,16 +443,25 @@
     	
     	//btnRegister event  textbook 564page
     	$("#btnRegister").on('click', function(e){
-    		alert('clicked')
     		var str = "";
     		var li = $("#uploaded li");
-    			str += "<input type='hidden' name='attachFile.pImgName' value='"+li.data("pImgName")+"'>";
+    			str += "<input type='hidden' name='attachFile.pImgName' value='"+li.data("pimgname")+"'>";
     		    str += "<input type='hidden' name='attachFile.uuid' value='"+li.data("uuid")+"'>";
     		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
     		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+"'>";
-    		$("#docProInsertFrm").append(str);
+    		    
+    		let education =$('#degree').val()+' '+$('#institute').val()+' '+$('#degree1Year').val()+" ";
+    		education +=$('#degree2').val()+' '+$('#institute2').val()+' '+$('#degree2Year').val()+" ";
+    		education +=$('#degree3').val()+' '+$('#institute3').val()+' '+$('#degree3Year').val();
     		
-    		$("#docProInsertFrm").submit();
+    		let edu="";
+    		var eduList=$('#education');
+    			edu+="<input type='hidden' name='profileEducation' id='profileEducation' value='"+education+"'>";
+    		
+    		$(eduList).append(edu);
+    		$("#docProInsertFrm").append(str);
+    		alert("프로필 등록이 완료되었습니다.")
+    		//$("#docProInsertFrm").submit();
     		
     	});//end of btnRegister event
     	
@@ -461,8 +471,8 @@
     			var targetLi = $(this).closest("li");
     			var preview=$('#profileImg');
     			targetLi.remove();
-    			//이거 왜 안돼 ㅠㅠ
-    			$('preview').removeAttr('src');
+    			//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
+    			$(preview).removeAttr('src');
     			
     		}
     	});//end of attachment btn delete event
