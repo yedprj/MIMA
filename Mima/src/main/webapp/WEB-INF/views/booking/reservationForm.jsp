@@ -20,7 +20,7 @@
     border: 1px solid #e5eded !important;
     border-radius: 30px;
     padding: 3px 20px;
-    width: 75%;
+    width: 85%;
     color: #061a3a;
     font-size: 14px;
     font-weight: 500;
@@ -95,13 +95,17 @@ input[type="time"]:valid::before {
 										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 											<label>의사</label>
 											<div class="select-box">
-												<select class="good-select wide" id="doctorSelect" name="doctorSelect">
+												<select class="good-select wide" id="doctorSelect" name="doctorSelect"
+														onchange="categorySelect();">
 													<option data-display="의사를 선택해주세요">의사를 선택해주세요</option>
 													<c:forEach items="${doctors}" var="doc">
 														<option value="${doc.memberNo}">Dr. ${doc.name}</option>
 													</c:forEach>
 												</select>
 											</div>
+										</div>
+										
+										<div class="col-lg-12 col-md-12 col-sm-12 form-group" id="selectCategory">
 										</div>
 									
 										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
@@ -125,6 +129,7 @@ input[type="time"]:valid::before {
 											</button>
 										</div>
 									</div>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 								</form>
 							</div>
 						</div>
@@ -138,11 +143,48 @@ input[type="time"]:valid::before {
 
 <script>
 	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	//진료과목 추가 p.10/07
+	function categorySelect(){
+		
+		var docNo = $("#doctorSelect option:selected").val();
+		
+		console.log(docNo);
+		
+		$.ajax({
+			url : 'categorySelect',
+			type : 'post',
+			data : {docNo : docNo},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(data) {
+				console.log(data);
+				$("#selectCategory").empty();
+				$('#selectCategory').append(selectCategory(data));	
+			}, error : function(reject) {
+				console.log(reject);
+			}
+		});
+	}
+	
+	function selectCategory(data) {
+		console.log(encodeURIComponent(data.category1))
+		return '<label>진료과목</label>'
+			 + '<div class="select-box">'
+			 + '	<select class="good-select wide" id="categoryChoose" name="doctorChoose">'
+			 + '		<option data-display="진료과목을 선택해주세요">진료과목을 선택해주세요</option>'
+			 + '		<option value='+ data.category1 +'>'+ data.category1 +'</option>'
+			 + '		<option value='+ data.category2 +'>'+ data.category2 +'</option>'
+			 + '		<option value='+ data.category3 +'>'+ data.category3 +'</option>'
+			 + '	</select>'
+			 + '</div>'
+	}
+	
 	$(function() {
-		
-		var csrfHeaderName = "${_csrf.headerName}";
-		var csrfTokenValue = "${_csrf.token}";
-		
+			
 		$("#selecttime").on("click", function() {
 			
 			var week = new Array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT');
@@ -180,6 +222,7 @@ input[type="time"]:valid::before {
 				}
 			});
 		});
+		
 		
 		// 진료 가능 시간 추가 p.1003
 		function makediv(time, i){
@@ -267,6 +310,7 @@ input[type="time"]:valid::before {
 			
 			var ptNo = ${session.memberNo};									// PT_NO 예약 환자 번호
 			var docNo = $("#doctorSelect option:selected").val();			// DOC_NO 의사 번호
+			var subject = $("#categoryChoose option:selected").val();		// 카테고리 추가
 			var consultDate = $("#date").val();								// 실제 진료 날짜
 			var consultTime = $('#consultTime').val();						// 실제 진료 시간
 			var firstSession = $('input:checkbox[id=chooseFirst]').val();	// 체크박스 y or n
@@ -274,14 +318,27 @@ input[type="time"]:valid::before {
 			console.log(consultDate);
 			console.log(consultTime);
 			
+			console.log(subject);
+			
 			$.ajax({
-				url: "",
+				url: "reservationTime",
 				type : "post",
 				data : {ptNo : ptNo,
 						docNo : docNo,
-						},
+						subject : subject,
+						consultDate : consultDate,
+						consultTime : consultTime,
+						firstSession : firstSession
+					   },
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				success : function(data) {
-				
+					console.log(data);
+					if (data == 1) {
+						alert("예약이 되었습니다. 결제 페이지로 이동합니다.");
+						window.location.href = "paymentForm";
+					}
 				},
 				error : function(reject) {
 					console.log(reject);

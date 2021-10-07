@@ -82,6 +82,12 @@ public class BookingServiceImpl implements BookingService {
 		return bookingMapper.insertBookingDate(vo);
 	}
 
+	// p.10/07 결제 정보
+	@Override
+	public BookingVO selectBookingInfo(int memberNo) {
+		return bookingMapper.selectBookingInfo(memberNo);
+	}
+
 
 
 }

@@ -62,7 +62,7 @@
 										</tbody>
 									</table>
 								</div>
-							</div>
+							</div>						
 						</div>
 					<!-- e.4 -->
 					<!-- pagination  -->
@@ -101,5 +101,3 @@
 			<span class="fa fa-arrow-up"></span>
 		</button>
 	</div>
-
-

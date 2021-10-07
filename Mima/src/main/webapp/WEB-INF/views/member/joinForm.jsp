@@ -173,8 +173,9 @@
 									</div>
 								</div>
 							</div>
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}">
+							
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+							
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
 								<button type="button" id="joinMember" name="joinMember" class="theme-btn-one">
 									Register Now<i class="icon-Arrow-Right"></i>
