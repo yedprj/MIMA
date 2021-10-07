@@ -18,4 +18,16 @@ public class MentalSubjectServiceImpl implements MentalSubjectService {
 		return mentalSubjectMapper.insert(vo);
 	}
 
+	// p.10/07 의사 카테고리, 금액 가져오기
+	@Override
+	public MentalSubjectVO getPriceCategory(int docNo) {
+		return mentalSubjectMapper.getPriceCategory(docNo);
+	}
+
+	// p.10/07 의사 카테고리만 가져오기
+	@Override
+	public MentalSubjectVO categorySelect(int docNo) {
+		return mentalSubjectMapper.categorySelect(docNo);
+	}
+
 }

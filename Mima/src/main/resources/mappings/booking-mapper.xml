@@ -213,6 +213,7 @@
 		(BOOKING_NO,
 		 PT_NO,
 		 DOC_NO,
+		 SUBJECT,
 		 CONSULT_DATE,
 		 CONSULT_TIME,
 		 FIRST_SESSION)
@@ -220,9 +221,21 @@
 		(#{bookingNo},
 		 #{ptNo},
 		 #{docNo},
+		 #{subject},
 		 #{consultDate},
 		 #{consultTime},
 		 #{firstSession})
 </insert>
+
+<!-- 결제 페이지 필요 내용 가져오기 p.10/07 -->
+<select id="selectBookingInfo" resultType="BookingVO">
+	SELECT CONSULT_DATE, 
+		   CONSULT_TIME, 
+		   FIRST_SESSION, 
+		   SUBJECT
+	FROM BOOKING
+	WHERE BOOKING_STATUS = 'y'
+	AND PT_NO = #{memberNo}
+</select>
 
 </mapper>

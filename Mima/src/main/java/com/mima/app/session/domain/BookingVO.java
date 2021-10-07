@@ -23,7 +23,7 @@ public class BookingVO {
 	private Date editDate;		// 예약 수정 날짜
 	
 	private String roomId; 		// 진료 링크주소 s:0929
-	private String docName;		//의사이름
+	private String docName;		//의사 이름
 	
 	private String firstSession;	// 첫 진료 여부
 	private String subject;			// 진료 과목

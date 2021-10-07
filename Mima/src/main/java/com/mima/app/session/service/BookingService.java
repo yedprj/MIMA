@@ -49,4 +49,6 @@ public interface BookingService {
 	//p.10/06 진료 예약
 	public int insertBookingDate(BookingVO vo);
 	
+	//p.10.07 결제 정보
+	public BookingVO selectBookingInfo(int memberNo);
 }

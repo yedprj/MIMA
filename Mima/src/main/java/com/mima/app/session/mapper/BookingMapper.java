@@ -37,14 +37,15 @@ public interface BookingMapper {
 	// 닥터 대쉬보드 진료내역 페이징 데이터 수 전체조회_J06
 	public int apptHistoryCount(Criteria cri);
 	
-	
-
 	//s:0929 진료시간 5분 전 부터 매 10초마다 테이블 확인해서 방 아이디 확인
 	public List<BookingVO> getRoomId();
 
-	//s:1003 단일 예약정보 가져오기
+	//s:1003 단일 예약정보 가져오기 NODE
 	public BookingVO getBookingInfo(BookingVO vo);
 	
 	//p.10/06 진료 예약
 	public int insertBookingDate(BookingVO vo);
+	
+	//p.10.07 결제 정보
+	public BookingVO selectBookingInfo(int memberNo);
 }

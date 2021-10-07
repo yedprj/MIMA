@@ -23,4 +23,25 @@
 			#{price3}
 		)
 	</insert>
+	
+	<!-- 진료과목 금액 가져오기 p.10/07 -->
+	<select id="getPriceCategory" resultType="MentalSubjectVO">
+		SELECT CATEGORY_1,
+			   PRICE_1,
+			   CATEGORY_2,
+			   PRICE_2,
+			   CATEGORY_3,
+			   PRICE_3
+		FROM MENTAL_SUBJECT
+		WHERE DOC_NO = #{docNo}
+	</select>
+	
+	<!-- 의사 진료과목 가져오기 p.10/07 -->
+	<select id="categorySelect" resultType="MentalSubjectVO">
+		SELECT CATEGORY_1,
+			   CATEGORY_2,
+			   CATEGORY_3
+		FROM MENTAL_SUBJECT
+		WHERE DOC_NO = #{docNo}
+	</select>
 </mapper>

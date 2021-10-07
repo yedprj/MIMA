@@ -128,7 +128,7 @@
 										</tbody>
 									</table>
 								</div>
-							</div>
+							</div>						
 						</div>
 					<!-- e.4 -->
 					<!-- pagination  -->
@@ -181,3 +181,4 @@
 		}
 	} 
 </script>
+
