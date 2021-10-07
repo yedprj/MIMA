@@ -33,7 +33,6 @@ th, td {
 <!--page-title-two end-->
 
 <section class="doctors-dashboard bg-color-3">
-
 	<div class="left-panel">
 		<div class="profile-box">
 			<div class="upper-box">
@@ -42,7 +41,7 @@ th, td {
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
-						<h3>Dr. Rex Allen</h3>
+						<h3>${session.name}</h3>
 						<p>MDS - Periodontology</p>
 					</div>
 				</div>
@@ -55,7 +54,8 @@ th, td {
 	                <li><a href="patientList" class="current"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
 	                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
 	                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-	                <li><a href="docProfileForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+	                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+	                <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
 	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 	                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 	            </ul>
@@ -101,21 +101,21 @@ th, td {
 	                                        <td>
 	                                            <div class="name-box">
 	                                                <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png"></figure>
-	                                                <h5>${patientList.name}</h5>
-	                                                <span class="ptno"># no.${patientList.ptNo}</span>
+	                                                <h5>${patientList.mname}</h5>
+	                                                <span class="ptno"># no.${patientList.bptNo}</span>
 	                                            </div>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.identifyNo}</p>
+	                                            <p>${patientList.midentifyNo}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.gender}</p>
+	                                            <p>${patientList.mgender}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.phone}</p>
+	                                            <p>${patientList.mphone}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.addr1}</p>
+	                                            <p>${patientList.maddr1}</p>
 	                                        </td>
                                     	</tr>
                                 	</c:forEach>
@@ -124,7 +124,6 @@ th, td {
                         </div>
                     </div>
                 </div>
-
 			</div>
 		</div>
 	</div>
@@ -137,4 +136,3 @@ th, td {
 </button>
 
 <!-- End of .page_wrapper -->
-

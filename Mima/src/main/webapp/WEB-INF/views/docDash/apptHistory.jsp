@@ -45,7 +45,7 @@ th, td {
         	<figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
 	        <div class="title-box centred">
 	        	<div class="inner">
-		            <h3>Dr. Rex Allen</h3>
+		            <h3>${session.name}</h3>
 		            <p>MDS - Periodontology</p>
 	            </div>
 	        </div>
@@ -58,7 +58,8 @@ th, td {
                 <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
                 <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
                 <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-                <li><a href="docProfileForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+                <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
                 <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
                 <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
             </ul>
@@ -152,15 +153,15 @@ th, td {
 				<div class="pagination-wrapper">
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous"><a href="../docDash/apptHistory?pageNum=${pageMaker.startPage-1}">이전</a></li>
+							<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/apptHistory?pageNum=${pageMaker.startPage-1}">이전</a></li>
 						</c:if>
 							
 						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage }" var="num">
-							<li class="paginate_button"><a href="../docDash/apptHistory?pageNum=${num}">${num}</a></li>
+							<li class="paginate_button"><a href="${pageContext.request.contextPath}/apptHistory?pageNum=${num}">${num}</a></li>
 						</c:forEach>
 							
 						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a href="../docDash/apptHistory?pageNum=${pageMaker.endPage+1}">다음</a></li>
+							<li class="paginate_button next"><a href="${pageContext.request.contextPath}/apptHistory?pageNum=${pageMaker.endPage+1}">다음</a></li>
 						</c:if>
 					</ul>
 				</div>

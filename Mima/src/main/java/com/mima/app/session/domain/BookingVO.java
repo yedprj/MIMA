@@ -27,4 +27,5 @@ public class BookingVO {
 	
 	private String firstSession;	// 첫 진료 여부
 	private String subject;			// 진료 과목
+	
 }

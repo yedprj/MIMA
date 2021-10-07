@@ -33,7 +33,7 @@
                         <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
                         <div class="title-box centred">
                             <div class="inner">
-                                <h3>Dr. Rex Allen</h3>
+                                <h3>${session.name}</h3>
                                 <p>MDS - Periodontology</p>
                             </div>
                         </div>
@@ -46,7 +46,8 @@
 			                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
 			                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
 			                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-			                <li><a href="docProfileForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+			                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+			                <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
 			                <li><a href="docPwChangeForm" class="current"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 			                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 			            </ul>
