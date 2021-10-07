@@ -164,7 +164,6 @@ public class PatnerDoctorController {
 	 */
 	
 	
-	
 	//s:1005 docProfileInsertFrm
 	@GetMapping("/docProfileInsertForm")
 	public String docProfileInsertForm() {
@@ -174,7 +173,7 @@ public class PatnerDoctorController {
 
 	
 	
-	// 닥터 진료가능 요일 시간 등록 폼 페이지 S:1005
+	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
 	@GetMapping("/docProfileForm")
 	public String docProfileFrom(Model model, DocAvailabilityVO vo) {
 		
@@ -229,5 +228,12 @@ public class PatnerDoctorController {
 			System.out.println(attachVo);
 		}
 		return attachVo;
-	}	
+	}
+	
+	//s:1007 의사 프로필 디테일 페이지로 이동하는거
+	@GetMapping("/docProfileDetail")
+	public String docProfileDetail() {
+		return "/docDash/docProfileDetail";
+	}
+	
 }

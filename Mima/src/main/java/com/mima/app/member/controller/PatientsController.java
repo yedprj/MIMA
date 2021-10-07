@@ -12,9 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.mima.app.admin.domain.CscVO;
+import com.mima.app.admin.service.CscService;
+import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.service.CommentsService;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.member.domain.MemberVO;
@@ -26,9 +32,10 @@ import com.mima.app.pharmacy.service.PatnerPharmacyService;
 public class PatientsController {
 	
 	@Autowired PatientsService patientsService;
-	
+	@Autowired CommentsService commentsService;
 	// K.10/07 약국 서비스
 	@Autowired PatnerPharmacyService phaService;
+
 
 	//e.4
 	//환자대쉬보드 메인 페이지
@@ -136,8 +143,15 @@ public class PatientsController {
 	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
 	@GetMapping("/ptReviewFrm")
 	public String ptReviewFrm() {
-		return "/patients/ptReviewFrm";
-
+		return "patients/ptReviewFrm";
 	}
 	
+	//s:1007 코멘트 테이블에 입력
+	@PostMapping("/insert")
+	public String insertReview(CommentsVO vo) {
+		System.out.println("의사 리뷰 코멘트테이블입력 insert VO"+vo);
+		commentsService.insert(vo);
+		return  "patients/ptMain";
+	}
+
 }
