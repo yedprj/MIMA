@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,10 +45,19 @@ public class PatnerDoctorController {
 	@Autowired PartnerDoctorService doctorService;
 	@Autowired MemberService memberService;
 	
-	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("/docMain")
-	public String docMain(Model model, BookingVO bookingvo, CommentsVO commentsvo) {
+	public String docMain(Model model, BookingVO bookingvo, CommentsVO commentsvo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = mvo.getMemberNo();
+		
+		model.addAttribute("member", mvo);
+		model.addAttribute("countGetList", bookingService.countGetList(memberNo));
+		model.addAttribute("countPatientList", bookingService.countPatientList(memberNo));
+		model.addAttribute("countDocReview", commentsService.countDocReview(memberNo));
 		model.addAttribute("bookingList", bookingService.getList());
 		model.addAttribute("getlatestapptList", bookingService.getlatestapptList());
 		model.addAttribute("getlatestreviewList", commentsService.getlatestreviewList());
@@ -55,6 +68,7 @@ public class PatnerDoctorController {
 	// 닥터 대쉬보드 예약관리 페이지_J
 	@GetMapping("apptManage")
 	public String apptManage(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
+		
 		int total = bookingService.apptListCount(cri);
 		
 		model.addAttribute("apptList", bookingService.apptList());
@@ -77,8 +91,15 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 나의 환자들 페이지_J29. J06
 	@GetMapping("/patientList")
-	public String patientList(Model model, MemberBookingVO memberbookingvo) {
-		model.addAttribute("patientList", memberService.patientList());
+	public String patientList(Model model, MemberBookingVO memberbookingvo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = mvo.getMemberNo();
+	
+		model.addAttribute("patientList", memberService.patientList(memberNo));
+		
 		return "docDash/patientList";
 	}
 	

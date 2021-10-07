@@ -26,4 +26,7 @@ public interface CommentsMapper {
 	
 	// 닥터 대쉬보드 메인 페이지 나의 후기_J29
 	public List<CommentsVO> docReview();
+	
+	// 닥터 대쉬보드 메인 페이지 나의 후기 카운트_J07
+	public int countDocReview(int memberNo);
 }

@@ -11,14 +11,14 @@
                 </div>
                 <div class="auto-container">
                     <div class="title">
-                        <h1>진료시간, 과목, 가격 입력</h1>
+                        <h1>진료 관리</h1>
                     </div>
                 </div>
             </div>
             <div class="lower-content">
                 <ul class="bread-crumb clearfix">
                     <li><a href="${pageContext.request.contextPath}">Home</a></li>
-                    <li>진료시간, 과목, 가격 입력</li>
+                    <li>진료 관리</li>
                 </ul>
             </div>
         </section>
@@ -33,7 +33,7 @@
                         <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
                         <div class="title-box centred">
                             <div class="inner">
-                                <h3>Dr. Rex Allen</h3>
+                                <h3>${session.name}</h3>
                                 <p>MDS - Periodontology</p>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
 			                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 			                <!-- s:1005 insertForm, subject Form -->
 			                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
-			                <li><a href="docProfileForm" class="current"><i class="fas fa-user"></i>진료 시간, 진료과목 등록</a></li>
+			                <li><a href="docProfileForm" class="current"><i class="fas fa-user"></i>진료 관리</a></li>
 			                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 			                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 			            </ul>
@@ -61,7 +61,8 @@
                         <div class="add-listing my-profile">
                         <div class="single-box">
                                <div class="title-box">
-                                    <h3>진료가능시간 설정</h3>
+                                    <h3>진료 시간</h3>
+                                    <span>가능한 진료 시간을 설정해주세요.</span>
                                 </div>
                                 <div class="inner-box">
                                     <form action="insertAvailable" method="post" id="availableFrm">
@@ -154,6 +155,7 @@
                             <div class="single-box">
                                 <div class="title-box">
                                     <h3>진료비 책정</h3>
+                                    <span>진료명과 진료비를 설정해주세요.</span>
                                 </div>
                                 <div class="inner-box" style="padding-bottom:20px">
                                     <form action="add-listing.html" method="post">

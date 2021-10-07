@@ -7,6 +7,12 @@ import com.mima.app.session.domain.BookingVO;
 
 public interface BookingMapper {
 
+	// 닥터 대쉬보드 메인 페이지 오늘의 예약 카운트_J07
+	public int countGetList(int memberNo);
+	
+	// 닥터 대쉬보드 메인 페이지 나의 환자들 카운트_J07
+	public int countPatientList(int memberNo);
+
 	// 닥터 대쉬보드 메인 페이지 오늘의 예약_J
 	public List<BookingVO> getList();
 	

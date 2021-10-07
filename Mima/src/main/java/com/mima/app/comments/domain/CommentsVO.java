@@ -20,4 +20,5 @@ public class CommentsVO {
 	private Date editDate;			// 수정일
 	private int cno;				//시퀀스 사용 고유번호 pk
 	private String nickname;
+	
 }
