@@ -30,11 +30,13 @@ public class AdminController {
 	@GetMapping("/adlist")
 	public String list(Model model, @ModelAttribute("cri") Criteria cri) {
 		int total = patientsService.getTotalPatientsCount(cri);
+		int total1 = patientsService.getTotaldoctorCount(cri);
 		
 		model.addAttribute("getptList", patientsService.getptList());
 		model.addAttribute("getdocList", patientsService.getdocList());
 		model.addAttribute("getpmList", patientsService.getpmList());
 		model.addAttribute("getPatientsList",patientsService.getPatientsList(cri));
+		model.addAttribute("getdoctorList", patientsService.getdoctorList(cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "admin/adlist";
 	}

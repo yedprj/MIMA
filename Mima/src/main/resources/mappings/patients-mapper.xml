@@ -34,32 +34,7 @@
 		FROM PATIENTS
 	</select> 
 
-<!-- 관리자 회원정보조회(의사) e.7 -->
-	<select id="getdocList" resultType="PartnerDoctorVO">
-		SELECT  MEMBER_NO,
-				PROFILE_EDUCATION,
-				CLINIC_INFO,
-				CLINIC_PHONE,
-				CLINIC_EMAIL,
-				REG_DATE,
-				EDIT_DATE
-		FROM PARTNER_DOCTOR
-	</select>
-
-<!-- 관리자 회원정보조회(약국) e.7 -->
-	<select id="getpmList" resultType="PartnerPharmacyVO">
-		SELECT  MEMBER_NO,
-				PHARMACY_INFO,
-				PHARMACY_CONTACT,
-				PHARMACY_EMAIL,
-				DELIVERY_AREA,
-				REG_DATE,
-				EDIT_DATE
-		FROM PARTNER_PHARMACY
-	</select>
-	
-<!-- e.4 -->
-<!--회원정보조회 페이징 -->
+<!--회원정보조회(환자) 페이징 e.4-->
 <!-- trim 한 것 따로 빼 낸것... -->
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
@@ -112,6 +87,82 @@
 	</select>
 <!-- 페이징 end -->
 
+<!-- 관리자 회원정보조회(의사) e.7 -->
+	<select id="getdocList" resultType="PartnerDoctorVO">
+		SELECT  MEMBER_NO,
+				PROFILE_EDUCATION,
+				CLINIC_INFO,
+				CLINIC_PHONE,
+				CLINIC_EMAIL,
+				REG_DATE,
+				EDIT_DATE
+		FROM PARTNER_DOCTOR
+	</select>
+
+<!--회원정보조회(의사) 페이징 e.7-->
+<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criteriasd">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+						<when test="type =='delivery'.toString()">
+							DELIVERT_AREA LIKE '%'|| #{keyword} || '%'
+						</when>
+						
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- total count -->
+	<select id="getTotaldoctorCount" resultType="int">
+		SELECT COUNT(*) FROM PARTNER_DOCTOR
+		WHERE
+		<include refid="criteriasd"></include>
+		MEMBER_NO > 0
+	</select>
+
+	<select id="getdoctorList" 
+		resultType="com.mima.app.member.domain.PatientsVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
+		ROWNUM RN, MEMBER_NO, PROFILE_EDUCATION, CLINIC_INFO, CLINIC_PHONE, CLINIC_EMAIL
+		FROM PARTNER_DOCTOR
+		WHERE	
+		<include refid="criteriasd"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+<!-- 페이징 end -->
+
+<!-- 관리자 회원정보조회(약국) e.7 -->
+	<select id="getpmList" resultType="PartnerPharmacyVO">
+		SELECT  MEMBER_NO,
+				PHARMACY_INFO,
+				PHARMACY_CONTACT,
+				PHARMACY_EMAIL,
+				DELIVERY_AREA,
+				REG_DATE,
+				EDIT_DATE
+		FROM PARTNER_PHARMACY
+	</select>
+	
 <!-- e.4 -->
 <!--환자대쉬보드 Main 오늘의예약-->
 <select id="ptgetList" resultType="BookingVO">

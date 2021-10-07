@@ -18,21 +18,20 @@
 								<div class="text pull-left">
 									<h3>회원정보조회</h3>
 								</div>
+							<!-- selectbox -->
 								<div class="btn-box pull-right">
-									<form action="my-patients.html" method="post"
-										class="search-form">
-										<div class="form-group">
-											<input type="search" name="search-field" placeholder="Search"
-												>
-											<button type="submit">
-												<i class="far fa-search"></i>
-											</button>
-										</div>
-									</form>
+									<div class="select-box">
+										<select class="good-select wide" id="selectbox" name="selectbox">
+											<option data-display="환자(patients)">환자(patients)</option>
+											<option value="doctor">의사(doctor)</option>
+											<option value="pharmacy">약국(pharmacy)</option>
+										</select>
+									</div>
 								</div>
+							<!-- selectbox end -->
 							</div>
 							<!-- patients -->
-							<div class="Patients-list">
+							<div class="Patients-list" id="patients" style="display: none;">
 								<div class="table-outer">
 									<table class="table table-hover">
 										<thead class="table-header">
@@ -64,32 +63,65 @@
 									</table>
 								</div>
 							</div>
-							<!--doctor-->
-							<div class="Doctor-list">
+						<!--doctor-->
+							<div class="Doctor-list" id="doctor" style="display: block;">
 								<div class="table-outer">
 									<table class="table table-hover">
 										<thead class="table-header">
 											<tr align="center">
 												<th>NO</th>
-												<th>과거진료기록</th>
-												<th>자가진단표</th>
-												<th>진료분야</th>
-												<th>약배달</th>
+												<th>이름</th>
+												<th>주소</th>
+												<th>전화번호</th>
+												<th>이메일</th>
 												<th>등록일</th>
 												<th>수정일</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${getptList}" var="getptList">
+											<c:forEach items="${getdocList}" var="getdocList">
 												<tr align="center">
-													<td>${getptList.memberNo }</td>
-													<td>${getptList.pastHx }</td>
-													<td>${getptList.preSelfAx }</td>
-													<td>${getptList.topic }</td>
-													<td>${getptList.medDelivery }</td>
-													<td><fmt:formatDate value="${getptList.regDate }"
+													<td>${getdocList.memberNo }</td>
+													<td>${getdocList.profileEducation }</td>
+													<td>${getdocList.clinicInfo }</td>
+													<td>${getdocList.clinicPhone }</td>
+													<td>${getdocList.clinicEmail }</td>
+													<td><fmt:formatDate value="${getdocList.regDate }"
 															pattern="yy-MM-dd" /></td>
-													<td><fmt:formatDate value="${getptList.editDate }"
+													<td><fmt:formatDate value="${getdocList.editDate }"
+															pattern="yy-MM-dd" /></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+					<!-- pharmacy -->
+						<div class="Pharmacy-list" id="pharmacy" style="display: none;">
+								<div class="table-outer">
+									<table class="table table-hover">
+										<thead class="table-header">
+											<tr align="center">
+												<th>NO</th>
+												<th>이름</th>
+												<th>연락처</th>
+												<th>이메일</th>
+												<th>배달 가능 지역</th>
+												<th>등록일</th>
+												<th>수정일</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${getpmList}" var="getpmList">
+												<tr align="center">
+													<td>${getpmList.memberNo }</td>
+													<td>${getpmList.pharmacyInfo }</td>
+													<td>${getpmList.pharmacyContact }</td>
+													<td>${getpmList.pharmacyEmail }</td>
+													<td>${getpmList.deliveryArea }</td>
+													<td><fmt:formatDate value="${getpmList.regDate }"
+															pattern="yy-MM-dd" /></td>
+													<td><fmt:formatDate value="${getpmList.editDate }"
 															pattern="yy-MM-dd" /></td>
 												</tr>
 											</c:forEach>
@@ -136,4 +168,16 @@
 		</button>
 	</div>
 
-
+<script>
+	function searchCheck(num) {
+		if (num == '3') {
+			$("#patients").css('display','none');
+			$("#doctor").css('display', 'block');   
+			$("#pharmacy").css('display', 'none'); 
+		} else {
+			$("#patients").css('display', 'none');
+			$("#doctor").css('display', "block");
+			$("#pharmacy").css('display', 'none'); 
+		}
+	} 
+</script>
