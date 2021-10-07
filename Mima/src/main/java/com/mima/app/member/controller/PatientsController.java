@@ -1,5 +1,8 @@
 package com.mima.app.member.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,20 +11,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mima.app.admin.domain.CscVO;
-import com.mima.app.admin.service.CscService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.PatientsService;
-
+import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
+import com.mima.app.pharmacy.service.PatnerPharmacyService;
 
 @Controller
 public class PatientsController {
 	
 	@Autowired PatientsService patientsService;
+	
+	// K.10/07 약국 서비스
+	@Autowired PatnerPharmacyService phaService;
 
 	//e.4
 	//환자대쉬보드 메인 페이지
@@ -111,18 +118,26 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/06
-	@GetMapping("phaSearch")
+	@GetMapping("/phaSearch")
 	public String phaSearch() {
 		return "patients/phaSearch";
 	}
 	
+	@PostMapping("pharmacy")
+	@ResponseBody
+	public List<PartnerPharmacyVO> pharmacy(@RequestBody Criteria cri){
+		
+		List<PartnerPharmacyVO> list = new ArrayList<PartnerPharmacyVO>();
+		list = phaService.pharmacySearch(cri);
+		
+		return list;
+  }
 	
 	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
 	@GetMapping("/ptReviewFrm")
 	public String ptReviewFrm() {
 		return "/patients/ptReviewFrm";
+
 	}
 	
-	
-
 }
