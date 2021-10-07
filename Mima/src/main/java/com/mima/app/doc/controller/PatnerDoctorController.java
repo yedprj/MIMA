@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +28,10 @@ import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.meditation.domain.MeditAttachVO;
+import com.mima.app.member.domain.ExperienceVO;
 import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
+import com.mima.app.member.service.ExperienceService;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
@@ -40,11 +46,21 @@ public class PatnerDoctorController {
 	@Autowired CscService cscService;
 	@Autowired PartnerDoctorService doctorService;
 	@Autowired MemberService memberService;
-	
+	@Autowired ExperienceService experienceService;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("/docMain")
-	public String docMain(Model model, BookingVO bookingvo, CommentsVO commentsvo) {
+	public String docMain(Model model, BookingVO bookingvo, CommentsVO commentsvo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = mvo.getMemberNo();
+		
+		model.addAttribute("member", mvo);
+		model.addAttribute("countGetList", bookingService.countGetList(memberNo));
+		model.addAttribute("countPatientList", bookingService.countPatientList(memberNo));
+		model.addAttribute("countDocReview", commentsService.countDocReview(memberNo));
 		model.addAttribute("bookingList", bookingService.getList());
 		model.addAttribute("getlatestapptList", bookingService.getlatestapptList());
 		model.addAttribute("getlatestreviewList", commentsService.getlatestreviewList());
@@ -55,6 +71,7 @@ public class PatnerDoctorController {
 	// 닥터 대쉬보드 예약관리 페이지_J
 	@GetMapping("apptManage")
 	public String apptManage(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
+		
 		int total = bookingService.apptListCount(cri);
 		
 		model.addAttribute("apptList", bookingService.apptList());
@@ -77,8 +94,15 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 나의 환자들 페이지_J29. J06
 	@GetMapping("/patientList")
-	public String patientList(Model model, MemberBookingVO memberbookingvo) {
-		model.addAttribute("patientList", memberService.patientList());
+	public String patientList(Model model, MemberBookingVO memberbookingvo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = mvo.getMemberNo();
+	
+		model.addAttribute("patientList", memberService.patientList(memberNo));
+		
 		return "docDash/patientList";
 	}
 	
@@ -140,8 +164,6 @@ public class PatnerDoctorController {
 	 */
 	
 	
-	
-	
 	//s:1005 docProfileInsertFrm
 	@GetMapping("/docProfileInsertForm")
 	public String docProfileInsertForm() {
@@ -151,7 +173,7 @@ public class PatnerDoctorController {
 
 	
 	
-	// 닥터 진료가능 요일 시간 등록 폼 페이지 S:1005
+	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
 	@GetMapping("/docProfileForm")
 	public String docProfileFrom(Model model, DocAvailabilityVO vo) {
 		
@@ -160,12 +182,21 @@ public class PatnerDoctorController {
 		
 	//s:1006 의사프로필등록
 	@PostMapping("/register")
-	public String register(PartnerDoctorVO vo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
+	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
 		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
+		//s:1006 파트너의사테이블에 저장
 		doctorService.docProfileInsert(vo);
-
+		
+		//s:1007 멤버 테이블 주소 업데이트
+		doctorService.docAddrUpdate(mVo);
+		System.out.println("파트너 의사 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
+		
+		//s:1007 경력 테이블 인서트
+		System.out.println("파트너 의사 컨트롤러-> 경력테이블 인서트 보 보는거임======" + expVo);
+		experienceService.insertExp(expVo);
+		
 		rttr.addFlashAttribute("result", vo.getMemberNo());
-		return "redirect:/docDash/docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
+		return "redirect:/docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
 	}
 	
 	
@@ -197,5 +228,12 @@ public class PatnerDoctorController {
 			System.out.println(attachVo);
 		}
 		return attachVo;
-	}	
+	}
+	
+	//s:1007 의사 프로필 디테일 페이지로 이동하는거
+	@GetMapping("/docProfileDetail")
+	public String docProfileDetail() {
+		return "/docDash/docProfileDetail";
+	}
+	
 }

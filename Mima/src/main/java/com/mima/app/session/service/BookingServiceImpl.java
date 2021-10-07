@@ -14,11 +14,24 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired BookingMapper bookingMapper;
 	
+	// 닥터 대쉬보드 메인 페이지 오늘의 예약 카운트_J07
+	@Override
+	public int countGetList(int memberNo) {
+		return bookingMapper.countGetList(memberNo);
+	}
+
+	// 닥터 대쉬보드 메인 페이지 나의 환자들 카운트_J07
+	@Override
+	public int countPatientList(int memberNo) {
+		return bookingMapper.countPatientList(memberNo);
+	}
+	
 	// 닥터 대쉬보드 메인 페이지 오늘의 예약_J
 	@Override
 	public List<BookingVO> getList() {
 		return bookingMapper.getList();
 	}
+	
 	
 	// 닥터 대쉬보드 메인 페이지 진료내역_J
 	@Override
@@ -87,7 +100,5 @@ public class BookingServiceImpl implements BookingService {
 	public BookingVO selectBookingInfo(int memberNo) {
 		return bookingMapper.selectBookingInfo(memberNo);
 	}
-
-
 
 }

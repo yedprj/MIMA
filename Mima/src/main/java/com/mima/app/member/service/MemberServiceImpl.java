@@ -103,8 +103,9 @@ public class MemberServiceImpl implements MemberService {
 
 	// 닥터 나의 환자들 조회_J06
 	@Override
-	public List<MemberBookingVO> patientList() {
-		return memberMapper.patientList();
+	public List<MemberBookingVO> patientList(int memberNo) {
+		return memberMapper.patientList(memberNo);
 	}
+
 
 }

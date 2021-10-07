@@ -7,15 +7,28 @@
 							UUID,
 							UPLOADPATH,
 							V_FILE_NAME,
-							P_IMG_NAME
 						)
 				 VALUES (	#{meditationNo},
 				 			#{uuid},
 							#{uploadPath},
 							#{vFileName},
-							#{pImgName}
 							 )
 	</insert>
+
+	<insert id="insertImg">
+			INSERT INTO 
+				MEDIT_ATTACH (	MEDITATION_NO,
+								UUID,
+								UPLOADPATH,
+								P_IMG_NAME
+							)
+					 VALUES (	#{meditationNo},
+					 			#{uuid},
+								#{uploadPath},
+								#{pImgName}
+								 )
+		</insert>
+
 
 	<delete id="delete">
 		DELETE FROM MEDIT_ATTACH 

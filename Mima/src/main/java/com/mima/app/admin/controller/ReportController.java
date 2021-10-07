@@ -30,12 +30,10 @@ public class ReportController {
 	//관리자 신고당한사람 전체조회
 	@GetMapping("/rplist")
 	public void rplist(Model model, @ModelAttribute("cri") Criteria cri) {
-		System.out.println("cri============="+ cri);
 		
 			int total =  reportService.getTotalCount(cri);
 			model.addAttribute("list", reportService.getList(cri));
 			model.addAttribute("pageMaker", new PageVO(cri,total));
-			System.out.println("" + total + reportService.getList(cri));
 	}
 	
 	

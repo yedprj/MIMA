@@ -80,6 +80,10 @@
 		<div class="sec-title centred">
 			<p>Category</p>
 			<h2>Browse by specialist</h2>
+			<!-- s:1007 의사 프로필 상세페이지 -> 들어갈때 의사번호넘겨줘야함 -->
+			<a class="theme-btn-one" href="${pageContext.request.contextPath}/docProfileDetail">의사 프로필 디테일 페이지</a>
+			<!-- s:1007 환자가 진료 끝나고 의사리뷰남기는 페이지 -->
+			<a class="theme-btn-one" href="${pageContext.request.contextPath}/ptReviewFrm">진료 후 리뷰남기는 폼</a>
 			<!-- s:1004 자가진단 폼페이지 -->
 			<a class="theme-btn-one" href="${pageContext.request.contextPath}/consultation/preSelfAssessmentFrm">진료전 스트레스 자가검진</a>
 			<!-- s:0930 진료시작 페이지 테스트 링크 -->
@@ -106,9 +110,6 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-						<!--s: 임시 테스트 원격진료 버튼 누르면 진료 화면 띄우기 굿굿!! 됨!!!!!!! -->
-							<!-- <button onclick="window.open('http://localhost:3000','진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');" class="theme-btn-one">진료 시작하기<i class="icon-Arrow-Right"></i>
-							</button> -->
 						</div>
 					</div>
 				</div>

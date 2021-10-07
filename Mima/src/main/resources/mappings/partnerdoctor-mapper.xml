@@ -4,7 +4,38 @@
 
 <!-- 닥터프로필인서트갑미다 s:1006 -->
 <insert id="docProfileInsert">
-	
+	INSERT INTO PARTNER_DOCTOR(
+				MEMBER_NO,
+				PROFILE_PHOTO,
+				PROFILE_CONTENTS,
+				PROFILE_EDUCATION,
+				CLINIC_INFO,
+				CLINIC_PHONE,
+				CLINIC_EMAIL,
+				REG_DATE
+		)
+	VALUES(
+			#{memberNo},
+			#{profilePhoto},
+			#{profileContents},
+			#{profileEducation},
+			#{clinicInfo},
+			#{clinicPhone},
+			#{clinicEmail},
+			sysdate
+		)
 </insert>
+
+<!-- s:1007 프로필 등록 시 주소 멤버 테이블에 업데이트 -->
+<update id="docAddrUpdate">
+	UPDATE MEMBER
+		SET
+			ADDR1=#{addr1},
+			EDIT_DATE=sysdate,
+			ADDR2=#{addr2},
+			ADDR3=#{addr3},
+			POSTCODE=#{postcode}
+	WHERE MEMBER_NO=#{memberNo}
+</update>
 
 </mapper>

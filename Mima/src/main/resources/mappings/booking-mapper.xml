@@ -17,6 +17,21 @@
 	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE)
 </select>
 
+<!-- 닥터 대쉬보드 메인 페이지 오늘의 예약 카운트_J07 -->
+<select id="countGetList" resultType="int">
+    SELECT COUNT(*)
+    FROM BOOKING
+    WHERE CONSULT_DATE = TO_DATE(SYSDATE)
+    AND DOC_NO = #{memberNo}
+</select>
+
+<!-- 닥터 대쉬보드 메인 페이지 나의 환자들 카운트_J07 -->
+<select id="countPatientList" resultType="int">
+	SELECT COUNT (DISTINCT PT_NO)
+	FROM BOOKING
+	WHERE DOC_NO = #{memberNo}
+</select>
+
 <!-- 닥터 대쉬보드 메인 페이지 진료내역_J -->
 <select id="getlatestapptList" resultType="BookingVO">
 	<![CDATA[
