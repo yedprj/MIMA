@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mima.app.member.mapper.ExperienceMapper">
+
+	<insert id="insertExp">
+	INSERT INTO EXPERIENCE(
+			EXP_NO,
+			TITLE,
+			DETAIL,
+			FROM_DATE,
+			TO_DATE,
+			MEMBER_NO,
+			REG_DATE
+			)
+	VALUES(
+		SEQ_EXPERIENCE.NEXTVAL,
+		#{title},
+		#{detail},
+		#{fromDate},
+		#{toDate},
+		#{memberNo},
+		SYSDATE
+	)
+	
+	</insert>
+
+</mapper>

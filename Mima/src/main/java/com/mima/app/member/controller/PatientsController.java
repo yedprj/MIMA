@@ -114,6 +114,15 @@ public class PatientsController {
 	@GetMapping("phaSearch")
 	public String phaSearch() {
 		return "patients/phaSearch";
-	}	
+	}
+	
+	
+	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
+	@GetMapping("/ptReviewFrm")
+	public String ptReviewFrm() {
+		return "/patients/ptReviewFrm";
+	}
+	
+	
 
 }
