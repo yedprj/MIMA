@@ -16,6 +16,8 @@ import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 
+import oracle.jdbc.proxy.annotation.Post;
+
 
 @RestController
 @RequestMapping("/replies/*")
@@ -57,5 +59,7 @@ public class CommentsController {
 			return result == 1 ? true: false;
 		}
 	
+	
+		
 	
 }
