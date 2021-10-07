@@ -71,4 +71,10 @@ public class CommentsServiceImpl implements CommentsService {
 	public List<CommentsVO> docReview() {
 		return commentsMapper.docReview();
 	}
+
+	// 닥터 대쉬보드 메인 페이지 나의 후기 카운트_J07
+	@Override
+	public int countDocReview(int memberNo) {
+		return commentsMapper.countDocReview(memberNo);
+	}
 }

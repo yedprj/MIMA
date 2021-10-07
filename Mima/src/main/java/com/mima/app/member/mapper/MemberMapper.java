@@ -52,5 +52,6 @@ public interface MemberMapper {
 	public int docPwChange(MemberVO vo);
 	
 	// 닥터 나의 환자들 조회_J06
-	public List<MemberBookingVO> patientList();
+	public List<MemberBookingVO> patientList(int memberNo);
+
 }

@@ -18,51 +18,6 @@
 								<h3>신고글 조회</h3>
 							</div>
 							<div class="btn-box pull-right">
-					<!-- e.4 -->
-					<!-- 검색기능 -->
-					<!-- search -->				
-					<form id="actionForm" action="rplist" method="get" class="search-form">
-					<div class="form-group">
-						<select name="type">
-						<option value=""
-							<c:out value="${pageMaker.cri.type == null ? 'selected':'' }"/>
-						>선택</option>
-						<option value="T" 
-							<c:out value="${pageMaker.cri.type eq 'T'? 'selected':'' }"/>
-						>제목</option>
-						<option value="C"
-							<c:out value="${pageMaker.cri.type eq 'C'? 'selected':'' }"/>
-						>내용</option>
-						<option value="W"
-							<c:out value="${pageMaker.cri.type eq 'W'? 'selected':'' }"/>
-						>신고자</option>
-						<option value="TC"
-							<c:out value="${pageMaker.cri.type eq 'TC'? 'selected':'' }"/>
-						>제목 or 내용</option>
-						<option value="TW" 
-							<c:out value="${pageMaker.cri.type eq 'TW'? 'selected':'' }"/>
-						>제목 or 신고자</option>
-						<option value="TWC"
-							<c:out value="${pageMaker.cri.type eq 'TWC'? 'selected':'' }"/>
-						>제목 or 내용 or 신고자</option>
-						</select>
-						
-						<input type="search" name="search-field" placeholder="Search" required="">
-							 <button type="submit">
-								 <i class="far fa-search"></i>
-							 </button>
-						
-						<input type="text" name="keyword" value="${pageMaker.cri.keyword }">
-
-		               <input type="hidden" id="pageNum" name="pageNum" value="1">
-		               <input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
-		            	<button class='btn btn-default'>Search</button>
-		            </div>
-		            </form>
-								
-								
-								
-							<!-- 검색기능 end -->
 							</div>
 						</div>
 						<div class="doctors-list">
@@ -145,34 +100,3 @@
 		<span class="fa fa-arrow-up"></span>
 	</button>
 </div>
-
-<script>
-	 $(document).ready(function() {
-		 var actionForm = $('#actionForm');
-		 
-		 //e.1
-		 //페이징
-		 $(".move").on('click', function(e){
-			 e.preventDefault();
-			 actionForm.append('<input type="hidden" id="reportNo" name="reportNo" value="'+ $(this).attr("href") +'">');
-			 actionForm.attr("action", "get");
-			 actionForm.submit();
-		 });
-		 
-		 
-		 //e.1
-		 //페이징 
-		 $("#pageButton a").on("click", function(e){
-			 e.preventDefault(); //a tag, submit
-			 console.log('clicked')
-			 var p=$(this).attr("href");
-			 $('[name="pageNum"]').val(p);
-			 
-			 actionForm.submit();
-		 });
-
-			/* $('#board').DataTable({
-	            responsive: true
-	        });*/
-	    });
-	</script>

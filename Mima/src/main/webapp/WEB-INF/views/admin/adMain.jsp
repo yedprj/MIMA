@@ -31,7 +31,7 @@
 												<a href="pricing.html"><i class="icon-Arrow-Right"></i></a>
 											</div>
 											<div class="btn-box">
-												<a href="${pageContext.request.contextPath }/admin/list" class="theme-btn-one">GO<i
+												<a href="${pageContext.request.contextPath }/admin/adlist" class="theme-btn-one">GO<i
 													class="icon-Arrow-Right"></i></a>
 											</div>
 										</div>

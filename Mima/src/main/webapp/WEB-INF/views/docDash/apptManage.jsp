@@ -52,7 +52,7 @@ th, td {
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
-						<h3>Dr. Rex Allen</h3>
+						<h3>${session.name}</h3>
 						<p>MDS - Periodontology</p>
 					</div>
 				</div>
@@ -65,7 +65,8 @@ th, td {
 	                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
 	                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
 	                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-	                <li><a href="docProfileForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+	                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
+	                <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
 	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 	                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 	            </ul>
@@ -155,24 +156,19 @@ th, td {
 			<div class="pagination-wrapper">
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev}">
-						<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/docDash/apptManage?pageNum=${pageMaker.startPage-1}">이전</a></li>
+						<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/apptManage?pageNum=${pageMaker.startPage-1}">이전</a></li>
 					</c:if>
 						
 					<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-						<li class="paginate_button"><a href="${pageContext.request.contextPath}/docDash/apptManage?pageNum=${num}">${num}</a></li>
+						<li class="paginate_button"><a href="${pageContext.request.contextPath}/apptManage?pageNum=${num}">${num}</a></li>
 					</c:forEach>
 						
 					<c:if test="${pageMaker.next}">
-						<li class="paginate_button next"><a href="${pageContext.request.contextPath}/docDash/apptManage?pageNum=${pageMaker.endPage+1}">다음</a></li>
+						<li class="paginate_button next"><a href="${pageContext.request.contextPath}/apptManage?pageNum=${pageMaker.endPage+1}">다음</a></li>
 					</c:if>
 				</ul>
 			</div>
 			<!-- pagination end -->
-			
-			<form id='actionForm' action="${pageContext.request.contextPath}/docDash/apptManage" method='get'>
-				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>			
-			</form>
 			
 		</div>
 	</div>
@@ -186,12 +182,3 @@ th, td {
 </button>
 
 <!-- End of .page_wrapper -->
-
-<script>
-	$(".paginate_button a").on("click", function(e) {
-		e.preventDefault();
-		console.log('click');
-		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-		actionForm.submit();
-		});
-</script>

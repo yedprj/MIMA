@@ -96,14 +96,17 @@ public class PatientsController {
 	
 	//환자대쉬보드 나의문의 페이지 e.6
 	@GetMapping("/ptQna")
-	public String ptQna(Model model, HttpServletRequest request) {
+	public String ptQna(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
 		
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
 		
-		model.addAttribute("ptQna", patientsService.ptQna(memberNo));
+		int total = patientsService.getTotalPtqCount(cri);
 		
+		model.addAttribute("ptQna", patientsService.ptQna(memberNo));
+		model.addAttribute("getPtqList", patientsService.getPtqList(cri));
+		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptQna";
 	}
 	
@@ -128,8 +131,13 @@ public class PatientsController {
 		list = phaService.pharmacySearch(cri);
 		
 		return list;
+  }
+	
+	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
+	@GetMapping("/ptReviewFrm")
+	public String ptReviewFrm() {
+		return "/patients/ptReviewFrm";
+
 	}
 	
-	
-
 }
