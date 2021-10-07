@@ -28,8 +28,10 @@ import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.meditation.domain.MeditAttachVO;
+import com.mima.app.member.domain.ExperienceVO;
 import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
+import com.mima.app.member.service.ExperienceService;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
@@ -44,6 +46,7 @@ public class PatnerDoctorController {
 	@Autowired CscService cscService;
 	@Autowired PartnerDoctorService doctorService;
 	@Autowired MemberService memberService;
+	@Autowired ExperienceService experienceService;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("/docMain")
@@ -162,7 +165,6 @@ public class PatnerDoctorController {
 	
 	
 	
-	
 	//s:1005 docProfileInsertFrm
 	@GetMapping("/docProfileInsertForm")
 	public String docProfileInsertForm() {
@@ -181,12 +183,21 @@ public class PatnerDoctorController {
 		
 	//s:1006 의사프로필등록
 	@PostMapping("/register")
-	public String register(PartnerDoctorVO vo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
+	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
 		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
+		//s:1006 파트너의사테이블에 저장
 		doctorService.docProfileInsert(vo);
-
+		
+		//s:1007 멤버 테이블 주소 업데이트
+		doctorService.docAddrUpdate(mVo);
+		System.out.println("파트너 의사 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
+		
+		//s:1007 경력 테이블 인서트
+		System.out.println("파트너 의사 컨트롤러-> 경력테이블 인서트 보 보는거임======" + expVo);
+		experienceService.insertExp(expVo);
+		
 		rttr.addFlashAttribute("result", vo.getMemberNo());
-		return "redirect:/docDash/docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
+		return "redirect:/docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
 	}
 	
 	
