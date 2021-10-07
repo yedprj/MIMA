@@ -22,6 +22,7 @@ import com.mima.app.member.service.PatientsService;
 public class PatientsController {
 	
 	@Autowired PatientsService patientsService;
+	
 
 	//e.4
 	//환자대쉬보드 메인 페이지
@@ -110,7 +111,10 @@ public class PatientsController {
 	//환자대쉬보드 약배달 페이지 K.10/06
 	@GetMapping("phaSearch")
 	public String phaSearch() {
+		
 		return "patients/phaSearch";
 	}	
+	
+	
 
 }
