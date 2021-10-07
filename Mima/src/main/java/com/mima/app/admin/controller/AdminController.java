@@ -24,14 +24,17 @@ public class AdminController {
 	@Autowired MemberService memberService;
 	@Autowired PatientsService patientsService;
 	
+	//e.29
 	//K 10/06 수정
-	//관리자 회원정보조회
-	@GetMapping("/list")
+	//관리자 회원정보조회(환자)
+	@GetMapping("/adlist")
 	public String list(Model model, @ModelAttribute("cri") Criteria cri) {
 		int total = patientsService.getTotalPatientsCount(cri);
 		
-		model.addAttribute("list",patientsService.getList());
-		model.addAttribute("list",patientsService.getPatientsList(cri));
+		model.addAttribute("getptList", patientsService.getptList());
+		model.addAttribute("getdocList", patientsService.getdocList());
+		model.addAttribute("getpmList", patientsService.getpmList());
+		model.addAttribute("getPatientsList",patientsService.getPatientsList(cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "admin/adlist";
 	}
@@ -39,26 +42,27 @@ public class AdminController {
 	//e.29
 	//관리자 메인페이지
 	@GetMapping("/adMain")
-	public void adMain() { 
-		
+	public String adMain() { 
+		return "admin/adMain";
 	}
 	
 	//e.29
 	// 파트너 의사 / 약국 승인 유무 검색
 	@GetMapping("/patnerStatusSelect")
-	public void patnerStatusSelect(Model model) {
+	public String patnerStatusSelect(Model model) {
 		model.addAttribute("patnerStatusSelect",memberService.patnerStatusSelect());
+		return "admin/patnerStatusSelect";
 	}
 		
 	//e.29
 	// 파트너 의사 / 약국 승인 등록
 	@PutMapping("/patnerStatusUpdate")
 	@ResponseBody
-	public int patnerStatusUpdate(@RequestBody MemberVO vo) {
+	public String patnerStatusUpdate(@RequestBody MemberVO vo) {
 		System.out.println(vo.getLicense());
 		//int result = memberService.patnerStatusUpdate(vo);
 		//return result;
-		return 0;
+		return "admin/patnerStatusUpdate";
 	}
 	
 	 

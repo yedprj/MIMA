@@ -31,7 +31,8 @@
 									</form>
 								</div>
 							</div>
-							<div class="doctors-list">
+							<!-- patients -->
+							<div class="Patients-list">
 								<div class="table-outer">
 									<table class="table table-hover">
 										<thead class="table-header">
@@ -46,16 +47,49 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${list}" var="patients">
+											<c:forEach items="${getptList}" var="getptList">
 												<tr align="center">
-													<td>${patients.memberNo }</td>
-													<td>${patients.pastHx }</td>
-													<td>${patients.preSelfAx }</td>
-													<td>${patients.topic }</td>
-													<td>${patients.medDelivery }</td>
-													<td><fmt:formatDate value="${patients.regDate }"
+													<td>${getptList.memberNo }</td>
+													<td>${getptList.pastHx }</td>
+													<td>${getptList.preSelfAx }</td>
+													<td>${getptList.topic }</td>
+													<td>${getptList.medDelivery }</td>
+													<td><fmt:formatDate value="${getptList.regDate }"
 															pattern="yy-MM-dd" /></td>
-													<td><fmt:formatDate value="${patients.editDate }"
+													<td><fmt:formatDate value="${getptList.editDate }"
+															pattern="yy-MM-dd" /></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!--doctor-->
+							<div class="Doctor-list">
+								<div class="table-outer">
+									<table class="table table-hover">
+										<thead class="table-header">
+											<tr align="center">
+												<th>NO</th>
+												<th>과거진료기록</th>
+												<th>자가진단표</th>
+												<th>진료분야</th>
+												<th>약배달</th>
+												<th>등록일</th>
+												<th>수정일</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${getptList}" var="getptList">
+												<tr align="center">
+													<td>${getptList.memberNo }</td>
+													<td>${getptList.pastHx }</td>
+													<td>${getptList.preSelfAx }</td>
+													<td>${getptList.topic }</td>
+													<td>${getptList.medDelivery }</td>
+													<td><fmt:formatDate value="${getptList.regDate }"
+															pattern="yy-MM-dd" /></td>
+													<td><fmt:formatDate value="${getptList.editDate }"
 															pattern="yy-MM-dd" /></td>
 												</tr>
 											</c:forEach>

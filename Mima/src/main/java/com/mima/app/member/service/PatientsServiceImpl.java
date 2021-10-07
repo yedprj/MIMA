@@ -9,8 +9,10 @@ import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.member.mapper.PatientsMapper;
+import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.session.domain.BookingVO;
 
 
@@ -19,13 +21,6 @@ public class PatientsServiceImpl implements PatientsService {
 	
 	@Autowired
 	PatientsMapper patientsMapper;
-
-	//e.29
-	//관리자 회원정보조회
-	@Override
-	public List<PatientsVO> getList() {
-		return patientsMapper.getList();
-	}
 
 	//s:1004 self assessment extra info
 	@Override
@@ -38,22 +33,37 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.updateAx(vo);
 	}	
 	
-	//e.4
-	//전체조회
+	//관리자 회원정보조회(환자) e.29
+	@Override
+	public List<PatientsVO> getptList() {
+		return patientsMapper.getptList();
+	}
+	
+	//관리자 회원정보조회(의사) e.7
+	@Override
+	public List<PartnerDoctorVO> getdocList() {
+		return patientsMapper.getdocList();
+	}
+	
+	//관리자 회원정보조회(약국) e.7
+	@Override
+	public List<PartnerPharmacyVO> getpmList() {
+		return patientsMapper.getpmList();
+	}
+	
+	//관리자 회원정보조회 전체조회 페이징 e.4
 	@Override
 	public List<PatientsVO> getPatientsList(Criteria cri) {
 		return patientsMapper.getPatientsList(cri);
 	}
 
-	//e.4
-	//전체 데이터 수 조회
+	//관리자 회원정보조회 전체 데이터 수 조회 페이징 e.4
 	@Override
 	public int getTotalPatientsCount(Criteria cri) {
 		return patientsMapper.getTotalPatientsCount(cri);
 	}
 
-	//e.4
-	//환자대쉬보드 Main 오늘의예약
+	//환자대쉬보드 Main 오늘의예약 e.4
 	@Override
 	public List<BookingVO> ptgetList(int memberNo) {
 		return patientsMapper.ptgetList(memberNo);
@@ -131,6 +141,20 @@ public class PatientsServiceImpl implements PatientsService {
 	public List<QnaVO> ptQna(int memberNo) {
 		return patientsMapper.ptQna(memberNo);
 	}
+
+	//전체조회 나의문의 페이징 e.7
+	@Override
+	public List<QnaVO> getPtqList(Criteria cri) {
+		return patientsMapper.getPtqList(cri);
+	}
+
+	//전체 데이터 수 조회 나의문의 페이징 e.7
+	@Override
+	public int getTotalPtqCount(Criteria cri) {
+		return patientsMapper.getTotalPtqCount(cri);
+	}
+	
+	
 
 
 }
