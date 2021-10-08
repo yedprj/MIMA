@@ -171,14 +171,14 @@ input[type="time"]:valid::before {
 	}
 	
 	function selectCategory(data) {
-		console.log(encodeURIComponent(data.category1))
+		//console.log(encodeURIComponent(data.category1))
 		return '<label>진료과목</label>'
 			 + '<div class="select-box">'
 			 + '	<select class="good-select wide" id="categoryChoose" name="doctorChoose">'
 			 + '		<option data-display="진료과목을 선택해주세요">진료과목을 선택해주세요</option>'
-			 + '		<option value='+ data.category1 +'>'+ data.category1 +'</option>'
-			 + '		<option value='+ data.category2 +'>'+ data.category2 +'</option>'
-			 + '		<option value='+ data.category3 +'>'+ data.category3 +'</option>'
+			 + '		<option value='+ encodeURIComponent(data.category1) +'>'+ data.category1 +'</option>'
+			 + '		<option value='+ encodeURIComponent(data.category2) +'>'+ data.category2 +'</option>'
+			 + '		<option value='+ encodeURIComponent(data.category3) +'>'+ data.category3 +'</option>'
 			 + '	</select>'
 			 + '</div>'
 	}
@@ -310,7 +310,7 @@ input[type="time"]:valid::before {
 			
 			var ptNo = ${session.memberNo};									// PT_NO 예약 환자 번호
 			var docNo = $("#doctorSelect option:selected").val();			// DOC_NO 의사 번호
-			var subject = $("#categoryChoose option:selected").val();		// 카테고리 추가
+			var subject = decodeURIComponent($("#categoryChoose option:selected").val());		// 카테고리 추가
 			var consultDate = $("#date").val();								// 실제 진료 날짜
 			var consultTime = $('#consultTime').val();						// 실제 진료 시간
 			var firstSession = $('input:checkbox[id=chooseFirst]').val();	// 체크박스 y or n
