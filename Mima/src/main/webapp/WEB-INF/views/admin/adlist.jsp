@@ -21,17 +21,19 @@
 							<!-- selectbox -->
 								<div class="btn-box pull-right">
 									<div class="select-box">
-										<select class="good-select wide" id="selectbox" name="selectbox">
-											<option data-display="환자(patients)">환자(patients)</option>
-											<option value="doctor">의사(doctor)</option>
-											<option value="pharmacy">약국(pharmacy)</option>
+										<select class="good-select wide" id="selectbox" name="selectbox"
+												onchange="searchCheck()">
+											<option data-display="">선택해주세요</option>
+											<option value="pt" >환자(patients)</option>
+											<option value="doctor" >의사(doctor)</option>
+											<option value="pharmacy" >약국(pharmacy)</option>
 										</select>
 									</div>
 								</div>
 							<!-- selectbox end -->
 							</div>
 							<!-- patients -->
-							<div class="Patients-list" id="patients" style="display: none;">
+							<div class="Patients-list" id="patients" style="display: block;">
 								<div class="table-outer">
 									<table class="table table-hover">
 										<thead class="table-header">
@@ -42,20 +44,17 @@
 												<th>진료분야</th>
 												<th>약배달</th>
 												<th>등록일</th>
-												<th>수정일</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${getptList}" var="getptList">
+											<c:forEach items="${getPatientsList}" var="getPatientsList">
 												<tr align="center">
-													<td>${getptList.memberNo }</td>
-													<td>${getptList.pastHx }</td>
-													<td>${getptList.preSelfAx }</td>
-													<td>${getptList.topic }</td>
-													<td>${getptList.medDelivery }</td>
-													<td><fmt:formatDate value="${getptList.regDate }"
-															pattern="yy-MM-dd" /></td>
-													<td><fmt:formatDate value="${getptList.editDate }"
+													<td>${getPatientsList.memberNo }</td>
+													<td>${getPatientsList.pastHx }</td>
+													<td>${getPatientsList.preSelfAx }</td>
+													<td>${getPatientsList.topic }</td>
+													<td>${getPatientsList.medDelivery }</td>
+													<td><fmt:formatDate value="${getPatientsList.regDate }"
 															pattern="yy-MM-dd" /></td>
 												</tr>
 											</c:forEach>
@@ -64,7 +63,7 @@
 								</div>
 							</div>
 						<!--doctor-->
-							<div class="Doctor-list" id="doctor" style="display: block;">
+							<div class="Doctor-list" id="doctor" style="display: none;">
 								<div class="table-outer">
 									<table class="table table-hover">
 										<thead class="table-header">
@@ -75,20 +74,17 @@
 												<th>전화번호</th>
 												<th>이메일</th>
 												<th>등록일</th>
-												<th>수정일</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${getdocList}" var="getdocList">
+											<c:forEach items="${getdoctorList}" var="getdoctorList">
 												<tr align="center">
-													<td>${getdocList.memberNo }</td>
-													<td>${getdocList.profileEducation }</td>
-													<td>${getdocList.clinicInfo }</td>
-													<td>${getdocList.clinicPhone }</td>
-													<td>${getdocList.clinicEmail }</td>
-													<td><fmt:formatDate value="${getdocList.regDate }"
-															pattern="yy-MM-dd" /></td>
-													<td><fmt:formatDate value="${getdocList.editDate }"
+													<td>${getdoctorList.memberNo }</td>
+													<td>${getdoctorList.profileEducation }</td>
+													<td>${getdoctorList.clinicInfo }</td>
+													<td>${getdoctorList.clinicPhone }</td>
+													<td>${getdoctorList.clinicEmail }</td>
+													<td><fmt:formatDate value="${getdoctorList.regDate }"
 															pattern="yy-MM-dd" /></td>
 												</tr>
 											</c:forEach>
@@ -108,20 +104,17 @@
 												<th>이메일</th>
 												<th>배달 가능 지역</th>
 												<th>등록일</th>
-												<th>수정일</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${getpmList}" var="getpmList">
+											<c:forEach items="${getpharList}" var="getpharList">
 												<tr align="center">
-													<td>${getpmList.memberNo }</td>
-													<td>${getpmList.pharmacyInfo }</td>
-													<td>${getpmList.pharmacyContact }</td>
-													<td>${getpmList.pharmacyEmail }</td>
-													<td>${getpmList.deliveryArea }</td>
-													<td><fmt:formatDate value="${getpmList.regDate }"
-															pattern="yy-MM-dd" /></td>
-													<td><fmt:formatDate value="${getpmList.editDate }"
+													<td>${getpharList.memberNo }</td>
+													<td>${getpharList.pharmacyInfo }</td>
+													<td>${getpharList.pharmacyContact }</td>
+													<td>${getpharList.pharmacyEmail }</td>
+													<td>${getpharList.deliveryArea }</td>
+													<td><fmt:formatDate value="${getpharList.regDate }"
 															pattern="yy-MM-dd" /></td>
 												</tr>
 											</c:forEach>
@@ -132,18 +125,50 @@
 						</div>
 					<!-- e.4 -->
 					<!-- pagination  -->
-					<div class="pagination-wrapper" align="center">
+					<div id="ptPaging" class="pagination-wrapper" align="center" style="display: block;">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev }">
-								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/list?pageNum=${pageMaker.startPage-1 }">이전</a></li>
+								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/adlist?category=pt&pageNum=${pageMaker.startPage-1 }">이전</a></li>
 							</c:if>
 								
 							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-								<li class="paginate_button"><a href="${pageContext.request.contextPath }/admin/list?pageNum=${num }">${num }</a></li>
+								<li class="paginate_button"><a href="${pageContext.request.contextPath }/admin/adlist?category=pt&pageNum=${num }">${num }</a></li>
 							</c:forEach>
 								
 							<c:if test="${pageMaker.next }">
-								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/list?pageNum=${pageMaker.endPage+1 }">다음</a></li>
+								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/adlist?category=pt&pageNum=${pageMaker.endPage+1 }">다음</a></li>
+							</c:if>
+						</ul>
+					</div>
+					
+					<div id="doctorPaging" class="pagination-wrapper" align="center" style="display: none;">
+						<ul class="pagination">
+							<c:if test="${pageMaker.prev }">
+								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/adlist?category=doctor&pageNum=${pageMaker.startPage-1 }">이전</a></li>
+							</c:if>
+								
+							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+								<li class="paginate_button"><a href="${pageContext.request.contextPath }/admin/adlist?category=doctor&pageNum=${num }">${num }</a></li>
+							</c:forEach>
+								
+							<c:if test="${pageMaker.next }">
+								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/adlist?category=doctor&pageNum=${pageMaker.endPage+1 }">다음</a></li>
+							</c:if>
+						</ul>
+					</div>
+					
+					<div id="pharmacyPaging" class="pagination-wrapper" align="center" style="display: none;">
+						<ul class="pagination">
+							<c:if test="${pageMaker.prev }">
+								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/adlist?category=pharmacy&pageNum=${pageMaker.startPage-1 }">이전</a></li>
+							</c:if>
+								
+							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+								<li class="paginate_button"><a href="${pageContext.request.contextPath }/admin/adlist?category=pharmacy&pageNum=${num }">${num }</a></li>
+							</c:forEach>
+								
+							<c:if test="${pageMaker.next }">
+								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/adlist?category=pharmacy&pageNum=${pageMaker.endPage+1 }">다음</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -169,16 +194,37 @@
 	</div>
 
 <script>
-	function searchCheck(num) {
-		if (num == '3') {
-			$("#patients").css('display','none');
-			$("#doctor").css('display', 'block');   
-			$("#pharmacy").css('display', 'none'); 
-		} else {
+	function searchCheck() {
+		
+		var choose = $("#selectbox option:selected").val();
+
+		if (choose == 'pt') {
+			$("#patients").css('display','block');
+			$("#doctor").css('display', 'none');   
+			$("#pharmacy").css('display', 'none');
+			$("#ptPaging").css('display','block');
+			$("#doctorPaging").css('display', 'none');   
+			$("#pharmacyPaging").css('display', 'none'); 
+		} else if (choose == 'doctor'){
 			$("#patients").css('display', 'none');
-			$("#doctor").css('display', "block");
-			$("#pharmacy").css('display', 'none'); 
+			$("#doctor").css('display', 'block');
+			$("#pharmacy").css('display', 'none');
+			$("#ptPaging").css('display', 'none');
+			$("#doctorPaging").css('display', 'block');
+			$("#pharmacyPaging").css('display', 'none');
+		} else if (choose == 'pharmacy'){
+			$("#patients").css('display', 'none');
+			$("#doctor").css('display', 'none');
+			$("#pharmacy").css('display', 'block'); 
+			$("#ptPaging").css('display', 'none');
+			$("#doctorPaging").css('display', 'none');
+			$("#pharmacyPaging").css('display', 'block');
 		}
 	} 
+	
+	$(document).ready(function(){
+		$('#selectbox').val('${cri.category}').prop("selected",true);
+		searchCheck();
+	});
 </script>
 

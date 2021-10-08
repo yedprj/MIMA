@@ -75,6 +75,18 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.getTotaldoctorCount(cri);
 	}
 	
+	//관리자 회원정보조회(약국) 전체조회 페이징 e.8
+	@Override
+	public List<PartnerPharmacyVO> getpharList(Criteria cri) {
+		return patientsMapper.getpharList(cri);
+	}
+	
+	//관리자 회원정보조회(약국) 전체 데이터 수 조회 페이징 e.8
+	@Override
+	public int getTotalpharCount(Criteria cri) {
+		return patientsMapper.getTotalpharCount(cri);
+	}
+	
 	//환자대쉬보드 Main 오늘의예약 e.4
 	@Override
 	public List<BookingVO> ptgetList(int memberNo) {
@@ -88,13 +100,13 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptbmList(memberNo);
 	}
 
-	//전체조회 페이징 e.5
+	//전체조회 예약관리 페이징 e.5
 	@Override
 	public List<BookingVO> getPtbmList(Criteria cri) {
 		return patientsMapper.getPtbmList(cri);
 	}
 
-	//전체 데이터 수 조회 페이징 e.5
+	//전체 데이터 수 조회 예약관리 페이징 e.5
 	@Override
 	public int getTotalPtbmCount(Criteria cri) {
 		return patientsMapper.getTotalPtbmCount(cri);
@@ -166,7 +178,4 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.getTotalPtqCount(cri);
 	}
 	
-	
-
-
 }

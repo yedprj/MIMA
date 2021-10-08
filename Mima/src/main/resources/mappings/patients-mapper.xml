@@ -72,7 +72,7 @@
 	</select>
 
 	<select id="getPatientsList" 
-		resultType="com.mima.app.member.domain.PatientsVO">
+		resultType="PatientsVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
 		ROWNUM RN, MEMBER_NO, PAST_HX, PRE_SELF_AX, TOPIC, MED_DELIVERY
@@ -137,12 +137,13 @@
 	</select>
 
 	<select id="getdoctorList" 
-		resultType="com.mima.app.member.domain.PatientsVO">
+		resultType="PartnerDoctorVO">
 		SELECT *
-		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
+		FROM( SELECT /*+INDEX_DESC(PARTNER_DOCTOR PARTNER_DOCTOR_PK) */
 		ROWNUM RN, MEMBER_NO, PROFILE_EDUCATION, CLINIC_INFO, CLINIC_PHONE, CLINIC_EMAIL
 		FROM PARTNER_DOCTOR
 		WHERE	
+		
 		<include refid="criteriasd"></include>
 				<![CDATA[
 				ROWNUM <= #{pageNum} * #{amount}				
@@ -162,6 +163,60 @@
 				EDIT_DATE
 		FROM PARTNER_PHARMACY
 	</select>
+	
+<!--회원정보조회(약국) 페이징 e.8-->
+<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criteriase">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+						<when test="type =='delivery'.toString()">
+							DELIVERT_AREA LIKE '%'|| #{keyword} || '%'
+						</when>
+						
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- total count -->
+	<select id="getTotalpharCount" resultType="int">
+		SELECT COUNT(*) FROM PARTNER_PHARMACY
+		WHERE
+		<include refid="criteriase"></include>
+		MEMBER_NO > 0
+	</select>
+
+	<select id="getpharList" 
+		resultType="PartnerPharmacyVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(PARTNER_PHARMACY PARTNER_PHARMACY_PK) */
+		ROWNUM RN, MEMBER_NO, PHARMACY_INFO, PHARMACY_CONTACT, 
+		PHARMACY_EMAIL, DELIVERY_AREA
+		FROM PARTNER_PHARMACY
+		WHERE	
+		
+		<include refid="criteriase"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	</select>
+<!-- 페이징 end -->
 	
 <!-- e.4 -->
 <!--환자대쉬보드 Main 오늘의예약-->
@@ -230,14 +285,13 @@
 	</select>
 
 	<select id="getPtbmList" 
-		resultType="com.mima.app.session.domain.BookingVO">
+		resultType="BookingVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
 		ROWNUM RN, BOOKING_NO, PT_NO, DOC_NO, BOOKING_DATE, PRICE,
-		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME,FIRST_SESSION, SUBJECT
+		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME, EDIT_DATE, ROOM_ID, FIRST_SESSION, SUBJECT
 		FROM BOOKING
-		where
-				
+		WHERE
 		<include refid="criterias"></include>
 				<![CDATA[
 				ROWNUM <= #{pageNum} * #{amount}				
@@ -318,14 +372,13 @@
 	</select>
 
 	<select id="getPthList" 
-		resultType="com.mima.app.session.domain.BookingVO">
+		resultType="BookingVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
 		ROWNUM RN, BOOKING_NO, PT_NO, DOC_NO, BOOKING_DATE, PRICE,
-		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME,FIRST_SESSION, SUBJECT
+		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME, EDIT_DATE, ROOM_ID, FIRST_SESSION, SUBJECT
 		FROM BOOKING
-		where
-				
+		WHERE		
 		<include refid="criteriasa"></include>
 				<![CDATA[
 				ROWNUM <= #{pageNum} * #{amount}				
@@ -400,13 +453,13 @@
 	</select>
 
 	<select id="getPtrvList" 
-		resultType="com.mima.app.comments.domain.CommentsVO">
+		resultType="CommentsVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
-		ROWNUM RN, CMAIN_CATEGORY, CMAIN_NO, COMMENT_WRITER_NO, CONTENTS, REVIEW_POINT, CNO
+		ROWNUM RN, CMAIN_CATEGORY, CMAIN_NO, COMMENT_WRITER_NO, 
+		CONTENTS, REVIEW_POINT, REG_DATE, EDIT_DATE, CNO
 		FROM COMMENTS
-		where
-				
+		WHERE	
 		<include refid="criteriasb"></include>
 				<![CDATA[
 				ROWNUM <= #{pageNum} * #{amount}				
@@ -460,7 +513,7 @@
 		</select>
 	
 		<select id="getPtqList" 
-			resultType="com.mima.app.admin.domain.QnaVO">
+			resultType="QnaVO">
 			SELECT *
 			FROM( SELECT /*+INDEX_DESC(QNA QNA_PK) */
 				ROWNUM RN, C.CS_NO AS QNA_NO,
@@ -470,6 +523,7 @@
 			FROM CSC C JOIN MEMBER M
 	        ON (C.MEMBER_NO = M.MEMBER_NO)
 			WHERE
+			
 			<include refid="criteriasc"></include>
 					<![CDATA[
 					ROWNUM <= #{pageNum} * #{amount}				
