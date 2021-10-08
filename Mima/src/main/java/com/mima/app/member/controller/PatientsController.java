@@ -130,6 +130,7 @@ public class PatientsController {
 		return "patients/phaSearch";
 	}
 	
+	//약국 찾기 K.10/07
 	@PostMapping("pharmacy")
 	@ResponseBody
 	public List<PartnerPharmacyVO> pharmacy(@RequestBody Criteria cri){
@@ -138,7 +139,7 @@ public class PatientsController {
 		list = phaService.pharmacySearch(cri);
 		
 		return list;
-  }
+	}
 	
 	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
 	@GetMapping("/ptReviewFrm")
