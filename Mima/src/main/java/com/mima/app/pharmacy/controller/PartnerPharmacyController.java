@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,14 +42,12 @@ public class PartnerPharmacyController {
 	
 	// 약국 대쉬보드 [K]210929 
 	@GetMapping("/pharmacyDash")
-	public void pharmacyDash(PartnerPharmacyVO vo, Model model, HttpServletRequest request) {
-		/*
-		 * HttpSession session = request.getSession();
-		 * log.info(session.getAttribute("session").toString()); MemberVO mvo =
-		 * (MemberVO) session.getAttribute("session");
-		 * log.info("*************"+mvo.getName());
-		 */
-		model.addAttribute("profile", partPhaService.selectOne(vo));
+	public void pharmacyDash(PartnerPharmacyVO pvo, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		pvo.setMemberNo(memberNo);
+		model.addAttribute("profile", partPhaService.selectOne(pvo));
 	}
 	
 	// 약배달 관리페이지 [K]210929
