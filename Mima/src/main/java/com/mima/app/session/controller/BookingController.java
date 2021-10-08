@@ -96,6 +96,7 @@ public class BookingController {
 		BookingVO bvo = new BookingVO();
 		bvo = bookingService.selectBookingInfo(memberNo);	
 		model.addAttribute("resvinfo", bvo);
+		log.info("========================" + bvo);
 		
 		int docNo = bvo.getDocNo();
 		
