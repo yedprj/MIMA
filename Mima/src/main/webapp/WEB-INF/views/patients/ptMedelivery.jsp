@@ -149,7 +149,7 @@ input::placeholder {
                                     <a href="add-listing.html" class="menu"><i class="icon-Dot-menu"></i></a>
                                 </div>
                                 <div class="inner-box">
-                                    <form action="add-listing.html" method="post">
+                                    <form id="deliveryFrm" action="medDeliveryAdd" method="post">
                                         <div class="row clearfix">
                                             <div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                                 <label>배달지 주소</label>
@@ -174,6 +174,7 @@ input::placeholder {
                                                 <label>신청 약국</label>
                                                 <input id="phaName" type="text" name="phaName" >
                                                 <input id="memberNo" type="hidden" name="memberNo" >
+                                                <input id="booking" type="hidden" name="memberNo" >
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
 												<button id="searchBtn" type="button" onclick="window.open('phaSearch', '약국찾기', 'top=100px, left=300, width=600px, height=700px , scrollbars=yes');">검색</button>                                             	
@@ -188,7 +189,7 @@ input::placeholder {
                                 </div>
                             </div>
                             <div class="btn-box">
-                                <a href="add-listing.html" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
+                                <a id="submitBtn" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
                             </div>
                             <!-- <div class="modal">
 								<div class="modal_content" title="클릭하면 창이 닫힙니다.">
@@ -290,20 +291,9 @@ function execDaumPostcode() {
 $(function(){ 
 		
 	 
-	 /*  $("#searchBtn").click(function(){
-	    $(".modal").fadeIn();
-	  });
-	  
-	  $(".cancel").click(function(){
-	    $(".modal").fadeOut();
-	  }); 
-	  
-	  $("#modalSearchBtn").on("click", function(){
-		  var pharmacy = $("input[name='pharmacy']").val();
-		  
-		  // ajax 호출 검색
-		  
-	  }); */
+	 $("#submitBtn").on("click",function(){
+		// booking 번호 받아와서 같이 폼에 넣어주기
+	 });
 	
 	  
 	});
