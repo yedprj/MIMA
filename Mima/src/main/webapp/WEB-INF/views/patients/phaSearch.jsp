@@ -37,7 +37,6 @@
 											<option value=""  data-display="카테고리 선택&nbsp;&nbsp;▼" class="option selected focus" <c:out value="${pageMaker.cri.type==null ?'selected':''}"/>> 검색 카테고리</option>
 											<option value="D" <c:out value="${pageMaker.cri.type eq 'D' ?'selected':''}"/> >주소검색</option>
 											<option value="P" <c:out value="${pageMaker.cri.type eq 'P' ?'selected':''}"/> >약국명</option>
-											<option value="PD" <c:out value="${pageMaker.cri.type eq 'PD' ?'selected':''}"/> >약국명</option>
 										</select>
 									</div>
 								</div>
@@ -79,32 +78,24 @@
 						</div>
 						<!-- 검색 구간 -->
 						<div id="searchBox" class="search-inner">
-							<form action="blog-3.html" method="post" class="search-form">
+							<form class="search-form">
                                <div class="form-group">
                                    <input type="search" name="search-field" placeholder="Search">
                                    <button id="searchBtn" type="button"><i class="fas fa-search"></i></button>
                                </div>
-                               <input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}">
+                               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                
                             </form>
 						</div>
 					</div> <!-- 약 검색 구간 END -->
+					<div class="wrapper list">
+	                    <div class="clinic-list-content list-item">
+	                        <!-- 검색 결과내용 -->
+	                        
+	                    </div>
+	                </div>
 					
-                    <div class="clinic-details-content">
-                        <div class="tabs-box">
-                            <div class="tabs-content">
-                                <div class="tab active-tab" id="tab-1">
-                                    <div class="inner-box">
-                                        <div class="accordion-box">
-                                                 
-                                            
-                                        </div> <!-- 아코디언 박스 END -->
-                                    </div>
-                                </div>
-                            </div> <!-- tab-_contents END -->
-                        </div>
-                    </div><!-- 검색결과 끝 -->
+                    <!-- 검색결과 끝 -->
                     <div class="pagination-wrapper">
                          <ul class="pagination">
                              
@@ -183,6 +174,9 @@
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.daegu[i] +'" class="option">'+subOption.daegu[i] +'</li>'							
 					);
+					$("#ci").append(
+							'<option value="'+subOption.daegu[i] +'">'+subOption.daegu[i] +'</option>'	
+						);
 				}
 			} // if문
 			else if( ciChecked == "인천"){
@@ -190,12 +184,19 @@
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.incheon[i] +'" class="option">'+subOption.incheon[i] +'</li>'							
 					);
+					$("#ci").append(
+							'<option value="'+subOption.incheon[i] +'">'+subOption.incheon[i] +'</option>'	
+						);
+					
 				}
 			} // if문
 			else if( ciChecked == "광주"){
 				for (var i=0; i < subOption.ghangjo.length; i++){
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.ghangjo[i] +'" class="option">'+subOption.ghangjo[i] +'</li>'							
+					);
+					$("#ci").append(
+							'<option value="'+subOption.ghangjo[i] +'">'+subOption.ghangjo[i] +'</option>'	
 					);
 				}
 			} // if문
@@ -204,12 +205,18 @@
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.deajeon[i] +'" class="option">'+subOption.deajeon[i] +'</li>'							
 					);
+					$("#ci").append(
+							'<option value="'+subOption.deajeon[i] +'">'+subOption.deajeon[i] +'</option>'	
+					);
 				}
 			} // if문
 			else if( ciChecked == "울산"){
 				for (var i=0; i < subOption.ulsan.length; i++){
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.ulsan[i] +'" class="option">'+subOption.ulsan[i] +'</li>'							
+					);
+					$("#ci").append(
+							'<option value="'+subOption.ulsan[i] +'">'+subOption.ulsan[i] +'</option>'	
 					);
 				}
 			} // if문
@@ -218,12 +225,18 @@
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.gyeonggi[i] +'" class="option">'+subOption.gyeonggi[i] +'</li>'							
 					);
+					$("#ci").append(
+							'<option value="'+subOption.gyeonggi[i] +'">'+subOption.gyeonggi[i] +'</option>'	
+					);
 				}
 			} // if문
 			else if( ciChecked == "강원"){
 				for (var i=0; i < subOption.gangwon.length; i++){
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.gangwon[i] +'" class="option">'+subOption.gangwon[i] +'</li>'							
+					);
+					$("#ci").append(
+							'<option value="'+subOption.gangwon[i] +'">'+subOption.gangwon[i] +'</option>'	
 					);
 				}
 			} // if문
@@ -232,12 +245,18 @@
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.chungbuk[i] +'" class="option">'+subOption.chungbuk[i] +'</li>'							
 					);
+					$("#ci").append(
+							'<option value="'+subOption.chungbuk[i] +'">'+subOption.chungbuk[i] +'</option>'	
+					);
 				}
 			} // if문
 			else if( ciChecked == "충청남도"){
 				for (var i=0; i < subOption.chungnam.length; i++){
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.chungnam[i] +'" class="option">'+subOption.chungnam[i] +'</li>'							
+					);
+					$("#ci").append(
+							'<option value="'+subOption.chungnam[i] +'">'+subOption.chungnam[i] +'</option>'	
 					);
 				}
 			} // if문
@@ -246,12 +265,18 @@
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.jeonbuk[i] +'" class="option">'+subOption.jeonbuk[i] +'</li>'							
 					);
+					$("#ci").append(
+							'<option value="'+subOption.jeonbuk[i] +'">'+subOption.jeonbuk[i] +'</option>'	
+					);
 				}
 			} // if문
 			else if( ciChecked == "전라남도"){
 				for (var i=0; i < subOption.jeonnam.length; i++){
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.jeonnam[i] +'" class="option">'+subOption.jeonnam[i] +'</li>'							
+					);
+					$("#ci").append(
+							'<option value="'+subOption.jeonnam[i] +'">'+subOption.jeonnam[i] +'</option>'	
 					);
 				}
 			} // if문
@@ -260,12 +285,18 @@
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.gyeongbuk[i] +'" class="option">'+subOption.gyeongbuk[i] +'</li>'							
 					);
+					$("#ci").append(
+							'<option value="'+subOption.gyeongbuk[i] +'">'+subOption.gyeongbuk[i] +'</option>'	
+					);
 				}
 			} // if문
 			else if( ciChecked == "경상남도"){
 				for (var i=0; i < subOption.gyeongnam.length; i++){
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.gyeongnam[i] +'" class="option">'+subOption.gyeongnam[i] +'</li>'							
+					);
+					$("#ci").append(
+							'<option value="'+subOption.gyeongnam[i] +'">'+subOption.gyeongnam[i] +'</option>'	
 					);
 				}
 			} // if문
@@ -274,20 +305,30 @@
 					$(".ciBox .list").append(
 						'<li data-value="'+subOption.jeju[i] +'" class="option">'+subOption.jeju[i] +'</li>'							
 					);
+					$("#ci").append(
+							'<option value="'+subOption.jeju[i] +'">'+subOption.jeju[i] +'</option>'	
+					);
 				}
 			} // if문
 			else {	};
 			
-		});
+		}); // 주소 option end
 		
-		
+		// 검색 초기화
+		function init(){
+			
+		}
 		
 		// 검색 버튼 클릭시
 		$("#searchBtn").on("click", function(){
+			$(".list-item").empty();
 			var search = $("input[name='search-field']").val();
 			var category = $("select[name='category']").val();
+			var cido = $("select[name='cido']").val();
+			var ci = $("select[name='ci']").val();
+			var delJuso = cido + " " + ci;
 			
-			 
+			
 			if (category == ''){ // 카테고리 체크
 				alert("카테고리를 선택하세요");
 				return;
@@ -295,10 +336,10 @@
 			
 			// 주소검색일때
 			if(category == 'D'){
-				var cido = $("select[name='cido']").val();
-				var ci = $("select[name='ci']").val();
-				var delJuso = cido + " " + ci ;
 				
+				if (search != ""){
+					delJuso = cido + " " + ci + " " + search;
+				}
 				$.ajax({
 	    			url : "pharmacy",
 	    			method : "post",
@@ -316,31 +357,111 @@
 	    					alert("검색결과 존재하지 않습니다");
 	    				}else {
 	    					$.each(datas,function(i, data) {
-	    						$(".accordion-box").append(
-	    						'<div><p>'+data.memberNo+'</p><p>'+data.pharmacyInfo+'</p><p>'+data.pharmacyContact+'</p></div><br>'		
-	    						);
+	    						dataView(data);
 	    					}); // each end
 	    				}
-
-	    			}
-	    		});
-				
-				
+	    			}  // success end
+	    		}); //  ajax end
 			}
+			// 약국명 검색 체크
 			else if (category == 'P'){
+				
 				// 검색내용 체크
-				if( search == 'phaName'){
-					$("input[name='search-field']").attr("placeholder", "검색할 약국이름 or 상세주소를 입력하세요!");
+				if( search == ''){
+					$("input[name='search-field']").attr("placeholder", "검색할 약국이름을 입력하세요!");
 					$("input[name='search-field']").focus();
 					return;
 				}
-			}
-			
-			
-			alert("검색 클릭!"+ search);
+				console.log("조건문 확인"+cido+" : " + ci+" : " +search);
+				if (cido == "" && ci == "") {
+					console.log("if"+cido+" : " + ci+" : " +search);
+					$.ajax({
+		    			url : "pharmacy",
+		    			method : "post",
+		    			data : JSON.stringify({
+		    				keyword : search ,
+		    				type : category
+		    			}),
+		    			beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
+		    			dataType : "json", 
+		    			contentType : "application/json",
+		    			success : function(datas){
+		    				if( datas == null) {
+		    					alert("검색결과 존재하지 않습니다");
+		    				}else {
+		    					$.each(datas,function(i, data) {
+		    						dataView(data);
+		    					}); // each end
+		    				}
+		    			}  // success end
+		    		}); //  ajax end
+				}
+				// 약국명이랑 주소 같이 검색 + 스크립트에서 한번더 걸러줌
+				else {
+					console.log("else"+ cido + " : " + ci+" : " +search);
+					$.ajax({
+		    			url : "pharmacy",
+		    			method : "post",
+		    			data : JSON.stringify({
+		    				keyword : delJuso ,
+		    				type : "D"
+		    			}),
+		    			beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
+		    			dataType : "json", 
+		    			contentType : "application/json",
+		    			success : function(datas){
+		    					var result = false;
+		    					$.each(datas,function(i, data) {
+		    						var phaName = data.pharmacyInfo;
+		    						if(phaName.includes(search)){
+		    							dataView(data);
+			    						result = true;
+		    						} 
+		    					}); // each end
+		    					if(result == false){
+		    						alert("일치하는 주소지와 약국명이 존재하지 않습니다.")
+		    					}
+		    			}  // success end
+					});// ajax end
+				
+				 } // 주소+ 약국 end
+				
+            } // 카테고리 약국명 찾기
+            
 		});// searchBtn end
+		
+		 $(document).on("click","#phaCheckBtn", function(){
+			console.log(this);
+			var no = $(this).data("no");
+			var phaName = $(this).data("name"); 
+			console.log(no);
+			console.log(phaName);
+			$("#memberNo", opener.document).val(no);
+			$("#phaName", opener.document).val(phaName);
+			window.close();
+		 });
+		
 		
 	}); // function end
 	
+	function dataView(data){
+		$(".list-item").append(
+				'<div class="clinic-block-one"><div class="inner-box">'
+                +    '<form><figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt=""></figure>'
+                +    '<div class="content-box"><ul class="name-box clearfix">'
+                +            '<li class="name"><h3>'+data.pharmacyInfo+'</h3></li>'
+                +            '<li><i class="icon-Trust-1"></i></li>'
+                +            '<li><i class="icon-Trust-2"></i></li></ul>'
+                +        '<span class="designation">'+data.pharmacyContact+'</span>'
+                +        '<div class="text"><p>'+data.profileContents+'</p></div>'
+                +        '<div class="location-box"><p><i class="fas fa-map-marker-alt"></i>'+data.deliveryArea+'</p></div>'
+                +        '<div class="btn-box"><a id="phaCheckBtn" data-no="'+data.memberNo+'" data-name="'+data.pharmacyInfo+'" >약국 선택</a></div>'
+                + '</div></form></div></div>'
+       		);// append end
+	}
 	
 </script>

@@ -172,7 +172,8 @@ input::placeholder {
 												</div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>신청 약국</label>
-                                                <input type="text" name="state" >
+                                                <input id="phaName" type="text" name="phaName" >
+                                                <input id="memberNo" type="hidden" name="memberNo" >
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
 												<button id="searchBtn" type="button" onclick="window.open('phaSearch', '약국찾기', 'top=100px, left=300, width=600px, height=700px , scrollbars=yes');">검색</button>                                             	
