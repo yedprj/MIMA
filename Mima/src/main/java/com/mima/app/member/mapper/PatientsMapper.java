@@ -36,8 +36,14 @@ public interface PatientsMapper {
 	//관리자 회원정보조회(의사) 전체조회 페이징 e.7
 	public List<PartnerDoctorVO> getdoctorList(Criteria cri);
 	
-	////관리자 회원정보조회(의사) 전체 데이터 수 조회 페이징 e.7
+	//관리자 회원정보조회(의사) 전체 데이터 수 조회 페이징 e.7
 	public int getTotaldoctorCount(Criteria cri);
+	
+	//관리자 회원정보조회(약국) 전체조회 페이징 e.8
+	public List<PartnerPharmacyVO> getpharList(Criteria cri);
+	
+	//관리자 회원정보조회(약국) 전체 데이터 수 조회 페이징 e.8
+	public int getTotalpharCount(Criteria cri);
 	
 	//환자대쉬보드 Main 오늘의예약 e.4
 	public List<BookingVO> ptgetList(int memberNo);
