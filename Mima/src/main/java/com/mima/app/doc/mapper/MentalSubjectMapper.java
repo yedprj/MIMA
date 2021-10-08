@@ -11,4 +11,5 @@ public interface MentalSubjectMapper {
 	
 	// p.10/07 의사 카테고리만 가져오기
 	public MentalSubjectVO categorySelect(int docNo);
+	
 }

@@ -1,5 +1,7 @@
 package com.mima.app.member.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,24 @@ public class ExperienceServiceImpl implements ExperienceService {
 	@Override
 	public int insertExp(ExperienceVO vo) {
 		return experienceMapper.insertExp(vo);
+	}
+
+	//s:1008 경력 테이블 한 의사의 여러 경력 가져오기
+	@Override
+	public List<ExperienceVO> getExpList(ExperienceVO vo) {
+		return experienceMapper.getExpList(vo);
+	}
+
+	//s:1008 한 의사의 경력 수정하기 (경력번호를 넣어줘야함)
+	@Override
+	public int updateExp(ExperienceVO vo) {
+		return experienceMapper.updateExp(vo);
+	}
+
+	//s:1008 경력 테이블 한 의사의 경력 삭제하기(경력번호를 넣어줘야함)
+	@Override
+	public int deleteExp(ExperienceVO vo) {
+		return experienceMapper.deleteExp(vo);
 	}
 
 }

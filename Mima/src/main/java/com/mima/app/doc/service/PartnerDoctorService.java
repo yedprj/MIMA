@@ -1,5 +1,10 @@
 package com.mima.app.doc.service;
 
+import java.util.List;
+
+
+import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.member.domain.MemberVO;
 
@@ -10,6 +15,17 @@ public interface PartnerDoctorService {
 	
 	// s:1007 프로필 등록 시 주소 멤버 테이블에 업데이트
 	public int docAddrUpdate(MemberVO vo);
+	
+	
+	
+	//s:1008 전체 의사 멤버 수 조회
+	public int totalDocNumCount(Criteria cri);
+	
+	//s:1008 의사 전체 리스트 
+	public List<DocInfoVO> getTotalDocList(Criteria cri);
+	
+	//s:1008 의사 디테일 페이지
+	public DocInfoVO getDocDetail(DocInfoVO vo);
 	
 
 }

@@ -38,4 +38,126 @@
 	WHERE MEMBER_NO=#{memberNo}
 </update>
 
+
+
+
+
+	<!-- s:1008 의사 리뷰 수 업데이트 -->
+	<update id="updateCommentsCnt">
+		UPDATE partner_Doctor
+		SET COMMENTSCNT = COMMENTSCNT + #{amount}
+		WHERE
+		member_NO=#{cmainNo}
+	</update>
+
+
+	<!--s:1008 검색조건 따로 뺀거. -->
+	<sql id="criteria" >
+		<if test="category !=null and category!=''">
+			CATEGORY=#{category}
+				AND
+	 	</if>
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'A'.toString()">
+							ADDR1 LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CATEGORY_1 LIKE '%'|| #{keyword} || '%'
+						
+						</when>
+
+						<when test="type =='D'.toString()">
+							NAME LIKE '%'|| #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+	<!--s:1008 전체 의사 숫자 total  count -->
+	<select id="totalDocNumCount" resultType="int">
+		SELECT COUNT(*) FROM 
+		 (
+         SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
+				ROWNUM RN,
+				a.MEMBER_NO,
+				a.NAME,
+				a.GENDER,
+				a.ADDR1,
+				b.PROFILE_PHOTO,
+				b.PROFILE_CONTENTS,
+				b.PROFILE_EDUCATION,
+				b.COMMENTSCNT,
+				C.CATEGORY_1,
+				C.CATEGORY_2,
+				C.CATEGORY_3
+			FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
+             JOIN MENTAL_SUBJECT c 
+            ON b.MEMBER_NO=c.DOC_NO
+         ) 
+         WHERE
+		<include refid="criteria"></include>
+		MEMBER_NO > 0
+	</select>
+
+
+
+	<!-- s:1008 전체 의사 리스트 불러오기 -->
+	<select id="getTotalDocList" resultType="DocInfoVO">
+	
+	SELECT *
+		FROM( SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
+				ROWNUM RN,
+				a.MEMBER_NO,
+				a.NAME,
+				a.GENDER,
+				a.ADDR1,
+				b.PROFILE_PHOTO,
+				b.PROFILE_CONTENTS,
+				b.PROFILE_EDUCATION,
+				b.COMMENTSCNT,
+				C.CATEGORY_1,
+				C.CATEGORY_2,
+				C.CATEGORY_3
+			FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
+             JOIN MENTAL_SUBJECT c 
+            ON b.MEMBER_NO=c.DOC_NO
+		WHERE
+				
+		<include refid="criteria"></include>
+				<![CDATA[
+				ROWNUM <= #{pageNum} * #{amount}				
+				)
+		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+
+	</select>
+
+	<!-- s:1008 의사프로필 디테일 불러오기 -->
+	<select id="getDocDetail" resultType="DocInfoVO">
+	SELECT 
+		a.MEMBER_NO,
+		a.NAME,
+		a.GENDER,
+		a.ADDR1,
+		a.ADDR2,
+		a.ADDR3,
+		a.POSTCODE,
+		b.PROFILE_PHOTO,
+		b.PROFILE_CONTENTS,
+		b.PROFILE_EDUCATION,
+		b.CLINIC_INFO,
+		b.CLINIC_PHONE,
+		b.CLINIC_EMAIL
+			FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
+            where b.MEMBER_NO=#{memberNo}
+	</select>
+
+
 </mapper>

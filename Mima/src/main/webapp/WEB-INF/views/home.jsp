@@ -68,7 +68,7 @@
 <!-- banner-section end -->
 
 
-<!-- category-section -->
+<!-- 진료과목-section s:1008 여기도 코드 중복이라 줄일 수 있겠지만 일단 이대로 합니다...-->
 <section class="category-section bg-color-3 centred">
 	<div class="pattern-layer">
 		<div class="pattern-1"
@@ -78,7 +78,7 @@
 	</div>
 	<div class="auto-container">
 		<div class="sec-title centred">
-			<p>Category</p>
+			<p>진료과목</p>
 			<h2>Browse by specialist</h2>
 			<!-- s:1007 의사 프로필 상세페이지 -> 들어갈때 의사번호넘겨줘야함 -->
 			<a class="theme-btn-one" href="${pageContext.request.contextPath}/docProfileDetail">의사 프로필 디테일 페이지</a>
@@ -104,7 +104,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-12.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">Cardiologist</a>
+							<a href="doctors-dashboard.html">정신분석 / 정신치료</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -128,7 +128,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-13.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">Gastroenterologist</a>
+							<a href="doctors-dashboard.html">스트레스 / 트라우마</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -155,7 +155,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-14.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">Ear-Nose-Throat</a>
+							<a href="doctors-dashboard.html">기분장애 / 공황 • 불안장애</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -182,7 +182,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-15.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">Ophthalmologist</a>
+							<a href="doctors-dashboard.html">신경증 / 성격장애</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -209,7 +209,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-16.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">Nephrologist</a>
+							<a href="doctors-dashboard.html">직장인 정신건강</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -236,7 +236,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-17.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">Pulmonologist</a>
+							<a href="doctors-dashboard.html">중독장애</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -263,7 +263,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-18.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">Neurologist</a>
+							<a href="doctors-dashboard.html">노인장애</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -290,7 +290,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-19.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">Orthopedic Surgeon</a>
+							<a href="doctors-dashboard.html">해리장애(다중인격)</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -305,13 +305,12 @@
 			</div>
 		</div>
 		<div class="more-btn">
-			<a href="doctors-dashboard.html" class="theme-btn-one">All
-				Category<i class="icon-Arrow-Right"></i>
-			</a>
+		<!-- s:1008 전체 의사 리스트 조회->partnerDoctorController에 있음  -->
+			<a href="getTotalDocList" class="theme-btn-one">전체 의사리스트 보기<i class="icon-Arrow-Right"></i></a>
 		</div>
 	</div>
 </section>
-<!-- category-section end -->
+<!-- 진료과목-section end -->
 
 
 <!-- about-style-two -->
@@ -1001,4 +1000,5 @@
 	</div>
 </section>
 <!-- agent-section -->
-<h1><a href='meditation/meditationInsertForm'>Ju meditation insert Form</a></h1>
+
+

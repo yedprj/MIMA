@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,7 @@ import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.doc.domain.DocAvailabilityVO;
+import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.meditation.domain.MeditAttachVO;
@@ -230,9 +230,23 @@ public class PatnerDoctorController {
 		return attachVo;
 	}
 	
+	//s:1008 전체 의사 리스트 페이지로 이동
+	@GetMapping("/getTotalDocList")
+	public String getTotalDocList(Model model, @ModelAttribute("cri") Criteria cri) {
+		int total = doctorService.totalDocNumCount(cri);
+		
+		model.addAttribute("list", doctorService.getTotalDocList(cri) );
+		model.addAttribute("pageMaker", new PageVO(cri, total));
+		
+		return "/docList/getTotalDocList";
+	}
+
 	//s:1007 의사 프로필 디테일 페이지로 이동하는거
 	@GetMapping("/docProfileDetail")
-	public String docProfileDetail() {
+	public String docProfileDetail(DocInfoVO vo, Model model) {
+		vo = doctorService.getDocDetail(vo);
+				
+		model.addAttribute("item", vo);
 		return "/docDash/docProfileDetail";
 	}
 	

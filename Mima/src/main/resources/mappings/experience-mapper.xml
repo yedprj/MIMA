@@ -24,4 +24,9 @@
 	
 	</insert>
 
+	<select id="getExpList" resultType="ExperienceVO">
+		SELECT * FROM EXPERIENCE
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+
 </mapper>

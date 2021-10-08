@@ -47,10 +47,12 @@
                                         <div class="share-box">
                                             <a href="doctors-details.html" class="share-btn"><i class="fas fa-share-alt"></i></a>
                                         </div>
+                                        ${item }<br>
+                                        ${item.subjects.category1 }
                                         <ul class="name-box clearfix">
-                                            <li class="name"><h2>Dr.의사이름</h2></li>
+                                            <li class="name"><h2>Dr.${item.name }</h2></li>
                                         </ul>
-                                        <span class="designation">여기도여!! BDS, MDS - Oral & Maxillofacial Surgery</span>
+                                        <span class="designation">${item.clinicInfo }</span>
                                         <div class="rating-box clearfix">
                                             <ul class="rating clearfix">
                                                 <li><i class="icon-Star"></i></li>
@@ -58,16 +60,17 @@
                                                 <li><i class="icon-Star"></i></li>
                                                 <li><i class="icon-Star"></i></li>
                                                 <li><i class="icon-Star"></i></li>
-                                                <li><a href="doctors-details.html">(32)</a></li>
+                                                <li><a href="doctors-details.html">(${item.commentsCnt })</a></li>
                                             </ul>
                                         </div>
                                         <div class="text">
-                                            <p>Lorem ipsum dolor sit amet consectur adipisc eiusmod tempor incididunt.</p>
+                                            <p></p>
                                         </div>
                                         <div class="lower-box clearfix">
                                             <ul class="info clearfix">
-                                                <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                                <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
+                                                <li><i class="fas fa-map-marker-alt"></i>${item.addr1 }</li>
+                                                <li><i class="fas fa-phone"></i>${item.clinicPhone }</li>
+                                                <li><i class="fas fa-phone"></i>${item.clinicEmail }</li>
                                             </ul>
                                             <div class="view-map"><a href="doctors-details.html">View Map</a></div>
                                         </div>
@@ -87,20 +90,16 @@
                                     <div class="tab active-tab" id="tab-1">
                                         <div class="inner-box">
                                             <div class="text">
-                                                <h3>About Dr. Agnes Ayres:</h3>
-                                                <p>Dr. Agnes Ayres is a Maxillofacial Surgeon in New York, NY.  Dr. Ayres has more experience with Congenital Cardiac Disorders and Cardiac Care than other specialists in his area.  He is affiliated with medical facilities such as Mount Sinai Morningside and Roosevelt Hospital.  He is accepting new patients.  Be sure to call ahead with Dr. Pinney to book an appointment.</p>
-                                                <h3>Specialities</h3>
-                                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Nullam mollis. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapi.</p>
+                                                <h3>전문의 Dr. ${item.name }님은요... :</h3>
+                                                <p>${item.profileContents }</p>
+                                                <h3>진료과목</h3>
                                                 <ul class="treatments-list clearfix">
-                                                    <li><a href="doctors-details.html">Cardiology</a></li>
-                                                    <li><a href="doctors-details.html">Dermatology</a></li>
-                                                    <li><a href="doctors-details.html">Family Medicine</a></li>
-                                                    <li><a href="doctors-details.html">Obstetrics & Gynecology</a></li>
-                                                    <li><a href="doctors-details.html">Oncology</a></li>
-                                                    <li><a href="doctors-details.html">Orthopedic Surgery</a></li>
+                                                    <li><a href="doctors-details.html">${item.subjects.category1 }</a></li>
+                                                    <li><a href="doctors-details.html">${item.subjects.category2 }</a></li>
+                                                    <li><a href="doctors-details.html">${item.subjects.category3 }</a></li>
                                                 </ul>
-                                                <h3>Educational Background</h3>
-                                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Nullam mollis. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapi.</p>
+                                                <h3>학력</h3>
+                                                <p>${item.profileEducation } 을 밑에 잘라 넣으면 됩니다.</p>
                                                 <ul class="list clearfix">
                                                     <li>New York Medical College <span>- Doctor of Medicine</span></li>
                                                     <li>Montefiore Medical Center <span>- Residency in Internal Medicine</span></li>
@@ -108,52 +107,41 @@
                                                 </ul>
                                             </div>
                                             <div class="accordion-box">
-                                                <h3>Offered Services</h3>
+                                                <h3>진료과목과 가격안내</h3>
                                                 <div class="title-box">
-                                                    <h6>Service - Visit<span>Price</span></h6>
+                                                    <h6>Service<span>Price</span></h6>
                                                 </div>
                                                 <ul class="accordion-inner">
                                                     <li class="accordion block">
                                                         <div class="acc-btn">
                                                             <div class="icon-outer"></div>
-                                                            <h6>New Patient Visit<span>$40</span></h6>
+                                                            <h6>${item.subjects.category1 }<span>${item.subjects.price1 }</span></h6>
                                                         </div>
                                                         <div class="acc-content">
                                                             <div class="text">
-                                                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id mattis vel nisi.</p>
+                                                                <p>진료과목 설명이 있음 좋겠지만....없네유?</p>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li class="accordion block active-block">
                                                         <div class="acc-btn active">
                                                             <div class="icon-outer"></div>
-                                                            <h6>General Consultation<span>$50</span></h6>
+                                                            <h6>${item.subjects.category2 }<span>${item.subjects.price2 }</span></h6>
                                                         </div>
                                                         <div class="acc-content current">
                                                             <div class="text">
-                                                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id mattis vel nisi.</p>
+                                                                <p>진료과목 설명이 있음 좋겠지만....없네유?</p>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li class="accordion block">
                                                          <div class="acc-btn">
                                                             <div class="icon-outer"></div>
-                                                            <h6>Back Pain<span>$60</span></h6>
+                                                            <h6>${item.subjects.category3 }<span>${item.subjects.price3 }</span></h6>
                                                         </div>
                                                         <div class="acc-content">
                                                             <div class="text">
-                                                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id mattis vel nisi.</p>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="accordion block">
-                                                         <div class="acc-btn">
-                                                            <div class="icon-outer"></div>
-                                                            <h6>Diabetes Consultation<span>$35</span></h6>
-                                                        </div>
-                                                        <div class="acc-content">
-                                                            <div class="text">
-                                                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id mattis vel nisi.</p>
+                                                                <p>진료과목 설명이 있음 좋겠지만....없네유?</p>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -172,7 +160,7 @@
                                     <div class="tab" id="tab-2">
                                         <div class="experience-box">
                                             <div class="text">
-                                                <h3>Professional Experience</h3>
+                                                <h3>경력사항</h3>
                                                 <p>Dr. Agnes Ayres is a Maxillofacial Surgeon in New York, NY.  Dr. Ayres has more experience with Congenital Cardiac Disorders and Cardiac Care than other specialists in his area.  He is affiliated with medical facilities.</p>
                                                 <ul class="experience-list clearfix">
                                                     <li>
@@ -217,17 +205,17 @@
 
                                                 </div>
                                             </div>
-                                            <h4>New Apollo Hospital:</h4>
+                                            <h4>${item.clinicInfo }:</h4>
                                             <ul class="location-info clearfix">
-                                                <li><i class="fas fa-map-marker-alt"></i>369 San Miguel Dr Ste 200 Newport <br />Beach,CA,92660</li>
-                                                <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
+                                                <li><i class="fas fa-map-marker-alt"></i>${item.addr1 } ${item.addr2 } ${item.addr3 }<br />${item.postcode }</li>
+                                                <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(82)${item.clinicPhone }</a></li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="tab" id="tab-4">
                                         <div class="review-box">
-                                            <h3>Dr. Agnes Ayres Reviews</h3>
-                                            <div class="rating-inner">
+                                            <h3>Dr. ${item.name } Reviews</h3>
+                                            <!-- <div class="rating-inner">
                                                 <div class="rating-box">
                                                     <h2>4.5</h2>
                                                     <ul class="clearfix">
@@ -261,7 +249,7 @@
                                                         <div class="text"><p><i class="icon-Star"></i>1 Stars</p></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="review-inner">
                                                 <div class="single-review-box">
                                                     <figure class="image-box"><img src="assets/images/resource/review-1.jpg" alt=""></figure>
@@ -338,27 +326,16 @@
                             <div class="form-widget">
                                 <div class="form-title">
                                     <h3>Book Appointment</h3>
-                                    <p>Monday to Friday: 09:00Am-05:00PM</p>
                                 </div>
                                 <div class="form-inner">
-                                    <div class="appointment-time">
-                                        <div class="form-group">
-                                            <input type="text" name="date" placeholder="07/08/2020" id="datepicker">
-                                            <i class="fas fa-calendar-alt"></i>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="time" placeholder="Any Time">
-                                            <i class="far fa-clock"></i>
-                                        </div>
-                                    </div>
                                     <div class="choose-service">
-                                        <h4>Choose Service</h4>
+                                        <h4>진료과목을 선택하세요</h4>
                                         <div class="custom-check-box">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">New Patient Visit <span class="price">$40</span></span>
+                                                    <span class="description">${item.subjects.category1 }<span class="price">$${item.subjects.price1 }</span></span>
                                                 </label>
                                             </div>
                                         </div>
@@ -367,7 +344,7 @@
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input" checked="">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">General Consultation <span class="price">$50</span></span>
+                                                    <span class="description">${item.subjects.category2 }<span class="price">$${item.subjects.price2 }</span></span>
                                                 </label>
                                             </div>
                                         </div>
@@ -376,21 +353,13 @@
                                                 <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">Back Pain <span class="price">$60</span></span>
+                                                    <span class="description">${item.subjects.category3 }<span class="price">$${item.subjects.price3 }</span></span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="custom-check-box">
-                                            <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input">
-                                                    <span class="material-control-indicator"></span>
-                                                    <span class="description">Diabetes Consultation <span class="price">$35</span></span>
-                                                </label>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="btn-box">
-                                            <a href="book-appointment.html" class="theme-btn-one">Book Appoinment<i class="icon-Arrow-Right"></i></a>
+                                            <a href="#" class="theme-btn-one">진료 예약 페이지로 이동<i class="icon-Arrow-Right"></i></a>
                                         </div>
                                     </div>
                                 </div>
