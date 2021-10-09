@@ -87,11 +87,8 @@ th, td {
                                 <thead class="table-header">
                                     <tr>
                                         <th>환자명</th>
-                                        <th>주민번호</th>
                                         <th>성별</th>
                                         <th>연락처</th>
-                                        <th>주소</th>
-                                        <th>나의 약국</th>
                                         <th>초진문진표</th>
                                     </tr>    
                                 </thead>
@@ -101,21 +98,21 @@ th, td {
 	                                        <td>
 	                                            <div class="name-box">
 	                                                <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png"></figure>
-	                                                <h5>${patientList.mname}</h5>
-	                                                <span class="ptno"># no.${patientList.bptNo}</span>
+	                                                <h5>${patientList.}</h5>
+	                                                <span class="ptno"># no.${patientList.}</span>
 	                                            </div>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.midentifyNo}</p>
+	                                            <p>${patientList.}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.mgender}</p>
+	                                            <p>${patientList.}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.mphone}</p>
+	                                            <p>${patientList.}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.maddr1}</p>
+	                                            <p>${patientList.}</p>
 	                                        </td>
                                     	</tr>
                                 	</c:forEach>
