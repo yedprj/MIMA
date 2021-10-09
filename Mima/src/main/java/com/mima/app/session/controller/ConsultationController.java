@@ -30,21 +30,21 @@ import lombok.extern.java.Log;
 @Controller
 @RequestMapping("/consultation/*")
 public class ConsultationController {
-
-	@Autowired ConsultationService consultationService;
-	//s:1003
-	@Autowired BookingService bookingService;
-	//s:1004
-	@Autowired PatientsService patientsService;
+	
+		@Autowired ConsultationService consultationService;
+		//s:1003
+		@Autowired BookingService bookingService;
+		//s:1004
+		@Autowired PatientsService patientsService;
 	
 	
-	//s:0930 진료 시작 테스트 페이지로 이동
-	@GetMapping("/consultationStart2")
-	public void consultationStart2(Model model, BookingVO vo) {
-		model.addAttribute("bookingNo", vo);
-	}
-	
-	//s:0929 진료 시작 테스트 페이지로 이동
+		//s:0930 진료 시작 테스트 페이지로 이동
+		@GetMapping("/consultationStart2")
+		public void consultationStart2(Model model, BookingVO vo) {
+			model.addAttribute("bookingNo", vo);
+		}
+		
+		//s:0929 진료 시작 테스트 페이지로 이동
 		@GetMapping("/consultationStart")
 		public void consultationStart(Model model, BookingVO vo) {
 			//나중에 예약 번호를 넘겨줄 거예요
@@ -55,7 +55,7 @@ public class ConsultationController {
 		public void preSelfAssessment(Model model, BookingVO vo, ConsultationVO consultationVo) {
 			
 		}
-		//s:1003 자가검진 페이지 ajax2
+		//s:1003 자가검진 전체 폼 섭밋 ajax2
 		@PostMapping("/preSelfInfo")
 		public String preSelfInfo(@RequestBody PatientsVO vo, RedirectAttributes rttr) {
 			int result = patientsService.update(vo);
@@ -66,7 +66,8 @@ public class ConsultationController {
 			//나중에 리턴=> 자기 메인페이지로
 			return "redirect:/consultation/preSelfAssessmentFrm";
 		}
-		//s:1003 자가검진 페이지 ajax1
+		
+		//s:1003 자가검진 스트레스 문항 페이지 ajax1
 		@PostMapping("/preSelfAx")
 		public String preSelfAx(@RequestBody PatientsVO vo, RedirectAttributes rttr) {
 			int result = patientsService.updateAx(vo);
@@ -80,25 +81,24 @@ public class ConsultationController {
 
 
 		//노드 화상진료에서 환자 정보 조회시
-		
-	@GetMapping("/ptInformation")
-	public void ptInformation(Model model, BookingVO vo, PtInfoVO ptVo) {
-
-		ptVo=consultationService.getPtInformation(vo);
-		log.info("+++++++++++++"+ptVo.toString());
-		model.addAttribute("pt", ptVo);
-	}
+		@GetMapping("/ptInformation")
+		public void ptInformation(Model model, BookingVO vo, PtInfoVO ptVo) {
+	
+			ptVo=consultationService.getPtInformation(vo);
+			log.info("+++++++++++++"+ptVo.toString());
+			model.addAttribute("pt", ptVo);
+		}
 	
 	
 	
-	// s:1003 노드에서 요청해서 예약기록 조회
-	@GetMapping("/getBookingInfo")
-	@ResponseBody
-	public BookingVO getBookingInfo(BookingVO vo, MemberVO memberSessionVo, HttpServletRequest requset) {
-		
-		vo=bookingService.getBookingInfo(vo);
-		return  vo;
-	}
+		// s:1003 노드에서 요청해서 예약기록 조회
+		@GetMapping("/getBookingInfo")
+		@ResponseBody
+		public BookingVO getBookingInfo(BookingVO vo, MemberVO memberSessionVo, HttpServletRequest requset) {
+			
+			vo=bookingService.getBookingInfo(vo);
+			return  vo;
+		}
 	
 
 }
