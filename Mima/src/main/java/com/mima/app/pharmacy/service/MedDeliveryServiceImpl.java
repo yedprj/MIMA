@@ -17,4 +17,10 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 		return deliveryMapper.deliveryInsert(vo);
 	}
 
+	@Override
+	public MedDeliveryVO selectOne(int bookingNo) {
+		// TODO Auto-generated method stub
+		return deliveryMapper.selectOne(bookingNo);
+	}
+
 }

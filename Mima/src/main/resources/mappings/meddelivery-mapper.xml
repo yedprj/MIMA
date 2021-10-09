@@ -2,19 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.pharmacy.mapper.MedDeliveryMapper">
 
+<select id="selectOne" resultType="medDeliveryVO">
+	SELECT * FROM MED_DELIVERY
+	WHERE BOOKING_NO = #{bookingNo}
+</select>
+
 <insert id="deliveryInsert">
 	INSERT INTO MED_DELIVERY( 
 			MED_DELIVERY_NO, 
 			PHARMACY_NO, 
 			BOOKING_NO, 
 			DELIVERY_STATUS, 
-			PT_DELIVERY_AREA
+			PT_DELIVERY_AREA,
+			PT_DELIVERY_AREA2,
+			PT_DELIVERY_AREA3,
+			PT_NOTE,
+			PT_POSTCODE
 	) VALUES(
 			SEQ_MED_DELIVERY.NEXTVAL, 
 			#{pharmacyNo},
 			#{bookingNo},
 			'A',
-			#{ptDeliveryArea} 
+			#{ptDeliveryArea},
+			#{ptDeliveryArea2, jdbcType=VARCHAR },
+			#{ptDeliveryArea3, jdbcType=VARCHAR },
+			#{ptNote, jdbcType=VARCHAR},
+			#{ptPostcode}
 	)
 </insert>
 
