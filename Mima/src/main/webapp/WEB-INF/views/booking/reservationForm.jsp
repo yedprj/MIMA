@@ -253,7 +253,7 @@ input[type="time"]:valid::before {
 				 + "		</label>"
 				 + "		<label class='custom-control material-checkbox'>"
 				 + "			<input type='checkbox' class='material-control-input'"
-				 + "				id='chooseFirst' name='chooseFirst' value='n'>"
+				 + "				id='chooseSecond' name='chooseSecond' value='n'>"
 				 + "			<span class='material-control-indicator'></span>"
 				 + "			<span class='description'>아니요.</span>"
 				 + "		</label>"
@@ -313,7 +313,13 @@ input[type="time"]:valid::before {
 			var subject = decodeURIComponent($("#categoryChoose option:selected").val());		// 카테고리 추가
 			var consultDate = $("#date").val();								// 실제 진료 날짜
 			var consultTime = $('#consultTime').val();						// 실제 진료 시간
-			var firstSession = $('input:checkbox[id=chooseFirst]').val();	// 체크박스 y or n
+			var firstSession = "";	// 체크박스 y or n
+			
+			if ($('#chooseFirst').is(':checked')){
+				firstSession = $('input:checkbox[id="chooseFirst"]').val();
+			} else {
+				firstSession = $('input:checkbox[id="chooseSecond"]').val();
+			}
 			
 			console.log(consultDate);
 			console.log(consultTime);
