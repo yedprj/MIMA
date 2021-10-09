@@ -241,4 +241,11 @@
 	AND PT_NO = #{memberNo}
 </select>
 
+<!-- Booking table 결제 status 업데이트 p.10/09 -->
+<update id="updateBookingStatus"> 
+	UPDATE BOOKING
+	SET BOOKING_STATUS = 'p'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
+
 </mapper>
