@@ -77,7 +77,7 @@
 	<!-- S:1009 web socket -->
 	<beans:bean id="echoHandler" class="com.mima.app.socket.EchoHandler" />
 	<websocket:handlers>
-	    <websocket:mapping handler="echoHandler" path="/echo-ws" />
+	    <websocket:mapping handler="echoHandler" path="/echo" />
 	    <websocket:handshake-interceptors>
 	        <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 	    </websocket:handshake-interceptors>	

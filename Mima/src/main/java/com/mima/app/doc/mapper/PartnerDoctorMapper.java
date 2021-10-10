@@ -29,4 +29,7 @@ public interface PartnerDoctorMapper {
 	
 	//s:1008 의사 디테일 페이지
 	public DocInfoVO getDocDetail(DocInfoVO vo);
+	
+	//s:1010 의사프로필 유무 확인
+	public DocInfoVO checkDocDetail(MemberVO vo);
 }

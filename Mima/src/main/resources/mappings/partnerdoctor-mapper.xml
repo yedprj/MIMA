@@ -160,4 +160,13 @@
 	</select>
 
 
+	<!-- s:1010 의사프로필 디테일 유무 확인 -->
+		<select id="checkDocDetail" resultType="DocInfoVO"> 
+			SELECT 
+   				 MEMBER_NO
+   			FROM PARTNER_DOCTOR 
+   			WHERE MEMBER_NO=#{memberNo}
+		</select>
+
+
 </mapper>
