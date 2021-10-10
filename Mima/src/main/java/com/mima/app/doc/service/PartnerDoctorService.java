@@ -13,10 +13,10 @@ public interface PartnerDoctorService {
 	// 닥터 대쉬보드 프로필 페이지 INSERT_J04
 	public int docProfileInsert(PartnerDoctorVO vo);
 	
+	
+	
 	// s:1007 프로필 등록 시 주소 멤버 테이블에 업데이트
 	public int docAddrUpdate(MemberVO vo);
-	
-	
 	
 	//s:1008 전체 의사 멤버 수 조회
 	public int totalDocNumCount(Criteria cri);
@@ -27,5 +27,7 @@ public interface PartnerDoctorService {
 	//s:1008 의사 디테일 페이지
 	public DocInfoVO getDocDetail(DocInfoVO vo);
 	
+	//s:1010 의사프로필 유무 확인
+	public DocInfoVO checkDocDetail(MemberVO vo);
 
 }

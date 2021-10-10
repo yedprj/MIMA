@@ -94,16 +94,10 @@ public class PatientsServiceImpl implements PatientsService {
 
 	}
 
-	//환자대쉬보드 예약관리 페이지 e.5
+	//환자대쉬보드 예약관리 페이지,페이징 e.5
 	@Override
-	public List<BookingVO> ptbmList(int memberNo) {
-		return patientsMapper.ptbmList(memberNo);
-	}
-
-	//전체조회 예약관리 페이징 e.5
-	@Override
-	public List<BookingVO> getPtbmList(Criteria cri) {
-		return patientsMapper.getPtbmList(cri);
+	public List<BookingVO> ptbmList(int memberNo, Criteria cri) {
+		return patientsMapper.ptbmList(memberNo, cri);
 	}
 
 	//전체 데이터 수 조회 예약관리 페이징 e.5
@@ -118,16 +112,10 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptMainhisList(memberNo);
 	}
 
-	//환자대쉬보드 진료내역 페이지 e.5
+	//환자대쉬보드 진료내역 페이지, 페이징 e.5
 	@Override
-	public List<BookingVO> ptHistoryList(int memberNo) {
-		return patientsMapper.ptHistoryList(memberNo);
-	}
-
-	//전체조회 진료내역 페이징 e.6
-	@Override
-	public List<BookingVO> getPthList(Criteria cri) {
-		return patientsMapper.getPthList(cri);
+	public List<BookingVO> ptHistoryList(int memberNo, Criteria cri) {
+		return patientsMapper.ptHistoryList(memberNo, cri);
 	}
 
 	//전체 데이터 수 조회 진료내역 페이징 e.6
@@ -144,14 +132,8 @@ public class PatientsServiceImpl implements PatientsService {
 
 	//환자대쉬보드 나의후기 페이지 e.5
 	@Override
-	public List<CommentsVO> ptReviewList(int memberNo) {
-		return patientsMapper.ptReviewList(memberNo);
-	}
-
-	//전체조회 나의후기 페이징 e.6
-	@Override
-	public List<CommentsVO> getPtrvList(Criteria cri) {
-		return patientsMapper.getPtrvList(cri);
+	public List<CommentsVO> ptReviewList(int memberNo, Criteria cri) {
+		return patientsMapper.ptReviewList(memberNo, cri);
 	}
 
 	//전체 데이터 수 조회 나의후기 페이징 e.6
@@ -176,6 +158,18 @@ public class PatientsServiceImpl implements PatientsService {
 	@Override
 	public int getTotalPtqCount(Criteria cri) {
 		return patientsMapper.getTotalPtqCount(cri);
+	}
+	
+	// 약배달 신청내역 조회 K.10/10
+	@Override
+	public PatientsVO ptDeliveryCheck(int memberNo) {
+		return patientsMapper.ptDeliveryCheck(memberNo);
+	}
+	
+	// 약배달 정보 등록
+	@Override
+	public int ptDeliveryInsert(PatientsVO vo) {
+		return patientsMapper.ptDeliveryInsert(vo);
 	}
 	
 }

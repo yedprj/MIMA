@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.mapper.MemberMapper;
+import com.mima.app.session.domain.PtInfoVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -106,6 +107,13 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberBookingVO> patientList(int memberNo) {
 		return memberMapper.patientList(memberNo);
 	}
+
+	@Override
+	public PtInfoVO getCnote(PtInfoVO vo) {
+		return memberMapper.getCnote(vo);
+	}
+	
+	
 
 
 }

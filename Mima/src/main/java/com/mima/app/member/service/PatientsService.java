@@ -2,6 +2,8 @@ package com.mima.app.member.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
@@ -49,11 +51,8 @@ public interface PatientsService {
 	//환자대쉬보드 Main 오늘의예약 e.4
 	public List<BookingVO> ptgetList(int memberNo);
 
-	//환자대쉬보드 예약관리 페이지 e.5
-	public List<BookingVO> ptbmList(int memberNo);
-	
-	//전체조회 예약관리 페이징 e.5
-	public List<BookingVO> getPtbmList(Criteria cri);
+	//환자대쉬보드 예약관리 페이지,페이징 e.5
+	public List<BookingVO> ptbmList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
 	//전체 데이터 수 조회 예약관리 페이징 e.5
 	public int getTotalPtbmCount(Criteria cri);
@@ -61,11 +60,8 @@ public interface PatientsService {
 	//환자대쉬보드 Main 진료내역 e.5
 	public List<BookingVO> ptMainhisList(int memberNo);
 	
-	//환자대쉬보드 진료내역 페이지 e.5
-	public List<BookingVO> ptHistoryList(int memberNo);
-	
-	//전체조회 진료내역 페이징 e.6
-	public List<BookingVO> getPthList(Criteria cri);
+	//환자대쉬보드 진료내역 페이지,페이징 e.5
+	public List<BookingVO> ptHistoryList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
 	//전체 데이터 수 조회 진료내역 페이징 e.6
 	public int getTotalPthCount(Criteria cri);
@@ -73,11 +69,8 @@ public interface PatientsService {
 	//환자대쉬보드 Main 나의후기 e.5
 	public List<CommentsVO> ptMainreList(int memberNo);
 	
-	//환자대쉬보드 나의후기 페이지 e.5
-	public List<CommentsVO> ptReviewList(int memberNo);
-	
-	//전체조회 나의후기 페이징 e.6
-	public List<CommentsVO> getPtrvList(Criteria cri);
+	//환자대쉬보드 나의후기 페이지,페이징 e.5
+	public List<CommentsVO> ptReviewList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
 	//전체 데이터 수 조회 나의후기 페이징 e.6
 	public int getTotalPtrvCount(Criteria cri);
@@ -90,4 +83,10 @@ public interface PatientsService {
 	
 	//전체 데이터 수 조회 나의문의 페이징 e.7
 	public int getTotalPtqCount(Criteria cri);
+	
+	// 약배달 신청내역 조회 K.10/10
+	public PatientsVO ptDeliveryCheck(int memberNo);
+	
+	// 약배달 정보 등록 K.10/10
+	public int ptDeliveryInsert(PatientsVO vo);
 }

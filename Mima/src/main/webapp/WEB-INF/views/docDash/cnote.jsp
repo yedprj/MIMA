@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <style>
 div {
@@ -16,53 +17,51 @@ div {
 							<h3>진료노트</h3>
 						</div>
 						<div class="inner-box">
-							<form action="add-listing.html" method="post">
 								<div class="row clearfix">
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<label>환자명</label> <input type="text" name="fname"
-											placeholder="Enter your name" required="">
+										<label>환자명</label>
+										<input type="text" name="name" value="${cnote.name}" readonly>
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<label>주민번호</label> <input type="text" name="email"
-											placeholder="dob" required="">
+										<label>주민번호</label>
+										<input type="text" name="identifyNo" value="${cnote.identifyNo}" readonly>
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<label>성별</label> <input type="text" name="lname"
-											placeholder="Enter your gender" required="">
+										<label>성별</label>
+										<input type="text" name="gender" value="${cnote.gender}" readonly>
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<label>연락처</label> <input type="text" name="phone"
-											placeholder="Mobile number" required="">
+										<label>연락처</label>
+										<input type="text" name="phone" value="${cnote.phone}" readonly>
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<label>예약번호</label> <input type="text" name="fname"
-											placeholder="Enter your bookingNo" required="">
+										<label>예약번호</label>
+										<input type="text" name="bookingNo" value="${cnote.bookingNo}" readonly>
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<label>예약일</label> <input type="text" name="fname"
-											placeholder="Enter your bookingDate" required="">
+										<label>예약일시</label>
+										<input type="text" name="consultDate" value="${cnote.consultDate}" pattern="yy-MM-dd" readonly>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-										<label>주소</label> <input type="text" name="phone"
-											placeholder="address" required="">
+										<label>주소</label>
+										<input type="text" name="addr1" value="${cnote.addr1}" readonly>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 										<label>증상</label>
-										<textarea name="symptoms" placeholder="symptoms"></textarea>
+										<textarea name="ptDiagnosis" readonly>${cnote.ptDiagnosis}</textarea>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 										<label>처치내용</label>
-										<textarea name="note" placeholder="note"></textarea>
+										<textarea name="ptAssessment" readonly>${cnote.ptAssessment}</textarea>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 										<label>히스토리</label>
-										<textarea name="history" placeholder="history"></textarea>
+										<textarea name="pastHx"  readonly>${cnote.pastHx}</textarea>
 									</div>
 								</div>
-							</form>
 					<div class="btn-box" style="margin-top: 40px;, margin-bottom: 20px;">
-						<a href="add-listing.html" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
-						<a href="add-listing.html" class="cancel-btn">다시 작성하기</a>
+						<a href="javascript:window.close();" class="cancel-btn">창닫기</a>
+						<!-- <a href="add-listing.html" class="theme-btn-one">닫기<i class="icon-Arrow-Right"></i></a> -->
 					</div>
 						</div>
 					</div>

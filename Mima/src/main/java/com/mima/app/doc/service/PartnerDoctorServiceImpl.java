@@ -81,6 +81,12 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 		return vo;
 	}
 
+	//s:1010 의사 프로필 유무 체크
+	@Override
+	public DocInfoVO checkDocDetail(MemberVO vo) {
+		return partnerDoctorMapper.checkDocDetail(vo);
+	}
+
 
 
 }

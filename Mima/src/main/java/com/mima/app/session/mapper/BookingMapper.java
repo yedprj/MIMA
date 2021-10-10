@@ -20,7 +20,7 @@ public interface BookingMapper {
 	public List<BookingVO> getlatestapptList();
 	
 	// 닥터 대쉬보드 예약관리 페이지_J
-	public List<BookingVO> apptList();
+	public List<BookingVO> apptList(int memberNo);
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
 	public List<BookingVO> apptHistoryList();

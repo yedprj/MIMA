@@ -85,17 +85,18 @@ th, td {
 						</div>
 
 						<div class="select-box pull-right">
-							<select class="wide">
-								<option data-display="모두보기">모두보기</option>
-								<option value="apptManage?category=예정된 접수">예정된 접수</option>
-								<option value="apptManage?category=취소된 접수">취소된 접수</option>
+							<select class="wide" id="selectBox" name="selectBox" onchange="searchCheck()">
+								<option value="all">모두보기</option>
+								<option value="soon">예정된 접수</option>
+								<option value="canceled">취소된 접수</option>
 							</select>
 						</div>
+						
 					</div>
 					<div class="doctors-appointment">
-						<div class="doctors-list">
+						<div class="doctors-list" id="all" style="display: block;">
 							<div class="table-outer">
-								<table class="doctors-table">
+								<table class="doctors-table table-hover">
 									<thead class="table-header">
 										<tr>
 											<th>환자명</th>
@@ -153,12 +154,125 @@ th, td {
 								<input type="hidden" id="bookingNo" name="bookingNo" value="${apptList.bookingNo}">
 							</div>
 						</div>
+						
+						<div class="doctors-list" id="soon" style="display: none;">
+							<div class="table-outer">
+								<table class="doctors-table table-hover">
+									<thead class="table-header">
+										<tr>
+											<th>환자명</th>
+											<th>예약번호</th>
+											<th>진료일</th>
+											<th>예약일</th>
+											<th>결제금액</th>
+											<th>예약상태</th>
+										</tr>
+									</thead>
+									<tbody id="contentAll">
+										<c:forEach items="${apptList}" var="apptList">
+											<tr>
+												<td>
+													<div class="name-box">
+														<figure class="image">
+															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+														</figure>
+														<h5>${apptList.name}</h5>
+														<span class="ptno"># no.${apptList.ptNo}</span>
+													</div>
+												</td>
+												<td>${apptList.bookingNo}</td>
+												<td><fmt:formatDate value="${apptList.consultDate}"
+														pattern="yy-MM-dd" /> <span class="time">${apptList.consultTime}</span>
+												</td>
+												<td><fmt:formatDate value="${apptList.bookingDate}"
+														pattern="yy-MM-dd" /></td>
+												<td><fmt:setLocale value="ko_KR" />
+													<fmt:formatNumber type="currency" value="${apptList.price}" /></td>
+												<td>
+													<c:if test="${apptList.bookingStatus eq 'p'}">
+														<span class="status">결제완료</span>
+													</c:if>
+													<c:if test="${apptList.bookingStatus eq 'y'}">
+														<span class="status pending">결제예정</span>
+													</c:if>
+													<c:if test="${apptList.bookingStatus eq 'c'}">
+														<span class="status cancel">취소완료</span>
+													</c:if>
+												</td>
+												<td>
+													<c:if test="${apptList.bookingStatus == 'y' || apptList.bookingStatus == 'p'}">
+                                                    	<button class="cancel"><i class="fas fa-times"></i>Cancel</button>
+													</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						<div class="doctors-list" id="canceled" style="display: none;">
+							<div class="table-outer">
+								<table class="doctors-table table-hover">
+									<thead class="table-header">
+										<tr>
+											<th>환자명</th>
+											<th>예약번호</th>
+											<th>진료일</th>
+											<th>예약일</th>
+											<th>결제금액</th>
+											<th>예약상태</th>
+										</tr>
+									</thead>
+									<tbody id="contentAll">
+										<c:forEach items="${apptList}" var="apptList">
+											<tr>
+												<td>
+													<div class="name-box">
+														<figure class="image">
+															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+														</figure>
+														<h5>${apptList.name}</h5>
+														<span class="ptno"># no.${apptList.ptNo}</span>
+													</div>
+												</td>
+												<td>${apptList.bookingNo}</td>
+												<td><fmt:formatDate value="${apptList.consultDate}"
+														pattern="yy-MM-dd" /> <span class="time">${apptList.consultTime}</span>
+												</td>
+												<td><fmt:formatDate value="${apptList.bookingDate}"
+														pattern="yy-MM-dd" /></td>
+												<td><fmt:setLocale value="ko_KR" />
+													<fmt:formatNumber type="currency" value="${apptList.price}" /></td>
+												<td>
+													<c:if test="${apptList.bookingStatus eq 'p'}">
+														<span class="status">결제완료</span>
+													</c:if>
+													<c:if test="${apptList.bookingStatus eq 'y'}">
+														<span class="status pending">결제예정</span>
+													</c:if>
+													<c:if test="${apptList.bookingStatus eq 'c'}">
+														<span class="status cancel">취소완료</span>
+													</c:if>
+												</td>
+												<td>
+													<c:if test="${apptList.bookingStatus == 'y' || apptList.bookingStatus == 'p'}">
+                                                    	<button class="cancel"><i class="fas fa-times"></i>Cancel</button>
+													</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>
 
 			<!-- pagination  -->
-			<div class="pagination-wrapper">
+			<div id="allPaging" class="pagination-wrapper" style="display: block;">
 				<ul class="pagination">
 					<c:if test="${pageMaker.prev}">
 						<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/apptManage?pageNum=${pageMaker.startPage-1}">이전</a></li>
@@ -175,6 +289,7 @@ th, td {
 			</div>
 			<!-- pagination end -->
 			
+			
 		</div>
 	</div>
 
@@ -187,3 +302,29 @@ th, td {
 </button>
 
 <!-- End of .page_wrapper -->
+
+<script>
+		function searchCheck() {
+			var choose = $("#selectBox option:selected").val();
+			
+			if (choose == 'all') {
+				$("#all").css('display','block');
+				$("#soon").css('display', 'none');   
+				$("#canceled").css('display', 'none');
+			} else if (choose == 'soon') {
+				$("#all").css('display','none');
+				$("#soon").css('display', 'block');   
+				$("#canceled").css('display', 'none');
+			} else if (choose == 'canceled') {
+				$("#all").css('display','none');
+				$("#soon").css('display', 'none');   
+				$("#canceled").css('display', 'block');
+			}
+		}
+		
+		$(document).ready(function() {
+			$('#selectBox').val('${cri.category}').prop("selected", true);
+			searchCheck();
+		});
+	
+</script>

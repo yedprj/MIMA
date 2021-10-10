@@ -19,4 +19,13 @@ public class PatientsVO {
 	private String preDiagnosis;  //과거진단명
 	private String currentMeds;	  //현재 복용중인 약
 	private String moreInfo;	  //환자 본인 설명
+	
+	// K.10/10 -- 약배달 신청정보
+	private String delAddr;		// 약배달 주소
+	private String delAddr2;	// 약배달 도로명 주소
+	private String delAddr3;	// 약배달 상세주소
+	private String delPostCode;	// 약배달 우편번호
+	private String delNote;		// 약배달 특이사항
+	private int delPharmacyNo;	// 약배달 신청 약국번호
+	
 }
