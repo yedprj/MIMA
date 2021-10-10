@@ -158,19 +158,22 @@
 								<input type="file" id="ptProfilePhoto" name="ptProfilePhoto">
 							</div>
 							
+							<!-- 약 배달 유무 추가 p.10/10 -->
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-								<div class="custom-check-box">
-									<div class="custom-controls-stacked">
-										<label class="custom-control material-checkbox"> <input
-											type="checkbox" class="material-control-input"> <span
-											class="material-control-indicator"></span> <span
-											class="description">I accept <a
-												href="book-appointment.html">terms</a> and <a
-												href="book-appointment.html">conditions</a> and general
-												policy
-										</span>
-										</label>
-									</div>
+								<label>약 배달 유무</label>
+								<div class='custom-check-box form-inline'>
+									<label class='custom-control material-checkbox px-4'>
+										<input type='checkbox' class='material-control-input'
+											   id='deliveryStatus1' name='deliveryStatus1' value='y'>
+										<span class='material-control-indicator'></span>
+										<span class='description'>예&nbsp;&nbsp;&nbsp;</span>
+									</label>
+									<label class='custom-control material-checkbox'>
+										<input type='checkbox' class='material-control-input'
+											   id='deliveryStatus2' name='deliveryStatus2' value='n'>
+										<span class='material-control-indicator'></span>
+				 						<span class='description'>아니요.</span>
+				 					</label>
 								</div>
 							</div>
 							
@@ -245,6 +248,17 @@
 		});
 	});
 	
+	// 체크 박스 하나만 클릭 p.10/10
+	$(document).on("click", 'input[type="checkbox"]', function(){
+		
+		// 체크박스가 클릭 되었을 때
+		if($(this).prop('checked')){
+			
+			$('input[type="checkbox"]').prop('checked', false);
+			$(this).prop('checked', true);
+		}
+	});
+	
 	// 회원 가입
 	$("#joinMember").on("click", function(e) {
 		e.preventDefault();
@@ -263,6 +277,13 @@
 		var email = $("#email").val();
 		var phone = $("#phone").val();
 		var ptProfilePhoto = $("#ptProfilePhoto").val();
+		var deliveryStatus = '';
+		
+		if ($('#deliveryStatus1').is(':checked')){
+			deliveryStatus = $('input:checkbox[id="deliveryStatus1"]').val();
+		} else {
+			deliveryStatus = $('input:checkbox[id="deliveryStatus2"]').val();
+		}
 		
 		if (role == "환자"){
 			role = "pt";
@@ -290,7 +311,8 @@
 									   email : email,
 									   phone : phone,
 									   status : status,
-									   ptProfilePhoto : ptProfilePhoto}),
+									   ptProfilePhoto : ptProfilePhoto,
+									   deliveryStatus : deliveryStatus}),
 				dataType : "json",
 				contentType : "application/json",
 				success : function(data) {

@@ -294,12 +294,12 @@ input[type="time"]:valid::before {
 		}
 		
 		// 체크 박스 하나만 클릭 p.10/05
-		$(document).on("click", 'input[type="checkbox"][name="chooseFirst"]', function(){
+		$(document).on("click", 'input[type="checkbox"]', function(){
 			
 			// 체크박스가 클릭 되었을 때
 			if($(this).prop('checked')){
 				
-				$('input[type="checkbox"][name="chooseFirst"]').prop('checked', false);
+				$('input[type="checkbox"]').prop('checked', false);
 				$(this).prop('checked', true);
 			}
 		});
