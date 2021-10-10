@@ -34,6 +34,7 @@ import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.ExperienceService;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.domain.PtInfoVO;
 import com.mima.app.session.service.BookingService;
 
 // 타일스 때문에 RequestMapping제거 p.10/06
@@ -70,11 +71,15 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 예약관리 페이지_J
 	@GetMapping("apptManage")
-	public String apptManage(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
+	public String apptManage(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		int memberNo = mvo.getMemberNo();
 		
 		int total = bookingService.apptListCount(cri);
 		
-		model.addAttribute("apptList", bookingService.apptList());
+		model.addAttribute("member", mvo);
+		model.addAttribute("apptList", bookingService.apptList(memberNo));
 		model.addAttribute("apptListPage", bookingService.apptListPage(cri));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
     
@@ -96,11 +101,10 @@ public class PatnerDoctorController {
 	@GetMapping("/patientList")
 	public String patientList(Model model, MemberBookingVO memberbookingvo, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
-		
 		int memberNo = mvo.getMemberNo();
 	
+		model.addAttribute("member", mvo);
 		model.addAttribute("patientList", memberService.patientList(memberNo));
 		
 		return "docDash/patientList";
@@ -143,9 +147,11 @@ public class PatnerDoctorController {
 		return "redirect:/docPwChange";
 	}
 	
-	// 닥터 진료노트_J05
-	@GetMapping("cnote")
-	public String cnote() {
+	// 닥터 진료노트_J06. J10
+	@GetMapping("/cnote")
+	public String getCnote(Model model,int bookingNo, PtInfoVO vo) {
+		vo.setBookingNo(bookingNo);
+		model.addAttribute("cnote", memberService.getCnote(vo));
 		return "docDash/cnote";
 	}
 

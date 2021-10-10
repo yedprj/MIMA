@@ -51,7 +51,7 @@
     ]]>
 </select>
 
-<!-- 닥터 대쉬보드 예약관리 페이지_J -->
+<!-- 닥터 대쉬보드 예약관리 페이지 모두보기_J -->
 <select id="apptList" resultType="BookingVO">
 	<![CDATA[
     SELECT B.BOOKING_NO,
@@ -65,6 +65,44 @@
     FROM BOOKING B JOIN MEMBER M
     ON B.PT_NO=M.MEMBER_NO
     WHERE CONSULT_DATE >= TO_DATE(SYSDATE)
+    ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
+	]]>
+</select>
+
+<!-- 닥터 대쉬보드 예약관리 페이지 예정된 목록 보기_J10 -->
+<select id="apptListSoon" resultType="BookingVO">
+	<![CDATA[
+    SELECT B.BOOKING_NO,
+		   B.PT_NO,
+		   B.BOOKING_DATE,
+		   B.PRICE,
+		   B.CONSULT_DATE,
+		   B.CONSULT_TIME,
+		   B.BOOKING_STATUS,
+		   M.NAME
+    FROM BOOKING B JOIN MEMBER M
+    ON B.PT_NO=M.MEMBER_NO
+    WHERE CONSULT_DATE >= TO_DATE(SYSDATE)
+    AND B.BOOKING_STATUS = 'p'
+    OR B.BOOKING_STATUS = 'y'
+    ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
+	]]>
+</select>
+<!-- 닥터 대쉬보드 예약관리 페이지 취소된 목록 보기_J10 -->
+<select id="apptListCanceled" resultType="BookingVO">
+	<![CDATA[
+    SELECT B.BOOKING_NO,
+		   B.PT_NO,
+		   B.BOOKING_DATE,
+		   B.PRICE,
+		   B.CONSULT_DATE,
+		   B.CONSULT_TIME,
+		   B.BOOKING_STATUS,
+		   M.NAME
+    FROM BOOKING B JOIN MEMBER M
+    ON B.PT_NO=M.MEMBER_NO
+    WHERE CONSULT_DATE >= TO_DATE(SYSDATE)
+    AND B.BOOKING_STATUS = 'c'
     ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
 	]]>
 </select>
