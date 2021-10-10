@@ -23,7 +23,6 @@
 									<div class="select-box">
 										<select class="good-select wide" id="selectbox" name="selectbox"
 												onchange="searchCheck()">
-											<option data-display="">선택해주세요</option>
 											<option value="pt" >환자(patients)</option>
 											<option value="doctor" >의사(doctor)</option>
 											<option value="pharmacy" >약국(pharmacy)</option>

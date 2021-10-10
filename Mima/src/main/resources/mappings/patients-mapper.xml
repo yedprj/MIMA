@@ -235,22 +235,6 @@
 	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE) AND MEMBER_NO=#{memberNo}
 </select>
 
-<!-- 환자대쉬보드 예약관리 페이지 e.5-->
-<select id="ptbmList" resultType="BookingVO">
-	SELECT B.BOOKING_NO,
-		   B.PT_NO,
-		   B.DOC_NO,
-		   B.BOOKING_DATE,
-		   B.PRICE,
-		   B.BOOKING_STATUS,
-		   B.CONSULT_DATE,
-		   B.CONSULT_TIME,
-		   M.NAME
-	FROM BOOKING B JOIN MEMBER M
-	ON B.PT_NO=M.MEMBER_NO
-	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE) AND MEMBER_NO=#{memberNo}
-</select>
-
 <!-- 예약관리 페이징 e.5-->
 <!-- trim 한 것 따로 빼 낸것... -->
 	<sql id="criterias">
@@ -284,19 +268,19 @@
 		BOOKING_NO > 0
 	</select>
 
-	<select id="getPtbmList" 
+	<select id="ptbmList" 
 		resultType="BookingVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
-		ROWNUM RN, BOOKING_NO, PT_NO, DOC_NO, BOOKING_DATE, PRICE,
-		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME, EDIT_DATE, ROOM_ID, FIRST_SESSION, SUBJECT
-		FROM BOOKING
-		WHERE
-		<include refid="criterias"></include>
+		ROWNUM RN, B.BOOKING_NO, B.PT_NO, B.DOC_NO, B.BOOKING_DATE, B.PRICE,
+		B.BOOKING_STATUS, B.CONSULT_DATE, B.CONSULT_TIME, M.NAME
+		FROM BOOKING B JOIN MEMBER M
+		ON B.PT_NO=M.MEMBER_NO
+		WHERE B.CONSULT_DATE=TO_DATE(SYSDATE) AND M.MEMBER_NO=#{memberNo} AND
 				<![CDATA[
-				ROWNUM <= #{pageNum} * #{amount}				
+				ROWNUM <= #{cri.pageNum} * #{cri.amount}				
 				)
-		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 <!-- 페이징 end -->
 
@@ -319,26 +303,7 @@
  ]]>
 </select>
 
-<!-- 환자대쉬보드 진료내역 페이지 e.5-->
-<select id="ptHistoryList" resultType="BookingVO">
-	<![CDATA[
-	SELECT B.BOOKING_NO,
-		   B.PT_NO,
-		   B.DOC_NO,
-		   B.BOOKING_DATE,
-		   B.PRICE,
-		   B.BOOKING_STATUS,
-		   B.CONSULT_DATE,
-		   B.CONSULT_TIME,
-		   M.NAME
-	FROM BOOKING B JOIN MEMBER M
-	ON B.PT_NO=M.MEMBER_NO
-    WHERE B.CONSULT_DATE<TO_DATE(SYSDATE) AND BOOKING_STATUS = 'y' AND MEMBER_NO=#{memberNo}
-	ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC
-	]]>
-</select>
-
-<!-- 진료내역 페이징 e.6-->
+<!-- 진료내역 페이지, 페이징 e.6-->
 <!-- trim 한 것 따로 빼 낸것... -->
 	<sql id="criteriasa">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
@@ -371,19 +336,19 @@
 		BOOKING_NO > 0
 	</select>
 
-	<select id="getPthList" 
+	<select id="ptHistoryList" 
 		resultType="BookingVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
-		ROWNUM RN, BOOKING_NO, PT_NO, DOC_NO, BOOKING_DATE, PRICE,
-		BOOKING_STATUS, CONSULT_DATE, CONSULT_TIME, EDIT_DATE, ROOM_ID, FIRST_SESSION, SUBJECT
-		FROM BOOKING
-		WHERE		
-		<include refid="criteriasa"></include>
+		ROWNUM RN, B.BOOKING_NO, B.PT_NO, B.DOC_NO, B.BOOKING_DATE, B.PRICE,
+		B.BOOKING_STATUS, B.CONSULT_DATE, B.CONSULT_TIME, M.NAME
+		FROM BOOKING B JOIN MEMBER M
+		ON B.PT_NO = M.MEMBER_NO
+		WHERE B.BOOKING_STATUS = 'y' AND M.MEMBER_NO=#{memberNo} AND
 				<![CDATA[
-				ROWNUM <= #{pageNum} * #{amount}				
+				ROWNUM <= #{cri.pageNum} * #{cri.amount}				
 				)
-		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 <!-- 페이징 end -->
 
@@ -402,22 +367,6 @@
         ORDER BY REG_DATE DESC
 		]]>
 </select>
-
-<!-- 환자대쉬보드 나의후기 페이지 e.5-->
-	<select id="ptReviewList" resultType="CommentsVO">
-		<![CDATA[
-		SELECT C.CMAIN_NO,
-               C.COMMENT_WRITER_NO,
-               C.CONTENTS,
-               C.REVIEW_POINT,
-               C.REG_DATE,
-               M.NICKNAME
-        FROM COMMENTS C JOIN MEMBER M
-        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
-        WHERE MEMBER_NO=#{memberNo}
-        ORDER BY REG_DATE DESC
-		]]>
-	</select>
 
 <!-- 나의후기 페이징 e.6-->
 <!-- trim 한 것 따로 빼 낸것... -->
@@ -452,19 +401,19 @@
 		CMAIN_NO > 0
 	</select>
 
-	<select id="getPtrvList" 
+	<select id="ptReviewList" 
 		resultType="CommentsVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
-		ROWNUM RN, CMAIN_CATEGORY, CMAIN_NO, COMMENT_WRITER_NO, 
-		CONTENTS, REVIEW_POINT, REG_DATE, EDIT_DATE, CNO
-		FROM COMMENTS
-		WHERE	
-		<include refid="criteriasb"></include>
+		ROWNUM RN, C.CMAIN_CATEGORY, C.CMAIN_NO, C.COMMENT_WRITER_NO, 
+		C.CONTENTS, C.REVIEW_POINT, C.REG_DATE, M.NICKNAME
+		FROM COMMENTS C JOIN MEMBER M
+		ON (C.COMMENT_WRITER_NO = M.MEMBER_NO)
+        WHERE M.MEMBER_NO=#{memberNo} AND
 				<![CDATA[
-				ROWNUM <= #{pageNum} * #{amount}				
+				ROWNUM <= #{cri.pageNum} * #{cri.amount}				
 				)
-		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	<!-- 페이징 end -->
 

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,8 +68,7 @@ public class PatientsController {
 		
 		int total = patientsService.getTotalPtbmCount(cri);
 		
-		model.addAttribute("ptbmList", patientsService.ptbmList(memberNo));
-		model.addAttribute("getPtbmList", patientsService.getPtbmList(cri));
+		model.addAttribute("ptbmList", patientsService.ptbmList(memberNo, cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptBookManage";
 	}
@@ -83,8 +83,7 @@ public class PatientsController {
 		
 		int total = patientsService.getTotalPthCount(cri);
 		
-		model.addAttribute("ptHistoryList", patientsService.ptHistoryList(memberNo));
-		model.addAttribute("getPthList", patientsService.getPthList(cri));
+		model.addAttribute("ptHistoryList", patientsService.ptHistoryList(memberNo, cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptHistory";
 	}
@@ -99,8 +98,7 @@ public class PatientsController {
 		
 		int total = patientsService.getTotalPtrvCount(cri);
 		
-		model.addAttribute("ptReviewList", patientsService.ptReviewList(memberNo));
-		model.addAttribute("getPtrvList", patientsService.getPtrvList(cri));
+		model.addAttribute("ptReviewList", patientsService.ptReviewList(memberNo, cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptReview";
 	}
