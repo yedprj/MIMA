@@ -20,14 +20,18 @@ import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.member.domain.MemberVO;
+import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.member.service.PatientsService;
 import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
-import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
 
+import lombok.extern.java.Log;
+
+
+@Log
 @Controller
 public class PatientsController {
 	
@@ -121,33 +125,32 @@ public class PatientsController {
 		return "patients/ptQna";
 	}
 	
-	//환자대쉬보드 약배달 페이지 K.10/06
+	//환자대쉬보드 약배달 페이지 K.10/09
 	@GetMapping("/ptMedelivery")
 	public String ptMedelivery(HttpServletRequest request, Model model) {
-		// + 기존 약배달 신청한건 있는지부터 조회
 		String viewPage = "";
 		
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
-		int memberNo = vo.getMemberNo();
+		String delStatus = vo.getDeliveryStatus();
 		
-		// booking 확인하기
-		BookingVO bvo = new BookingVO();
-		bvo = bookingService.selectBookingInfo(memberNo);
-		MedDeliveryVO medBvo = new MedDeliveryVO();
-		medBvo = deliveryService.selectOne(bvo.getBookingNo());
-		if(bvo == null) {
+		// + 기존 약배달 신청한건 있는지부터 조회
+		PatientsVO pvo = new PatientsVO();
+		if(delStatus == "n") {
 			viewPage = "patients/ptMedeliveryNone";
 		}
 		else {
-			viewPage = "patients/ptMedelivery";
-			if(medBvo == null ) {
-				model.addAttribute("bookingNo", bvo.getBookingNo());
-			}else {
-				model.addAttribute("medBvo", medBvo);
+			log.info("예약이 존재!");
+			 pvo = patientsService.ptDeliveryCheck(vo.getMemberNo());
+			if(pvo == null ) { // 약배달 신청정보가 없으면 등록
+				log.info("**********************// 약배달 신청정보가 없으면 등록 없음 ");
+				viewPage = "patients/ptMedelivery";
+			}else {			   // 약배달 신청정보가 있으면 수정
+				log.info("**********************pvo : "+ pvo.toString());
+				model.addAttribute("pvo", pvo);
+				viewPage = "patients/ptMedelivery";
 			}
 		}
-		
 		return viewPage;
 	}
 	
@@ -174,6 +177,13 @@ public class PatientsController {
 	@ResponseBody
 	public int pharmacy(@RequestBody MedDeliveryVO vo ){
 		return deliveryService.deliveryInsert(vo);
+	}
+	
+	//약국 번호로 약국명 조회 K.10/10
+	@PostMapping("phaNameSearch")
+	@ResponseBody
+	public PartnerPharmacyVO phaNameSearch(@RequestBody PartnerPharmacyVO vo ){
+		return phaService.selectOne(vo);
 	}
 	
 	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동

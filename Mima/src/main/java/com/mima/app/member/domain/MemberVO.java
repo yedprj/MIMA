@@ -32,6 +32,8 @@ public class MemberVO implements UserDetails{
 	private String ptProfilePhoto;	// 환자 프로필 사진
 	private Date regDate;		// 등록일
 	private Date editDate;		// 수정일
+	// K.10/10
+	private String deliveryStatus; 	// 약배달신청 유무
 	
 	// Session 때문에 추가 코드 p.30
 	@Override

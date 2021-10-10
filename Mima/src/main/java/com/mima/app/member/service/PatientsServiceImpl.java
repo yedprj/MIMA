@@ -178,4 +178,10 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.getTotalPtqCount(cri);
 	}
 	
+	// 약배달 신청내역 조회 K.10/10
+	@Override
+	public PatientsVO ptDeliveryCheck(int memberNo) {
+		return patientsMapper.ptDeliveryCheck(memberNo);
+	}
+	
 }

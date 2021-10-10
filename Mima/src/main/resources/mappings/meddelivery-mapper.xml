@@ -7,6 +7,7 @@
 	WHERE BOOKING_NO = #{bookingNo}
 </select>
 
+<!-- 환자의 약배달 신청 등록 -->
 <insert id="deliveryInsert">
 	INSERT INTO MED_DELIVERY( 
 			MED_DELIVERY_NO, 
@@ -30,6 +31,19 @@
 			#{ptPostcode}
 	)
 </insert>
+
+<!-- 환자의 의사 약배달 신청전 약배달 내용 변경 -->
+<update id="ptDeliveryUpdate">
+	update med_delivery set 
+			pharmacy_no=#{pharmacyNo}, 
+			pt_delivery_area = #{ptDeliveryArea}, 
+			pt_delivery_area2 = #{ptDeliveryArea2, jdbcType=VARCHAR },
+			pt_delivery_area3 = #{ptDeliveryArea3, jdbcType=VARCHAR },
+			pt_postcode = #{ptPostcode},
+			pt_note = #{ptNote, jdbcType=VARCHAR} 
+	where booking_no = #{bookingNo};
+	
+</update>
 
 
 </mapper>

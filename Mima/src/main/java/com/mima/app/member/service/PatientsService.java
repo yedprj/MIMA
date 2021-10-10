@@ -90,4 +90,7 @@ public interface PatientsService {
 	
 	//전체 데이터 수 조회 나의문의 페이징 e.7
 	public int getTotalPtqCount(Criteria cri);
+	
+	// 약배달 신청내역 조회 K.10/10
+	public PatientsVO ptDeliveryCheck(int memberNo);
 }

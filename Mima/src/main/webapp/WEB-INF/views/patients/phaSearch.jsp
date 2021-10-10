@@ -437,11 +437,14 @@
 		 $(document).on("click","#phaCheckBtn", function(){
 			console.log(this);
 			var no = $(this).data("no");
-			var phaName = $(this).data("name"); 
+			var phaName = $(this).data("name");
+			var area = $(this).data("area");
+			var phaTel = $(this).data("tel");
 			console.log(no);
 			console.log(phaName);
 			$("#memberNo", opener.document).val(no);
-			$("#phaName", opener.document).val(phaName);
+			$("#phaName", opener.document).val(phaName + " ("+ area + ")");
+			$("#phaContact", opener.document).val(phaTel);
 			window.close();
 		 });
 		
@@ -459,7 +462,7 @@
                 +        '<span class="designation">'+data.pharmacyContact+'</span>'
                 +        '<div class="text"><p>'+data.profileContents+'</p></div>'
                 +        '<div class="location-box"><p><i class="fas fa-map-marker-alt"></i>'+data.deliveryArea+'</p></div>'
-                +        '<div class="btn-box"><a id="phaCheckBtn" data-no="'+data.memberNo+'" data-name="'+data.pharmacyInfo+'" >약국 선택</a></div>'
+                +        '<div class="btn-box"><a id="phaCheckBtn" data-no="'+data.memberNo+'" data-name="'+data.pharmacyInfo+'" data-area="'+data.deliveryArea+'" data-tel="'+data.pharmacyContact+'">약국 선택</a></div>'
                 + '</div></form></div></div>'
        		);// append end
 	}

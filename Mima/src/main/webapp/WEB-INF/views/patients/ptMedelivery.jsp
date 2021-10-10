@@ -157,7 +157,7 @@ input::placeholder {
                                             </div>
                                             <div class="col-lg-2 col-md-6 col-sm-12 form-group">
                                             	<label> &nbsp;&nbsp;&nbsp;</label>
-												<input type="text" id="addr3" name="addr3" placeholder="도로명주소">
+												<input type="text" id="addr3" name="addr3" placeholder="도로명주소" >
 											</div>
                                             <div class="col-lg-2 col-md-6 col-sm-12 form-group">
                                                 <label>상세주소</label>
@@ -165,7 +165,7 @@ input::placeholder {
                                             </div>
                                             <div class="col-lg-2 col-md-6 col-sm-12 form-group">
                                                 <label>우편번호</label>
-                                                <input id="postcode" name="postcode" type="text" placeholder="우편번호" readonly>
+                                                <input id="postcode" name="postcode" type="text" placeholder="우편번호" readonly >
                                             </div>
                                             <div class="col-lg-2 col-md-12 col-sm-12 form-group" >
 													<button type="button" id="jusoBtn" onclick="execDaumPostcode();" >주소검색</button>
@@ -177,7 +177,12 @@ input::placeholder {
                                                 <input type="hidden" name="bookingNo" value="${bookingNo}">
                                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+												<label>약국 연락처</label>
+                                                <input id="phaContact" type="text" >                                             	
+                                            </div>
+                                            
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
 												<button id="searchBtn" type="button" onclick="window.open('phaSearch', '약국찾기', 'top=100px, left=300, width=600px, height=700px , scrollbars=yes');">검색</button>                                             	
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
@@ -293,64 +298,106 @@ function execDaumPostcode() {
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";	
 		
-	 	$("#submitBtn").on("click",function(){
-	 		var addr1 = $("input[name='addr1']").val();
-			var addr2 = $("input[name='addr2']").val();
-			var phaName =  $("#phaName").val();
-			var memberNo = $("input[name='memberNo']").val();
-			var ptNote = $("#ptNote").val();
+		var bookingNum = ${medBvo.bookingNo};	// 약배달 신청한 예약번호
+
+		if (bookingNum == ""){
 			
-			console.log(addr1);
-	 		if(addr1 == ''){
-				alert("배달받은 실주소지를 입력하세요!")
-				$("#addr1").focus();
-				return;
-			}else if (addr2 == ''){
-				alert("상세 주소를 입력하세요!")
-				$("#addr2").focus();
-				return;
-			}else if (phaName == ''){
-				alert("신청할 약국을 선택하세요!")
-				$("#phaName").focus();
-				return;
-			}else if (phaName == ''){
-				alert("신청할 약국을 선택하세요!")
-				$("#phaName").focus();
-				return;
+			//  약배달(med_delivery) 에서 해당 예약 번호가 없을때 등록가능
+		 	$("#submitBtn").on("click",function(){
+		 		var addr1 = $("input[name='addr1']").val();
+				var addr2 = $("input[name='addr2']").val();
+				var phaName =  $("#phaName").val();
+				var memberNo = $("input[name='memberNo']").val();
+				var ptNote = $("#ptNote").val();
+				
+				console.log(addr1);
+		 		if(addr1 == ''){
+					alert("배달받은 실주소지를 입력하세요!")
+					$("#addr1").focus();
+					return;
+				}else if (addr2 == ''){
+					alert("상세 주소를 입력하세요!")
+					$("#addr2").focus();
+					return;
+				}else if (phaName == ''){
+					alert("신청할 약국을 선택하세요!")
+					$("#phaName").focus();
+					return;
+				}else if (phaName == ''){
+					alert("신청할 약국을 선택하세요!")
+					$("#phaName").focus();
+					return;
+				}else {
+					$.ajax({
+		    			url : "medDeliveryAdd",
+		    			method : "post",
+		    			data : JSON.stringify({
+		    				pharmacyNo : memberNo ,
+		    				bookingNo : $("input[name='bookingNo']").val(),
+		    				ptDeliveryArea : addr1,
+		    				ptDeliveryArea2 : $("input[name='addr3']").val(), // 도로명주소
+		    				ptDeliveryArea3 : addr2, // 상세주소
+		    				ptNote : ptNote ,
+		    				ptPostcode : $("input[name='postcode']").val()
+		    			}),
+		    			beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},
+		    			dataType : "json", 
+		    			contentType : "application/json",
+		    			success : function(data){
+		    				if( data > 0) {
+		    					alert("약 배달 등록 성공!");
+		    				}else {
+		    					alert("약 배달 등록에 실패했습니다.");
+		    				}
+		    			}  // success end
+		    		}); //  ajax end
+				} // 조건성공시 ajax 호출 end
+		 	}); // submitBtn end
+		}else {
+
+			
+			$("input[name='addr1']").val("${medBvo.ptDeliveryArea}");
+			$("input[name='addr2']").val("${medBvo.ptDeliveryArea3}"); // 상세 주소
+			$("input[name='addr3']").val("${medBvo.ptDeliveryArea2}"); // 도로명 주소
+			$("input[name='postcode']").val("${medBvo.ptPostcode}");   // 우편번호
+			$("input[name='memberNo']").val("${medBvo.pharmacyNo}");   // 신청 약국 번호
+			$.ajax({
+    			url : "phaNameSearch",
+    			method : "post",
+    			data : JSON.stringify({
+    				memberNo :  $("input[name='memberNo']").val()
+    			}),
+    			beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+    			dataType : "json", 
+    			contentType : "application/json",
+    			success : function(data){
+    				console.log(data);
+    				$("#phaName").val(data.pharmacyInfo + " (" +data.deliveryArea + ")");
+    				$("#phaContact").val(data.pharmacyContact);
+    			}  // success end
+    		}); //  ajax end
+			
+			
+			$("#ptNote").val("${medBvo.ptNote}");					   // 특이사항
+			$("#submitBtn").attr("id","updateBtn")
+						   .text("수정하기");
+		}	
+		$(document).on("click","#updateBtn", function(){
+			var delStatus = "${medBvo.deliveryStatus}";
+			if(delStatus == "A") {
+				
+				alert("수정이 완료되었습니다!");
 			}else {
-				$.ajax({
-	    			url : "medDeliveryAdd",
-	    			method : "post",
-	    			data : JSON.stringify({
-	    				pharmacyNo : memberNo ,
-	    				bookingNo : $("input[name='bookingNo']").val(),
-	    				ptDeliveryArea : addr1,
-	    				ptDeliveryArea2 : $("input[name='addr3']").val(), // 도로명주소
-	    				ptDeliveryArea3 : addr2, // 상세주소
-	    				ptNote : ptNote ,
-	    				ptPostcode : $("input[name='postcode']").val()
-	    			}),
-	    			beforeSend : function(xhr) {
-						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-					},
-	    			dataType : "json", 
-	    			contentType : "application/json",
-	    			success : function(data){
-	    				if( data > 0) {
-	    					alert("약 배달 등록 성공!");
-	    				}else {
-	    					alert("약 배달 등록에 실패했습니다.");
-	    				}
-	    			}  // success end
-	    		}); //  ajax end
-				
-				
-				
-			} // 조건성공시 ajax 호출 end
+				alert("배달신청 이미 접수 되었으므로 수정이 불가합니다! \n자세한 사항은 약국으로 문의하세요 *" + $("#phaContact").val() );
+				$("#phaContact").focus();
+			}
+			
+		}); // 수정하기 버튼
 		
-		
-	 	}); // submitBtn end
-	
 	  
 	});// function end
 	
