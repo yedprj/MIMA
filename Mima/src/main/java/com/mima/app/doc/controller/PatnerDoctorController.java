@@ -176,7 +176,7 @@ public class PatnerDoctorController {
 		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
 		String path="docDash/docProfileInsertForm";
 		//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 있으면 값을 가져와서 넘겨주고 수정할 수 있도록
-		if( docVo.getMemberNo() != 0) {
+		if( docVo != null) {
 			System.out.print("테이블에 값 잇음");
 			expVo.setMemberNo(docVo.getMemberNo());
 			model.addAttribute("doc", doctorService.getDocDetail(docVo));
