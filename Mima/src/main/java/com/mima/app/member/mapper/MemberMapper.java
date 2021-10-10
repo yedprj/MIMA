@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
+import com.mima.app.session.domain.PtInfoVO;
 
 public interface MemberMapper {
 	
@@ -53,5 +54,8 @@ public interface MemberMapper {
 	
 	// 닥터 나의 환자들 조회_J06
 	public List<MemberBookingVO> patientList(int memberNo);
+	
+	// 닥터 진료내역 페이지 선택한 환자의 진료노트 조회_J10
+	public PtInfoVO getCnote(PtInfoVO vo);
 
 }

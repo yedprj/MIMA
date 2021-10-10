@@ -101,7 +101,7 @@ th, td {
 				                   </tr>    
 				               </thead>
 				               <tbody>
-				               	<c:forEach items="${apptHistoryList}" var="apptHistoryList">
+				               	<c:forEach items="${apptHistoryPage}" var="apptHistoryList">
 									<tr>
 										<td>
 											<div class="name-box">
@@ -131,7 +131,7 @@ th, td {
 											</c:if>
 										</td>
 	                                    <td>
-	                                        <button class="view" id="cnote" onclick="window.open('cnote', '진료노트', 'width=1100, height=800, scrollbars=yes')">
+	                                        <button class="view" id="cnote" onclick="window.open('cnote?bookingNo=${apptHistoryList.bookingNo}', '진료노트', 'width=1100, height=800, scrollbars=yes')">
 	                                        	<i class="fas fa-eye"></i>진료노트
 	                                        </button>
 	                                    </td>

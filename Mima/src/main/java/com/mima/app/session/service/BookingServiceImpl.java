@@ -41,8 +41,8 @@ public class BookingServiceImpl implements BookingService {
 
 	// 닥터 대쉬보드 예약관리 페이지_J
 	@Override
-	public List<BookingVO> apptList() {
-		return bookingMapper.apptList();
+	public List<BookingVO> apptList(int memberNo) {
+		return bookingMapper.apptList(memberNo);
 	}
 
 	@Override
