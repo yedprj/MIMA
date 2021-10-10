@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.domain.MentalSubjectVO;
@@ -23,7 +24,9 @@ import com.mima.app.doc.service.MentalSubjectService;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.domain.PaymentVO;
 import com.mima.app.session.service.BookingService;
+import com.mima.app.session.service.RaymentService;
 
 import lombok.extern.java.Log;
 
@@ -35,6 +38,7 @@ public class BookingController {
 	@Autowired DocAvailabilityService docAvailabilityService;
 	@Autowired BookingService bookingService;
 	@Autowired MentalSubjectService mentalSubjectService;
+	@Autowired RaymentService raymentService;
 	
 	// 결제 예약 페이지로 이동 p.01
 	@GetMapping("/reservationForm")
@@ -96,6 +100,7 @@ public class BookingController {
 		BookingVO bvo = new BookingVO();
 		bvo = bookingService.selectBookingInfo(memberNo);	
 		model.addAttribute("resvinfo", bvo);
+		log.info("========================" + bvo);
 		
 		int docNo = bvo.getDocNo();
 		
@@ -104,6 +109,22 @@ public class BookingController {
 		model.addAttribute("priceinfo", mentalvo);
 		
 		return "booking/paymentForm";
+	}
+	
+	// 결제 후 이동 페이지
+	@PostMapping("insertPayment")
+	@ResponseBody
+	public int insertPayment(PaymentVO vo, RedirectAttributes rttr) {
+		
+		int bookingNo = vo.getPayItem();
+		
+		int result = raymentService.insertPayment(vo);
+		
+		if (result == 1) {
+			bookingService.updateBookingStatus(bookingNo);
+		}
+		
+		return result;
 	}
 	
 }

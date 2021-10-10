@@ -101,29 +101,29 @@ th, td {
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${ptbmList}" var="ptbmList">
+										<c:forEach items="${getPtbmList}" var="getPtbmList">
 											<tr>
 												<td>
 													<div class="name-box">
-														<h5>${ptbmList.name}</h5>
-														<span class="ptno">#${ptbmList.ptNo}</span>
+														<h5>${getPtbmList.name}</h5>
+														<span class="ptno">#${getPtbmList.ptNo}</span>
 													</div>
 												</td>
-												<td>${ptbmList.bookingNo}</td>
-												<td><fmt:formatDate value="${ptbmList.consultDate}"
-														pattern="yy-MM-dd" /> <span class="time">${ptbmList.consultTime}</span>
+												<td>${getPtbmList.bookingNo}</td>
+												<td><fmt:formatDate value="${getPtbmList.consultDate}"
+														pattern="yy-MM-dd" /> <span class="time">${getPtbmList.consultTime}</span>
 												</td>
-												<td><fmt:formatDate value="${ptbmList.bookingDate}"
+												<td><fmt:formatDate value="${getPtbmList.bookingDate}"
 														pattern="yy-MM-dd" /></td>
 												<td><fmt:setLocale value="ko_KR" />
-													<fmt:formatNumber type="currency" value="${ptbmList.price}" /></td>
-												<td>${ptbmList.payStatus}</td>
-												<td><c:if test="${ptbmList.bookingStatus eq 'y'}">
+													<fmt:formatNumber type="currency" value="${getPtbmList.price}" /></td>
+												<td>${getPtbmList.payStatus}</td>
+												<td><c:if test="${getPtbmList.bookingStatus eq 'y'}">
 														<span class="status">접수완료</span>
-													</c:if> <c:if test="${ptbmList.bookingStatus eq 'c'}">
+													</c:if> <c:if test="${getPtbmList.bookingStatus eq 'c'}">
 														<span class="status pending">취소완료</span>
 													</c:if></td>
-												<td><c:if test="${ptbmList.bookingStatus eq 'y'}">
+												<td><c:if test="${getPtbmList.bookingStatus eq 'y'}">
 														<button class="status cancel">
 															<i class="fas fa-times"></i>취소하기
 														</button>

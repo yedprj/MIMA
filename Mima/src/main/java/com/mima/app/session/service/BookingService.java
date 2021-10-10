@@ -51,4 +51,7 @@ public interface BookingService {
 	
 	//p.10.07 결제 정보
 	public BookingVO selectBookingInfo(int memberNo);
+	
+	// Booking table 결제 status 업데이트 p.10/09
+	public int updateBookingStatus(int bookingNo);
 }

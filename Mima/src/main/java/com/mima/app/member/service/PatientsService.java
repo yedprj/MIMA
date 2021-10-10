@@ -40,16 +40,22 @@ public interface PatientsService {
 	//관리자 회원정보조회(의사) 전체 데이터 수 조회 페이징 e.7
 	public int getTotaldoctorCount(Criteria cri);
 	
+	//관리자 회원정보조회(약국) 전체조회 페이징 e.8
+	public List<PartnerPharmacyVO> getpharList(Criteria cri);
+	
+	//관리자 회원정보조회(약국) 전체 데이터 수 조회 페이징 e.8
+	public int getTotalpharCount(Criteria cri);
+	
 	//환자대쉬보드 Main 오늘의예약 e.4
 	public List<BookingVO> ptgetList(int memberNo);
 
 	//환자대쉬보드 예약관리 페이지 e.5
 	public List<BookingVO> ptbmList(int memberNo);
 	
-	//전체조회 페이징 e.5
+	//전체조회 예약관리 페이징 e.5
 	public List<BookingVO> getPtbmList(Criteria cri);
 	
-	//전체 데이터 수 조회 페이징 e.5
+	//전체 데이터 수 조회 예약관리 페이징 e.5
 	public int getTotalPtbmCount(Criteria cri);
 	
 	//환자대쉬보드 Main 진료내역 e.5

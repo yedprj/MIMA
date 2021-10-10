@@ -229,7 +229,10 @@
 
 <!-- 결제 페이지 필요 내용 가져오기 p.10/07 -->
 <select id="selectBookingInfo" resultType="BookingVO">
-	SELECT CONSULT_DATE, 
+	SELECT BOOKING_NO,
+		   PT_NO,
+		   DOC_NO,
+		   CONSULT_DATE, 
 		   CONSULT_TIME, 
 		   FIRST_SESSION, 
 		   SUBJECT
@@ -237,5 +240,12 @@
 	WHERE BOOKING_STATUS = 'y'
 	AND PT_NO = #{memberNo}
 </select>
+
+<!-- Booking table 결제 status 업데이트 p.10/09 -->
+<update id="updateBookingStatus"> 
+	UPDATE BOOKING
+	SET BOOKING_STATUS = 'p'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
 
 </mapper>

@@ -12,21 +12,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.mima.app.admin.domain.CscVO;
-import com.mima.app.admin.service.CscService;
-import com.mima.app.comments.domain.CommentsVO;
-import com.mima.app.comments.service.CommentsService;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.PatientsService;
+import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
+import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
+import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.service.BookingService;
 
 @Controller
 public class PatientsController {
@@ -35,6 +35,10 @@ public class PatientsController {
 	@Autowired CommentsService commentsService;
 	// K.10/07 약국 서비스
 	@Autowired PatnerPharmacyService phaService;
+	// K.10/09 약배달
+	@Autowired MedDeliveryService deliveryService;
+	// K.10/09 booking 확인
+	@Autowired BookingService bookingService;
 
 
 	//e.4
@@ -119,9 +123,32 @@ public class PatientsController {
 	
 	//환자대쉬보드 약배달 페이지 K.10/06
 	@GetMapping("/ptMedelivery")
-	public String ptMedelivery(Model model) {
-	
-		return "patients/ptMedelivery";
+	public String ptMedelivery(HttpServletRequest request, Model model) {
+		// + 기존 약배달 신청한건 있는지부터 조회
+		String viewPage = "";
+		
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		
+		// booking 확인하기
+		BookingVO bvo = new BookingVO();
+		bvo = bookingService.selectBookingInfo(memberNo);
+		MedDeliveryVO medBvo = new MedDeliveryVO();
+		medBvo = deliveryService.selectOne(bvo.getBookingNo());
+		if(bvo == null) {
+			viewPage = "patients/ptMedeliveryNone";
+		}
+		else {
+			viewPage = "patients/ptMedelivery";
+			if(medBvo == null ) {
+				model.addAttribute("bookingNo", bvo.getBookingNo());
+			}else {
+				model.addAttribute("medBvo", medBvo);
+			}
+		}
+		
+		return viewPage;
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/06
@@ -130,6 +157,8 @@ public class PatientsController {
 		return "patients/phaSearch";
 	}
 	
+	
+	//약국 찾기 K.10/07
 	@PostMapping("pharmacy")
 	@ResponseBody
 	public List<PartnerPharmacyVO> pharmacy(@RequestBody Criteria cri){
@@ -138,7 +167,14 @@ public class PatientsController {
 		list = phaService.pharmacySearch(cri);
 		
 		return list;
-  }
+	}
+	
+	//약배달 신청등록 K.10/09
+	@PostMapping("medDeliveryAdd")
+	@ResponseBody
+	public int pharmacy(@RequestBody MedDeliveryVO vo ){
+		return deliveryService.deliveryInsert(vo);
+	}
 	
 	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
 	@GetMapping("/ptReviewFrm")

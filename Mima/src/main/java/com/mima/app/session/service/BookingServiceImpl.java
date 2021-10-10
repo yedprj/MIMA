@@ -101,4 +101,10 @@ public class BookingServiceImpl implements BookingService {
 		return bookingMapper.selectBookingInfo(memberNo);
 	}
 
+	// Booking table 결제 status 업데이트 p.10/09
+	@Override
+	public int updateBookingStatus(int bookingNo) {
+		return bookingMapper.updateBookingStatus(bookingNo);
+	}
+
 }

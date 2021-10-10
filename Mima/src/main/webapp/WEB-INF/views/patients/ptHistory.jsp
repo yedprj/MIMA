@@ -95,22 +95,22 @@ th, td {
 				                   </tr>    
 				               </thead>
 				               <tbody>
-				               	<c:forEach items="${ptHistoryList}" var="ptHistoryList">
+				               	<c:forEach items="${getPthList}" var="getPthList">
 									<tr>
 										<td>
 											<div class="name-box">
-	                                             <h5>${ptHistoryList.name}</h5>
-	                                            <span class="ptno">#${ptHistoryList.ptNo}</span>
+	                                             <h5>${getPthList.name}</h5>
+	                                            <span class="ptno">#${getPthList.ptNo}</span>
 	                                        </div>
 	                                    </td>
-										<td>${ptHistoryList.bookingNo}</td>
+										<td>${getPthList.bookingNo}</td>
 										<td>
-											<fmt:formatDate value="${ptHistoryList.consultDate}" pattern="yy-MM-dd"/>
-											<span class="time">${ptHistoryList.consultTime}</span>
+											<fmt:formatDate value="${getPthList.consultDate}" pattern="yy-MM-dd"/>
+											<span class="time">${getPthList.consultTime}</span>
 										</td>
-										<td><fmt:formatDate value="${ptHistoryList.bookingDate}" pattern="yy-MM-dd"/></td>
-										<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${ptHistoryList.price}" /></td>
-										<td>${ptHistoryList.payStatus}</td>
+										<td><fmt:formatDate value="${getPthList.bookingDate}" pattern="yy-MM-dd"/></td>
+										<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${getPthList.price}" /></td>
+										<td>${getPthList.payStatus}</td>
 	                                    <td>
 	                                        <button class="view"><i class="fas fa-eye"></i>진료노트</button>
 	                                    </td>

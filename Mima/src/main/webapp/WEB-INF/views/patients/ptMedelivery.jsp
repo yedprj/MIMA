@@ -149,7 +149,7 @@ input::placeholder {
                                     <a href="add-listing.html" class="menu"><i class="icon-Dot-menu"></i></a>
                                 </div>
                                 <div class="inner-box">
-                                    <form action="add-listing.html" method="post">
+                                    <form id="deliveryFrm">
                                         <div class="row clearfix">
                                             <div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                                 <label>배달지 주소</label>
@@ -172,14 +172,17 @@ input::placeholder {
 												</div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>신청 약국</label>
-                                                <input type="text" name="state" >
+                                                <input id="phaName" type="text" >
+                                                <input id="memberNo" type="hidden" name="memberNo" >
+                                                <input type="hidden" name="bookingNo" value="${bookingNo}">
+                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
 												<button id="searchBtn" type="button" onclick="window.open('phaSearch', '약국찾기', 'top=100px, left=300, width=600px, height=700px , scrollbars=yes');">검색</button>                                             	
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>특이사항</label>
-                                                <textarea name="message" ></textarea>
+                                                <textarea id="ptNote" name="ptNote" ></textarea>
                                             </div>
                                         </div>
                                         
@@ -187,7 +190,7 @@ input::placeholder {
                                 </div>
                             </div>
                             <div class="btn-box">
-                                <a href="add-listing.html" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
+                                <a id="submitBtn" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
                             </div>
                             <!-- <div class="modal">
 								<div class="modal_content" title="클릭하면 창이 닫힙니다.">
@@ -285,25 +288,71 @@ function execDaumPostcode() {
         }
     }).open();
 }// 주소 api 끝
-
-$(function(){ 
+	
+	$(function(){ 
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";	
 		
-	 
-	 /*  $("#searchBtn").click(function(){
-	    $(".modal").fadeIn();
-	  });
-	  
-	  $(".cancel").click(function(){
-	    $(".modal").fadeOut();
-	  }); 
-	  
-	  $("#modalSearchBtn").on("click", function(){
-		  var pharmacy = $("input[name='pharmacy']").val();
-		  
-		  // ajax 호출 검색
-		  
-	  }); */
+	 	$("#submitBtn").on("click",function(){
+	 		var addr1 = $("input[name='addr1']").val();
+			var addr2 = $("input[name='addr2']").val();
+			var phaName =  $("#phaName").val();
+			var memberNo = $("input[name='memberNo']").val();
+			var ptNote = $("#ptNote").val();
+			
+			console.log(addr1);
+	 		if(addr1 == ''){
+				alert("배달받은 실주소지를 입력하세요!")
+				$("#addr1").focus();
+				return;
+			}else if (addr2 == ''){
+				alert("상세 주소를 입력하세요!")
+				$("#addr2").focus();
+				return;
+			}else if (phaName == ''){
+				alert("신청할 약국을 선택하세요!")
+				$("#phaName").focus();
+				return;
+			}else if (phaName == ''){
+				alert("신청할 약국을 선택하세요!")
+				$("#phaName").focus();
+				return;
+			}else {
+				$.ajax({
+	    			url : "medDeliveryAdd",
+	    			method : "post",
+	    			data : JSON.stringify({
+	    				pharmacyNo : memberNo ,
+	    				bookingNo : $("input[name='bookingNo']").val(),
+	    				ptDeliveryArea : addr1,
+	    				ptDeliveryArea2 : $("input[name='addr3']").val(), // 도로명주소
+	    				ptDeliveryArea3 : addr2, // 상세주소
+	    				ptNote : ptNote ,
+	    				ptPostcode : $("input[name='postcode']").val()
+	    			}),
+	    			beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+	    			dataType : "json", 
+	    			contentType : "application/json",
+	    			success : function(data){
+	    				if( data > 0) {
+	    					alert("약 배달 등록 성공!");
+	    				}else {
+	    					alert("약 배달 등록에 실패했습니다.");
+	    				}
+	    			}  // success end
+	    		}); //  ajax end
+				
+				
+				
+			} // 조건성공시 ajax 호출 end
+		
+		
+	 	}); // submitBtn end
 	
 	  
-	});
+	});// function end
+	
+	
 </script>

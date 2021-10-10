@@ -102,21 +102,21 @@ th, td {
                     
                 </div>
                 <div class="comment-inner">
-                   	<c:forEach items="${ptReviewList}" var="ptReviewList">
+                   	<c:forEach items="${getPtrvList}" var="getPtrvList">
      <div class="single-comment-box">
          <div class="comment">
              <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt=""></figure>
-             <h4>${ptReviewList.nickname}</h4>
-             <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${ptReviewList.regDate}" pattern="yy-MM-dd"/></span>
+             <h4>${getPtrvList.nickname}</h4>
+             <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${getPtrvList.regDate}" pattern="yy-MM-dd"/></span>
              <ul class="rating clearfix">
-              <c:forEach var="i" begin="1" end="${ptReviewList.reviewPoint}">
+              <c:forEach var="i" begin="1" end="${getPtrvList.reviewPoint}">
              		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
              	</c:forEach>
-             	<c:forEach var="i" begin="1" end="${5-ptReviewList.reviewPoint}">
+             	<c:forEach var="i" begin="1" end="${5-getPtrvList.reviewPoint}">
              		<i class="icon-Star"></i>
              	</c:forEach>
              </ul>
-             <p>${ptReviewList.contents}</p>
+             <p>${getPtrvList.contents}</p>
          </div>
      </div>
     </c:forEach>

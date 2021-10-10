@@ -11,4 +11,6 @@ public class PaymentVO {
 	private String payStatus;	// 결제 상태
 	private String payResult;	// 결제 완료 후 결과 값
 	private int payItem;		// 예약 번호
+	private String payAmount;	// 금액
+	private String payConfirmnum;	// 카드 승인 번호
 }
