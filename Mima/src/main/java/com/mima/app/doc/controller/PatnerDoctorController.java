@@ -166,9 +166,28 @@ public class PatnerDoctorController {
 	
 	//s:1005 docProfileInsertFrm
 	@GetMapping("/docProfileInsertForm")
-	public String docProfileInsertForm() {
+	public String docProfileInsertForm(Model model, PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
+		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
 		
-		return "docDash/docProfileInsertForm";
+		//HttpSession session = request.getSession();
+		//mVo = (MemberVO) session.getAttribute("session");
+		mVo.setMemberNo(3);
+		docVo = doctorService.checkDocDetail(mVo);
+		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
+		String path="docDash/docProfileInsertForm";
+		//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 있으면 값을 가져와서 넘겨주고 수정할 수 있도록
+		if( docVo.getMemberNo() != 0) {
+			System.out.print("테이블에 값 잇음");
+			expVo.setMemberNo(docVo.getMemberNo());
+			model.addAttribute("doc", doctorService.getDocDetail(docVo));
+			model.addAttribute("expList", experienceService.getExpList(expVo));
+			return path;
+		}else {
+			//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 없으면 바로 인서트 할 수 있도록
+			System.out.print("테이블에 값 없음");
+			return path;
+		}
+		
 	}
 
 	
