@@ -140,13 +140,18 @@ th, td {
 												</td>
 												<td>
 													<c:if test="${apptList.bookingStatus == 'y' || apptList.bookingStatus == 'p'}">
-                                                    	<button class="cancel"><i class="fas fa-times"></i>Cancel</button>
+														<!-- 버튼 기능 구현을 위해 수정 p.10/10  -->
+                                                    	<button class="cancel" id="paymentCancel" name="paymentCancel">
+                                                    		<i class="fas fa-times"></i>Cancel
+                                                    	</button>
 													</c:if>
 												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+								<input type="hidden" id="bookingNo" name="bookingNo" value="${apptList.bookingNo}">
 							</div>
 						</div>
 						

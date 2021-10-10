@@ -80,7 +80,8 @@
 			 EMAIL,
 			 PHONE,
 			 STATUS,
-			 PT_PROFILE_PHOTO)
+			 PT_PROFILE_PHOTO,
+			 DELIVERY_STATUS)
 		VALUES 
 			(#{memberNo},
 			 #{memberId},
@@ -97,9 +98,11 @@
 			 #{email},
 			 #{phone},
 			 #{status},
-			 #{ptProfilePhoto})
+			 #{ptProfilePhoto},
+			 #{deliveryStatus})
 	</insert>
 	
+	<!-- 환자 회원가입 수정 p.10/10 -->
 	<insert id="partnerMemberInsert">
 		<selectKey keyProperty="memberNo" resultType="int"
 				order="BEFORE">
