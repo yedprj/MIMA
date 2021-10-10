@@ -442,7 +442,7 @@
 			var phaTel = $(this).data("tel");
 			console.log(no);
 			console.log(phaName);
-			$("#memberNo", opener.document).val(no);
+			$("#pharmacyNo", opener.document).val(no);
 			$("#phaName", opener.document).val(phaName + " ("+ area + ")");
 			$("#phaContact", opener.document).val(phaTel);
 			window.close();

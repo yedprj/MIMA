@@ -93,4 +93,7 @@ public interface PatientsService {
 	
 	// 약배달 신청내역 조회 K.10/10
 	public PatientsVO ptDeliveryCheck(int memberNo);
+	
+	// 약배달 정보 등록 K.10/10
+	public int ptDeliveryInsert(PatientsVO vo);
 }

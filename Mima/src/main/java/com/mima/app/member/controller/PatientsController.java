@@ -142,8 +142,9 @@ public class PatientsController {
 		else {
 			log.info("예약이 존재!");
 			 pvo = patientsService.ptDeliveryCheck(vo.getMemberNo());
-			if(pvo == null ) { // 약배달 신청정보가 없으면 등록
+			if(pvo == null || pvo.getDelAddr() == "" ) { // 약배달 신청정보가 없으면 등록
 				log.info("**********************// 약배달 신청정보가 없으면 등록 없음 ");
+				model.addAttribute("memberNo", vo.getMemberNo());
 				viewPage = "patients/ptMedelivery";
 			}else {			   // 약배달 신청정보가 있으면 수정
 				log.info("**********************pvo : "+ pvo.toString());
@@ -173,10 +174,10 @@ public class PatientsController {
 	}
 	
 	//약배달 신청등록 K.10/09
-	@PostMapping("medDeliveryAdd")
+	@PostMapping("ptDeliveryInsert")
 	@ResponseBody
-	public int pharmacy(@RequestBody MedDeliveryVO vo ){
-		return deliveryService.deliveryInsert(vo);
+	public int ptDeliveryInsert(@RequestBody PatientsVO vo ){
+		return patientsService.ptDeliveryInsert(vo);
 	}
 	
 	//약국 번호로 약국명 조회 K.10/10

@@ -184,4 +184,10 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptDeliveryCheck(memberNo);
 	}
 	
+	// 약배달 정보 등록
+	@Override
+	public int ptDeliveryInsert(PatientsVO vo) {
+		return patientsMapper.ptDeliveryInsert(vo);
+	}
+	
 }

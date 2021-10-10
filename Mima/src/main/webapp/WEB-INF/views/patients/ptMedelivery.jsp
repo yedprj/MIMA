@@ -173,7 +173,7 @@ input::placeholder {
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>신청 약국</label>
                                                 <input id="phaName" type="text" >
-                                                <input id="memberNo" type="hidden" name="memberNo" >
+                                                <input id="pharmacyNo" type="hidden" name="pharmacyNo" >
                                                 <input type="hidden" name="bookingNo" value="${bookingNo}">
                                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                             </div>
@@ -298,16 +298,18 @@ function execDaumPostcode() {
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";	
 		
-		var bookingNum = ${medBvo.bookingNo};	// 약배달 신청한 예약번호
+		// 약배달 신청내역 가져오기
+		var delAddr  = ${pvo.delAddr}; // 신청 주소
+		var delPharmacyNo = ${pvo.delPharmacyNo}; // 신청 약국 번호
 
-		if (bookingNum == ""){
+		if (delAddr == "" && delPharmacyNo == ""){ // 신청주소랑 약국번호가 없을떄
 			
 			//  약배달(med_delivery) 에서 해당 예약 번호가 없을때 등록가능
 		 	$("#submitBtn").on("click",function(){
 		 		var addr1 = $("input[name='addr1']").val();
 				var addr2 = $("input[name='addr2']").val();
 				var phaName =  $("#phaName").val();
-				var memberNo = $("input[name='memberNo']").val();
+				var memberNo = $("input[name='pharmacyNo']").val();
 				var ptNote = $("#ptNote").val();
 				
 				console.log(addr1);
@@ -329,11 +331,10 @@ function execDaumPostcode() {
 					return;
 				}else {
 					$.ajax({
-		    			url : "medDeliveryAdd",
+		    			url : "ptDeliveryInsert",
 		    			method : "post",
 		    			data : JSON.stringify({
 		    				pharmacyNo : memberNo ,
-		    				bookingNo : $("input[name='bookingNo']").val(),
 		    				ptDeliveryArea : addr1,
 		    				ptDeliveryArea2 : $("input[name='addr3']").val(), // 도로명주소
 		    				ptDeliveryArea3 : addr2, // 상세주소
@@ -357,12 +358,11 @@ function execDaumPostcode() {
 		 	}); // submitBtn end
 		}else {
 
-			
-			$("input[name='addr1']").val("${medBvo.ptDeliveryArea}");
-			$("input[name='addr2']").val("${medBvo.ptDeliveryArea3}"); // 상세 주소
-			$("input[name='addr3']").val("${medBvo.ptDeliveryArea2}"); // 도로명 주소
-			$("input[name='postcode']").val("${medBvo.ptPostcode}");   // 우편번호
-			$("input[name='memberNo']").val("${medBvo.pharmacyNo}");   // 신청 약국 번호
+			$("input[name='addr1']").val("${pvo.delAddr}");
+			$("input[name='addr2']").val("${pvo.delAddr3}"); // 상세 주소
+			$("input[name='addr3']").val("${pvo.delAddr2}"); // 도로명 주소
+			$("input[name='postcode']").val("${pvo.delPostCode}");   // 우편번호
+			$("input[name='memberNo']").val("${pvo.delPharmacyNo}");   // 신청 약국 번호
 			$.ajax({
     			url : "phaNameSearch",
     			method : "post",

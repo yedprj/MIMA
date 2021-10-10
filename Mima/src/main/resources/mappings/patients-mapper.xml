@@ -533,7 +533,9 @@
 		<!-- 페이징 end -->
 		
 		<select id="ptDeliveryCheck" resultType="patientsVO">
-			SELECT  DEL_ADDR,
+			SELECT  
+					MEMBER_NO,
+					DEL_ADDR,
 					DEL_ADDR2,
 					DEL_ADDR3,
 					DEL_POST_CODE,
@@ -542,5 +544,24 @@
 			FROM PATIENTS
 			WHERE MEMBER_NO = #{memberNo}
 		</select>
+		
+		<insert id="ptDeliveryInsert">
+			insert into patients (
+					MEMBER_NO
+                    DEL_ADDR,
+					DEL_ADDR2,
+					DEL_ADDR3,
+					DEL_POST_CODE,
+					DEL_NOTE,
+			)values (
+					#{memberNo},
+					#{delAddr},
+					#{delAddr2},
+					#{delAddr3},
+					#{delPostCode},
+					#{delNote},
+					#{delPharmacyNo}
+			)
+		</insert>
  	
 </mapper>
