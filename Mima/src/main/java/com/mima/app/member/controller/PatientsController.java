@@ -131,6 +131,8 @@ public class PatientsController {
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		String delStatus = vo.getDeliveryStatus();
+		log.info(delStatus);
+		log.info("session no: "+vo.getMemberNo());
 		
 		// + 기존 약배달 신청한건 있는지부터 조회
 		PatientsVO pvo = new PatientsVO();
@@ -139,12 +141,17 @@ public class PatientsController {
 		}
 		else {
 			log.info("예약이 존재!");
-			 pvo = patientsService.ptDeliveryCheck(vo.getMemberNo());
-			if(pvo == null || pvo.getDelAddr() == "" ) { // 약배달 신청정보가 없으면 등록
-				log.info("**********************// 약배달 신청정보가 없으면 등록 없음 ");
+			pvo = patientsService.ptDeliveryCheck(vo.getMemberNo());
+			if(pvo == null) { // 약배달 신청정보가 없으면 등록
+				log.info("**********************// 약배달 신청정보가 없으면 등록 ");
 				model.addAttribute("memberNo", vo.getMemberNo());
 				viewPage = "patients/ptMedelivery";
 			}else {			   // 약배달 신청정보가 있으면 수정
+				if(pvo.getDelAddr() == null) {
+					log.info("**********************// 환자테이블은 존재, 약배달은 x ");
+					model.addAttribute("memberNo", vo.getMemberNo());
+					viewPage = "patients/ptMedelivery";
+				}
 				log.info("**********************pvo : "+ pvo.toString());
 				model.addAttribute("pvo", pvo);
 				viewPage = "patients/ptMedelivery";
@@ -175,6 +182,13 @@ public class PatientsController {
 	@PostMapping("ptDeliveryInsert")
 	@ResponseBody
 	public int ptDeliveryInsert(@RequestBody PatientsVO vo ){
+		return patientsService.ptDeliveryInsert(vo);
+	}
+	
+	//약배달 정보수정 K.10/10
+	@PostMapping("ptDeliveryUpdate")
+	@ResponseBody
+	public int ptDeliveryUpdate(@RequestBody PatientsVO vo ){
 		return patientsService.ptDeliveryInsert(vo);
 	}
 	

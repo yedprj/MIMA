@@ -481,6 +481,7 @@
 		</select>
 		<!-- 페이징 end -->
 		
+		<!-- K.10/10 약배달 정보확인 -->
 		<select id="ptDeliveryCheck" resultType="patientsVO">
 			SELECT  
 					MEMBER_NO,
@@ -494,6 +495,7 @@
 			WHERE MEMBER_NO = #{memberNo}
 		</select>
 		
+		<!-- K.10/10 약배달 신청 정보 등록 -->
 		<insert id="ptDeliveryInsert">
 			insert into patients (
 					MEMBER_NO
@@ -512,5 +514,17 @@
 					#{delPharmacyNo}
 			)
 		</insert>
+		
+		<!-- K.10/10 약배달 정보 수정 -->
+		<update id="ptDeliveryUpdate">
+			UPDATE PATIENTS SET 
+					DEL_ADDR = #{delAddr},
+					DEL_ADDR2 = #{delAddr2, jdbcType=VARCHAR},
+					DEL_ADDR3 = #{delAddr3},
+					DEL_POST_CODE = #{delPostCode},
+					DEL_NOTE = #{delNote, jdbcType=VARCHAR},
+					DEL_PHARMACY_NO = #{delPharmacyNo}
+			WHERE MEMBER_NO = #{memberNo}
+		</update>
  	
 </mapper>

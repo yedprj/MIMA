@@ -71,8 +71,11 @@
                                     <h3>약 배달 신청</h3>
                                 </div>
                                 <div class="inner-box">
-                                	예약한 진료가 존재하지 않습니다.
+                                	약 배달 신청을 등록하지 않았습니다.
                                 </div>
+                                <div class="btn-box">
+                                <a id="delStatusAgreeBtn" class="theme-btn-one">약배달 신청하기<i class="icon-Arrow-Right"></i></a>
+                            	</div>
                             </div>    
                         </div>
                     </div>

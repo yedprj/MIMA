@@ -304,13 +304,14 @@ function execDaumPostcode() {
 
 		if (delAddr == "" && delPharmacyNo == ""){ // 신청주소랑 약국번호가 없을떄
 			
+			var memberNo = ${memberNo};
 			//  약배달(med_delivery) 에서 해당 예약 번호가 없을때 등록가능
 		 	$("#submitBtn").on("click",function(){
 		 		var addr1 = $("input[name='addr1']").val();
 				var addr2 = $("input[name='addr2']").val();
 				var phaName =  $("#phaName").val();
-				var memberNo = $("input[name='pharmacyNo']").val();
-				var ptNote = $("#ptNote").val();
+				var pharmacyNo = $("input[name='pharmacyNo']").val();
+				var delNote = $("#ptNote").val();
 				
 				console.log(addr1);
 		 		if(addr1 == ''){
@@ -325,21 +326,22 @@ function execDaumPostcode() {
 					alert("신청할 약국을 선택하세요!")
 					$("#phaName").focus();
 					return;
-				}else if (phaName == ''){
-					alert("신청할 약국을 선택하세요!")
+				}else if (pharmacyNo == ''){
+					alert("파트너쉽에 등록되지 않은 약국입니다.\n 검색으로 다시 선택해주세요!")
 					$("#phaName").focus();
 					return;
-				}else {
+				else {
 					$.ajax({
 		    			url : "ptDeliveryInsert",
 		    			method : "post",
 		    			data : JSON.stringify({
-		    				pharmacyNo : memberNo ,
-		    				ptDeliveryArea : addr1,
-		    				ptDeliveryArea2 : $("input[name='addr3']").val(), // 도로명주소
-		    				ptDeliveryArea3 : addr2, // 상세주소
-		    				ptNote : ptNote ,
-		    				ptPostcode : $("input[name='postcode']").val()
+		    				memberNo : memberNo
+		    				pharmacyNo : pharmacyNo ,
+		    				delAddr : addr1,
+		    				delAddr2 : $("input[name='addr3']").val(), // 도로명주소
+		    				delAddr3 : addr2, // 상세주소
+		    				delNote : delNote ,
+		    				delPostCode : $("input[name='postcode']").val()
 		    			}),
 		    			beforeSend : function(xhr) {
 							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
@@ -362,12 +364,12 @@ function execDaumPostcode() {
 			$("input[name='addr2']").val("${pvo.delAddr3}"); // 상세 주소
 			$("input[name='addr3']").val("${pvo.delAddr2}"); // 도로명 주소
 			$("input[name='postcode']").val("${pvo.delPostCode}");   // 우편번호
-			$("input[name='memberNo']").val("${pvo.delPharmacyNo}");   // 신청 약국 번호
+			$("input[name='pharmacyNo']").val("${pvo.delPharmacyNo}");   // 신청 약국 번호
 			$.ajax({
     			url : "phaNameSearch",
     			method : "post",
     			data : JSON.stringify({
-    				memberNo :  $("input[name='memberNo']").val()
+    				memberNo :  $("input[name='pharmacyNo']").val()
     			}),
     			beforeSend : function(xhr) {
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
@@ -382,19 +384,38 @@ function execDaumPostcode() {
     		}); //  ajax end
 			
 			
-			$("#ptNote").val("${medBvo.ptNote}");					   // 특이사항
+			$("#ptNote").val("${pvo.delNote}");					   // 특이사항
 			$("#submitBtn").attr("id","updateBtn")
 						   .text("수정하기");
 		}	
-		$(document).on("click","#updateBtn", function(){
-			var delStatus = "${medBvo.deliveryStatus}";
-			if(delStatus == "A") {
-				
-				alert("수정이 완료되었습니다!");
-			}else {
-				alert("배달신청 이미 접수 되었으므로 수정이 불가합니다! \n자세한 사항은 약국으로 문의하세요 *" + $("#phaContact").val() );
-				$("#phaContact").focus();
-			}
+		
+		// 수정하기 버튼 클릭시
+		$(document).on("click","#updateBtn", function(){ 
+			$.ajax({
+    			url : "ptDeliveryUpdate",
+    			method : "post",
+    			data : JSON.stringify({
+    				memberNo : memberNo
+    				pharmacyNo : pharmacyNo ,
+    				delAddr : addr1,
+    				delAddr2 : $("input[name='addr3']").val(), // 도로명주소
+    				delAddr3 : addr2, // 상세주소
+    				delNote : delNote ,
+    				delPostCode : $("input[name='postcode']").val()
+    			}),
+    			beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+    			dataType : "json", 
+    			contentType : "application/json",
+    			success : function(data){
+    				if( data > 0) {
+    					alert("약 배달 수정 완료!");
+    				}else {
+    					alert("약 배달 수정에 실패했습니다.");
+    				}
+    			}  // success end
+    		}); //  ajax end
 			
 		}); // 수정하기 버튼
 		
