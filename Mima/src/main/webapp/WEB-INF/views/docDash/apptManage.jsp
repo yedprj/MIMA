@@ -150,8 +150,6 @@ th, td {
 										</c:forEach>
 									</tbody>
 								</table>
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-								<input type="hidden" id="bookingNo" name="bookingNo" value="${apptList.bookingNo}">
 							</div>
 						</div>
 						
