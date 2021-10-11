@@ -13,7 +13,9 @@
 
 <script>
 
-
+$('#senMsgBtn').on('click', function(e){
+	socket.send("의사")
+});
 
 $('#notifySendBtn').click(function(e){
     let modal = $('.modal-content').has(e.target);
