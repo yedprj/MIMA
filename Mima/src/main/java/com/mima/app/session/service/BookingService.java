@@ -42,8 +42,8 @@ public interface BookingService {
 	
 	
 	
-	//s:0929 진료시간 5분 전 부터 매 10초마다 테이블 확인해서 방 아이디 확인
-	public List<BookingVO> getRoomId();
+	//s:0929 s:1011 수정 예약번호 받아서 방 아이디 가져오기
+	public BookingVO getRoomId(int bookingNo);
 
 	//s:1003 단일 예약정보 가져오기
 	public BookingVO getBookingInfo(BookingVO vo);

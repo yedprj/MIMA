@@ -6,23 +6,44 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.mima.app.member.domain.MemberVO;
+import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.service.BookingService;
 
 //s:1009 https://stothey0804.github.io/project/WebSocketExam/ 참고 로그인중인 유저에게 알람보내기
 
 @Controller
+@RequestMapping("/socket/*")
 public class EchoHandler extends TextWebSocketHandler{
+	
+	@Autowired BookingService bookingService;
 	
 	//로그인한 전체 유저
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 	// 로그인중인 개별유저
 	Map<String, WebSocketSession> users = new ConcurrentHashMap<String, WebSocketSession>();
+
+	String url="";
+	
+	//s:1011 진료방 링크 구하기
+	@GetMapping("/getRmId")
+	@ResponseBody
+	private BookingVO getRmId(int bookingNo) {
+		BookingVO vo= bookingService.getRoomId(bookingNo);
+		System.out.println(vo+"진료방아이디 확인!!");
+		
+		return vo;
+	}
 	
 	
 	// 클라이언트가 서버로 연결시
@@ -34,34 +55,41 @@ public class EchoHandler extends TextWebSocketHandler{
 		if(senderId!=null) {	// 로그인 값이 있는 경우만
 			log(senderId + " 연결 됨");
 			users.put(senderId, session);   // 로그인중 개별유저 저장
-			System.out.println(users+"users 보기");
+			System.out.println(users+" users 보기");
 			sessions.add(session); //전체 유저에 저장(이거 근데 필요 없을거같은데)
 		}
 	}
 	// 클라이언트가 Data 전송 시
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		System.out.println("노드에서 호출됨");
+		
 		String senderId = getMemberId(session);
+		System.out.println(senderId);
 		// 특정 유저에게 보내기
 		String msg = message.getPayload();
+		System.out.println(msg);
 		if(msg != null) {
-			String[] strs = msg.split(",");
-			log(strs.toString());
-			if(strs != null && strs.length == 4) {
-				String type = strs[0];
-				String target = strs[1]; // m_id 저장
-				String content = strs[2];
-				String url = strs[3];
-				WebSocketSession targetSession = users.get(target);  // 메시지를 받을 세션 조회
-				
-				// 실시간 접속시
-				if(targetSession!=null) {
-					// ex: [&분의일] 신청이 들어왔습니다.
-					TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>" );
-					targetSession.sendMessage(tmpMsg);
-				}
-			}
+			TextMessage tmpMsg = new TextMessage("<a target=\"_blank\" href="+msg+">진료실이 준비되었습니다. 링크를 클릭하여 진료실로 이동해 주세요.</a>");
+			System.out.println(tmpMsg.toString());
+			users.get("user1").sendMessage(tmpMsg);
+			System.out.println("msg sent");
+			
+//			String[] strs = msg.split(",");
+//			log(strs.toString());
+//			if(strs != null && strs.length == 4) {
+//				String type = strs[0];
+//				String target = strs[1]; // m_id 저장
+//				String content = strs[2];
+//				String url = strs[3];
+//				WebSocketSession targetSession = users.get(target);  // 메시지를 받을 세션 조회
+//				
+//				// 실시간 접속시
+//				if(targetSession!=null) {
+//					// ex: [&분의일] 신청이 들어왔습니다.
+//					//TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>" );
+//					targetSession.sendMessage(tmpMsg);
+//				}
+//			}
 		}
 	}
 	// 연결 해제될 때

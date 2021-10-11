@@ -252,9 +252,11 @@
 
 <!-- s:0929 진료시간중 10초마다 진료경로 검색 -->
 <select id="getRoomId" resultType="BookingVO">
-	SELECT BOOKING_NO, ROOM_ID, PT_NO, CONSULT_TIME
+	<!-- SELECT BOOKING_NO, ROOM_ID, PT_NO, CONSULT_TIME
 	FROM BOOKING
-	WHERE PAY_STATUS='y' AND BOOKING_STATUS='y' AND TO_CHAR(CONSULT_DATE, 'YYYY-MM-dd') = TO_CHAR(sysdate, 'YYYY-MM-dd') AND ROOM_ID IS NOT NULL
+	WHERE PAY_STATUS='y' AND BOOKING_STATUS='y' AND TO_CHAR(CONSULT_DATE, 'YYYY-MM-dd') = TO_CHAR(sysdate, 'YYYY-MM-dd') AND ROOM_ID IS NOT NULL -->
+	
+	select Room_id, pt_no from booking where booking_no = #{bookingNo}
 </select>
 
 <!-- s:1003 단일예약정보 조회: 노드에서 요청 -->
