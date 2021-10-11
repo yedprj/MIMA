@@ -22,14 +22,14 @@ public interface BookingService {
 	// 닥터 대쉬보드 예약관리 페이지_J
 	public List<BookingVO> apptList(int memberNo);
 	
+	// 닥터 대쉬보드 예약관리 페이지 셀렉트 박스 예정된 목록_J11
+	public List<BookingVO> apptListSoon(int memberNo);
+	
+	// 닥터 대쉬보드 예약관리 페이지 셀렉트 박스 취소된 목록_J11
+	public List<BookingVO> apptListCanceled(int memberNo);
+	
 	// 닥터 대쉬보드 진료내역 페이지_J29
 	public List<BookingVO> apptHistoryList();
-	
-	// 닥터 대쉬보드 예약관리 페이징_J06
-	public List<BookingVO> apptListPage(Criteria cri);
-	
-	// 닥터 대쉬보드 예약관리 페이징 데이터 수 전체조회_J06
-	public int apptListCount(Criteria cri);
 	
 	// 닥터 대쉬보드 진료내역 페이징_J06
 	public List<BookingVO> apptHistoryPage(Criteria cri);

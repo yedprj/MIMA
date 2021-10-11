@@ -116,7 +116,7 @@ th, td {
 															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
 														</figure>
 														<h5>${apptList.name}</h5>
-														<span class="ptno"># no.${apptList.ptNo}</span>
+														<span class="ptno"># ${apptList.ptNo}</span>
 													</div>
 												</td>
 												<td>${apptList.bookingNo}</td>
@@ -138,20 +138,10 @@ th, td {
 														<span class="status cancel">취소완료</span>
 													</c:if>
 												</td>
-												<td>
-													<c:if test="${apptList.bookingStatus == 'y' || apptList.bookingStatus == 'p'}">
-														<!-- 버튼 기능 구현을 위해 수정 p.10/10  -->
-                                                    	<button class="cancel" id="paymentCancel" name="paymentCancel">
-                                                    		<i class="fas fa-times"></i>Cancel
-                                                    	</button>
-													</c:if>
-												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-								<input type="hidden" id="bookingNo" name="bookingNo" value="${apptList.bookingNo}">
 							</div>
 						</div>
 						
@@ -169,39 +159,34 @@ th, td {
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${apptList}" var="apptList">
+										<c:forEach items="${apptListSoon}" var="apptListSoon">
 											<tr>
 												<td>
 													<div class="name-box">
 														<figure class="image">
 															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
 														</figure>
-														<h5>${apptList.name}</h5>
-														<span class="ptno"># no.${apptList.ptNo}</span>
+														<h5>${apptListSoon.name}</h5>
+														<span class="ptno"># no.${apptListSoon.ptNo}</span>
 													</div>
 												</td>
-												<td>${apptList.bookingNo}</td>
-												<td><fmt:formatDate value="${apptList.consultDate}"
-														pattern="yy-MM-dd" /> <span class="time">${apptList.consultTime}</span>
+												<td>${apptListSoon.bookingNo}</td>
+												<td><fmt:formatDate value="${apptListSoon.consultDate}"
+														pattern="yy-MM-dd" /> <span class="time">${apptListSoon.consultTime}</span>
 												</td>
-												<td><fmt:formatDate value="${apptList.bookingDate}"
+												<td><fmt:formatDate value="${apptListSoon.bookingDate}"
 														pattern="yy-MM-dd" /></td>
 												<td><fmt:setLocale value="ko_KR" />
-													<fmt:formatNumber type="currency" value="${apptList.price}" /></td>
+													<fmt:formatNumber type="currency" value="${apptListSoon.price}" /></td>
 												<td>
-													<c:if test="${apptList.bookingStatus eq 'p'}">
+													<c:if test="${apptListSoon.bookingStatus eq 'p'}">
 														<span class="status">결제완료</span>
 													</c:if>
-													<c:if test="${apptList.bookingStatus eq 'y'}">
+													<c:if test="${apptListSoon.bookingStatus eq 'y'}">
 														<span class="status pending">결제예정</span>
 													</c:if>
-													<c:if test="${apptList.bookingStatus eq 'c'}">
+													<c:if test="${apptListSoon.bookingStatus eq 'c'}">
 														<span class="status cancel">취소완료</span>
-													</c:if>
-												</td>
-												<td>
-													<c:if test="${apptList.bookingStatus == 'y' || apptList.bookingStatus == 'p'}">
-                                                    	<button class="cancel"><i class="fas fa-times"></i>Cancel</button>
 													</c:if>
 												</td>
 											</tr>
@@ -225,39 +210,34 @@ th, td {
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${apptList}" var="apptList">
+										<c:forEach items="${apptListCanceled}" var="apptListCanceled">
 											<tr>
 												<td>
 													<div class="name-box">
 														<figure class="image">
 															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
 														</figure>
-														<h5>${apptList.name}</h5>
-														<span class="ptno"># no.${apptList.ptNo}</span>
+														<h5>${apptListCanceled.name}</h5>
+														<span class="ptno"># no.${apptListCanceled.ptNo}</span>
 													</div>
 												</td>
-												<td>${apptList.bookingNo}</td>
-												<td><fmt:formatDate value="${apptList.consultDate}"
-														pattern="yy-MM-dd" /> <span class="time">${apptList.consultTime}</span>
+												<td>${apptListCanceled.bookingNo}</td>
+												<td><fmt:formatDate value="${apptListCanceled.consultDate}"
+														pattern="yy-MM-dd" /> <span class="time">${apptListCanceled.consultTime}</span>
 												</td>
-												<td><fmt:formatDate value="${apptList.bookingDate}"
+												<td><fmt:formatDate value="${apptListCanceled.bookingDate}"
 														pattern="yy-MM-dd" /></td>
 												<td><fmt:setLocale value="ko_KR" />
-													<fmt:formatNumber type="currency" value="${apptList.price}" /></td>
+													<fmt:formatNumber type="currency" value="${apptListCanceled.price}" /></td>
 												<td>
-													<c:if test="${apptList.bookingStatus eq 'p'}">
+													<c:if test="${apptListCanceled.bookingStatus eq 'p'}">
 														<span class="status">결제완료</span>
 													</c:if>
-													<c:if test="${apptList.bookingStatus eq 'y'}">
+													<c:if test="${apptListCanceled.bookingStatus eq 'y'}">
 														<span class="status pending">결제예정</span>
 													</c:if>
-													<c:if test="${apptList.bookingStatus eq 'c'}">
+													<c:if test="${apptListCanceled.bookingStatus eq 'c'}">
 														<span class="status cancel">취소완료</span>
-													</c:if>
-												</td>
-												<td>
-													<c:if test="${apptList.bookingStatus == 'y' || apptList.bookingStatus == 'p'}">
-                                                    	<button class="cancel"><i class="fas fa-times"></i>Cancel</button>
 													</c:if>
 												</td>
 											</tr>
@@ -271,25 +251,6 @@ th, td {
 				</div>
 			</div>
 
-			<!-- pagination  -->
-			<div id="allPaging" class="pagination-wrapper" style="display: block;">
-				<ul class="pagination">
-					<c:if test="${pageMaker.prev}">
-						<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/apptManage?pageNum=${pageMaker.startPage-1}">이전</a></li>
-					</c:if>
-						
-					<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-						<li class="paginate_button"><a href="${pageContext.request.contextPath}/apptManage?pageNum=${num}">${num}</a></li>
-					</c:forEach>
-						
-					<c:if test="${pageMaker.next}">
-						<li class="paginate_button next"><a href="${pageContext.request.contextPath}/apptManage?pageNum=${pageMaker.endPage+1}">다음</a></li>
-					</c:if>
-				</ul>
-			</div>
-			<!-- pagination end -->
-			
-			
 		</div>
 	</div>
 
