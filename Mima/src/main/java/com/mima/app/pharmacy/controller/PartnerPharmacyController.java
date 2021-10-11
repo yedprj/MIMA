@@ -19,7 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.meditation.domain.MeditAttachVO;
+import com.mima.app.member.domain.ExperienceVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
@@ -38,12 +42,11 @@ public class PartnerPharmacyController {
 	
 	// 약국 대쉬보드 [K]210929 
 	@GetMapping("/pharmacyDash")
-	public void pharmacyDash(PartnerPharmacyVO pvo, Model model, HttpServletRequest request) {
+	public void pharmacyDash(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
-		pvo.setMemberNo(memberNo);
-		model.addAttribute("profile", partPhaService.selectOne(pvo));
+		model.addAttribute("profile", partPhaService.selectOne(memberNo));
 	}
 	
 	// 약배달 관리페이지 [K]210929
@@ -56,8 +59,11 @@ public class PartnerPharmacyController {
 	
 	// 프로필 페이지 [K]210929
 	@GetMapping("/myProfile")
-	public void myProfile(PartnerPharmacyVO vo, Model model) {
-		model.addAttribute("profile", partPhaService.selectOne(vo));
+	public void myProfile(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		model.addAttribute("profile", partPhaService.selectOne(memberNo));
 	}
 	
 	// 프로필 수정 - ajax [K]210929
@@ -87,39 +93,59 @@ public class PartnerPharmacyController {
 	@PostMapping("/pwConfirm")
 	@ResponseBody
 	public MemberVO pwConfirm(@RequestBody MemberVO vo, Model model,HttpServletRequest request) {
-		
 		return  memberSerivce.memberLogin(vo);
 	}
 	
 	
+	//K.10/11 약국프로필등록
+	@PostMapping("/register")
+	public String register(PartnerPharmacyVO vo, MemberVO mVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
+		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
+		//K.10/11 파트너약국테이블에 저장
+		partPhaService.profileUpdate(vo);
+		
+		//K.10/11 멤버 테이블 주소 업데이트
+		mVo.setAddr1(vo.getDeliveryArea());
+		mVo.setAddr2(vo.getDeliveryArea2());
+		mVo.setAddr3(vo.getDeliveryArea3());
+		mVo.setPostcode(vo.getPharmacyPostCode());
+		mVo.setMemberNo(vo.getMemberNo());
+		partPhaService.phaAddrUpdate(mVo);
+		
+		System.out.println("파트너 약사 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
+		
+		rttr.addFlashAttribute("result", vo.getMemberNo());
+		return "redirect:/pharmacy/pharmacyDash"; // 파라미터 전달하고 싶을 때 redirectAttr사용
+	} 
 	
-	// 파일 
-	
-	// Ajax
-	@PostMapping("/uploadAjaxAction")
+	//K.10/11 첨부파일 등록 폼-- 약국 프로필사진
+	@PostMapping("/phaAjaxInsert")
 	@ResponseBody
-	public List<PhaDataVO> uploadAjaxAction(MultipartFile[] upLoadFile, PhaDataVO vo) throws IllegalStateException, IOException{
-		// 첨부파일 부분
-		List<PhaDataVO> list = new ArrayList<PhaDataVO>();
-		String path = "c:/upload";
-		for (int i = 0; i < upLoadFile.length; i++) {
-			MultipartFile ufile = upLoadFile[i];
-			if (!ufile.isEmpty() && ufile.getSize() > 0) {
-				String fileName = ufile.getOriginalFilename();
-				UUID uuid = UUID.randomUUID();
-				File file = new File(path, uuid + fileName);
-				ufile.transferTo(file); // 실제위치로 전송
-				// 파일정보
-				PhaDataVO attachvo = new PhaDataVO();
-				/*
-				 * attachvo.setid.toString()); 
-				 * attachvo.setFileName(fileName);
-				 * attachvo.setUploadPath(path); 
-				 * list.add(attachvo);
-				 */
-			}
+	// 업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
+	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
+			throws IllegalStateException, IOException {
+		MeditAttachVO attachVo = null;
+		String path = "C:/upload";
+
+		MultipartFile uFile = uploadFile;
+		if (!uFile.isEmpty() && uFile.getSize() > 0) {
+			String filename = uFile.getOriginalFilename(); // 사용자가 업로드한 파일명
+
+			// 파일 자체도 보안을 걸기 위해 파일이름 바꾸기도 한다. 원래 파일명과 서버에 저장된 파일이름을 따로 관리
+			// String saveName = System.currentTimeMillis()+""; //이거를 팀별로 상의해서 지정해 주면 된다.
+			// File file =new File("c:/upload", saveName);
+			UUID uuid = UUID.randomUUID();
+			File file = new File(path, uuid + filename);
+			uFile.transferTo(file);
+
+			attachVo = new MeditAttachVO(); // attachVO list안에 파일정보 저장하기 위해 만듦
+			attachVo.setPImgName(filename);
+			attachVo.setUuid(uuid.toString());
+			attachVo.setUploadPath(path);
+
+			System.out.println(attachVo);
 		}
-		return list;
+		return attachVo;
 	}
 	
 	/*

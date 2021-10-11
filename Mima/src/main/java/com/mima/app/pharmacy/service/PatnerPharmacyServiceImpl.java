@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.member.domain.MemberVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.mapper.PartnerPharmacyMapper;
 
@@ -16,8 +17,8 @@ public class PatnerPharmacyServiceImpl implements PatnerPharmacyService {
 	
 	// [K]210929 - 약국한건조회
 	@Override
-	public PartnerPharmacyVO selectOne(PartnerPharmacyVO vo) {
-		return partPhaMapper.selectOne(vo);
+	public PartnerPharmacyVO selectOne(int memberNo) {
+		return partPhaMapper.selectOne(memberNo);
 	}
 
 	// [K] 210929 - 약국 프로필 수정
@@ -30,6 +31,12 @@ public class PatnerPharmacyServiceImpl implements PatnerPharmacyService {
 	@Override
 	public List<PartnerPharmacyVO> pharmacySearch(Criteria cri) {
 		return partPhaMapper.pharmacySearch(cri);
+	}
+	
+	// k.10/11 - 약국 수정시 멤버 주소 변경
+	@Override
+	public int phaAddrUpdate(MemberVO vo) {
+		return partPhaMapper.phaAddrUpdate(vo);
 	}
 
 }

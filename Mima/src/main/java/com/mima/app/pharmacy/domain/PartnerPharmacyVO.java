@@ -15,4 +15,8 @@ public class PartnerPharmacyVO {
 	private String deliveryArea;	// 배달 가능 지역 ->[K]210929 약국 주소로 사용
 	private Date regDate;			// 등록일
 	private Date editDate;			// 수정일
+	private String pharmacyPostCode; // 우편번호
+	private String deliveryArea2;	// 약국 도로명주소
+	private String deliveryArea3;	// 약국 상세주소
+	private String openHours;		// 약국 영업시간 -> String 으로 전부 합쳐서 받음
 }

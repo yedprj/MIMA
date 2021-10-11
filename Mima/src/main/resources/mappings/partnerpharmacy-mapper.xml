@@ -54,6 +54,7 @@
 		WHERE MEMBER_NO = #{memberNo}
 	</select>
 
+	<!-- 약국 프로필 수정 -->
 	<update id="profileUpdate">
 		UPDATE PARTNER_PHARMACY
 			SET PROFILE_PHOTO = #{profilePhoto},
@@ -61,8 +62,22 @@
 			PHARMACY_CONTACT = #{pharmacyContact},
 			PHARMACY_EMAIL = #{pharmacyEmail},
 			DELIVERY_AREA = #{deliveryArea},
+			DELIVERY_AREA2 = #{deliveryArea2},
+			DELIVERY_AREA3 = #{deliveryArea3},
 			EDIT_DATE = SYSDATE
 		WHERE MEMBER_NO = #{memberNo};
+	</update>
+	
+	<!-- 약국 프로필 주소 수정시 멤버 테이블 주소도 수정 -->
+	<update id="phaAddrUpdate">
+		UPDATE MEMBER
+			SET
+				ADDR1=#{addr1},
+				EDIT_DATE=sysdate,
+				ADDR2=#{addr2},
+				ADDR3=#{addr3},
+				POSTCODE=#{postcode}
+		WHERE MEMBER_NO=#{memberNo}
 	</update>
 
 </mapper>
