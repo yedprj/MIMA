@@ -134,7 +134,7 @@ input::placeholder {
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${profile.pharmacyInfo}</h3>
-						<p>Qualitative Pharmacy</p>
+						<p>${profile.profileContents}</p>
 					</div>
 				</div>
 			</div>
@@ -208,84 +208,84 @@ input::placeholder {
                                   </div>
                                   <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                       <label>영업 시간</label>
-                                      <div class="row">
+                                      <div class="row openHour">
                                      	   <div class="col-lg-2 col-md-6 col-sm-12 form-group">
                                                <label>&nbsp;&nbsp;&nbsp;</label>
-                                               <label><input type="checkbox" name="mon" >월요일</label>
+                                               <label><input type="checkbox" name="is_check" value="mon" >월요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
                                                <label>오픈 시간</label>
-                                               <input type="text" name="monOpen" placeholder="ex) AM 09:00">
+                                               <input type="text" id="mon_open" name="open" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
                                                <label>마감 시간</label>
-                                               <input type="text" name="monClose" placeholder="ex) PM 06:00">
+                                               <input type="text" id="mon_close" name="close" placeholder="ex) PM 06:00">
                                            </div>
                                      		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                            </div>
                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
-                                               <label><input type="checkbox" name="tus" >화요일</label>
+                                               <label><input type="checkbox" name="is_check" value="tue">화요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="tusOpen" placeholder="ex) AM 09:00">
+                                               <input type="text" id="tue_open" name="tue_open" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="tusClose" required="">
+                                               <input type="text" id="tue_close" name="tue_close" placeholder="ex) PM 06:00">
                                            </div>
                                      		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                            </div>
                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
-                                               <label><input type="checkbox" name="wen" required="">수요일</label>
+                                               <label><input type="checkbox" name="is_check" value="wen">수요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="wenOpen" placeholder="ex) AM 09:00">
+                                               <input type="text" id="wen_open" name="wen_open" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="monClose" required="">
+                                               <input type="text" id="wen_close" name="wen_close" placeholder="ex) PM 06:00">
                                            </div>
                                      		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                            </div>
                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
-                                               <label><input type="checkbox" name="thu" required="">목요일</label>
+                                               <label><input type="checkbox" name="is_check" value="thu">목요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="thuOpen" placeholder="ex) AM 09:00">
+                                               <input type="text" id="thu_open" name="thu_open" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="thuClose" required="">
+                                               <input type="text" id="thu_close" name="thu_close" placeholder="ex) PM 06:00">
                                            </div>
                                      		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                            </div>
                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
-                                               <label><input type="checkbox" name="fri" required="">금요일</label>
+                                               <label><input type="checkbox" name="is_check" value="fri">금요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="friOpen" placeholder="ex) AM 09:00">
+                                               <input type="text" id="fri_open" name="fri_open" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="friClose" required="">
+                                               <input type="text" id="fri_close" name="fri_close" placeholder="ex) PM 06:00">
                                            </div>
                                      		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                            </div>
                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
-                                               <label><input type="checkbox" name="sat" required="">토요일</label>
+                                               <label><input type="checkbox" name="is_check" value="sat">토요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="satOpen" placeholder="ex) AM 09:00">
+                                               <input type="text" id="sat_open" name="sat_open" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="satClose" required="">
+                                               <input type="text" id="sat_close" name="sat_close" placeholder="ex) PM 06:00">
                                            </div>
                                      		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                            </div>
                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
-                                               <label><input type="checkbox" name="sun" required="">일요일</label>
+                                               <label><input type="checkbox" name="is_check" value="sun" >일요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="sunOpen" placeholder="ex) AM 09:00">
+                                               <input type="text" id="sun_open" name="sun_open" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="sunClose" required="">
+                                               <input type="text" id="sun_close" name="sun_close" placeholder="ex) PM 06:00">
                                            </div>
                                      		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
                                            </div>
@@ -502,14 +502,38 @@ $(function(){
 	
 	//btnRegister event  textbook 564page
 	$("#btnRegister").on('click', function(e){
+		var openHours = "";
+		$("input[name=is_check]:checked").each(function(){
+			var chk = $(this).val();
+			if(chk == "mon"){
+				openHours += " 월 "+ $("#mon_open").val() + " - " + $("#mon_close").val() + "\n"; 
+			}else if(chk == "tue"){
+				openHours += " 화 "+ $("#tue_open").val() + " - " + $("#tue_close").val() + "\n"; 
+			}else if(chk == "wen"){
+				openHours += " 수 "+ $("#wen_open").val() + " - " + $("#wen_close").val() + "\n"; 
+			}else if(chk == "thu"){
+				openHours += " 목 "+ $("#thu_open").val() + " - " + $("#thu_close").val() + "\n"; 
+			}else if(chk == "fri"){
+				openHours += " 금 "+ $("#fri_open").val() + " - " + $("#fri_close").val() + "\n"; 
+			}else if(chk == "sat"){
+				openHours += " 토 "+ $("#sat_open").val() + " - " + $("#sat_close").val() + "\n"; 
+			}else if(chk == "sun"){
+				openHours += " 일 "+ $("#sun_open").val() + " - " + $("#sun_close").val(); 
+			}else {	}
+			
 		var str = "";
 		var li = $("#uploaded li");
 			str += "<input type='hidden' name='attachFile.pImgName' value='"+li.data("pimgname")+"'>";
 		    str += "<input type='hidden' name='attachFile.uuid' value='"+li.data("uuid")+"'>";
 		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
 		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+"'>";
+		    str += "<input type='hidden' name='openHours'  value='"+ openHours +"'>";
 		    
 		$("#phaInsertFrm").append(str);
+		
+		
+		});
+		
 		alert("프로필 등록이 완료되었습니다.")
 		$("#phaInsertFrm").submit();
 		
@@ -519,7 +543,7 @@ $(function(){
 	$("#uploaded").on("click", "button", function(e){
 		if(confirm("파일을 삭제하시겠습니까?")){
 			var targetLi = $(this).closest("li");
-			var preview=$('#profileImg');
+			var preview = $('#profileImg');
 			targetLi.remove();
 			//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
 			$(preview).removeAttr('src');

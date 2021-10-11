@@ -36,7 +36,7 @@
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${profile.pharmacyInfo}</h3>
-						<p>Qualitative Pharmacy</p>
+						<p>${profile.profileContents}</p>
 					</div>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review"><i class="fas fa-star"></i>약국 후기</a></li>
 					<li><a id="ques" href="${pageContext.request.contextPath}/pharmacy/phaQna"><i class="fas fa-comments"></i>문의</a><span>20</span></li>
 					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile"><i class="fas fa-user"></i>약국 프로필</a></li>
-					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate?memberNo=${session.memberNo}"><i
+					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li><a id="logout" href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 				</ul>

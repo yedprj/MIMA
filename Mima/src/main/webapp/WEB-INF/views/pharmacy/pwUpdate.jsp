@@ -36,7 +36,7 @@
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${profile.pharmacyInfo}</h3>
-						<p>Qualitative Pharmacy</p>
+						<p>${profile.profileContents}</p>
 					</div>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review"><i class="fas fa-star"></i>약국 후기</a></li>
 					<li><a id="ques" href="${pageContext.request.contextPath}/pharmacy/phaQna"><i class="fas fa-comments"></i>문의</a><span>20</span></li>
 					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile"><i class="fas fa-user"></i>약국 프로필</a></li>
-					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate?memberNo=${session.memberNo}" class="current"><i
+					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate" class="current"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li><a id="logout" href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 				</ul>
@@ -70,8 +70,8 @@
                                         <div class="row clearfix">
                                         	<div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                                 <label>현재 비밀번호</label>
-                                                <input type="hidden" name="id" value="${memberNo}">
-                                                <input type="password" id="password" name="password2" >
+                                                <input type="hidden" name="id" value="${memberId}">
+                                                <input type="password" id="password" name="password" >
                                             </div>
                                             <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                                 <span class="accept"><i class="fas fa-check"></i>체크</span>
@@ -106,8 +106,10 @@
 <script>
 	
 	var memberId = $("input[name='id']").val();
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 
-	// 현재 비밀번호 확인  - 시큐리티 때문에 아직 테스트 못해봄 ㅠㅠ
+	// 현재 비밀번호 확인
 	$("#password").on("change", function(){
 		var password = $("input[name='password']").val();
 		if(password == ""){
@@ -121,6 +123,9 @@
 				memberId : memberId,
 				password : password
 			}),
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			contentType : 'application/json',
 			success : function(data) {
 				if(data.password == password){

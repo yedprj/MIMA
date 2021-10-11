@@ -62,10 +62,11 @@
 			PHARMACY_CONTACT = #{pharmacyContact},
 			PHARMACY_EMAIL = #{pharmacyEmail},
 			DELIVERY_AREA = #{deliveryArea},
-			DELIVERY_AREA2 = #{deliveryArea2},
-			DELIVERY_AREA3 = #{deliveryArea3},
+			DELIVERY_AREA2 = #{deliveryArea2, jdbcType=VARCHAR},
+			DELIVERY_AREA3 = #{deliveryArea3, jdbcType=VARCHAR},
+			OPEN_HOURS = #{openHours, jdbcType=VARCHAR},
 			EDIT_DATE = SYSDATE
-		WHERE MEMBER_NO = #{memberNo};
+		WHERE MEMBER_NO = #{memberNo}
 	</update>
 	
 	<!-- 약국 프로필 주소 수정시 멤버 테이블 주소도 수정 -->
@@ -73,9 +74,9 @@
 		UPDATE MEMBER
 			SET
 				ADDR1=#{addr1},
-				EDIT_DATE=sysdate,
-				ADDR2=#{addr2},
-				ADDR3=#{addr3},
+				EDIT_DATE=SYSDATE,
+				ADDR2=#{addr2, jdbcType=VARCHAR},
+				ADDR3=#{addr3, jdbcType=VARCHAR},
 				POSTCODE=#{postcode}
 		WHERE MEMBER_NO=#{memberNo}
 	</update>

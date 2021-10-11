@@ -2,14 +2,13 @@ package com.mima.app.pharmacy.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.meditation.domain.MeditAttachVO;
-import com.mima.app.member.domain.ExperienceVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
-import com.mima.app.pharmacy.domain.PhaDataVO;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
 
 import lombok.extern.java.Log;
@@ -39,6 +35,8 @@ public class PartnerPharmacyController {
 	
 	@Autowired PatnerPharmacyService partPhaService;
 	@Autowired MemberService memberSerivce;
+	@Autowired BCryptPasswordEncoder cryptEncoder;
+
 	
 	// 약국 대쉬보드 [K]210929 
 	@GetMapping("/pharmacyDash")
@@ -84,23 +82,31 @@ public class PartnerPharmacyController {
 
 	// 비밀번호 변경페이지 [K]210929
 	@GetMapping("/pwUpdate")
-	public void pwConfirmPage(PartnerPharmacyVO vo, Model model, HttpServletRequest request) {
-		
-		model.addAttribute("memberNo", vo.getMemberNo());
+	public void pwConfirmPage(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		model.addAttribute("memberId", vo.getMemberId());
+		model.addAttribute("profile", partPhaService.selectOne(vo.getMemberNo()));
 	}
 	
-	// 현재 비밀번호 확인페이지 [K]210929
+	// 현재 비밀번호 확인페이지 [K]10.12s
 	@PostMapping("/pwConfirm")
 	@ResponseBody
-	public MemberVO pwConfirm(@RequestBody MemberVO vo, Model model,HttpServletRequest request) {
-		return  memberSerivce.memberLogin(vo);
+	public boolean pwConfirm(@RequestBody MemberVO vo,HttpServletRequest request) {
+		boolean result = false;
+		MemberVO mvo = new MemberVO();
+		mvo = memberSerivce.findPassword1(vo.getMemberId());
+		if(cryptEncoder.matches(vo.getPassword(), mvo.getPassword())) {
+			result = true;
+		}
+		return result;
 	}
 	
 	
 	//K.10/11 약국프로필등록
 	@PostMapping("/register")
 	public String register(PartnerPharmacyVO vo, MemberVO mVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
-		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
+		System.out.println("파트너 약국 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
 		//K.10/11 파트너약국테이블에 저장
 		partPhaService.profileUpdate(vo);
 		
@@ -112,7 +118,7 @@ public class PartnerPharmacyController {
 		mVo.setMemberNo(vo.getMemberNo());
 		partPhaService.phaAddrUpdate(mVo);
 		
-		System.out.println("파트너 약사 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
+		System.out.println("파트너 약국 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
 		
 		rttr.addFlashAttribute("result", vo.getMemberNo());
 		return "redirect:/pharmacy/pharmacyDash"; // 파라미터 전달하고 싶을 때 redirectAttr사용
