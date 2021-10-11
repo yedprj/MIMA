@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
@@ -22,6 +23,7 @@ import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
+import com.mima.app.member.service.MemberService;
 import com.mima.app.member.service.PatientsService;
 import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
@@ -36,8 +38,12 @@ import lombok.extern.java.Log;
 @Controller
 public class PatientsController {
 	
+	// e.10/11 환자대쉬보드
 	@Autowired PatientsService patientsService;
+	
 	@Autowired CommentsService commentsService;
+	// e.10/11 비밀번호 변경 페이지
+	@Autowired MemberService memberService;
 	// K.10/07 약국 서비스
 	@Autowired PatnerPharmacyService phaService;
 	// K.10/09 약배달
@@ -121,6 +127,21 @@ public class PatientsController {
 		model.addAttribute("getPtqList", patientsService.getPtqList(cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptQna";
+	}
+	
+	// 환자 대쉬보드 비밀번호 변경 페이지 수정 폼 e.11
+	@GetMapping("/ptPwChangeForm")
+	public String ptPwUpdateForm() {
+		
+		return "patients/ptPwChange";
+	}
+	
+	//환자 대쉬보드 비밀번호 변경 페이지 수정 처리 e.11
+	@PostMapping("/ptPwChange")
+	public String ptPwUpdate(RedirectAttributes rttr, MemberVO vo) {
+		memberService.ptPwChange(vo);
+		rttr.addAttribute("ptPwUpdateResult", vo.getMemberId());
+		return "redirect:/ptPwChange";
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/09

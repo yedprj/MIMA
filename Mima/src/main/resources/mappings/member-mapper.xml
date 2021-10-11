@@ -176,6 +176,14 @@
 		WHERE MEMBER_ID = #{memberId}
 	</update>
 	
+	
+	<!-- 환자 대쉬보드 비밀번호 변경 e.11  -->
+	<update id="ptPwChange">
+		UPDATE MEMBER
+		SET PASSWORD = #{password}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
 	<!-- 닥터 대쉬보드 나의 환자들 조회_J06 -->
 	<select id="patientList">
 		<![CDATA[
