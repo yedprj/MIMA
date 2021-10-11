@@ -202,8 +202,8 @@ public class PatientsController {
 	//약국 번호로 약국명 조회 K.10/10
 	@PostMapping("phaNameSearch")
 	@ResponseBody
-	public PartnerPharmacyVO phaNameSearch(@RequestBody PartnerPharmacyVO vo ){
-		return phaService.selectOne(vo);
+	public PartnerPharmacyVO phaNameSearch(@RequestBody PartnerPharmacyVO vo){
+		return phaService.selectOne(vo.getMemberNo());
 	}
 	
 	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동

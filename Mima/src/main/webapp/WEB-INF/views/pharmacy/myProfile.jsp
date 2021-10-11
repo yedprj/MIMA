@@ -94,6 +94,10 @@
     max-width: 100%;
     width: 100% \9;
 }
+input::placeholder {
+  color: #d9d9d9;
+  font-style: italic;
+}
 </style>
 <!--page-title-two-->
 <section class="page-title-two">
@@ -142,7 +146,7 @@
 					<li><a id="guid" href="${pageContext.request.contextPath}/pharmacy/medGuid"><i class="fas fa-comment-medical"></i>복약지도관리</a></li>
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review"><i class="fas fa-star"></i>약국 후기</a></li>
 					<li><a id="ques" href="${pageContext.request.contextPath}/pharmacy/phaQna"><i class="fas fa-comments"></i>문의</a><span>20</span></li>
-					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile?memberNo=${session.memberNo}" class="current"><i class="fas fa-user"></i>약국 프로필</a></li>
+					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile" class="current"><i class="fas fa-user"></i>약국 프로필</a></li>
 					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate?memberNo=${session.memberNo}"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li><a id="logout" href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
@@ -164,7 +168,7 @@
                         <div class="inner-box">
                             <div class="profile-title">
                                 <div>
-                                    <figure class="image-box"><img width="300" height="300"  id="profileImg" src="${pageContext.request.contextPath}/assets/images/resource/profile-3.png" alt="프로필 미리보기"></figure>
+                                    <figure class="image-box"><img width="300" height="300"  id="profileImg" src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png" alt="프로필 미리보기"></figure>
                                     <ul id="uploaded"></ul>
                                 </div>
                                 <div class="upload-photo">
@@ -194,27 +198,112 @@
                     </div>
                     <div class="single-box">
                         <div class="title-box">
-                            <h3>About Me</h3>
+                            <h3>약국 상세</h3>
                         </div>
                         <div class="inner-box">
-                                <div class="row clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                        <label>약국 소개</label>
-                                        <textarea id="profileContents" name="profileContents" placeholder="약국의 대한 간단한 소개를 적어주세요."></textarea>
-                                    </div>
-                                </div>
+                              <div class="row clearfix">
+                                  <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                      <label>약국 소개</label>
+                                      <textarea id="profileContents" name="profileContents" placeholder="약국의 대한 간단한 소개를 적어주세요." >${profile.profileContents}</textarea>
+                                  </div>
+                                  <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                      <label>영업 시간</label>
+                                      <div class="row">
+                                     	   <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                               <label>&nbsp;&nbsp;&nbsp;</label>
+                                               <label><input type="checkbox" name="mon" >월요일</label>
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <label>오픈 시간</label>
+                                               <input type="text" name="monOpen" placeholder="ex) AM 09:00">
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <label>마감 시간</label>
+                                               <input type="text" name="monClose" placeholder="ex) PM 06:00">
+                                           </div>
+                                     		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                           </div>
+                                           <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                               <label><input type="checkbox" name="tus" >화요일</label>
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="tusOpen" required="">
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="tusClose" required="">
+                                           </div>
+                                     		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                           </div>
+                                           <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                               <label><input type="checkbox" name="wen" required="">수요일</label>
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="wenOpen" required="">
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="monClose" required="">
+                                           </div>
+                                     		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                           </div>
+                                           <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                               <label><input type="checkbox" name="thu" required="">목요일</label>
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="thuOpen" required="">
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="thuClose" required="">
+                                           </div>
+                                     		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                           </div>
+                                           <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                               <label><input type="checkbox" name="fri" required="">금요일</label>
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="friOpen" required="">
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="friClose" required="">
+                                           </div>
+                                     		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                           </div>
+                                           <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                               <label><input type="checkbox" name="sat" required="">토요일</label>
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="satOpen" required="">
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="satClose" required="">
+                                           </div>
+                                     		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                           </div>
+                                           <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                               <label><input type="checkbox" name="sun" required="">일요일</label>
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="sunOpen" required="">
+                                           </div>
+                                           <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                               <input type="text" name="sunClose" required="">
+                                           </div>
+                                     		<div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                           </div>
+                                      </div>
+                                  </div>
+                              </div>
                         </div>
                     </div>
                     <div class="single-box">
                         <div class="title-box">
-                            <h3>약국 상세</h3>
+                            <h3>약국 주소</h3>
                         </div>
                         <div class="inner-box">
                             <div class="row clearfix">
 								<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 									<input type="hidden" id="confmKey" name="confmKey" value="" >
 									<input type="text" class="form-control form-control-user"
-										id="postcode" name="postcode" placeholder="우편번호" readonly>
+										id="postcode" name="postcode" placeholder="우편번호" readonly value="${profile.pharmacyPostCode}">
 								</div>
 	                           	<div class="col-lg-6 col-md-12 col-sm-12 form-group" >
 									<button type="button" onclick="execDaumPostcode();" class="theme-btn-one" style=" float:right;padding:9px 30px; ">
@@ -222,24 +311,26 @@
 								</div>
 								<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 									<input type="text" class="form-control" id="addr1"
-										name="addr1" placeholder="주소">
+										name="deliveryArea" placeholder="주소" value="${profile.deliveryArea}">
 								</div>
 								<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 									<input type="text" class="form-control" id="addr2"
-									name="addr2" placeholder="상세주소">
+									name="deliveryArea2" placeholder="상세주소" value="${profile.deliveryArea3}">
 								</div>
 								
 								<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 									<input type="text" class="form-control" id="addr3"
-										name="addr3" placeholder="참고항목">
+										name="deliveryArea3" placeholder="참고항목" value="${profile.deliveryArea2}">
 								</div>
                         	</div>
                     	</div>
                     </div>
-                    <div class="btn-box">
-                        <a id="updateBtn" class="theme-btn-one">프로필 수정<i class="icon-Arrow-Right"></i></a>
-                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     </form>
+                    <div class="btn-box d-flex flex-row-reverse">
+                        <button id="insertResetBtn" class="cancel-btn">Cancel</button>
+                        <button id="btnRegister" class="theme-btn-one">등록하기<i class="icon-Arrow-Right"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -248,166 +339,196 @@
 <!-- doctors-dashboard -->
         
 <script>
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-	// 이미지 파일 넣기 테스트
-	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-		var maxSize = 5242880; //5MB
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
 
-		function checkExtension(fileName, fileSize) {
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
 
-			if (fileSize >= maxSize) {
-				alert("파일 사이즈 초과");
-				return false;
-			}
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                document.getElementById("addr3").value = extraAddr;
+            
+            } else {
+                document.getElementById("addr3").value = '';
+            }
 
-			if (regex.test(fileName)) {
-				alert("해당 종류의 파일은 업로드할 수 없습니다.");
-				return false;
-			}
-			return true;
-		}
-		
-				
-		$("#uploadBtn").on("click", function(){ //업로드 버튼
-			var formData = new FormData(document.frm);
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('postcode').value = data.zonecode;
+            document.getElementById("addr1").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("addr2").focus();
+        }
+    }).open();
+}// 주소 api 끝
 
-			var inputFile = $("input[name='upLoadFile']");
-			var files = inputFile[0].files;
-			for(i=0; i<files.length; i++){
-				if( !checkExtension(files[i].name, files[i].size) )
-					return;				
-				formData.append("upLoadFile", files[i]);
-			} 
-			//formData
-			$.ajax({
-				processData : false,
-				contentType : false,
-				url : "../uploadAjaxAction",
-				method : "post",
-				data : formData ,
-				success : function(datas){
-					var str = "";
-					for(i=0; i<datas.length; i++){
-						var obj= datas[i];
-						var fileCallPath =  encodeURIComponent( obj.uploadPath+"/"+ obj.uuid +"_"+obj.fileName);			      
-					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
-					      
-						str += "<li "
-						str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"' ><div>";
-						str += "<span> "+ obj.fileName+"</span>";
-						str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
-						str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-						str += "<img src='../resources/img/attach.png'></a>";
-						str += "</div>";
-						str +"</li>";
-						
-						
-					}
-					$("#uploaded").html(str);
-					alert("uploaded");
-				}
-			}) // ajax end
-			
-			
-			
-		}); // btn end	
-
-
-
-
-// 파일 이미지 넣기
-/* $(document).ready(function(){
-
-    var fileTarget = $('.file-upload .upload-hidden');
-
-    fileTarget.on('change', function(){  // 값이 변경되면
-         if(window.FileReader){  // modern browser
-              var filename = $(this)[0].files[0].name;
-         } 
-         else {  // old IE
-              var filename = $(this).val().split('/').pop().split('\\').pop();  // 파일명만 추출
-         }
-
-         // 추출한 파일명 삽입
-         $(this).siblings('.upload-name').val(filename);
-    });
-}); 
-
-//preview image 
-var imgTarget = $('.preview-image .upload-hidden');
-
-imgTarget.on('change', function(){
-    var parent = $(this).parent();
-    parent.children('.upload-display').remove();
-
-    if(window.FileReader){
-         //image 파일만
-         if (!$(this)[0].files[0].type.match(/image\//)) return;
-
-         var reader = new FileReader();
-         reader.onload = function(e){
-              var src = e.target.result;
-              //parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-              $(".image-box > img").attr("src",src);
-              
-         }
-         reader.readAsDataURL($(this)[0].files[0]);
-    }
-
-    else {
-         $(this)[0].select();
-         $(this)[0].blur();
-         var imgSrc = document.selection.createRange().text;
-         parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
-
-         var img = $(this).siblings('.image-box').find('img');
-         img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
-    }
-});
-//파일 이미지 넣기 끝 
- */
-
-$(function() {
-	var memberNo = ${profile.memberNo};
+/* 페이지 로드 이벤트 */
+$(function(){
 	
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	
+    
+   
+	//s:1006 폼 전체 취소 버튼 누르면 의사메인으로 돌아가도록
+	$('#insertResetBtn').on('click', function(){
+		alert("취소하겠습니까? 약국 대시보드 메인으로 돌아갑니닷!");
+		document.location.href="${pageContext.request.contextPath}/pharmacy/pharmacyDash"
+	})//End of 폼 전체 취소 버튼 누르면 의사메인으로 돌아가도록
+	
+	//file insert start
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880; //5MB
 
 	function checkExtension(fileName, fileSize) {
+
 		if (fileSize >= maxSize) {
 			alert("파일 사이즈 초과");
 			return false;
 		}
+
 		if (regex.test(fileName)) {
 			alert("해당 종류의 파일은 업로드할 수 없습니다.");
 			return false;
 		}
 		return true;
 	}
-		
-	// 수정버튼 클릭
-	$("#updateBtn").on("click", function(){
-		// 수정 ajax 호출
-		$.ajax({
-			url : "profileUpdate",
-			method : "put",
-			dataType : "json",
-			data : JSON.stringify({
-				memberNo : memberNo,
-				profilePhoto : $('input[name="pharmacyphoto"]').val(),
-				profileContents : $('input[name="profileContents"]').val(),
-				pharmacyContact : $('input[name="pharmacyContact"]').val(),
-				pharmacyEmail : $('input[name="pharmacyEmail"]').val(),
-				deliveryArea : $('input[name="deliveryArea"]').val()
-			}),
-			contentType : 'application/json',
-			success : function(data) {
-				alert("프로필 수정이 완료되었습니다.");
-			}// success end
-		}); //  ajax end
-		
-		
-	}); // updateBtn end
 	
-}); // $.function end
+	//사진 미리보기
+	const input = document.getElementById('fileInput');
+	const profileImg =document.getElementById('profileImg');
+
+	
+	input.addEventListener('change', function() {
+	  const files = this.files || [];
+
+	  if (!files.length) return;
+	  
+	  const reader = new FileReader();
+
+	  reader.onload = function (e) {
+		profileImg.setAttribute('src', e.target.result);
+	  };
+	  
+	  reader.onprogress = function (e) {
+	    console.log('progress: ', Math.round((e.loaded * 100) / e.total));
+	  };
+	  
+	  reader.readAsDataURL(files[0]);
+	}); // 사진 미리보기
+	
+	
+	
+	//imgUpBtn 눌렀을 때 이벤트 설정 교재502페이지 --> 의사프로필사진 넣는거
+	$('#imgUpBtn').on("click", function(e){
+		e.preventDefault();
+		
+		var formData = new FormData(document.docProInsertFrm);
+		console.log("formData writer+content: "+ FormData)
+		var inputFile = $("[name='docProImgFile']");
+		var files = inputFile[0].files;
+		console.log(files);
+		
+		for(var i=0; i<files.length; i++){
+			if(!checkExtension( files[i].name, files[i].size) ){
+				return;
+			}
+			formData.append("uploadFile", files[i]);
+		}
+			
+		
+		console.log("formData file: "+ formData)
+		$.ajax({
+			url:'phaAjaxInsert',
+			processData:false,
+			contentType:false,
+			data: formData,
+			method:'POST',
+			beforeSend : function(xhr) {
+				console.log(csrfHeaderName + " and " + csrfTokenValue);
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					//xhr.setRequestHeader("aa", "bb");
+			},
+			success:function(datas){
+				console.log(datas);
+				var str="";
+				
+					var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.pimgName);			      
+				    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					str += "<li ";
+					str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-pimgName='"+datas.pimgName+"' data-type='"+datas.image+"' ><div>";
+					str += "<span> "+ datas.pimgName+"</span>";
+					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
+					str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+					str += "</div>";
+					str +="</li>";
+								
+				$("#uploaded").html(str);
+				alert("file uploaded");
+			
+			},
+			error: function(reject){
+				console.error(reject);
+			}
+		})
+	}); //end of meditUpBtn event
+	
+	//btnRegister event  textbook 564page
+	$("#btnRegister").on('click', function(e){
+		var str = "";
+		var li = $("#uploaded li");
+			str += "<input type='hidden' name='attachFile.pImgName' value='"+li.data("pimgname")+"'>";
+		    str += "<input type='hidden' name='attachFile.uuid' value='"+li.data("uuid")+"'>";
+		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
+		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+"'>";
+		    
+		$("#phaInsertFrm").append(str);
+		alert("프로필 등록이 완료되었습니다.")
+		$("#phaInsertFrm").submit();
+		
+	});//end of btnRegister event
+	
+	//attachment btn delete event
+	$("#uploaded").on("click", "button", function(e){
+		if(confirm("파일을 삭제하시겠습니까?")){
+			var targetLi = $(this).closest("li");
+			var preview=$('#profileImg');
+			targetLi.remove();
+			//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
+			$(preview).removeAttr('src');
+			
+		}
+	});//end of attachment btn delete event
+	
+	
+	
+});/* 페이지로드이벤트 끝 */
 </script>
+
