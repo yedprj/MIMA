@@ -123,11 +123,14 @@ th, td {
 													</c:if> <c:if test="${ptbmList.bookingStatus eq 'c'}">
 														<span class="status pending">취소완료</span>
 													</c:if></td>
-												<td><c:if test="${ptbmList.bookingStatus eq 'y'}">
-														<button class="status cancel">
-															<i class="fas fa-times"></i>취소하기
-														</button>
-													</c:if></td>
+												<td>
+													<c:if test="${ptbmList.bookingStatus eq 'y' || apptList.bookingStatus == 'p'}">
+														<!-- 버튼 기능 구현을 위해 수정 p.10/10  -->
+                                                    	<button class="cancel" id="paymentCancel" name="paymentCancel">
+                                                    		<i class="fas fa-times"></i>Cancel
+                                                    	</button>
+													</c:if>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
