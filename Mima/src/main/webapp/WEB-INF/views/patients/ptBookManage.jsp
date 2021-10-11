@@ -124,7 +124,7 @@ th, td {
 														<span class="status pending">취소완료</span>
 													</c:if></td>
 												<td>
-													<c:if test="${ptbmList.bookingStatus eq 'y' || apptList.bookingStatus == 'p'}">
+													<c:if test="${ptbmList.bookingStatus eq 'y' || ptbmList.bookingStatus == 'p'}">
 														<!-- 버튼 기능 구현을 위해 수정 p.10/10  -->
                                                     	<button class="cancel" id="paymentCancel" name="paymentCancel">
                                                     		<i class="fas fa-times"></i>Cancel

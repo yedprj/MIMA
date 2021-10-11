@@ -74,7 +74,7 @@
 	</select>
 
 
-	<select id="getMeditationList" 
+	<select id="getMeditationList"
 		resultType="com.mima.app.meditation.domain.MeditationVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
