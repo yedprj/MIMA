@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +21,11 @@ import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
+import com.mima.app.member.service.MemberService;
 import com.mima.app.member.service.PatientsService;
-import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
-import com.mima.app.session.service.BookingService;
 
 import lombok.extern.java.Log;
 
@@ -38,12 +36,10 @@ public class PatientsController {
 	
 	@Autowired PatientsService patientsService;
 	@Autowired CommentsService commentsService;
-	// K.10/07 약국 서비스
-	@Autowired PatnerPharmacyService phaService;
-	// K.10/09 약배달
-	@Autowired MedDeliveryService deliveryService;
-	// K.10/09 booking 확인
-	@Autowired BookingService bookingService;
+	
+	@Autowired PatnerPharmacyService phaService; // K.10/07 약국 검색
+	@Autowired MedDeliveryService deliveryService; // K.10/09 약배달
+	@Autowired MemberService memberService; // K.10/11 약배달 신청 유무
 
 
 	//e.4
@@ -130,24 +126,35 @@ public class PatientsController {
 		
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
-		String delStatus = vo.getDeliveryStatus();
+		String delStatus = memberService.deliveryStatus(vo.getMemberNo());
+		log.info("***** 약배달 신청유무 : "+delStatus);
 		
 		// + 기존 약배달 신청한건 있는지부터 조회
 		PatientsVO pvo = new PatientsVO();
-		if(delStatus == "n") {
+		if(delStatus.equals("n") ) {
 			viewPage = "patients/ptMedeliveryNone";
-		}
-		else {
+			model.addAttribute("memberNo", vo.getMemberNo());
+		}else {
 			log.info("예약이 존재!");
-			 pvo = patientsService.ptDeliveryCheck(vo.getMemberNo());
-			if(pvo == null || pvo.getDelAddr() == "" ) { // 약배달 신청정보가 없으면 등록
-				log.info("**********************// 약배달 신청정보가 없으면 등록 없음 ");
+			pvo = patientsService.ptDeliveryCheck(vo.getMemberNo());
+			if(pvo == null) { // 약배달 신청정보가 없으면 등록
 				model.addAttribute("memberNo", vo.getMemberNo());
+				model.addAttribute("messege", "insert" );
 				viewPage = "patients/ptMedelivery";
-			}else {			   // 약배달 신청정보가 있으면 수정
-				log.info("**********************pvo : "+ pvo.toString());
-				model.addAttribute("pvo", pvo);
-				viewPage = "patients/ptMedelivery";
+			}else {			   
+				if(pvo.getDelAddr() == null) { // 환자테이블은 있으나, 약배달 정보는 x
+					log.info("**********************// 환자테이블은 존재, 약배달은 x ");
+					model.addAttribute("memberNo", vo.getMemberNo());
+					model.addAttribute("messege", "update" );
+					viewPage = "patients/ptMedelivery";
+				}
+				else {  // 약배달 신청정보가 있으면 수정
+					log.info("**********************pvo : "+ pvo.toString());
+					model.addAttribute("pvo", pvo);
+					model.addAttribute("memberNo", vo.getMemberNo());
+					model.addAttribute("messege", "updateBtn" );
+					viewPage = "patients/ptMedelivery";
+				}
 			}
 		}
 		return viewPage;
@@ -176,6 +183,20 @@ public class PatientsController {
 	@ResponseBody
 	public int ptDeliveryInsert(@RequestBody PatientsVO vo ){
 		return patientsService.ptDeliveryInsert(vo);
+	}
+	
+	//약배달 정보수정 K.10/10
+	@PostMapping("ptDeliveryUpdate")
+	@ResponseBody
+	public int ptDeliveryUpdate(@RequestBody PatientsVO vo ){
+		return patientsService.ptDeliveryUpdate(vo);
+	}
+	
+	//약배달신청 유무 수정 K.10/11
+	@PostMapping("deliberyStatusUpdate")
+	@ResponseBody
+	public int deliberyStatusUpdate(@RequestBody MemberVO vo){
+		return memberService.deliveryStatusUpdate(vo);
 	}
 	
 	//약국 번호로 약국명 조회 K.10/10

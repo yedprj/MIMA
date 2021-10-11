@@ -71,7 +71,12 @@
                                     <h3>약 배달 신청</h3>
                                 </div>
                                 <div class="inner-box">
-                                	예약한 진료가 존재하지 않습니다.
+                                	약 배달 신청을 등록하지 않았습니다.
+                                	<br>
+                                	<br>
+                                	<div class="btn-box">
+                                		<a id="delStatusAgreeBtn" class="theme-btn-one">약배달 신청하기<i class="icon-Arrow-Right"></i></a>
+                            		</div>
                                 </div>
                             </div>    
                         </div>
@@ -86,3 +91,43 @@
 <button class="scroll-top scroll-to-target" data-target="html">
 	<span class="fa fa-arrow-up"></span>
 </button>
+
+<script>
+	$(function(){ 
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";	
+		
+		var memberNo = ${memberNo};
+		console.log("번호: "+ memberNo);
+		$("#delStatusAgreeBtn").on("click",function(){
+			confirm("약배달을 신청하시겠습니까?")
+			if(confirm){
+				$.ajax({
+	    			url : "deliberyStatusUpdate",
+	    			method : "post",
+	    			data : JSON.stringify({
+	    				memberNo : memberNo,
+	    				deliveryStatus : "y"
+	    			}),
+	    			beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+	    			dataType : "json", 
+	    			contentType : "application/json",
+	    			success : function(data){
+	    				if( data > 0) {
+	    					console.log("업데이트 성공!")
+	    					location.href= "ptMedelivery";
+	    				}else {
+	    					console.log("업데이트 실패!")
+	    					return;
+	    				}
+	    			}  // success end
+	    		}); //  ajax end
+			}else {
+				return;
+			}
+			
+		});// delStatusAgreeBtn end
+	});
+</script>

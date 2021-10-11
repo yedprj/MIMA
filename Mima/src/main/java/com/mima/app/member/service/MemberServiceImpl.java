@@ -112,6 +112,18 @@ public class MemberServiceImpl implements MemberService {
 	public PtInfoVO getCnote(PtInfoVO vo) {
 		return memberMapper.getCnote(vo);
 	}
+
+	// 약배달 신청유무 변경 K.10/11
+	@Override
+	public int deliveryStatusUpdate(MemberVO vo) {
+		return memberMapper.deliveryStatusUpdate(vo);
+	}
+
+	// 약배달 신청 유무 확인 K.10/11
+	@Override
+	public String deliveryStatus(int memberNo) {
+		return memberMapper.deliveryStatus(memberNo);
+	}
 	
 	
 

@@ -88,4 +88,7 @@ public interface PatientsMapper {
 	
 	// 약배달 정보 등록 K.10/10
 	public int ptDeliveryInsert(PatientsVO vo);
+	
+	// 약배달 정보 수정 K.10/10
+	public int ptDeliveryUpdate(PatientsVO vo);
 }
