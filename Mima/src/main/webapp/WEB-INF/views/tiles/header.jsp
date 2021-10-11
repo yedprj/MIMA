@@ -192,6 +192,8 @@
 						</form>
 					</sec:authorize>
 				</div>
+				
+<div id="msgStack"></div>
 			</div>
 		</div>
 	</div>
@@ -267,6 +269,7 @@
 		</div>
 	</nav>
 </div>
+
 <!-- End Mobile Menu -->
 <script>
 	$(function() {
