@@ -5,13 +5,18 @@
 
 <div class="modal-body">
 
-<input type="">
+<input type="content">
+<!-- s:1010 미얀....ㅎㅎㅎ 이거내꺼야 -->
 
-
-
+<button id="sendMsgBtn">send</button>
 </div>
 
 <script>
+
+$('#senMsgBtn').on('click', function(e){
+	socket.send("의사")
+});
+
 $('#notifySendBtn').click(function(e){
     let modal = $('.modal-content').has(e.target);
     let type = '70';
