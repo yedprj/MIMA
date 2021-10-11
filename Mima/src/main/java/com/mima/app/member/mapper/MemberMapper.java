@@ -52,6 +52,9 @@ public interface MemberMapper {
 	// 닥터 비밀번호 변경_J04
 	public int docPwChange(MemberVO vo);
 	
+	// 환자 대쉬보드 비밀번호 변경 e.11
+	public int ptPwChange(MemberVO vo);
+	
 	// 닥터 나의 환자들 조회_J06
 	public List<MemberBookingVO> patientList(int memberNo);
 	

@@ -69,15 +69,6 @@ th, td {
                         <h3>진료내역</h3>
                         <span>지난 진료내역을 조회합니다. 목록은 최신순으로 보여집니다.</span>
                     </div>
-                    
-                    <div class="select-box pull-right">
-						<form name="search-form" action="apptHistory" method="post" class="search-form">
-						    <div class="form-group">
-						        <input type="search" name="search-field" placeholder="환자명을 입력하세요." required="">
-						        <button type="submit"><i class="far fa-search"></i></button>
-						    </div>
-						</form>
-       				</div>
    				</div>
    
 				<div class="doctors-appointment">

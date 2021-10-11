@@ -102,6 +102,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.docPwChange(vo);
 	}
 
+	// 환자 대쉬보드 비밀번호 변경 e.11
+	@Override
+	public int ptPwChange(MemberVO vo) {
+		return memberMapper.ptPwChange(vo);
+	}
+	
 	// 닥터 나의 환자들 조회_J06
 	@Override
 	public List<MemberBookingVO> patientList(int memberNo) {
@@ -124,8 +130,5 @@ public class MemberServiceImpl implements MemberService {
 	public String deliveryStatus(int memberNo) {
 		return memberMapper.deliveryStatus(memberNo);
 	}
-	
-	
-
 
 }
