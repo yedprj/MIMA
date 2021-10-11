@@ -131,4 +131,16 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.deliveryStatus(memberNo);
 	}
 
+	// 현재 비밀번호 확인을 위해 DB에 저장된 비밀번호 가져오기 p.10/11
+	@Override
+	public MemberVO findPassword1(String memberId) {
+		return memberMapper.findPassword1(memberId);
+	}
+
+	// 의사 비밀번호 변경 p.10/11
+	@Override
+	public int updatePassword(MemberVO vo) {
+		return memberMapper.updatePassword(vo);
+	}
+
 }

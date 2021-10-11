@@ -54,7 +54,7 @@
 								<!-- 홈 nav 끝 -->
 								
 								<!-- 진료예약 nav 시작 -->
-								<li class="dropdown"><a href="${pageContext.request.contextPath}/reservationForm">진료예약</a>
+								<li class="dropdown"><a href="${pageContext.request.contextPath}/patients/reservationForm">진료예약</a>
 									<ul>
 										<li class="dropdown"><a href="doctors-dashboard.html">진료과목</a>
 											<ul>
@@ -165,7 +165,7 @@
 										<li><a href="${pageContext.request.contextPath}/partnerJoinForm">파트너 회원가입</a></li>
 										<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
 										<!-- 링트 수정 p.10/06 -->
-										<li><a href="${pageContext.request.contextPath}/docMain">닥터 대쉬보드</a>
+										<li><a href="${pageContext.request.contextPath}/doctor/docMain">닥터 대쉬보드</a>
 										
 										</li>
 										<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash">약국 대쉬보드</a></li>

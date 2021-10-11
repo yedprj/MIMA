@@ -41,7 +41,7 @@ public class BookingController {
 	@Autowired RaymentService raymentService;
 	
 	// 결제 예약 페이지로 이동 p.01
-	@GetMapping("/reservationForm")
+	@GetMapping("patients/reservationForm")
 	public String reservationForm(Model model) {
 		
 		model.addAttribute("doctors", memberService.selectDoctorY());
@@ -50,7 +50,7 @@ public class BookingController {
 	}
 	
 	// 결제 페이지 의사 검사 가능 시간 조회
-	@PostMapping("/selectDocTime")
+	@PostMapping("patients/selectDocTime")
 	@ResponseBody
 	public List<String> selectDocTime(@RequestBody DocAvailabilityVO docVO) {
 		System.out.println("============"+docVO.getDay());
@@ -69,7 +69,7 @@ public class BookingController {
 	}
 	
 	// 예약 등록 p.10/07
-	@PostMapping("/reservationTime")
+	@PostMapping("patients/reservationTime")
 	@ResponseBody
 	public int reservationTime(BookingVO vo) {
 		
@@ -79,7 +79,7 @@ public class BookingController {
 	}
 	
 	// 의사 카테고리 가져오기 p.10/07
-	@PostMapping("/categorySelect")
+	@PostMapping("patients/categorySelect")
 	@ResponseBody
 	public MentalSubjectVO categorySelect(@RequestParam("docNo") int docNo) {
 		
@@ -90,7 +90,7 @@ public class BookingController {
 	}
 	
 	// 결제 페이지로 이동 p.10/07
-	@GetMapping("/paymentForm")
+	@GetMapping("patients/paymentForm")
 	public String paymentForm(Model model, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();	
@@ -111,8 +111,8 @@ public class BookingController {
 		return "booking/paymentForm";
 	}
 	
-	// 결제 후 이동 페이지
-	@PostMapping("insertPayment")
+	// 결제 후 이동 페이지 맵핑 수정 p.10/11
+	@PostMapping("patients/insertPayment")
 	@ResponseBody
 	public int insertPayment(PaymentVO vo, RedirectAttributes rttr) {
 		
