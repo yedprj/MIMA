@@ -61,4 +61,10 @@ public interface MemberService {
 	// 닥터 진료내역 페이지 선택한 환자의 진료노트 조회_J10
 	public PtInfoVO getCnote(PtInfoVO vo);
 	
+	// 약배달 신청유무 변경 K.10/11
+	public int deliveryStatusUpdate(MemberVO vo);
+	
+	// 약배달 신청 유무 확인 K.10/11
+	public String deliveryStatus(int memberNo);
+	
 }

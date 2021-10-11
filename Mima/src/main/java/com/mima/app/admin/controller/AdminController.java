@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,15 +62,13 @@ public class AdminController {
 		
 	//e.29
 	// 파트너 의사 / 약국 승인 등록
-	@PutMapping("/patnerStatusUpdate")
+	@PostMapping("/patnerStatusUpdate")
 	@ResponseBody
-	public String patnerStatusUpdate(@RequestBody MemberVO vo) {
+	public int patnerStatusUpdate(MemberVO vo) {
 		System.out.println(vo.getLicense());
-		//int result = memberService.patnerStatusUpdate(vo);
-		//return result;
-		return "admin/patnerStatusUpdate";
+		int result = memberService.patnerStatusUpdate(vo);
+		
+		return result;	
 	}
-	
-	 
 }
 

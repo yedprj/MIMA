@@ -69,18 +69,22 @@
 var socket  = null;
 $(document).ready(function(){
     // 웹소켓 연결
-    sock = new SockJS("<c:url value="/echo"/>");
-    socket = sock;
     
-    sock.onopen = onOpen;
+    
+    var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo";
+   	console.log(wsUri);
+    socket = new WebSocket(wsUri);
+    //let socket = new sockjs(wsUri);
+    
+    socket.onopen = onOpen;
     // 데이터를 전달 받았을때 
-    sock.onmessage = onMessage; // toast 생성
+    socket.onmessage = onMessage; // toast 생성
    
 });
 
 function onOpen(){
-	console.log(${session.name}, 'info: connection opened.');
-}
+	console.log("${session.name}", 'info: connection opened.');
+};
 
 
 // toast생성 및 추가

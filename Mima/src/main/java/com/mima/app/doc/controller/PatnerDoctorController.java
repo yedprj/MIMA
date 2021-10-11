@@ -77,20 +77,18 @@ public class PatnerDoctorController {
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
 		int memberNo = mvo.getMemberNo();
 		
-		int total = bookingService.apptListCount(cri);
-		
 		model.addAttribute("member", mvo);
 		model.addAttribute("apptList", bookingService.apptList(memberNo));
-		model.addAttribute("apptListPage", bookingService.apptListPage(cri));
-		model.addAttribute("pageMaker", new PageVO(cri, total));
-    
-    return "docDash/apptManage";
+		model.addAttribute("apptListSoon", bookingService.apptListSoon(memberNo));
+		model.addAttribute("apptListCanceled", bookingService.apptListCanceled(memberNo));
+		
+		return "docDash/apptManage";
 	}
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
 	@GetMapping("apptHistory")
 	public String apptHistory(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
-		int total = bookingService.apptListCount(cri);
+		int total = bookingService.apptHistoryCount(cri);
 		model.addAttribute("apptHistoryList", bookingService.apptHistoryList());
 		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri));
 		model.addAttribute("pageMaker", new PageVO(cri, total));

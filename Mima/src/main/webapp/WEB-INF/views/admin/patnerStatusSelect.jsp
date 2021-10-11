@@ -78,26 +78,26 @@
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
 		
-		$(document).on("click", "button[name=insertpartner]", function() {
+		$(document).on("click", "#insertpartner", function() {
 			console.log("버튼클릭!");
 			var license = $("#license").val();
 			console.log(license);
 
 			$.ajax({
 				url : "patnerStatusUpdate",
-				method : "put",
-				dataType : "json",
-				data : JSON.stringify({
-					license : license
-				}),
+				method : "post",
+				data : { license : license },
 				beforeSend : function(xhr) {
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 				},
-				contentType : 'application/json',
 				success : function(data) {
-					console.log(data);
-					alert(license + "등록이 되었습니다.");
-					location.reload();
+					//console.log(data);
+					if (data == 1){						
+						alert(license + "등록이 되었습니다.");
+						location.reload();
+					} else {
+						alert("db등록 실패");
+					}
 				},
 				error : function() {
 					console.log("error");

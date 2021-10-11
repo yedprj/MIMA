@@ -63,9 +63,10 @@
 		   B.BOOKING_STATUS,
 		   M.NAME
     FROM BOOKING B JOIN MEMBER M
-    ON B.PT_NO=M.MEMBER_NO
-    WHERE CONSULT_DATE >= TO_DATE(SYSDATE)
-    ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
+    ON (B.PT_NO=M.MEMBER_NO)
+    WHERE B.CONSULT_DATE >= TO_DATE(SYSDATE)
+    AND B.DOC_NO = #{memberNo}
+    ORDER BY B.CONSULT_DATE ASC, B.CONSULT_TIME ASC
 	]]>
 </select>
 
@@ -83,6 +84,7 @@
     FROM BOOKING B JOIN MEMBER M
     ON B.PT_NO=M.MEMBER_NO
     WHERE CONSULT_DATE >= TO_DATE(SYSDATE)
+    AND B.DOC_NO = #{memberNo}
     AND B.BOOKING_STATUS = 'p'
     OR B.BOOKING_STATUS = 'y'
     ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
@@ -102,11 +104,11 @@
     FROM BOOKING B JOIN MEMBER M
     ON B.PT_NO=M.MEMBER_NO
     WHERE CONSULT_DATE >= TO_DATE(SYSDATE)
+    AND B.DOC_NO = #{memberNo}
     AND B.BOOKING_STATUS = 'c'
     ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC
 	]]>
 </select>
-
 
 <select id="apptHistoryList" resultType="BookingVO">
 	<![CDATA[
@@ -153,39 +155,6 @@
 	
 	<!-- total count -->
 	
-		<!-- 닥터 대쉬보드 예약관리 페이징_J06 -->
-		<select id="apptListCount" resultType="int">
-			SELECT COUNT(*) FROM BOOKING
-			WHERE
-			<include refid="criteria"></include>
-			PT_NO > 0
-		</select>
-		
-		<!-- 닥터 대쉬보드 예약관리 페이징_J06 -->
-		<select id="apptListPage" resultType="BookingVO">
-			SELECT *
-			FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
-				ROWNUM RN,
-				BOOKING_NO,
-				PT_NO,
-				DOC_NO,
-				BOOKING_DATE,
-				PRICE,
-				BOOKING_STATUS,
-				CONSULT_DATE,
-				CONSULT_TIME,
-				EDIT_DATE,
-				ROOM_ID,
-				FIRST_SESSION,
-				SUBJECT
-			FROM BOOKING
-			WHERE <include refid="criteria"></include>
-					<![CDATA[
-					ROWNUM <= #{pageNum} * #{amount}				
-					)
-					WHERE RN > (#{pageNum}-1)* #{amount} ]]>
-		</select>
-		
 		<!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
 		<select id="apptHistoryCount" resultType="int">
 			SELECT COUNT(*) FROM BOOKING

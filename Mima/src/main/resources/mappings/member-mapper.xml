@@ -220,4 +220,17 @@
 		AND B.BOOKING_NO = #{bookingNo}
 	</select>
 	
+	<!-- K.10/11 약배달 신청 유무 변경 -->
+	<update id="deliveryStatusUpdate">
+		UPDATE MEMBER
+		SET DELIVERY_STATUS = #{deliveryStatus} 
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- K.10/11 약배달 신청 유무 확인 -->
+	<select id="deliveryStatus" resultType="String">
+		SELECT DELIVERY_STATUS
+		FROM MEMBER
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
 </mapper>

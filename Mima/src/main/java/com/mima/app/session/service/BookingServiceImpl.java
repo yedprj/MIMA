@@ -32,7 +32,6 @@ public class BookingServiceImpl implements BookingService {
 		return bookingMapper.getList();
 	}
 	
-	
 	// 닥터 대쉬보드 메인 페이지 진료내역_J
 	@Override
 	public List<BookingVO> getlatestapptList() {
@@ -44,32 +43,30 @@ public class BookingServiceImpl implements BookingService {
 	public List<BookingVO> apptList(int memberNo) {
 		return bookingMapper.apptList(memberNo);
 	}
+	
+	// 닥터 대쉬보드 예약관리 페이지 셀렉트 박스 예정된 목록_J11
+	@Override
+	public List<BookingVO> apptListSoon(int memberNo) {
+		return bookingMapper.apptListSoon(memberNo);
+	}
+
+	// 닥터 대쉬보드 예약관리 페이지 셀렉트 박스 취소된 목록_J11
+	@Override
+	public List<BookingVO> apptListCanceled(int memberNo) {
+		return bookingMapper.apptListCanceled(memberNo);
+	}
 
 	@Override
 	public List<BookingVO> apptHistoryList() {
 		return bookingMapper.apptHistoryList();
-
 	}
-
-	// 닥터 대쉬보드 예약관리 페이징_J06
-	@Override
-	public List<BookingVO> apptListPage(Criteria cri) {
-		return bookingMapper.apptListPage(cri);
-	}
-	
-	// 닥터 대쉬보드 예약관리 페이징_J06
-	@Override
-	public int apptListCount(Criteria cri) {
-		return bookingMapper.apptListCount(cri);
-	}
-	
 	// 닥터 대쉬보드 진료내역 페이징_J06
 	@Override
 	public List<BookingVO> apptHistoryPage(Criteria cri) {
 		return bookingMapper.apptHistoryPage(cri);
 	}
 
-	// 닥터 대쉬보드 진료내역 페이징_J06
+	// 닥터 대쉬보드 진료내역 페이징 카운트_J06
 	@Override
 	public int apptHistoryCount(Criteria cri) {
 		return bookingMapper.apptHistoryCount(cri);

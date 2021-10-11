@@ -166,10 +166,17 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptDeliveryCheck(memberNo);
 	}
 	
-	// 약배달 정보 등록
+	// 약배달 정보 등록 K.10/10
 	@Override
 	public int ptDeliveryInsert(PatientsVO vo) {
 		return patientsMapper.ptDeliveryInsert(vo);
+	}
+	
+	// 약배달 정보 수정 K.10/10
+	@Override
+	public int ptDeliveryUpdate(PatientsVO vo) {
+		// TODO Auto-generated method stub
+		return patientsMapper.ptDeliveryUpdate(vo);
 	}
 	
 }
