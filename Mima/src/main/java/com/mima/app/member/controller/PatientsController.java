@@ -27,6 +27,7 @@ import com.mima.app.member.service.PatientsService;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
+import com.mima.app.session.service.BookingService;
 
 import lombok.extern.java.Log;
 

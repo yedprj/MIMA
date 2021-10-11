@@ -90,10 +90,14 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
 	@GetMapping("doctor/apptHistory")
-	public String apptHistory(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
-		int total = bookingService.apptHistoryCount(cri);
-		model.addAttribute("apptHistoryList", bookingService.apptHistoryList());
-		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri));
+	public String apptHistory(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		int memberNo = mvo.getMemberNo();
+		
+		int total = bookingService.apptHistoryCount(cri, memberNo);
+		model.addAttribute("apptHistoryList", bookingService.apptHistoryList(memberNo));
+		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri, memberNo));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
     
 		return "docDash/apptHistory";
