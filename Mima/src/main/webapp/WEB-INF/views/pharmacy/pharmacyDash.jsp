@@ -42,7 +42,7 @@
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash?memberNo=${session.memberNo}" class="current"><i
+					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash" class="current"><i
 							class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/medDelivery"><i class="fas fa-ambulance"></i>약배달관리</a></li>
 					<li><a id="guid" href="${pageContext.request.contextPath}/pharmacy/medGuid"><i class="fas fa-comment-medical"></i>복약지도관리</a></li>

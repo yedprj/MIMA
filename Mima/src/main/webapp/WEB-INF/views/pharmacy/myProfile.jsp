@@ -136,13 +136,13 @@
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash?memberNo=${session.memberNo}" class="current"><i
+					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash"><i
 							class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/medDelivery"><i class="fas fa-ambulance"></i>약배달관리</a></li>
 					<li><a id="guid" href="${pageContext.request.contextPath}/pharmacy/medGuid"><i class="fas fa-comment-medical"></i>복약지도관리</a></li>
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review"><i class="fas fa-star"></i>약국 후기</a></li>
 					<li><a id="ques" href="${pageContext.request.contextPath}/pharmacy/phaQna"><i class="fas fa-comments"></i>문의</a><span>20</span></li>
-					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile?memberNo=${session.memberNo}"><i class="fas fa-user"></i>약국 프로필</a></li>
+					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile?memberNo=${session.memberNo}" class="current"><i class="fas fa-user"></i>약국 프로필</a></li>
 					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate?memberNo=${session.memberNo}"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li><a id="logout" href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
@@ -155,58 +155,86 @@
         <div class="content-container">
             <div class="outer-container">
                 <div class="add-listing my-profile">
+                <form id="phaInsertFrm" method="post"  action="register">
+                    <input type="hidden" id="memberNo" name="memberNo" value="${session.memberNo }">
                     <div class="single-box">
                         <div class="title-box">
                             <h3>약국 프로필</h3>
                         </div>
                         <div class="inner-box">
                             <div class="profile-title">
-                                <figure class="image-box"><img style="height:150px;" src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png" alt=""></figure>
-                                <div class="file-upload preview-image">
-								    <input type="text" class="upload-name" value="파일선택" disabled="disabled">
-								    <label for="input-file">업로드</label> 
-								    <input type="file" id="input-file" class="upload-hidden" name="pharmacyphoto"> 
-								    <br><span>프로필 이미지를 등록해주세요 ,최대 2MB(JPG, GIF, PNG)</span>
-								</div>
-								<br> 
-								<!-- <div class="form-group">
-									<input type="file"  id="upLoadFile" name="upLoadFile" multiple="multiple">
-									<button type="button" id="uploadBtn">첨부파일등록</button>
-								</div>
-								<div class="form-group">
-									<label>파일 목록</label> 
-									<ul id="uploaded"></ul>
-								</div> -->
+                                <div>
+                                    <figure class="image-box"><img width="300" height="300"  id="profileImg" src="${pageContext.request.contextPath}/assets/images/resource/profile-3.png" alt="프로필 미리보기"></figure>
+                                    <ul id="uploaded"></ul>
+                                </div>
+                                <div class="upload-photo">
+                                	<input id="fileInput" type="file" name="docProImgFile" required><br>
+                                    <span>형식은 JPG, GIF, PNG 만 가능합니다.<br> 파일사이즈 최대 2MB</span><br>
+                                    <button type="button" id="imgUpBtn" class="theme-btn-one" style="box-shadow: none;">등록</button>
+                                </div>
                             </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <label><b>약국명</b></label>
-                                        <input type="text" name="pharmacyInfo" value="${profile.pharmacyInfo}" >
-                                    </div>
-                                  
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <label><b>이메일</b></label>
-                                        <input type="email" name="pharmacyEmail" value="${profile.pharmacyEmail}">
-                                    </div>
-                                    
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                        <label><b>연락처</b></label>
-                                        <input type="text" name="pharmacyContact" value="${profile.pharmacyContact}">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                      <label><b>영업시간</b></label>
-                                      <input type="text" name="pharmacy" >
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                      <label><b>약국주소</b></label>
-                                      <input type="text" name="deliveryArea" value="${profile.deliveryArea}">
-                                  </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                        <label><b>간단 소개글</b></label>
-                                        <textarea name="profileContents" placeholder="약국 소개글을 간단하게 입력해주세요"></textarea>
-                                    </div>
-                              </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <label><b>약국명</b></label>
+                                    <input type="text" name="pharmacyInfo" value="${profile.pharmacyInfo}" >
+                                </div>
+                              	<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+	                            </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <label><b>이메일</b></label>
+                                    <input type="email" name="pharmacyEmail" value="${profile.pharmacyEmail}">
+                                </div>
+                                
+                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                    <label><b>연락처</b></label>
+                                    <input type="text" name="pharmacyContact" value="${profile.pharmacyContact}">
+                                </div>
+                        	</div>
                         </div>
+                    </div>
+                    <div class="single-box">
+                        <div class="title-box">
+                            <h3>About Me</h3>
+                        </div>
+                        <div class="inner-box">
+                                <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                        <label>약국 소개</label>
+                                        <textarea id="profileContents" name="profileContents" placeholder="약국의 대한 간단한 소개를 적어주세요."></textarea>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="single-box">
+                        <div class="title-box">
+                            <h3>약국 상세</h3>
+                        </div>
+                        <div class="inner-box">
+                            <div class="row clearfix">
+								<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+									<input type="hidden" id="confmKey" name="confmKey" value="" >
+									<input type="text" class="form-control form-control-user"
+										id="postcode" name="postcode" placeholder="우편번호" readonly>
+								</div>
+	                           	<div class="col-lg-6 col-md-12 col-sm-12 form-group" >
+									<button type="button" onclick="execDaumPostcode();" class="theme-btn-one" style=" float:right;padding:9px 30px; ">
+										주소검색</button>
+								</div>
+								<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+									<input type="text" class="form-control" id="addr1"
+										name="addr1" placeholder="주소">
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+									<input type="text" class="form-control" id="addr2"
+									name="addr2" placeholder="상세주소">
+								</div>
+								
+								<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+									<input type="text" class="form-control" id="addr3"
+										name="addr3" placeholder="참고항목">
+								</div>
+                        	</div>
+                    	</div>
                     </div>
                     <div class="btn-box">
                         <a id="updateBtn" class="theme-btn-one">프로필 수정<i class="icon-Arrow-Right"></i></a>
