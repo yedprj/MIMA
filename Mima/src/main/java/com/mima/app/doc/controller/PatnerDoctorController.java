@@ -171,12 +171,12 @@ public class PatnerDoctorController {
 	
 	//s:1005 docProfileInsertFrm
 	@GetMapping("/docProfileInsertForm")
-	public String docProfileInsertForm(Model model, PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
+	public String docProfileInsertForm(Model model, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
 		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
 		
-		//HttpSession session = request.getSession();
-		//mVo = (MemberVO) session.getAttribute("session");
-		mVo.setMemberNo(3);
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
+		System.out.println(mVo);
 		docVo = doctorService.checkDocDetail(mVo);
 		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
 		String path="docDash/docProfileInsertForm";
@@ -265,13 +265,26 @@ public class PatnerDoctorController {
 		return "/docList/getTotalDocList";
 	}
 
-	//s:1007 의사 프로필 디테일 페이지로 이동하는거
+	//s:1007 의사 프로필 디테일 페이지로 이동하는거 s:1012
 	@GetMapping("/docProfileDetail")
-	public String docProfileDetail(DocInfoVO vo, Model model) {
-		vo = doctorService.getDocDetail(vo);
-				
-		model.addAttribute("item", vo);
-		return "/docDash/docProfileDetail";
+	public String docProfileDetail(DocInfoVO docVo, Model model, MemberVO mVo, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
+		System.out.println(mVo);
+		docVo = doctorService.checkDocDetail(mVo);
+		
+		System.out.println(docVo+"보 값 널 확인");
+		if(docVo !=null) {
+			docVo = doctorService.getDocDetail(docVo);
+			System.out.print("테이블에 값 잇음");
+			model.addAttribute("item", docVo);
+			return "/docDash/docProfileDetail";
+		}else {
+			System.out.print("테이블에 값 없음 노노 ");
+			model.addAttribute("message", "No details saved for this doctor!");
+			return "/tiles/errorPage";
+		}
 	}
 	
 }
