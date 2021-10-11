@@ -33,15 +33,17 @@ $(function(){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 					//xhr.setRequestHeader("aa", "bb");
 			},
+			async: false,
             success: function(data) {
                         console.log(data.roomId);
-                        
+                        url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
+                        console.log(url);
                       },
             error: function(jqXHR, textStatus, err){
                  alert('text status '+textStatus+', err '+err);
              }
           })
-		socket.send("msg");
+		socket.send(url);
 
 		window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
 		

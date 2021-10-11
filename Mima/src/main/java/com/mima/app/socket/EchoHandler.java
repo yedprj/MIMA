@@ -67,12 +67,11 @@ public class EchoHandler extends TextWebSocketHandler{
 		System.out.println(senderId);
 		// 특정 유저에게 보내기
 		String msg = message.getPayload();
-		System.out.println(url);
+		System.out.println(msg);
 		if(msg != null) {
-			String content="hello";
-			TextMessage tmpMsg = new TextMessage("<p>"+content+"</p>");
+			TextMessage tmpMsg = new TextMessage("<a target=\"_blank\" href="+msg+">진료실이 준비되었습니다. 링크를 클릭하여 진료실로 이동해 주세요.</a>");
 			System.out.println(tmpMsg.toString());
-			users.get("admin").sendMessage(tmpMsg);
+			users.get("user1").sendMessage(tmpMsg);
 			System.out.println("msg sent");
 			
 //			String[] strs = msg.split(",");
