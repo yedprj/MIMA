@@ -227,7 +227,7 @@ input::placeholder {
                                                <label><input type="checkbox" name="tus" >화요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="tusOpen" required="">
+                                               <input type="text" name="tusOpen" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
                                                <input type="text" name="tusClose" required="">
@@ -238,7 +238,7 @@ input::placeholder {
                                                <label><input type="checkbox" name="wen" required="">수요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="wenOpen" required="">
+                                               <input type="text" name="wenOpen" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
                                                <input type="text" name="monClose" required="">
@@ -249,7 +249,7 @@ input::placeholder {
                                                <label><input type="checkbox" name="thu" required="">목요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="thuOpen" required="">
+                                               <input type="text" name="thuOpen" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
                                                <input type="text" name="thuClose" required="">
@@ -260,7 +260,7 @@ input::placeholder {
                                                <label><input type="checkbox" name="fri" required="">금요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="friOpen" required="">
+                                               <input type="text" name="friOpen" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
                                                <input type="text" name="friClose" required="">
@@ -271,7 +271,7 @@ input::placeholder {
                                                <label><input type="checkbox" name="sat" required="">토요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="satOpen" required="">
+                                               <input type="text" name="satOpen" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
                                                <input type="text" name="satClose" required="">
@@ -282,7 +282,7 @@ input::placeholder {
                                                <label><input type="checkbox" name="sun" required="">일요일</label>
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                               <input type="text" name="sunOpen" required="">
+                                               <input type="text" name="sunOpen" placeholder="ex) AM 09:00">
                                            </div>
                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
                                                <input type="text" name="sunClose" required="">
