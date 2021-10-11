@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.mima.app.member.domain.MemberVO;
+
 //s:1009 https://stothey0804.github.io/project/WebSocketExam/ 참고 로그인중인 유저에게 알람보내기
 
+@Controller
 public class EchoHandler extends TextWebSocketHandler{
 	
 	//로그인한 전체 유저
@@ -25,17 +29,19 @@ public class EchoHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String senderId = getMemberId(session); // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
-		System.out.println("senderId check"+ senderId);
+		System.out.println("senderId check  "+ senderId);
 		
 		if(senderId!=null) {	// 로그인 값이 있는 경우만
 			log(senderId + " 연결 됨");
 			users.put(senderId, session);   // 로그인중 개별유저 저장
+			System.out.println(users+"users 보기");
 			sessions.add(session); //전체 유저에 저장(이거 근데 필요 없을거같은데)
 		}
 	}
 	// 클라이언트가 Data 전송 시
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		System.out.println("노드에서 호출됨");
 		String senderId = getMemberId(session);
 		// 특정 유저에게 보내기
 		String msg = message.getPayload();
@@ -84,7 +90,10 @@ public class EchoHandler extends TextWebSocketHandler{
     // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
 	private String getMemberId(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
-		String m_id = (String) httpSession.get("m_id"); // 세션에 저장된 m_id 기준 조회
+		
+		MemberVO mVo = (MemberVO) httpSession.get("session");
+		
+		String m_id = mVo.getMemberId(); // 세션에 저장된 m_id 기준 조회
 		return m_id==null? null: m_id;
 	}
 }
