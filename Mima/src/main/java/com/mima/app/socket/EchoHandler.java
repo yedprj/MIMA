@@ -69,27 +69,10 @@ public class EchoHandler extends TextWebSocketHandler{
 		String msg = message.getPayload();
 		System.out.println(msg);
 		if(msg != null) {
-			TextMessage tmpMsg = new TextMessage("<a target=\"_blank\" href="+msg+">진료실이 준비되었습니다. 링크를 클릭하여 진료실로 이동해 주세요.</a>");
+			TextMessage tmpMsg = new TextMessage("<a target=\"_blank\" href="+msg+">진료실이 준비되었습니다. 이동하기</a>");
 			System.out.println(tmpMsg.toString());
 			users.get("user1").sendMessage(tmpMsg);
 			System.out.println("msg sent");
-			
-//			String[] strs = msg.split(",");
-//			log(strs.toString());
-//			if(strs != null && strs.length == 4) {
-//				String type = strs[0];
-//				String target = strs[1]; // m_id 저장
-//				String content = strs[2];
-//				String url = strs[3];
-//				WebSocketSession targetSession = users.get(target);  // 메시지를 받을 세션 조회
-//				
-//				// 실시간 접속시
-//				if(targetSession!=null) {
-//					// ex: [&분의일] 신청이 들어왔습니다.
-//					//TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>" );
-//					targetSession.sendMessage(tmpMsg);
-//				}
-//			}
 		}
 	}
 	// 연결 해제될 때

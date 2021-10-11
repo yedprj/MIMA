@@ -372,7 +372,7 @@
                         </div>
                         <div class="inner-box">   
                         <div class="information-form">
-                            <form action="book-appointment.html" method="post">
+                            <form>
                                 <div class="row clearfix">
                                     <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                        
@@ -403,7 +403,7 @@
                                     </div>
                                 </div>
                                 <div class="btn-box">
-                                    <button id="form2SubmitBtn" class="theme-btn-one">제출하기<i class="icon-Arrow-Right"></i></button>
+                                    <button type="button" id="form2SubmitBtn" class="theme-btn-one">제출하기<i class="icon-Arrow-Right"></i></button>
                                 </div>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                             </form>
@@ -814,7 +814,7 @@ var csrfTokenValue = "${_csrf.token}";
 
 /* 페이지온로드 */
 $(function(){
-	//버튼 누르면 자가스트레스 표 결과보기 -> 모달로>??? 
+	//버튼 누르면 자가스트레스 표 결과보기 -> 모달로 확인, 디비 저장
 	let result = "";
 	$('#calcResult').on('click', function(){
 		//이거 답변안한거 잇음 하라고 알람듸우는거
@@ -873,11 +873,11 @@ $(function(){
 			dataType : "json",
 			data : JSON.stringify({
 				memberNo: 2,
-				pastHx: "$('#pastSession').val()",
-				sessionReason:"$('#reason').val()",
-				preDiagnosis:"$('#pastDiagnosis').val()",
-				currentMeds:"$('#currentMeds').val()",
-				moreInfo : "$('#currentStatus').val()"
+				pastHx: $('#pastSession').val(),
+				sessionReason:$('#reason').val(),
+				preDiagnosis:$('#pastDiagnosis').val(),
+				currentMeds:$('#currentMeds').val(),
+				moreInfo : $('#currentStatus').val()
 			}),
 			 beforeSend : function(xhr) {
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
@@ -885,6 +885,7 @@ $(function(){
 			contentType : 'application/json',
 			success : function(data) {
 				console.log(data);
+				location.href="${pageContext.request.contextPath}/ptMain"
 			}// success end
 		})
 		
