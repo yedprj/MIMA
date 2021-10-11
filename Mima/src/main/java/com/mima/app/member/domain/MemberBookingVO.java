@@ -1,5 +1,9 @@
 package com.mima.app.member.domain;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -16,5 +20,10 @@ public class MemberBookingVO{
 	private String maddr3;		// 참고주소
 	private int bdocNo;
 	private int bptNo;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")	
+	private Date bconsultDate;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")	
+	private Date bconsultTime;
+	
 	
 }

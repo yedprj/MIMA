@@ -121,6 +121,8 @@
                                                 </div>
                                                 
                                             </div>
+                                            
+                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                         </form>
                                         
                                     </div>
@@ -140,6 +142,9 @@
 <script>
 /* 페이지 로드 이벤트 */
 $(function(){
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	$('#insertResetBtn').on('click', function(){
 		//이거 작동 안함. 누르면 그냥 alert 해서 취소하겠습니까 하고 메인으로이동하게
@@ -195,8 +200,6 @@ $(function(){
 	});//End of 비디오 미리보기
 	
 	
-	
-	
 	//meditUpBtn 눌렀을 때 이벤트 설정 교재502페이지 --> 명상첨부파일 넣는거
 	$('#meditUpBtn').on("click", function(e){
 		e.preventDefault();
@@ -222,6 +225,9 @@ $(function(){
 			contentType:false,
 			data: formData,
 			method:'POST',
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success:function(datas){
 				console.log(datas);
 				var str="";
@@ -262,6 +268,7 @@ $(function(){
 	
 	//attachment btn delete event
 	$("#uploaded").on("click", "button", function(e){
+		e.preventDefault();
 		if(confirm("Remove this file?")){
 			var targetLi = $(this).closest("li");
 			var videoPreview=$('#videoSource');
@@ -269,7 +276,6 @@ $(function(){
 			videoPreview.remove();
 		}
 	});//end of attachment btn delete event
-	
 	
 	
 });/* 페이지로드이벤트 끝 */

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,7 @@ import com.mima.app.session.service.BookingService;
 
 // 타일스 때문에 RequestMapping제거 p.10/06
 // 타일스로 인해 아래 맵핑 해주는 클래스 String으로 수정 return으로 페이지 이동 p.10/06
+// 시큐리티 권한 부여 때문에 전체적인 Mapping 수정 p.10/11
 @Controller
 public class PatnerDoctorController {
 	
@@ -49,9 +51,10 @@ public class PatnerDoctorController {
 	@Autowired PartnerDoctorService doctorService;
 	@Autowired MemberService memberService;
 	@Autowired ExperienceService experienceService;
+	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	// 닥터 대쉬보드 메인 페이지_J
-	@GetMapping("/docMain")
+	@GetMapping("doctor/docMain")
 	public String docMain(Model model, BookingVO bookingvo, CommentsVO commentsvo, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 
@@ -71,7 +74,7 @@ public class PatnerDoctorController {
 	}
 	
 	// 닥터 대쉬보드 예약관리 페이지_J
-	@GetMapping("apptManage")
+	@GetMapping("doctor/apptManage")
 	public String apptManage(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
@@ -86,7 +89,7 @@ public class PatnerDoctorController {
 	}
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
-	@GetMapping("apptHistory")
+	@GetMapping("doctor/apptHistory")
 	public String apptHistory(Model model, BookingVO bookingvo, @ModelAttribute("cri") Criteria cri) {
 		int total = bookingService.apptHistoryCount(cri);
 		model.addAttribute("apptHistoryList", bookingService.apptHistoryList());
@@ -97,7 +100,7 @@ public class PatnerDoctorController {
 	}
 	
 	// 닥터 대쉬보드 나의 환자들 페이지_J29. J06
-	@GetMapping("/patientList")
+	@GetMapping("doctor/patientList")
 	public String patientList(Model model, MemberBookingVO memberbookingvo, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
@@ -111,14 +114,14 @@ public class PatnerDoctorController {
 	
 	
 	// 닥터 대쉬보드 나의 후기 페이지_J29
-	@GetMapping("/docReview")
+	@GetMapping("doctor/docReview")
 	public String docReview(Model model, CommentsVO commentsvo) {
 		model.addAttribute("docReview", commentsService.docReview());
 		
 		return "docDash/docReview";
 	}
 	
-	@GetMapping("/docQna")
+	@GetMapping("doctor/docQna")
 	public String docQna(Model model, CscVO cscvo) {
 		model.addAttribute("docQna", cscService.docQna());
 		
@@ -132,18 +135,34 @@ public class PatnerDoctorController {
 	 */
 	
 	// 닥터 대쉬보드 패스워드 변경 페이지 수정 폼_J04
-	@GetMapping("/docPwChangeForm")
+	@GetMapping("doctor/docPwChangeForm")
 	public String pwUpdateForm() {
 		
 		return "docDash/docPwChange";
 	}
 	
 	// 닥터 대쉬보드 패스워드 변경 페이지 수정 처리_J04
-	@PostMapping("/docPwChange")
-	public String pwUpdate(RedirectAttributes rttr, MemberVO vo) {
-		memberService.docPwChange(vo);
-		rttr.addAttribute("pwUpdateResult", vo.getMemberId());
-		return "redirect:/docPwChange";
+	@PostMapping("doctor/docPwChange")
+	@ResponseBody
+	public boolean pwUpdate(MemberVO vo, HttpServletRequest request) {
+		
+		String password = vo.getPassword();
+		String memberId = vo.getMemberId();
+		MemberVO pass = memberService.findPassword1(memberId);
+		
+		Boolean matchPass = bCryptPasswordEncoder.matches(password, pass.getPassword()); //비교
+		
+		System.out.println(matchPass);
+		
+		return matchPass;
+	}
+	
+	// 닥터 비밀번호 변경 p.10/11
+	@PostMapping("doctor/updatePassword")
+	@ResponseBody
+	public int updatePassword(MemberVO vo) {
+		int result = memberService.updatePassword(vo);
+		return result;
 	}
 	
 	// 닥터 진료노트_J06. J10

@@ -64,4 +64,10 @@ public interface MemberService {
 	// 약배달 신청 유무 확인 K.10/11
 	public String deliveryStatus(int memberNo);
 	
+	// 현재 비밀번호 확인을 위해 DB에 저장된 비밀번호 가져오기 p.10/11
+	public MemberVO findPassword1(String memberId);
+	
+	// 의사 비밀번호 변경 p.10/11
+	public int updatePassword(MemberVO vo);
+	
 }

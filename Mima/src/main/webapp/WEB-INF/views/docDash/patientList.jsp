@@ -89,7 +89,7 @@ th, td {
                                         <th>환자명</th>
                                         <th>성별</th>
                                         <th>연락처</th>
-                                        <th>초진문진표</th>
+                                        <th>예약받은날</th>
                                     </tr>    
                                 </thead>
                                 <tbody>
@@ -98,21 +98,18 @@ th, td {
 	                                        <td>
 	                                            <div class="name-box">
 	                                                <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png"></figure>
-	                                                <h5>${patientList.}</h5>
-	                                                <span class="ptno"># no.${patientList.}</span>
+	                                                <h5>${patientList.mname}</h5>
+	                                                <span class="ptno"># no.${patientList.mmemberNo}</span>
 	                                            </div>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.}</p>
+	                                            <p>${patientList.mgender}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.}</p>
+	                                            <p>${patientList.mphone}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.}</p>
-	                                        </td>
-	                                        <td>
-	                                            <p>${patientList.}</p>
+	                                            <p>${patientList.bconsultDate}</p>
 	                                        </td>
                                     	</tr>
                                 	</c:forEach>

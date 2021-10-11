@@ -37,6 +37,19 @@
 		AND STATUS = 'y'
 	</select>
 	
+	<!-- 비밀번호 가져오기 p10/11 -->
+	<select id="findPassword1" resultType="MemberVO">
+		SELECT PASSWORD 
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	<update id="updatePassword">
+		UPDATE MEMBER
+		SET PASSWORD = #{password}
+		WHERE MEMBER_ID = #{memberId}
+	</update>
+	
 	<!-- 아이디 이메일로 초기화 유무 묻기 p-29 -->
 	<select id="findPassword" resultType="int"> 
 		SELECT COUNT(*)
@@ -177,17 +190,17 @@
 	</update>
 	
 	<!-- 닥터 대쉬보드 나의 환자들 조회_J06 -->
-	<select id="patientList">
-		<![CDATA[
-		select distinct m.name,
-		        m.phone,
-		        b.consult_date,
-		        b.consult_time,
-		        b.doc_no
-		from member m join booking b
-		on m.member_no = b.pt_no
-		where b.doc_no=#{memberNo}
-	   ]]>
+	<select id="patientList" resultType="MemberBookingVO">
+		SELECT DISTINCT M.NAME AS MNAME,
+				M.MEMBER_NO AS MMEMBERNO,
+				M.GENDER AS MGENDER,
+		        M.PHONE AS MPHONE,
+		        B.CONSULT_DATE AS BCONSULTDATE,
+		        B.CONSULT_TIME AS BCONSULTTIME,
+		        B.DOC_NO AS BDOCNO
+		FROM MEMBER M JOIN BOOKING B
+		ON M.MEMBER_NO = B.PT_NO
+		WHERE B.DOC_NO=#{memberNo}
 	</select>
 	
 	<!-- 닥터 진료내역 페이지 선택한 환자의 진료노트 조회_J10 -->

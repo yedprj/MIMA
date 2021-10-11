@@ -187,6 +187,7 @@
 						// rsp.merchant_uid -> 고유 주문 번호
 						// rsp.paid_amount -> 결제 금액
 						// rsp.imp_uid -> 아임포트 고유 결제 번호
+						// ajax url 수정 p.10/10
 						$.ajax({
 							url : 'insertPayment',
 							method : 'post',
@@ -239,7 +240,7 @@
 			$('#btnSelfCheck').on('click', function(e){
 				e.preventDefault();
 				$('#myModal').modal('hide');
-				window.location.href = 'consultation/preSelfAssessmentFrm';
+				window.location.href = '${pageContext.request.contextPath}/consultation/preSelfAssessmentFrm';
 			});
 		});
 	});

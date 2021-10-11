@@ -87,7 +87,7 @@
 												<a href="pricing.html"><i class="icon-Arrow-Right"></i></a>
 											</div>
 											<div class="btn-box">
-												<a href="${pageContext.request.contextPath }/report/rplist" class="theme-btn-one">GO<i
+												<a href="${pageContext.request.contextPath }/admin/rplist" class="theme-btn-one">GO<i
 													class="icon-Arrow-Right"></i></a>
 											</div>
 										</div>
@@ -118,7 +118,7 @@
 											<a href="pricing.html"><i class="icon-Arrow-Right"></i></a>
 										</div>
 										<div class="btn-box">
-											<a href="patnerStatusSelect" class="theme-btn-one">GO<i
+											<a href="${pageContext.request.contextPath }/admin/meditationInsertForm" class="theme-btn-one">GO<i
 												class="icon-Arrow-Right"></i></a>
 										</div>
 									</div>
