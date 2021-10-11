@@ -96,7 +96,7 @@ public class PatnerDoctorController {
 		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
     
-    return "docDash/apptHistory";
+		return "docDash/apptHistory";
 	}
 	
 	// 닥터 대쉬보드 나의 환자들 페이지_J29. J06

@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,7 @@ import com.mima.app.admin.domain.ReportVO;
 import com.mima.app.admin.service.ReportService;
 import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.likes.service.LikesService;
+import com.mima.app.member.domain.MemberVO;
 import com.mima.app.post.domain.PostVO;
 import com.mima.app.post.service.PostService;
 
@@ -40,7 +44,12 @@ public class PostController {
 	
 	//포스트잇 페이지
 	@GetMapping("/mindPostIt2")
-	public void mindPostIt2() {}
+	public void mindPostIt2(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		model.addAttribute("memberNo", vo.getMemberNo());
+		
+	}
 	
 	// 포스트잇 총 갯수 조회
 	@GetMapping("/postCount")

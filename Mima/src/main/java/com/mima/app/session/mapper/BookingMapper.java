@@ -2,6 +2,8 @@ package com.mima.app.session.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.session.domain.BookingVO;
 
@@ -29,16 +31,16 @@ public interface BookingMapper {
 	public List<BookingVO> apptListCanceled(int memberNo);
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
-	public List<BookingVO> apptHistoryList();
+	public List<BookingVO> apptHistoryList(int memberNo);
 	
 	// 닥터 대쉬보드 진료내역 페이징_J06
-	public List<BookingVO> apptHistoryPage(Criteria cri);
+	public List<BookingVO> apptHistoryPage(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
 	
 	// 닥터 대쉬보드 진료내역 페이징 데이터 수 전체조회_J06
-	public int apptHistoryCount(Criteria cri);
+	public int apptHistoryCount(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
 	
-	//s:0929 진료시간 5분 전 부터 매 10초마다 테이블 확인해서 방 아이디 확인
-	public List<BookingVO> getRoomId();
+	//s:0929 s:1011 수정 예약번호 받아서 방 아이디 가져오기
+	public BookingVO getRoomId(int bookingNo);
 
 	//s:1003 단일 예약정보 가져오기 NODE
 	public BookingVO getBookingInfo(BookingVO vo);

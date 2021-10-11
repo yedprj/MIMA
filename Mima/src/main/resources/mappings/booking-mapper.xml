@@ -11,6 +11,7 @@
 		   B.PRICE,
 		   B.CONSULT_DATE,
 		   B.CONSULT_TIME,
+		   B.BOOKING_STATUS,
 		   M.NAME
 	FROM BOOKING B JOIN MEMBER M
 	ON B.PT_NO=M.MEMBER_NO
@@ -110,6 +111,7 @@
 	]]>
 </select>
 
+<!-- 닥터 대쉬보드 진료내역 페이지 -->
 <select id="apptHistoryList" resultType="BookingVO">
 	<![CDATA[
 	SELECT B.BOOKING_NO,
@@ -122,10 +124,40 @@
 		   B.CONSULT_TIME,
 		   M.NAME
 	FROM BOOKING B JOIN MEMBER M
-	ON B.PT_NO=M.MEMBER_NO
-    WHERE B.CONSULT_DATE < TO_DATE(SYSDATE) AND BOOKING_STATUS = 'p'
+	ON (B.PT_NO=M.MEMBER_NO)
+    WHERE CONSULT_DATE < TO_DATE(SYSDATE)
+    AND DOC_NO = #{memberNo}
 	ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC
 	]]>
+</select>
+
+<!-- 닥터 대쉬보드 진료내역 페이지 내 검색 기능 -->
+<select id="searchApptHistory" resultType="BookingVO">
+	SELECT *
+	FROM ( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
+				  ROWNUM RN,
+				  B.BOOKING_NO,
+				  B.PT_NO,
+				  B.DOC_NO,
+				  B.BOOKING_DATE,
+				  B.PRICE,
+				  B.BOOKING_STATUS,
+				  B.CONSULT_DATE,
+				  B.CONSULT_TIME,
+				  B.EDIT_DATE,
+				  B.ROOM_ID,
+				  B.FIRST_SESSION,
+				  B.SUBJECT,
+				  M.NAME
+		   FROM BOOKING B JOIN MEMBER M
+		   ON (B.PT_NO=M.MEMBER_NO)
+	       WHERE <include refid="criteria"></include>
+	       		 <![CDATA[
+	       		 ROWNUM <= #{pageNum} * #{amount}
+	       		 AND CONSULT_DATE < TO_DATE(SYSDATE)
+		         AND DOC_NO = #{memberNo})
+	WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+	ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC
 </select>
 
 <!-- 페이징 -->
@@ -153,48 +185,78 @@
 		</trim>
 	</sql>
 	
+	<sql id="criteriaApptHistory">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="#{cri.typeArr}" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
 	<!-- total count -->
 	
 		<!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
 		<select id="apptHistoryCount" resultType="int">
 			SELECT COUNT(*) FROM BOOKING
 			WHERE
-			<include refid="criteria"></include>
+			<include refid="criteriaApptHistory"></include>
 			PT_NO > 0
+			AND DOC_NO = #{memberNo}
 		</select>
 	
 		<!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
-		<select id="apptHistoryPage" resultType="com.mima.app.session.domain.BookingVO">
+		<select id="apptHistoryPage" resultType="BookingVO">
 			SELECT *
-			FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
-				ROWNUM RN,
-				BOOKING_NO,
-				PT_NO,
-				DOC_NO,
-				BOOKING_DATE,
-				PRICE,
-				BOOKING_STATUS,
-				CONSULT_DATE,
-				CONSULT_TIME,
-				EDIT_DATE,
-				ROOM_ID,
-				FIRST_SESSION,
-				SUBJECT
-			FROM BOOKING
-			WHERE <include refid="criteria"></include>
-					<![CDATA[
-					ROWNUM <= #{pageNum} * #{amount}				
-					)
-					WHERE RN > (#{pageNum}-1)* #{amount} ]]>
+			FROM( SELECT  /*+INDEX_DESC(BOOKING BOOKING_PK) */
+						  ROWNUM RN,
+						  B.BOOKING_NO,
+						  B.PT_NO,
+						  B.DOC_NO,
+						  B.BOOKING_DATE,
+						  B.PRICE,
+						  B.BOOKING_STATUS,
+						  B.CONSULT_DATE,
+						  B.CONSULT_TIME,
+						  B.EDIT_DATE,
+						  B.ROOM_ID,
+						  B.FIRST_SESSION,
+						  B.SUBJECT,
+						  M.NAME
+				  FROM BOOKING B JOIN MEMBER M
+                  ON PT_NO = M.MEMBER_NO
+				  WHERE <include refid="criteriaApptHistory"></include>
+				  		<![CDATA[
+					  	ROWNUM <= #{cri.pageNum} * #{cri.amount} 
+					  	AND CONSULT_DATE < TO_DATE(SYSDATE)
+						AND DOC_NO = #{memberNo})
+			WHERE RN > (#{cri.pageNum}-1)* #{cri.amount}]]>
+			ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC
 		</select>
 	<!-- 페이징 end -->
 
 
 <!-- s:0929 진료시간중 10초마다 진료경로 검색 -->
 <select id="getRoomId" resultType="BookingVO">
-	SELECT BOOKING_NO, ROOM_ID, PT_NO, CONSULT_TIME
+	<!-- SELECT BOOKING_NO, ROOM_ID, PT_NO, CONSULT_TIME
 	FROM BOOKING
-	WHERE PAY_STATUS='y' AND BOOKING_STATUS='y' AND TO_CHAR(CONSULT_DATE, 'YYYY-MM-dd') = TO_CHAR(sysdate, 'YYYY-MM-dd') AND ROOM_ID IS NOT NULL
+	WHERE PAY_STATUS='y' AND BOOKING_STATUS='y' AND TO_CHAR(CONSULT_DATE, 'YYYY-MM-dd') = TO_CHAR(sysdate, 'YYYY-MM-dd') AND ROOM_ID IS NOT NULL -->
+	
+	select Room_id, pt_no from booking where booking_no = #{bookingNo}
 </select>
 
 <!-- s:1003 단일예약정보 조회: 노드에서 요청 -->

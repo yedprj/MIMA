@@ -63,21 +63,19 @@
 
 
 <!--s:1009 sockJS -->
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
+
 <script>
 // 전역변수 설정
 var socket  = null;
 $(document).ready(function(){
     // 웹소켓 연결
-    
-    
+        
     var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo";
    	console.log(wsUri);
     socket = new WebSocket(wsUri);
-    //let socket = new sockjs(wsUri);
-    
+        
     socket.onopen = onOpen;
-    // 데이터를 전달 받았을때 
     socket.onmessage = onMessage; // toast 생성
    
 });
@@ -90,6 +88,7 @@ function onOpen(){
 // toast생성 및 추가
 function onMessage(evt){
     var data = evt.data;
+    console.log(data);
     // toast
     let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
     toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";

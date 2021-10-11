@@ -57,27 +57,27 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public List<BookingVO> apptHistoryList() {
-		return bookingMapper.apptHistoryList();
+	public List<BookingVO> apptHistoryList(int memberNo) {
+		return bookingMapper.apptHistoryList(memberNo);
 	}
 	// 닥터 대쉬보드 진료내역 페이징_J06
 	@Override
-	public List<BookingVO> apptHistoryPage(Criteria cri) {
-		return bookingMapper.apptHistoryPage(cri);
+	public List<BookingVO> apptHistoryPage(Criteria cri, int memberNo) {
+		return bookingMapper.apptHistoryPage(cri, memberNo);
 	}
 
 	// 닥터 대쉬보드 진료내역 페이징 카운트_J06
 	@Override
-	public int apptHistoryCount(Criteria cri) {
-		return bookingMapper.apptHistoryCount(cri);
+	public int apptHistoryCount(Criteria cri, int memberNo) {
+		return bookingMapper.apptHistoryCount(cri, memberNo);
 	}
 	
 	
 	
-	//	s:0929 진료시간 5분전 매10초마다 테이블확인 to get rm Id
+	//	s:0929  s:1011 get rm Id
 	@Override
-	public List<BookingVO> getRoomId() {
-		return bookingMapper.getRoomId();
+	public BookingVO getRoomId(int bookingNo) {
+		return bookingMapper.getRoomId(bookingNo);
 	}
 
 	//s:1003 예약정보 가져오기(노드에서 요청)
