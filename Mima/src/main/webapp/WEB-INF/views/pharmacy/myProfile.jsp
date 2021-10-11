@@ -239,6 +239,7 @@
                     <div class="btn-box">
                         <a id="updateBtn" class="theme-btn-one">프로필 수정<i class="icon-Arrow-Right"></i></a>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
