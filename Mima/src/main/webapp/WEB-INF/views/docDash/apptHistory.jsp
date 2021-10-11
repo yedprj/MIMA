@@ -79,7 +79,7 @@ th, td {
 							<span>지난 진료내역을 조회합니다. 목록은 최신순으로 보여집니다.</span>
                         </div>
                         <div class="btn-box pull-right">
-                            <form action="my-patients.html" method="post" class="search-form">
+                            <form action="apptHistory" method="get" class="search-form" id="actionForm">
                             	<div class="form-group">
 			                    	<input type="hidden" id="pageNum" name="pageNum" value="1">
 	              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
@@ -137,8 +137,6 @@ th, td {
 	                                        <button class="view" id="cnote" onclick="window.open('cnote?bookingNo=${apptHistoryPage.bookingNo}', '진료노트', 'width=1100, height=800, scrollbars=yes')">
 	                                        	<i class="fas fa-eye"></i>진료노트
 	                                        </button>
-	                                    </td>
-										<td>
 	                                      	<button class="print" id="prescription" onclick="window.open('prescription?bookingNo=${apptHistoryPage.bookingNo}', '처방전', 'width=1100, height=800, scrollbars=yes')">
 	                                      		<i class="fas fa-print"></i>처방전
 	                                      	</button>
@@ -181,21 +179,15 @@ th, td {
 </button>
 
 <script>
-	$(function(){
-		/* $('#cnote').on('click', function(){
-			//window.open('${pageContext.request.contextPath}/docDash/cnote', '진료노트', 'width=1200, height=900, scrollbars=yes');
-		}); */
-		/* $('prescription').on('click', function(){
-			window.open('http://localhost:3000/?bookingNo=', '처방전', 'width=1200, height=900, scrollbars=yes');
-		}); */
-		
+$(document).ready(function() {
+	 var actionForm = $('#actionForm');
+	 
 		$('#nameSearch');
 		
 		$(enter(event){
 			if(event.keyCode == 13){
-				
 			}
-		})
+		});
 		
 	});
 </script>

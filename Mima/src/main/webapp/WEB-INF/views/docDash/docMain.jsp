@@ -7,6 +7,12 @@
 th, td {
 	text-align: center;
 }
+.doctors-appointment .doctors-table tr td .status.pending {
+    margin-right: 30px;
+}
+.doctors-appointment .doctors-table tr td .status {
+	margin-right: 30px;
+}
 </style>
 
 <!-- doctors-dashboard -->
@@ -144,7 +150,7 @@ th, td {
 										<th>진료일</th>
 										<th>예약일</th>
 										<th>결제금액</th>
-										<th>결제상태</th>
+										<th>예약상태</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -169,7 +175,17 @@ th, td {
 													pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${bookingList.price}" /></td>
-											<td>${bookingList.bookingStatus}</td>
+											<td>
+												<c:if test="${bookingList.bookingStatus eq 'p'}">
+													<span class="status">결제완료</span>
+												</c:if>
+												<c:if test="${bookingList.bookingStatus eq 'y'}">
+													<span class="status pending">결제예정</span>
+												</c:if>
+												<c:if test="${bookingList.bookingStatus eq 'c'}">
+													<span class="status cancel">취소완료</span>
+												</c:if>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>

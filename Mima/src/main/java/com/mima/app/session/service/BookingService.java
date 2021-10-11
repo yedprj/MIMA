@@ -2,6 +2,8 @@ package com.mima.app.session.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.session.domain.BookingVO;
 
@@ -29,13 +31,13 @@ public interface BookingService {
 	public List<BookingVO> apptListCanceled(int memberNo);
 	
 	// 닥터 대쉬보드 진료내역 페이지_J29
-	public List<BookingVO> apptHistoryList();
+	public List<BookingVO> apptHistoryList(int memberNo);
 	
 	// 닥터 대쉬보드 진료내역 페이징_J06
-	public List<BookingVO> apptHistoryPage(Criteria cri);
+	public List<BookingVO> apptHistoryPage(Criteria cri, int memberNo);
 	
 	// 닥터 대쉬보드 진료내역 페이징 데이터 수 전체조회_J06
-	public int apptHistoryCount(Criteria cri);
+	public int apptHistoryCount(Criteria cri, int memberNo);
 	
 	
 	
