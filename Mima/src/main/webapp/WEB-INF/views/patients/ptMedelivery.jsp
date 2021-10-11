@@ -196,6 +196,7 @@ input::placeholder {
                             </div>
                             <div class="btn-box">
                                 <a id="submitBtn" class="theme-btn-one">저장하기<i class="icon-Arrow-Right"></i></a>
+                                &nbsp;&nbsp;<button class="cancel-btn">신청 취소</button>
                             </div>
                             <!-- <div class="modal">
 								<div class="modal_content" title="클릭하면 창이 닫힙니다.">
@@ -298,14 +299,11 @@ function execDaumPostcode() {
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";	
 		
-		// 약배달 신청내역 가져오기
-		var delAddr  = ${pvo.delAddr}; // 신청 주소
-		var delPharmacyNo = ${pvo.delPharmacyNo}; // 신청 약국 번호
-
-		if (delAddr == "" && delPharmacyNo == ""){ // 신청주소랑 약국번호가 없을떄
-			
-			var memberNo = ${memberNo};
-			//  약배달(med_delivery) 에서 해당 예약 번호가 없을때 등록가능
+		var messege = "${messege}";
+		var memberNo = ${memberNo};
+		console.log(messege);
+		
+		if (messege == "insert" || messege == "update"){ // 멤버번호가 있을때
 		 	$("#submitBtn").on("click",function(){
 		 		var addr1 = $("input[name='addr1']").val();
 				var addr2 = $("input[name='addr2']").val();
@@ -330,36 +328,65 @@ function execDaumPostcode() {
 					alert("파트너쉽에 등록되지 않은 약국입니다.\n 검색으로 다시 선택해주세요!")
 					$("#phaName").focus();
 					return;
-				else {
-					$.ajax({
-		    			url : "ptDeliveryInsert",
-		    			method : "post",
-		    			data : JSON.stringify({
-		    				memberNo : memberNo
-		    				pharmacyNo : pharmacyNo ,
-		    				delAddr : addr1,
-		    				delAddr2 : $("input[name='addr3']").val(), // 도로명주소
-		    				delAddr3 : addr2, // 상세주소
-		    				delNote : delNote ,
-		    				delPostCode : $("input[name='postcode']").val()
-		    			}),
-		    			beforeSend : function(xhr) {
-							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						},
-		    			dataType : "json", 
-		    			contentType : "application/json",
-		    			success : function(data){
-		    				if( data > 0) {
-		    					alert("약 배달 등록 성공!");
-		    				}else {
-		    					alert("약 배달 등록에 실패했습니다.");
-		    				}
-		    			}  // success end
-		    		}); //  ajax end
+				}else {
+					if(messege == "insert" ){
+						$.ajax({
+			    			url : "ptDeliveryInsert",
+			    			method : "post",
+			    			data : JSON.stringify({
+			    				memberNo : memberNo,
+			    				delPharmacyNo : pharmacyNo ,
+			    				delAddr : addr1,
+			    				delAddr2 : $("input[name='addr3']").val(), // 도로명주소
+			    				delAddr3 : addr2, // 상세주소
+			    				delNote : delNote ,
+			    				delPostCode : $("input[name='postcode']").val()
+			    			}),
+			    			beforeSend : function(xhr) {
+								xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+							},
+			    			dataType : "json", 
+			    			contentType : "application/json",
+			    			success : function(data){
+			    				if( data > 0) {
+			    					alert("약 배달 등록 성공!");
+			    				}else {
+			    					alert("약 배달 등록에 실패했습니다.");
+			    				}
+			    			}  // success end
+			    		}); //  ajax end
+					} // messege == insert 일때
+					else {
+						$.ajax({
+			    			url : "ptDeliveryUpdate",
+			    			method : "post",
+			    			data : JSON.stringify({
+			    				memberNo : memberNo,
+			    				delPharmacyNo : pharmacyNo ,
+			    				delAddr : addr1,
+			    				delAddr2 : $("input[name='addr3']").val(), // 도로명주소
+			    				delAddr3 : addr2, // 상세주소
+			    				delNote : delNote ,
+			    				delPostCode : $("input[name='postcode']").val()
+			    			}),
+			    			beforeSend : function(xhr) {
+								xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+							},
+			    			dataType : "json", 
+			    			contentType : "application/json",
+			    			success : function(data){
+			    				if( data > 0) {
+			    					alert("약 배달 등록 완료!");
+			    				}else {
+			    					alert("약 배달 등록에 실패했습니다.");
+			    				}
+			    			}  // success end
+			    		}); //  ajax end
+					} // messege == update 일때
 				} // 조건성공시 ajax 호출 end
 		 	}); // submitBtn end
 		}else {
-
+			console.log("${pvo}")
 			$("input[name='addr1']").val("${pvo.delAddr}");
 			$("input[name='addr2']").val("${pvo.delAddr3}"); // 상세 주소
 			$("input[name='addr3']").val("${pvo.delAddr2}"); // 도로명 주소
@@ -391,12 +418,18 @@ function execDaumPostcode() {
 		
 		// 수정하기 버튼 클릭시
 		$(document).on("click","#updateBtn", function(){ 
+			var addr1 = $("input[name='addr1']").val();
+			var addr2 = $("input[name='addr2']").val();
+			var phaName =  $("#phaName").val();
+			var pharmacyNo = $("input[name='pharmacyNo']").val();
+			var delNote = $("#ptNote").val();
+			
 			$.ajax({
     			url : "ptDeliveryUpdate",
     			method : "post",
     			data : JSON.stringify({
-    				memberNo : memberNo
-    				pharmacyNo : pharmacyNo ,
+    				memberNo : memberNo,
+    				delPharmacyNo : pharmacyNo ,
     				delAddr : addr1,
     				delAddr2 : $("input[name='addr3']").val(), // 도로명주소
     				delAddr3 : addr2, // 상세주소
@@ -419,6 +452,51 @@ function execDaumPostcode() {
 			
 		}); // 수정하기 버튼
 		
+		$(".cancel-btn").on("click",function(){
+			$.ajax({
+    			url : "deliberyStatusUpdate",
+    			method : "post",
+    			data : JSON.stringify({
+    				memberNo : memberNo,
+    				deliveryStatus : "n"
+    			}),
+    			beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+    			dataType : "json", 
+    			contentType : "application/json",
+    			success : function(data){
+    				if( data > 0) {
+    					console.log("업데이트 성공!")
+	    					$.ajax({
+				    			url : "ptDeliveryUpdate",
+				    			method : "post",
+				    			data : JSON.stringify({
+				    				memberNo : memberNo,
+				    				delPharmacyNo : "0" ,
+				    				delAddr : "",
+				    				delAddr2 : "", // 도로명주소
+				    				delAddr3 : "", // 상세주소
+				    				delNote : "" ,
+				    				delPostCode : ""
+				    			}),
+				    			beforeSend : function(xhr) {
+									xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+								},
+				    			dataType : "json", 
+				    			contentType : "application/json",
+				    			success : function(data){
+    								location.href= "ptMedelivery";
+				    			}  // success end
+				    		}); //  ajax end
+    				}else {
+    					console.log("업데이트 실패!")
+    					return;
+    				}
+    			}  // success end
+    		}); //  ajax end
+			
+		});// 신청 취소하기
 	  
 	});// function end
 	

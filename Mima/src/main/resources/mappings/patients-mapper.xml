@@ -518,10 +518,10 @@
 		<!-- K.10/10 약배달 정보 수정 -->
 		<update id="ptDeliveryUpdate">
 			UPDATE PATIENTS SET 
-					DEL_ADDR = #{delAddr},
+					DEL_ADDR = #{delAddr, jdbcType=VARCHAR},
 					DEL_ADDR2 = #{delAddr2, jdbcType=VARCHAR},
 					DEL_ADDR3 = #{delAddr3},
-					DEL_POST_CODE = #{delPostCode},
+					DEL_POST_CODE = #{delPostCode, jdbcType=VARCHAR},
 					DEL_NOTE = #{delNote, jdbcType=VARCHAR},
 					DEL_PHARMACY_NO = #{delPharmacyNo}
 			WHERE MEMBER_NO = #{memberNo}
