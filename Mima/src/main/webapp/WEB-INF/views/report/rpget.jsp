@@ -9,11 +9,6 @@
 	<!-- preloader -->
 
 
-	<!-- main header -->
-	<header class="main-header style-three">
-
-
-
 		<!-- doctors-dashboard -->
 		<section class="doctors-dashboard bg-color-3">
 
@@ -75,9 +70,6 @@
 			</div>
 		</section>
 		<!-- doctors-dashboard -->
-
-
-	     
 
 
 		<!--Scroll to top-->

@@ -405,6 +405,7 @@
                                 <div class="btn-box">
                                     <button id="form2SubmitBtn" class="theme-btn-one">제출하기<i class="icon-Arrow-Right"></i></button>
                                 </div>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                             </form>
                         </div>
                         </div>
