@@ -57,14 +57,15 @@ public class ConsultationController {
 		}
 		//s:1003 자가검진 전체 폼 섭밋 ajax2
 		@PostMapping("/preSelfInfo")
-		public String preSelfInfo(@RequestBody PatientsVO vo, RedirectAttributes rttr) {
+		@ResponseBody
+		public int preSelfInfo(@RequestBody PatientsVO vo, RedirectAttributes rttr) {
 			int result = patientsService.update(vo);
+			System.out.println(result+"updated");
 			
 			if (result == 1) {
 				rttr.addFlashAttribute("result", "success");
 			}
-			//나중에 리턴=> 자기 메인페이지로
-			return "redirect:/consultation/preSelfAssessmentFrm";
+			return result;
 		}
 		
 		//s:1003 자가검진 스트레스 문항 페이지 ajax1
@@ -100,5 +101,22 @@ public class ConsultationController {
 			return  vo;
 		}
 	
-
+		
+		//s:1012 노드에서 요청 진료기록 저장 ajax
+		@PostMapping("/consultInsertAjax")
+		@ResponseBody
+		public int consultationInsert(BookingVO vo, MemberVO memberSessionVo, ConsultationVO conVo, HttpServletRequest requset) {
+			int result =2;
+			
+			return  result;
+		}
+		
+		//s:1012 노드에서 요청 처방전 저장 ajax
+		@PostMapping("/medInsertAjax")
+		@ResponseBody
+		public BookingVO medInsertAjax(BookingVO vo, MemberVO memberSessionVo, HttpServletRequest requset) {
+			
+			vo=bookingService.getBookingInfo(vo);
+			return  vo;
+		}
 }

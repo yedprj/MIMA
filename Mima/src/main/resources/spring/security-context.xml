@@ -19,6 +19,10 @@
 		<!-- 권한 admin만 접근 가능 -->
 		<security:intercept-url pattern="/admin/**" access="hasAuthority('admin')"/>
 		
+		
+		<!-- 이거 수정해야함 주유니 ***예시*** -->
+		<!-- <security:intercept-url pattern="/consultation/pt*" access="hasAuthority('pt')"/> -->
+		
 		<!-- 접근 제한 설정 pattern: url패턴 , access: 권한 체크 -->
 		<security:intercept-url pattern="/**" access="permitAll()"/>
 
