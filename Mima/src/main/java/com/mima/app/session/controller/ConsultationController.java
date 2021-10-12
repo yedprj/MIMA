@@ -26,7 +26,7 @@ import lombok.extern.java.Log;
 
 
 @Log
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
 @Controller
 @RequestMapping("/consultation/*")
 public class ConsultationController {
@@ -105,8 +105,18 @@ public class ConsultationController {
 		//s:1012 노드에서 요청 진료기록 저장 ajax
 		@PostMapping("/consultInsertAjax")
 		@ResponseBody
-		public int consultationInsert(BookingVO vo, MemberVO memberSessionVo, ConsultationVO conVo, HttpServletRequest requset) {
-			int result =2;
+		public int consultInsertAjax(BookingVO vo, MemberVO memberSessionVo, ConsultationVO conVo, HttpServletRequest requset) {
+			System.out.println("111노드에서 넘긴 정보" + conVo);
+			
+			vo.setBookingNo(conVo.getBookingNo());
+			// 의사번호 가져오기
+			vo = bookingService.getBookingInfo(vo);
+			System.out.println("222예약 보"+vo);
+			
+			conVo.setDocNo(vo.getDocNo());
+			System.out.println("333입력할 진료기록 정보" + conVo);
+			
+			int result =consultationService.consultInsert(conVo);
 			
 			return  result;
 		}

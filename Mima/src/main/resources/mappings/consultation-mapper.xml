@@ -21,21 +21,21 @@
 </select>
 
 <insert id="consultInsert">
-INSERT INTO CONSULTATION(
-    CONSULT_DATE,
-    PT_ASSESSMENT,
-    PT_DIAGNOSIS,
-    BOOKING_NO,
-    PT_NO,
-    DOC_NO
-    ) values(
-      sysdate,
-      #{ptAssessment},
-      #{ptDiagnosis},
-      #{bookingNo},
-      #{ptNo},
-      #{docNo}
-    )
+	INSERT INTO CONSULTATION(
+	    CONSULT_DATE,
+	    PT_ASSESSMENT,
+	    PT_DIAGNOSIS,
+	    BOOKING_NO,
+	    PT_NO,
+	    DOC_NO
+	    ) values(
+	      sysdate,
+	      #{ptAssessment},
+	      #{ptDiagnosis},
+	      #{bookingNo},
+	      #{ptNo},
+	      #{docNo}
+	    )
 </insert>
 
 </mapper>

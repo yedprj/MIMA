@@ -28,4 +28,9 @@ public class BookingVO {
 	private String firstSession;	// 첫 진료 여부
 	private String subject;			// 진료 과목
 	
+//	s:1012 약 배달 유무
+	private String medDelivery;
+	//s:1012 주민번호
+	private String identifyNo;
+	
 }
