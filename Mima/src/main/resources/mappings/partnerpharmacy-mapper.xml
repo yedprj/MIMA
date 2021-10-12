@@ -61,6 +61,7 @@
 			PROFILE_CONTENTS = #{profileContents},
 			PHARMACY_CONTACT = #{pharmacyContact},
 			PHARMACY_EMAIL = #{pharmacyEmail},
+			PHARMACY_POST_CODE = #{pharmacyPostCode},
 			DELIVERY_AREA = #{deliveryArea},
 			DELIVERY_AREA2 = #{deliveryArea2, jdbcType=VARCHAR},
 			DELIVERY_AREA3 = #{deliveryArea3, jdbcType=VARCHAR},

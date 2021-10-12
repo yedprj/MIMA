@@ -49,8 +49,13 @@ public class PartnerPharmacyController {
 	}
 	
 	// 약배달 관리페이지 [K]210929
-	@GetMapping("/medDelivery")
-	public void medDelivery() {}
+	@GetMapping("/mediDelivery")
+	public void mediDelivery(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		model.addAttribute("profile", partPhaService.selectOne(memberNo));
+	}
 	
 	// 복약지도 관리페이지 [K]210929
 	@GetMapping("/medGuid")
@@ -93,16 +98,24 @@ public class PartnerPharmacyController {
 	// 현재 비밀번호 확인페이지 [K]10.12s
 	@PostMapping("/pwConfirm")
 	@ResponseBody
-	public boolean pwConfirm(@RequestBody MemberVO vo,HttpServletRequest request) {
-		boolean result = false;
-		MemberVO mvo = new MemberVO();
-		mvo = memberSerivce.findPassword1(vo.getMemberId());
-		log.info(vo.getPassword());
-		log.info(mvo.getPassword());
-		log.info("결과" + cryptEncoder.matches(vo.getPassword(), mvo.getPassword()));
-		if(cryptEncoder.matches(vo.getPassword(), mvo.getPassword())) {
-			result = true;
-		}
+	public boolean pwConfirm(MemberVO vo,HttpServletRequest request) {
+		String password = vo.getPassword();
+		String memberId = vo.getMemberId();
+		MemberVO pass = memberSerivce.findPassword1(memberId);
+		
+		Boolean matchPass = cryptEncoder.matches(password, pass.getPassword()); //비교
+		
+		System.out.println(matchPass);
+		
+		return matchPass;
+	}
+	
+	// 닥터 비밀번호 변경 p.10/12
+	@PostMapping("updatePassword")
+	@ResponseBody
+	public int updatePassword(MemberVO vo) {
+		vo.setPassword(cryptEncoder.encode(vo.getPassword()));
+		int result = memberSerivce.updatePassword(vo);
 		return result;
 	}
 	
