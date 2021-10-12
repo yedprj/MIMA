@@ -16,6 +16,6 @@ public class RmemberVO {
 	private String reportId; // 신고 당한 회원 아이디
 	private Date reportDate; //신고한 날짜
 	private Date checkDate; //신고 확인 날짜
-	private String reportResult; //신고 처리 결과
+	private String reportResult; //신고 조치 여부
 	
 }
