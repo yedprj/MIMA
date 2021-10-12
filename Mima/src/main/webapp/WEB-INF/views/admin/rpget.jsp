@@ -59,9 +59,9 @@
 							</div>
 
 
-							<div class="btn-box">
-								<a href="rplist" class="cancel-btn">목록</a> <a class="cancel-btn"
-									onclick="location.href='rpdelete?reportNo=${report.reportNo}'">삭제</a>
+							<div class="btn-box" align="center">
+								<a href="rplist" class="cancel-btn">목록</a> 
+								<a class="cancel-btn" onclick="location.href='rpdelete?reportNo=${report.reportNo}'">확인</a>
 							</div>
 
 						</div>

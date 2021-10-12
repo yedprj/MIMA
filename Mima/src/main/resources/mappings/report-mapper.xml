@@ -32,12 +32,14 @@
 	</delete>
 
 
-	<!-- e.29 -->
+	<!-- e.12 -->
 	<!-- 관리자 신고당한사람 삭제 -->
-	<delete id="adminDelete">
-		DELETE FROM REPORT
-		WHERE REPORT_NO=#{reportNo}
-	</delete>
+	<update id="adminDelete">
+		UPDATE REPORT
+        SET REPORT_RESULT='y'
+        WHERE REPORT_NO= #{reportNo}
+        AND REPORT_RESULT='n'
+	</update>
 	
 	<sql id="criteria">
 		<if test="category !=null and category!=''">
