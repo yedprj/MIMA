@@ -129,7 +129,7 @@ public class AdminController {
 	public String rpdelete(RedirectAttributes rttr, @RequestParam int reportNo, @ModelAttribute("cri") Criteria cri) {
 		ReportVO vo = new ReportVO();
 		vo.setReportNo(reportNo);
-		int result = reportService.delete(vo);
+		int result = reportService.adminDelete(vo);
 		
 		if(result == 1) {
 			rttr.addFlashAttribute("result","success");

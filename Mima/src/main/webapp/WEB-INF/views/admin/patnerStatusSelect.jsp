@@ -30,17 +30,12 @@
 									<h3>
 										<a>${member.name }</a>
 									</h3>
+									<h3>
+										<a>${member.role }</a>
+									</h3>
 									<span class="designation">${member.license }</span> <input
 										type="hidden" id="license" name="license"
 										value="${member.license }">
-									<ul class="rating clearfix">
-										<li><i class="icon-Star"></i></li>
-										<li><i class="icon-Star"></i></li>
-										<li><i class="icon-Star"></i></li>
-										<li><i class="icon-Star"></i></li>
-										<li><i class="icon-Star"></i></li>
-										<li><a>5 reviews</a></li>
-									</ul>
 									<div class="location-box">
 										<p>
 											<i class="fas fa-map-marker-alt"></i>${member.addr1 }</p>
