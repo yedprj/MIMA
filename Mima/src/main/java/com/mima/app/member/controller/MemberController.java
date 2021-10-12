@@ -236,6 +236,8 @@ public class MemberController {
 	@PostMapping("/partnerJoinMember")
 	@ResponseBody
 	public int partnerJoinMember(@RequestBody MemberVO vo) {
+		
+		vo.setPassword(bCryptPasswordEncoder.encode(vo.getPassword()));
 		int result = memberService.partnerMemberInsert(vo);
 		
 		return result;

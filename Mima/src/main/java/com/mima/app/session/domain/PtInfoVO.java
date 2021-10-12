@@ -30,5 +30,7 @@ public class PtInfoVO {
 	private String consultTime;
 	private String ptAssessment;
 	private String ptDiagnosis;
+	private String subject;	// 진료과목 추가_J12
+	private String ptSymptom;	// 증상 추가_J12
 	
 }

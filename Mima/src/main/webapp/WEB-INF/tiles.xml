@@ -14,6 +14,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/docDash/cnote.jsp"/>
 	</definition>
 	
+	<definition name="docDash/prescription" template="/WEB-INF/views/tiles/nolayout.jsp"> 
+		<put-attribute name="content" value="/WEB-INF/views/docDash/prescription.jsp"/>
+	</definition>
+	
 	<definition name="patients/phaSearch" template="/WEB-INF/views/tiles/nolayout.jsp"> 
 		<put-attribute name="content" value="/WEB-INF/views/patients/phaSearch.jsp"/>
 	</definition>

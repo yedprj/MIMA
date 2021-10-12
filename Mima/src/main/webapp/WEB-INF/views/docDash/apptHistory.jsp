@@ -12,6 +12,10 @@ th, td {
 .doctors-appointment .doctors-table tr td .status {
 	margin-right: 30px;
 }
+
+.doctors-appointment .doctors-table tr td .print {
+	margin-right: 70px;
+}
 </style>
 
 <!-- doctors-dashboard -->
@@ -61,7 +65,7 @@ th, td {
                 <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
                 <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
                 <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                <li><a href="../logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
             </ul>
         </div>
     </div>
@@ -100,6 +104,7 @@ th, td {
 				                       <th>진료일</th>
 				                       <th>예약일</th>
 				                       <th>결제금액</th>
+				                       <th></th>
 				                   </tr>    
 				               </thead>
 				               <tbody>
@@ -170,12 +175,11 @@ th, td {
 $(document).ready(function() {
 	 var actionForm = $('#actionForm');
 	 
-		$('#nameSearch');
-		
-		$(enter(event){
+		/* $(enter(event){
 			if(event.keyCode == 13){
+				
 			}
-		});
+		}); */
 		
 	});
 </script>

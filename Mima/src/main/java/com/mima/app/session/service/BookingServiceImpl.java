@@ -28,14 +28,14 @@ public class BookingServiceImpl implements BookingService {
 	
 	// 닥터 대쉬보드 메인 페이지 오늘의 예약_J
 	@Override
-	public List<BookingVO> getList() {
-		return bookingMapper.getList();
+	public List<BookingVO> getList(int memberNo) {
+		return bookingMapper.getList(memberNo);
 	}
 	
 	// 닥터 대쉬보드 메인 페이지 진료내역_J
 	@Override
-	public List<BookingVO> getlatestapptList() {
-		return bookingMapper.getlatestapptList();
+	public List<BookingVO> getlatestapptList(int memberNo) {
+		return bookingMapper.getlatestapptList(memberNo);
 	}
 
 	// 닥터 대쉬보드 예약관리 페이지_J

@@ -16,10 +16,10 @@ public interface BookingService {
 	public int countPatientList(int memberNo);
 
 	// 닥터 대쉬보드 메인 페이지 오늘의 예약_J
-	public List<BookingVO> getList();
+	public List<BookingVO> getList(int memberNo);
 		
 	// 닥터 대쉬보드 메인 페이지 진료내역_J
-	public List<BookingVO> getlatestapptList();
+	public List<BookingVO> getlatestapptList(int memberNo);
 	
 	// 닥터 대쉬보드 예약관리 페이지_J
 	public List<BookingVO> apptList(int memberNo);

@@ -36,7 +36,7 @@
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${profile.pharmacyInfo}</h3>
-						<p>Qualitative Pharmacy</p>
+						<p>${profile.profileContents} </p>
 					</div>
 				</div>
 			</div>
@@ -44,14 +44,19 @@
 				<ul class="list clearfix">
 					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash" class="current"><i
 							class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/medDelivery"><i class="fas fa-ambulance"></i>약배달관리</a></li>
+					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery"><i class="fas fa-ambulance"></i>약배달관리</a></li>
 					<li><a id="guid" href="${pageContext.request.contextPath}/pharmacy/medGuid"><i class="fas fa-comment-medical"></i>복약지도관리</a></li>
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review"><i class="fas fa-star"></i>약국 후기</a></li>
 					<li><a id="ques" href="${pageContext.request.contextPath}/pharmacy/phaQna"><i class="fas fa-comments"></i>문의</a><span>20</span></li>
 					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile"><i class="fas fa-user"></i>약국 프로필</a></li>
-					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate?memberNo=${session.memberNo}"><i
+					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a id="logout" href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -170,3 +175,10 @@
     <span class="fa fa-arrow-up"></span>
 </button>
 
+<script>
+	$(function(){
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
+		});
+	});
+</script>

@@ -65,9 +65,9 @@ public class PatnerDoctorController {
 		model.addAttribute("countGetList", bookingService.countGetList(memberNo));
 		model.addAttribute("countPatientList", bookingService.countPatientList(memberNo));
 		model.addAttribute("countDocReview", commentsService.countDocReview(memberNo));
-		model.addAttribute("bookingList", bookingService.getList());
-		model.addAttribute("getlatestapptList", bookingService.getlatestapptList());
-		model.addAttribute("getlatestreviewList", commentsService.getlatestreviewList());
+		model.addAttribute("bookingList", bookingService.getList(memberNo));
+		model.addAttribute("getlatestapptList", bookingService.getlatestapptList(memberNo));
+		model.addAttribute("getlatestreviewList", commentsService.getlatestreviewList(memberNo));
 		
 		return "docDash/docMain";
 	}
@@ -117,8 +117,14 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 나의 후기 페이지_J29
 	@GetMapping("doctor/docReview")
-	public String docReview(Model model, CommentsVO commentsvo) {
-		model.addAttribute("docReview", commentsService.docReview());
+	public String docReview(Model model, CommentsVO commentsvo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = mvo.getMemberNo();
+		
+		model.addAttribute("docReview", commentsService.docReview(memberNo));
 		
 		return "docDash/docReview";
 	}
@@ -163,7 +169,9 @@ public class PatnerDoctorController {
 	@PostMapping("doctor/updatePassword")
 	@ResponseBody
 	public int updatePassword(MemberVO vo) {
+		vo.setPassword(bCryptPasswordEncoder.encode(vo.getPassword()));
 		int result = memberService.updatePassword(vo);
+		
 		return result;
 	}
 	
@@ -175,9 +183,10 @@ public class PatnerDoctorController {
 		return "docDash/cnote";
 	}
 
-	// 닥터 처방전 새창_J06
+	// 닥터 처방전 새창_J06. J12
 	@GetMapping("doctor/prescription")
-	public String prescription() {
+	public String prescription(Model model,int bookingNo, PtInfoVO vo) {
+		vo.setBookingNo(bookingNo);
 		return "docDash/prescription";
 	}
 	
@@ -191,13 +200,14 @@ public class PatnerDoctorController {
 	
 	
 	//s:1005 docProfileInsertFrm
-	@GetMapping("/docProfileInsertForm")
-	public String docProfileInsertForm(Model model, PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
+
+	@GetMapping("doctor/docProfileInsertForm")
+	public String docProfileInsertForm(Model model, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
 		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
 		
-		//HttpSession session = request.getSession();
-		//mVo = (MemberVO) session.getAttribute("session");
-		mVo.setMemberNo(3);
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
+		System.out.println(mVo);
 		docVo = doctorService.checkDocDetail(mVo);
 		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
 		String path="docDash/docProfileInsertForm";
@@ -216,10 +226,8 @@ public class PatnerDoctorController {
 		
 	}
 
-	
-	
 	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
-	@GetMapping("/docProfileForm")
+	@GetMapping("doctor/docProfileForm")
 	public String docProfileFrom(Model model, DocAvailabilityVO vo) {
 		
 		return "docDash/docProfileForm";
@@ -286,13 +294,27 @@ public class PatnerDoctorController {
 		return "/docList/getTotalDocList";
 	}
 
-	//s:1007 의사 프로필 디테일 페이지로 이동하는거
+	//s:1007 의사 프로필 디테일 페이지로 이동하는거 s:1012
 	@GetMapping("/docProfileDetail")
-	public String docProfileDetail(DocInfoVO vo, Model model) {
-		vo = doctorService.getDocDetail(vo);
-				
-		model.addAttribute("item", vo);
-		return "/docDash/docProfileDetail";
+	public String docProfileDetail(DocInfoVO docVo, Model model, MemberVO mVo, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
+		System.out.println(mVo);
+		docVo = doctorService.checkDocDetail(mVo);
+		
+		System.out.println(docVo+"보 값 널 확인");
+		if(docVo !=null) {
+			docVo = doctorService.getDocDetail(docVo);
+			System.out.print("테이블에 값 잇음");
+			model.addAttribute("item", docVo);
+			return "/docDash/docProfileDetail";
+		}else {
+			System.out.print("테이블에 값 없음 노노 ");
+			model.addAttribute("message", "No details saved for this doctor!");
+			return "/tiles/errorPage";
+		}
+
 	}
 	
 }

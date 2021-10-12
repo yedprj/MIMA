@@ -7,11 +7,21 @@
 th, td {
 	text-align: center;
 }
+
 .doctors-appointment .doctors-table tr td .status.pending {
-    margin-right: 30px;
+	margin-right: 30px;
 }
+
 .doctors-appointment .doctors-table tr td .status {
 	margin-right: 30px;
+}
+
+.doctors-appointment .doctors-table tr td .accept {
+	margin-right: 80px;
+}
+
+.cusBtn {
+	padding: 9px 28px;
 }
 </style>
 
@@ -59,17 +69,22 @@ th, td {
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-	                <li><a href="docMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
-	                <li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
-	                <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
-	                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
-	                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
-	                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-	                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
-	                <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
-	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-	                <li><a href="logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-	            </ul>
+					<li><a href="docMain" class="current"><i
+							class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="apptManage"><i class="fas fa-clock"></i>예약관리</a></li>
+					<li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
+					<li><a href="patientList"><i class="fas fa-wheelchair"></i>나의
+							환자들</a></li>
+					<li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
+					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
+					<li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필
+							관리</a></li>
+					<li><a href="docProfileForm"><i class="fas fa-user"></i>진료
+							관리</a></li>
+					<li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호
+							변경</a></li>
+					<li><a href="logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -151,6 +166,7 @@ th, td {
 										<th>예약일</th>
 										<th>결제금액</th>
 										<th>예약상태</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -175,22 +191,17 @@ th, td {
 													pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${bookingList.price}" /></td>
-											<td>
-												<c:if test="${bookingList.bookingStatus eq 'p'}">
+											<td><c:if test="${bookingList.bookingStatus eq 'p'}">
 													<span class="status">결제완료</span>
-												</c:if>
-												<c:if test="${bookingList.bookingStatus eq 'y'}">
+												</c:if> <c:if test="${bookingList.bookingStatus eq 'y'}">
 													<span class="status pending">결제예정</span>
-												</c:if>
-												<c:if test="${bookingList.bookingStatus eq 'c'}">
+												</c:if> <c:if test="${bookingList.bookingStatus eq 'c'}">
 													<span class="status cancel">취소완료</span>
-												</c:if>
-											</td>
-											<td>
-												<c:if test="${bookingList.bookingStatus eq 'p'}">
-                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
-                                                </c:if>
-                                            </td>
+												</c:if></td>
+											<td><c:if test="${bookingList.bookingStatus eq 'p'}">
+													<span class="accept"><i class="fas fa-check"></i>진료
+														시작하기</span>
+												</c:if></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -219,7 +230,8 @@ th, td {
 										<th>진료일</th>
 										<th>예약일</th>
 										<th>결제금액</th>
-										<th>결제상태</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -244,10 +256,15 @@ th, td {
 													value="${getlatestapptList.bookingDate}" pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${getlatestapptList.price}" /></td>
-											<td>${getlatestapptList.bookingStatus}</td>
-											<td><span class="print"><i class="fas fa-print"></i>처방전</span>
-											</td>
-											<td><span class="view"><i class="fas fa-eye"></i>진료노트</span>
+											<td>
+												<button class="view" id="cnote"
+													onclick="window.open('cnote?bookingNo=${getlatestapptList.bookingNo}', '진료노트', 'width=1100, height=800, scrollbars=yes')">
+													<i class="fas fa-eye"></i>진료노트
+												</button>
+												<button class="print" id="prescription"
+													onclick="window.open('prescription?bookingNo=${getlatestapptList.bookingNo}', '처방전', 'width=1100, height=800, scrollbars=yes')">
+													<i class="fas fa-print"></i>처방전
+												</button>
 											</td>
 										</tr>
 									</c:forEach>
@@ -259,54 +276,37 @@ th, td {
 
 				<br>
 
-				<div class="doctors-appointment">
+				<div class="review-list">
 					<div class="title-box">
-						<h3>나의 후기</h3>
+						<h3>나의 후기</h3><br>
 						<div class="btn-box">
-							<a href="docReview" class="theme-btn-one">전체보기<i
+							<a href="docReview" class="theme-btn-one cusBtn">전체보기<i
 								class="icon-Arrow-Right"></i></a>
 						</div>
 					</div>
-					<div class="doctors-list">
-						<div class="table-outer">
-							<table class="doctors-table">
-								<thead class="table-header">
-									<tr>
-										<th>닉네임</th>
-										<th>별점</th>
-										<th>날짜</th>
-										<th>내용</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${getlatestreviewList}"
-										var="getlatestreviewList">
-										<tr>
-											<td>
-												<div class="name-box">
-													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
-													</figure>
-													<h5>${getlatestreviewList.nickname}</h5>
-												</div>
-											</td>
-											<td><c:forEach var="i" begin="1"
-													end="${getlatestreviewList.reviewPoint}">
-													<span style="color: #ffab01;"><i class="icon-Star"></i></span>
-												</c:forEach> <c:forEach var="i" begin="1"
-													end="${5-getlatestreviewList.reviewPoint}">
-													<i class="icon-Star"></i>
-												</c:forEach></td>
-											<td><fmt:formatDate
-													value="${getlatestreviewList.regDate}" pattern="yy-MM-dd" /></td>
-											<td>${getlatestreviewList.contents}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+					<div class="comment-inner">
+						<c:forEach items="${getlatestreviewList}"
+							var="getlatestreviewList">
+							<div class="single-comment-box">
+								<div class="comment" style="padding-left: 20px;">
+									<span class="comment-time"><i
+										class="fas fa-calendar-alt"></i>
+									<fmt:formatDate value="${getlatestreviewList.regDate}"
+											pattern="yy-MM-dd" /></span>
+									<ul class="rating clearfix">
+										<c:forEach var="i" begin="1"
+											end="${getlatestreviewList.reviewPoint}">
+											<span style="color: #ffab01;"><i class="icon-Star"></i></span>
+										</c:forEach>
+										<c:forEach var="i" begin="1"
+											end="${5-getlatestreviewList.reviewPoint}">
+											<i class="icon-Star"></i>
+										</c:forEach>
+									</ul>
+									<p>${getlatestreviewList.contents}</p>
+								</div>
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

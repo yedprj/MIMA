@@ -62,14 +62,14 @@ public class CommentsServiceImpl implements CommentsService {
 
 	// 닥터 대쉬보드 메인 페이지 나의 후기_J
 	@Override
-	public List<CommentsVO> getlatestreviewList() {
-		return commentsMapper.getlatestreviewList();
+	public List<CommentsVO> getlatestreviewList(int memberNo) {
+		return commentsMapper.getlatestreviewList(memberNo);
 	}
 
 	// 닥터 대쉬보드 나의 후기 페이지_J29
 	@Override
-	public List<CommentsVO> docReview() {
-		return commentsMapper.docReview();
+	public List<CommentsVO> docReview(int memberNo) {
+		return commentsMapper.docReview(memberNo);
 	}
 
 	// 닥터 대쉬보드 메인 페이지 나의 후기 카운트_J07

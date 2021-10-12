@@ -75,14 +75,14 @@
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                         <label>새로운 비밀번호</label>
-                                        <input type="password" id="password2" name="password2" onchange="check_pw()">
+                                        <input type="password" id="password2" name="password2" onchange="change_pw()" required="required">
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                         
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                         <label>새로운 비밀번호 확인</label>
-                                        <input type="password" id="password3" name="password3" onchange="check_pw2()">
+                                        <input type="password" id="password3" name="password3" onchange="change_pw2()" required="required">
                                         <span id="pwCheck" class="jb-xx-small"></span>
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 form-group">
@@ -105,6 +105,70 @@
 <!-- doctors-dashboard -->
 
 <script>
+
+	//비밀번호 형식 체크 function 들어갈 부분
+	function change_pw() {
+		
+		var password2 = $("#password2").val();
+		
+		if(!/^[a-zA-Z0-9]{8,20}$/.test(password2)){
+	        alert("비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.");
+	        $('#password2').val('').focus();
+	        return false;
+	    }
+	    
+	    var chk_num = password2.search(/[0-9]/g);
+	    var chk_eng = password2.search(/[a-z]/ig);
+	    
+	    if(chk_num<0 || chk_eng<0){
+	        alert("비밀번호는 숫자와 영문자를 혼용하여야 합니다.");
+	        $('#password2').val('').focus();
+	        return false;
+	    }
+	    if(/(\w)\1\1\1/.test(password2)){
+	        alert("비밀번호에 같은 문자를 4번 이상 사용하실 수 없습니다.");
+	        $('#password2').val('').focus();
+	        return false;
+	    }
+	    
+	    $('#password3').focus();
+		return true;
+	}
+	
+	// 비밀번호 중복 체크 function
+	function change_pw2() {
+		
+		var password = $("#password2").val();
+		var pwcheck = $("#password3").val();
+		
+		if( change_pw() == true ) {
+			if (password != null && pwcheck != null) {
+				if (password == pwcheck) {
+					$('#password2').removeClass('is-invalid')
+								   .addClass('is-valid');
+					$('#password3').removeClass('is-invalid')
+								   .addClass('is-valid');
+					$('#pwCheck').removeClass('invalid-feedback')
+								 .addClass('valid-feedback').text('입력하신 비밀번호가 일치합니다.');
+				} else {
+					$('#password2').removeClass('is-valid')
+								   .addClass('is-invalid');
+					$('#password3').removeClass('is-valid')
+								   .addClass('is-invalid');
+					$('#pwCheck').removeClass('valid-feedback')
+								 .addClass('invalid-feedback').text('입력하신 비밀번호가 일치하지 않습니다.');
+				}
+			} else {
+				$('#password2').removeClass('is-valid')
+							   .removeClass('is-invalid');
+				$('#password3').removeClass('is-valid')
+							   .removeClass('is-invalid');
+				$('#pwCheck').removeClass('valid-feedback')
+							 .removeClass('invalid-feedback');
+			}
+		}
+	}
+
 	$(function(){
 		
 		var csrfHeaderName = "${_csrf.headerName}";
@@ -145,68 +209,6 @@
 			});
 		});
 		
-		// 비밀번호 형식 체크 function 들어갈 부분
-		function check_pw() {
-			
-			var password = $("#password2").val();
-			
-			if(!/^[a-zA-Z0-9]{8,20}$/.test(password)){
-		        alert("비밀번호는 숫자와 영문자 조합으로 8~20자리를 사용해야 합니다.");
-		        $('#password2').val('').focus();
-		        return false;
-		    }
-		    
-		    var chk_num = password.search(/[0-9]/g);
-		    var chk_eng = password.search(/[a-z]/ig);
-		    
-		    if(chk_num<0 || chk_eng<0){
-		        alert("비밀번호는 숫자와 영문자를 혼용하여야 합니다.");
-		        $('#password2').val('').focus();
-		        return false;
-		    }
-		    if(/(\w)\1\1\1/.test(password)){
-		        alert("비밀번호에 같은 문자를 4번 이상 사용하실 수 없습니다.");
-		        $('#password2').val('').focus();
-		        return false;
-		    }
-		    
-		    $('#password3').focus();
-			return true;
-		}
-		
-		// 비밀번호 중복 체크 function
-		function check_pw2() {
-			
-			var password = $("#password").val();
-			var pwcheck = $("#pwcheck").val();
-			
-			if( check_pw() == true ) {
-				if (password != null && pwcheck != null) {
-					if (password == pwcheck) {
-						$('#password2').removeClass('is-invalid')
-									   .addClass('is-valid');
-						$('#password3').removeClass('is-invalid')
-									   .addClass('is-valid');
-						$('#pwCheck').removeClass('invalid-feedback')
-									 .addClass('valid-feedback').text('입력하신 비밀번호가 일치합니다.');
-					} else {
-						$('#password2').removeClass('is-valid')
-									   .addClass('is-invalid');
-						$('#password3').removeClass('is-valid')
-									   .addClass('is-invalid');
-						$('#pwCheck').removeClass('valid-feedback')
-									 .addClass('invalid-feedback').text('입력하신 비밀번호가 일치하지 않습니다.');
-					}
-				} else {
-					$('#password2').removeClass('is-valid')
-								   .removeClass('is-invalid');
-					$('#password3').removeClass('is-valid')
-								   .removeClass('is-invalid');
-					$('#pwCheck').removeClass('valid-feedback')
-								 .removeClass('invalid-feedback');
-				}
-			}
-		}
 		
 		// 버튼 클릭 시 비밀번호 수정 p.10/11
 		$('#update').on('click', function(e){
@@ -219,6 +221,9 @@
 				type : 'post',
 				data : {memberId : id,
 					    password : udpassword},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
 				success : function(data) {
 					if(data == 1){
 						alert("비밀번호가 성공적으로 변경되었습니다.");
