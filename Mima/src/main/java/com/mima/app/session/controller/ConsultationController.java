@@ -101,5 +101,22 @@ public class ConsultationController {
 			return  vo;
 		}
 	
-
+		
+		//s:1012 노드에서 요청 진료기록 저장 ajax
+		@PostMapping("/consultInsertAjax")
+		@ResponseBody
+		public int consultationInsert(BookingVO vo, MemberVO memberSessionVo, ConsultationVO conVo, HttpServletRequest requset) {
+			int result =2;
+			
+			return  result;
+		}
+		
+		//s:1012 노드에서 요청 처방전 저장 ajax
+		@PostMapping("/medInsertAjax")
+		@ResponseBody
+		public BookingVO medInsertAjax(BookingVO vo, MemberVO memberSessionVo, HttpServletRequest requset) {
+			
+			vo=bookingService.getBookingInfo(vo);
+			return  vo;
+		}
 }
