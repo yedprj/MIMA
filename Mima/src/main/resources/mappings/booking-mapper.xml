@@ -223,16 +223,23 @@
 
 <!-- s:1003 단일예약정보 조회: 노드에서 요청 -->
 <select id="getBookingInfo" resultType="BookingVO">
-	SELECT 
+	    SELECT 
 		a.BOOKING_NO,
 		a.PT_NO,
+		a.DOC_NO,
+        d.NAME AS DOC_NAME,
 		a.CONSULT_DATE,
 		a.CONSULT_TIME,
-		b.NAME
+		b.NAME,
+		b.IDENTIFY_NO,
+		c.med_delivery
 	FROM BOOKING a JOIN MEMBER b
-	ON (a.PT_NO = b.MEMBER_NO)
+	ON (a.PT_NO = b.MEMBER_NO) JOIN PATIENTS C
+	ON (a.PT_NO = c.MEMBER_NO) JOIN MEMBER D
+    ON (a.DOC_NO = d.MEMBER_NO)
 	WHERE a.BOOKING_NO=#{bookingNo}
 </select>
+
 
 <!-- 진료 예약 p.10/06 -->
 <insert id="insertBookingDate">

@@ -375,14 +375,11 @@
                             <form>
                                 <div class="row clearfix">
                                     <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                       
-                                        <br><label>이 전문의와 첫 진료인가요?</label>
-                                        <input type="text" id="isThisFirstSession" name="isThisFirstSession" placeholder="네/아니오로 답해주세요." required="">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                         <label>다른 곳에서 동일한 이유로 진료를 받은적이 있나요?</label>
                                         있다면 언제, 어느 병원/의사인지 알려주세요.
                                         <input type="text" name="pastSession" id="pastSession" placeholder="네/아니오로 답해주세요." required="">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                         <label>이번에 진료를 예약하게된 계기가 무엇인가요? 자세히 알려주시면 진료에 도움이 될거예요.</label>
@@ -402,7 +399,7 @@
                                         <textarea name="currentStatus" id="currentStatus" placeholder="최근의 기분, 현재 상황, 어떤 점이 힘든지 등 무엇이든 좋아요."></textarea>
                                     </div>
                                 </div>
-                                <div class="btn-box">
+                                <div class="btn-box" style="float:right">
                                     <button type="button" id="form2SubmitBtn" class="theme-btn-one">제출하기<i class="icon-Arrow-Right"></i></button>
                                 </div>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
