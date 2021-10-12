@@ -172,7 +172,7 @@ public class PatnerDoctorController {
 	}
 	
 	// 닥터 진료노트_J06. J10
-	@GetMapping("/cnote")
+	@GetMapping("doctor/cnote")
 	public String getCnote(Model model,int bookingNo, PtInfoVO vo) {
 		vo.setBookingNo(bookingNo);
 		model.addAttribute("cnote", memberService.getCnote(vo));
@@ -180,7 +180,7 @@ public class PatnerDoctorController {
 	}
 
 	// 닥터 처방전 새창_J06
-	@GetMapping("prescription")
+	@GetMapping("doctor/prescription")
 	public String prescription() {
 		return "docDash/prescription";
 	}
@@ -195,7 +195,7 @@ public class PatnerDoctorController {
 	
 	
 	//s:1005 docProfileInsertFrm
-	@GetMapping("/docProfileInsertForm")
+	@GetMapping("doctor/docProfileInsertForm")
 	public String docProfileInsertForm(Model model, PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
 		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
 		
@@ -220,10 +220,8 @@ public class PatnerDoctorController {
 		
 	}
 
-	
-	
 	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
-	@GetMapping("/docProfileForm")
+	@GetMapping("doctor/docProfileForm")
 	public String docProfileFrom(Model model, DocAvailabilityVO vo) {
 		
 		return "docDash/docProfileForm";
@@ -291,12 +289,13 @@ public class PatnerDoctorController {
 	}
 
 	//s:1007 의사 프로필 디테일 페이지로 이동하는거
+	//p.1012 return 링크 수정
 	@GetMapping("/docProfileDetail")
 	public String docProfileDetail(DocInfoVO vo, Model model) {
 		vo = doctorService.getDocDetail(vo);
 				
 		model.addAttribute("item", vo);
-		return "/docDash/docProfileDetail";
+		return "/docList/docProfileDetail";
 	}
 	
 }

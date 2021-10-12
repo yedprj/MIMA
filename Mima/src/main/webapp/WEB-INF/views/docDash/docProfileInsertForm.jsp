@@ -12,8 +12,8 @@
         <section class="page-title-two">
             <div class="title-box centred bg-color-2">
                 <div class="pattern-layer">
-                    <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-70.png);"></div>
-                    <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-71.png);"></div>
+                    <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-70.png);"></div>
+                    <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-71.png);"></div>
                 </div>
                 <div class="auto-container">
                     <div class="title">
@@ -36,7 +36,7 @@
             <div class="left-panel">
                 <div class="profile-box">
                     <div class="upper-box">
-                        <figure class="profile-image"><img src="${pageContext.request.contextPath}/assets/images/resource/profile-2.png" alt=""></figure>
+                        <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
                         <div class="title-box centred">
                             <div class="inner">
                               
@@ -77,7 +77,7 @@
 		                                    <div class="profile-title">
 		                                    <!-- 여기 프로필 사진 보여주기 하면 됨 -->
 		                                    	<div>
-			                                        <figure class="image-box"><img width="300" height="300"  id="profileImg" src="${pageContext.request.contextPath}/assets/images/resource/profile-3.png" alt="프로필 미리보기"></figure>
+			                                        <figure class="image-box"><img width="300" height="300"  id="profileImg" src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png" alt="프로필 미리보기"></figure>
 			                                        <ul id="uploaded"></ul>
 		                                        </div>
 		                                        <div class="upload-photo">
