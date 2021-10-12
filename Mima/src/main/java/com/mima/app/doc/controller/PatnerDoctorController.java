@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -96,7 +95,6 @@ public class PatnerDoctorController {
 		int memberNo = mvo.getMemberNo();
 		
 		int total = bookingService.apptHistoryCount(cri, memberNo);
-		model.addAttribute("apptHistoryList", bookingService.apptHistoryList(memberNo));
 		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri, memberNo));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
     
@@ -170,7 +168,7 @@ public class PatnerDoctorController {
 	}
 	
 	// 닥터 진료노트_J06. J10
-	@GetMapping("/cnote")
+	@GetMapping("doctor/cnote")
 	public String getCnote(Model model,int bookingNo, PtInfoVO vo) {
 		vo.setBookingNo(bookingNo);
 		model.addAttribute("cnote", memberService.getCnote(vo));
@@ -178,7 +176,7 @@ public class PatnerDoctorController {
 	}
 
 	// 닥터 처방전 새창_J06
-	@GetMapping("prescription")
+	@GetMapping("doctor/prescription")
 	public String prescription() {
 		return "docDash/prescription";
 	}
