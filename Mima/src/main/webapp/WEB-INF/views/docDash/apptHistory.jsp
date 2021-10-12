@@ -174,7 +174,9 @@ th, td {
 <script>
 $(document).ready(function() {
 	 var actionForm = $('#actionForm');
-	 
+
+		$('#nameSearch');
+
 		/* $(enter(event){
 			if(event.keyCode == 13){
 				

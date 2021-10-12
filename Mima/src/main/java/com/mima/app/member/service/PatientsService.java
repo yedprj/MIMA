@@ -9,6 +9,7 @@ import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.session.domain.BookingVO;
@@ -83,6 +84,12 @@ public interface PatientsService {
 	
 	//전체 데이터 수 조회 나의문의 페이징 e.7
 	public int getTotalPtqCount(Criteria cri);
+	
+	//환자 대쉬보드 프로필 관리 한건조회 e.12
+	public PatientsVO ptSelectOne(int memberNo);
+	
+	//환자 대쉬보드 프로필 수정 e.12
+	public int ptprofileUpdate(MemberVO vo);
 	
 	// 약배달 신청내역 조회 K.10/10
 	public PatientsVO ptDeliveryCheck(int memberNo);

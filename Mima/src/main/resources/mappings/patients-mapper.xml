@@ -481,6 +481,22 @@
 		</select>
 		<!-- 페이징 end -->
 		
+		<!-- 환자 대쉬보드 프로필 관리 e.12-->
+		<select id="ptSelectOne" resultType="patientsVO">
+			SELECT * FROM PATIENTS
+			WHERE MEMBER_NO = #{memberNo}
+		</select>
+		
+		<!-- 환자 대쉬보드 프로필 수정 e.12 -->
+		<update id="ptprofileUpdate">
+			UPDATE MEMBER
+				SET
+					NAME=#{name},
+					EMAIL=#{email},
+					PHONE=#{phone}
+			WHERE MEMBER_NO=#{memberNo}
+		</update>
+		
 		<!-- K.10/10 약배달 정보확인 -->
 		<select id="ptDeliveryCheck" resultType="patientsVO">
 			SELECT  

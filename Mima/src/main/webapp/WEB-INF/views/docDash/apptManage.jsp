@@ -13,9 +13,11 @@ th, td {
 .doctors-appointment .doctors-table tr td .status {
 	margin-right: 30px;
 }
+
 .doctors-appointment .doctors-table tr td .accept {
 	margin-right: 80px;
 }
+
 
 </style>
 
