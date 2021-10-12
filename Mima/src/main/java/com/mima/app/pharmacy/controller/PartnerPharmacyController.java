@@ -38,6 +38,7 @@ public class PartnerPharmacyController {
 	@Autowired BCryptPasswordEncoder cryptEncoder;
 
 	
+	
 	// 약국 대쉬보드 [K]210929 
 	@GetMapping("/pharmacyDash")
 	public void pharmacyDash(Model model, HttpServletRequest request) {
@@ -96,6 +97,9 @@ public class PartnerPharmacyController {
 		boolean result = false;
 		MemberVO mvo = new MemberVO();
 		mvo = memberSerivce.findPassword1(vo.getMemberId());
+		log.info(vo.getPassword());
+		log.info(mvo.getPassword());
+		log.info("결과" + cryptEncoder.matches(vo.getPassword(), mvo.getPassword()));
 		if(cryptEncoder.matches(vo.getPassword(), mvo.getPassword())) {
 			result = true;
 		}
@@ -106,7 +110,7 @@ public class PartnerPharmacyController {
 	//K.10/11 약국프로필등록
 	@PostMapping("/register")
 	public String register(PartnerPharmacyVO vo, MemberVO mVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
-		System.out.println("파트너 약국 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
+		log.info("파트너 약국 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
 		//K.10/11 파트너약국테이블에 저장
 		partPhaService.profileUpdate(vo);
 		
@@ -118,7 +122,7 @@ public class PartnerPharmacyController {
 		mVo.setMemberNo(vo.getMemberNo());
 		partPhaService.phaAddrUpdate(mVo);
 		
-		System.out.println("파트너 약국 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
+		log.info("파트너 약국 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
 		
 		rttr.addFlashAttribute("result", vo.getMemberNo());
 		return "redirect:/pharmacy/pharmacyDash"; // 파라미터 전달하고 싶을 때 redirectAttr사용

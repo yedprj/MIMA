@@ -95,8 +95,8 @@
                                 </div>
                             </div>
                             <div class="btn-box">
-                                <a href="add-listing.html" class="theme-btn-one">비밀번호 변경<i class="icon-Arrow-Right"></i></a>
-                                <a href="add-listing.html" class="cancel-btn">취소</a>
+                                <a id="pwUpdateBtn" class="theme-btn-one">비밀번호 변경<i class="icon-Arrow-Right"></i></a>
+                                <a class="cancel-btn">취소</a>
                             </div>
                         </div>
                     </div>
@@ -128,18 +128,30 @@
 			},
 			contentType : 'application/json',
 			success : function(data) {
-				if(data.password == password){
+				if(data){
 					$('.accept').css("color", "#39cabb");
 				}else {
-					$('.accept').text("비밀번호가 일치하지 않습니다");
+					$('.accept').text("비밀번호가 일치하지 않습니다")
+								.css("color","red");
 				}
 			},// success end
 			error : function(xhr, status, message) {
 				alert(xhr + " status: " + status + " er:" + message);
 			}
 		}) //ajax end
-	}) // 현재 비밀번호 확인 끝
-
-
+	}); // 현재 비밀번호 확인 끝
 	
+	// 비밀번호 변경 버튼
+	$("#pwUpdateBtn").on("click",function(){
+		var acceptColor = $('.accept').css("color");
+		console.log(acceptColor);
+		
+		if(acceptColor == rgb(57, 202, 187)){
+			alert("성공!");
+		} else {
+			alert()
+		}
+		
+	});// 비밀번호 변경 버튼 end
+
 </script>
