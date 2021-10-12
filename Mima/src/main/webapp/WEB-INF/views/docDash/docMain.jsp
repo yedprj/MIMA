@@ -186,6 +186,11 @@ th, td {
 													<span class="status cancel">취소완료</span>
 												</c:if>
 											</td>
+											<td>
+												<c:if test="${bookingList.bookingStatus eq 'p'}">
+                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
+                                                </c:if>
+                                            </td>
 										</tr>
 									</c:forEach>
 								</tbody>

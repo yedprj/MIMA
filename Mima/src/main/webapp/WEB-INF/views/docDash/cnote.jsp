@@ -39,12 +39,12 @@ div {
 										<input type="text" name="bookingNo" value="${cnote.bookingNo}" readonly>
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										<label>예약일시</label>
-										<input type="text" name="consultDate" value="${cnote.consultDate}" pattern="yy-MM-dd" readonly>
+										<label>진료일시</label>
+										<input type="text" name="consultDate" value="<fmt:formatDate value="${cnote.consultDate}" pattern="yy-MM-dd"/> (${cnote.consultTime})" readonly>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 										<label>주소</label>
-										<input type="text" name="addr1" value="${cnote.addr1}" readonly>
+										<input type="text" name="addr1" value="${cnote.addr1} ${cnote.addr2} ${cnote.addr3}" readonly>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 										<label>증상</label>

@@ -80,6 +80,30 @@ th, td {
             				</div>
         				</div>
        				</c:forEach>
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+<br><br>
+<div class="right-panel">
+    <div class="content-container">
+        <div class="outer-container">
+            <div class="review-list">
+                <div class="title-box clearfix">
+                    <div class="text pull-left">
+                    	<h3>나의 문의</h3>
+                    </div>
+                </div>
+                <div class="comment-inner">
+                   	<c:forEach items="${docQna}" var="docQna">
+        				<div class="single-comment-box">
+           					<div class="comment" style="padding-left: 20px;">
+                				<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docQna.csDate}" pattern="yy-MM-dd"/></span>
+				                <p>${docQna.csTitle}</p>
+            				</div>
+        				</div>
+       				</c:forEach>
        				
                 </div>
                 

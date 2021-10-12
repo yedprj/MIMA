@@ -76,7 +76,7 @@ th, td {
                     <div class="title-box clearfix">
                         <div class="text pull-left">
                             <h3>진료내역</h3>
-							<span>지난 진료내역을 조회합니다. 목록은 최신순으로 보여집니다.</span>
+							<span>지난 진료내역을 조회합니다. 목록은 진료일순으로 보여집니다.</span>
                         </div>
                         <div class="btn-box pull-right">
                             <form action="apptHistory" method="get" class="search-form" id="actionForm">
@@ -84,7 +84,7 @@ th, td {
 			                    	<input type="hidden" id="pageNum" name="pageNum" value="1">
 	              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
 	              					
-			                        <input type="search" id="nameSearch" name="nameSearch" onKeypress="enter();" placeholder="환자명을 입력하세요.">
+			                        <input type="search" id="keyword" name="keyword" onKeypress="enter();" placeholder="환자명을 입력하세요." value="${cri.keyword}">
 			                        <button type="submit"><i class="fas fa-search"></i></button>
 			                    </div>
                             </form>
@@ -100,7 +100,6 @@ th, td {
 				                       <th>진료일</th>
 				                       <th>예약일</th>
 				                       <th>결제금액</th>
-				                       <th>결제상태</th>
 				                   </tr>    
 				               </thead>
 				               <tbody>
@@ -122,17 +121,6 @@ th, td {
 										</td>
 										<td><fmt:formatDate value="${apptHistoryPage.bookingDate}" pattern="yy-MM-dd"/></td>
 										<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${apptHistoryPage.price}" /></td>
-										<td>
-											<c:if test="${apptHistoryPage.bookingStatus eq 'p'}">
-												<span class="status">결제완료</span>
-											</c:if>
-											<c:if test="${apptHistoryPage.bookingStatus eq 'y'}">
-												<span class="status pending">결제예정</span>
-											</c:if>
-											<c:if test="${apptHistoryPage.bookingStatus eq 'c'}">
-												<span class="status cancel">취소완료</span>
-											</c:if>
-										</td>
 	                                    <td>
 	                                        <button class="view" id="cnote" onclick="window.open('cnote?bookingNo=${apptHistoryPage.bookingNo}', '진료노트', 'width=1100, height=800, scrollbars=yes')">
 	                                        	<i class="fas fa-eye"></i>진료노트
@@ -154,15 +142,15 @@ th, td {
 				<div class="pagination-wrapper">
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/apptHistory?pageNum=${pageMaker.startPage-1}">이전</a></li>
+							<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/doctor/apptHistory?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
 						</c:if>
 							
 						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-							<li class="paginate_button"><a href="${pageContext.request.contextPath}/apptHistory?pageNum=${num}">${num}</a></li>
+							<li class="paginate_button"><a href="${pageContext.request.contextPath}/doctor/apptHistory?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
 						</c:forEach>
 							
 						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a href="${pageContext.request.contextPath}/apptHistory?pageNum=${pageMaker.endPage+1}">다음</a></li>
+							<li class="paginate_button next"><a href="${pageContext.request.contextPath}/doctor/apptHistory?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
 						</c:if>
 					</ul>
 				</div>
