@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- preloader -->
 <div class="preloader"></div>
@@ -97,12 +98,12 @@
 										<!-- s:1005 의사프로필 페이지/리뷰페이지 테스트 링크 -->
 										<!-- p.10/06 컨트롤러 수정으로 페이지 링크 수정 -->
 											<ul>
-												<li><a href="${pageContext.request.contextPath}/docMain">대시보드</a></li>
-												<li><a href="${pageContext.request.contextPath}/docProfileInsertForm">의사프로필 인서트 폼</a></li>
-												<li><a href="${pageContext.request.contextPath}/docProfileForm">의사 진료시간 인서트 폼</a></li>
+												<li><a href="${pageContext.request.contextPath}/doctor/docMain">대시보드</a></li>
+												<li><a href="${pageContext.request.contextPath}/doctor/docProfileInsertForm">의사프로필 인서트 폼</a></li>
+												<li><a href="${pageContext.request.contextPath}/doctor/docProfileForm">의사 진료시간 인서트 폼</a></li>
 												<li><a href="${pageContext.request.contextPath}/docProfileDetail">의사 프로필 상세페이지</a></li>
-												<li><a href="${pageContext.request.contextPath}/docReviewList">의사 리뷰 리스트 페이지</a></li>
-												<li><a href="${pageContext.request.contextPath}/docReviewDetail">의사 리뷰 상세페이지</a></li>
+												<li><a href="${pageContext.request.contextPath}/doctor/docReviewList">의사 리뷰 리스트 페이지</a></li>
+												<li><a href="${pageContext.request.contextPath}/doctor/docReviewDetail">의사 리뷰 상세페이지</a></li>
 											</ul>
 										</li>
 										<li><a href="book-appointment.html">Book Appointment</a></li>
@@ -158,18 +159,16 @@
 								<!-- 문의 nav 끝 -->
 								
 								<!-- 로그인 nav 시작 -->
-								<li class="dropdown"><a href="${pageContext.request.contextPath}/login">로그인</a>
+								<li class="dropdown"><a href="#">마이페이지</a>
 									<ul>
-										<li><a href="${pageContext.request.contextPath}/login">로그인</a></li>
-										<li><a href="${pageContext.request.contextPath}/joinForm">일반 회원가입</a></li>
-										<li><a href="${pageContext.request.contextPath}/partnerJoinForm">파트너 회원가입</a></li>
+									
 										<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
 										<!-- 링트 수정 p.10/06 -->
 										<li><a href="${pageContext.request.contextPath}/doctor/docMain">닥터 대쉬보드</a>
 										
 										</li>
 										<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash">약국 대쉬보드</a></li>
-										<li><a href="${pageContext.request.contextPath}/ptMain">환자 대쉬보드</a></li>
+										<li><a href="${pageContext.request.contextPath}/patients/ptMain">환자 대쉬보드</a></li>
 									</ul>
 								</li>
 							</ul>

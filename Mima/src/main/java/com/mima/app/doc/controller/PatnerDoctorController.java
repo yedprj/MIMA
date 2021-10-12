@@ -193,7 +193,8 @@ public class PatnerDoctorController {
 	
 	
 	//s:1005 docProfileInsertFrm
-	@GetMapping("/docProfileInsertForm")
+
+	@GetMapping("doctor/docProfileInsertForm")
 	public String docProfileInsertForm(Model model, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
 		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
 		
@@ -218,10 +219,8 @@ public class PatnerDoctorController {
 		
 	}
 
-	
-	
 	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
-	@GetMapping("/docProfileForm")
+	@GetMapping("doctor/docProfileForm")
 	public String docProfileFrom(Model model, DocAvailabilityVO vo) {
 		
 		return "docDash/docProfileForm";
@@ -308,6 +307,7 @@ public class PatnerDoctorController {
 			model.addAttribute("message", "No details saved for this doctor!");
 			return "/tiles/errorPage";
 		}
+
 	}
 	
 }

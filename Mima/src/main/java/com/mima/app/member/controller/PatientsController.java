@@ -49,7 +49,7 @@ public class PatientsController {
 
 	//e.4
 	//환자대쉬보드 메인 페이지
-	@GetMapping("/ptMain")
+	@GetMapping("patients/ptMain")
 	public String ptMain(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
@@ -64,7 +64,7 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 예약관리 페이지 e.5
-	@GetMapping("/ptBookManage")
+	@GetMapping("patients/ptBookManage")
 	public String ptBookManage(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
 		
@@ -79,7 +79,7 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 진료내역 페이지 e.5
-	@GetMapping("/ptHistory")
+	@GetMapping("patients/ptHistory")
 	public String ptHistory(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
 		
@@ -94,7 +94,7 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 나의후기 페이지 e.5
-	@GetMapping("/ptReview")
+	@GetMapping("patients/ptReview")
 	public String ptReview(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
 		
@@ -109,7 +109,7 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 나의문의 페이지 e.6
-	@GetMapping("/ptQna")
+	@GetMapping("patients/ptQna")
 	public String ptQna(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
 		
@@ -125,7 +125,7 @@ public class PatientsController {
 	}
 	
 	// 환자 대쉬보드 비밀번호 변경 페이지 수정 폼 e.11
-	@GetMapping("/ptPwChangeForm")
+	@GetMapping("patients/ptPwChangeForm")
 	public String ptPwUpdateForm() {
 		
 		return "patients/ptPwChange";
@@ -140,7 +140,7 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/09
-	@GetMapping("/ptMedelivery")
+	@GetMapping("patients/ptMedelivery")
 	public String ptMedelivery(HttpServletRequest request, Model model) {
 		String viewPage = "";
 		
@@ -181,7 +181,7 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/06
-	@GetMapping("/phaSearch")
+	@GetMapping("patients/phaSearch")
 	public String phaSearch() {
 		return "patients/phaSearch";
 	}
@@ -227,7 +227,7 @@ public class PatientsController {
 	}
 	
 	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
-	@GetMapping("/ptReviewFrm")
+	@GetMapping("patients/ptReviewFrm")
 	public String ptReviewFrm() {
 		return "patients/ptReviewFrm";
 	}

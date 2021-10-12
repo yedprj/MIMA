@@ -13,8 +13,8 @@
         <section class="page-title-two">
             <div class="title-box centred bg-color-2">
                 <div class="pattern-layer">
-                    <div class="pattern-1" style="background-image: url(assets/images/shape/shape-70.png);"></div>
-                    <div class="pattern-2" style="background-image: url(assets/images/shape/shape-71.png);"></div>
+                    <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-70.png);"></div>
+                    <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-71.png);"></div>
                 </div>
                 <div class="auto-container">
                     <div class="title">
@@ -121,11 +121,11 @@
                                     <div class="inner-box">
                                         <div class="pattern">
                                             <div class="pattern-1"
-                                                style="background-image: url(assets/images/shape/shape-24.png);"></div>
+                                                style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-24.png);"></div>
                                             <div class="pattern-2"
-                                                style="background-image: url(assets/images/shape/shape-25.png);"></div>
+                                                style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-25.png);"></div>
                                         </div>
-                                        <figure class="image-box"><img src="assets/images/team/team-1.jpg" alt="">
+                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt="">
                                         </figure>
                                         <div class="content-box">
                                             <div class="like-box"><a href="${item.memberNo }"><i
@@ -174,7 +174,7 @@
                                         <div class="team-block-three">
                                             <div class="inner-box">
                                                 <figure class="image-box">
-                                                    <img src="assets/images/team/team-5.jpg" alt="">
+                                                    <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-5.jpg" alt="">
                                                     <a href="doctors-details.html"><i class="far fa-heart"></i></a>
                                                 </figure>
                                                 <div class="lower-content">

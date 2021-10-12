@@ -109,7 +109,7 @@ th, td {
 	                                            <p>${patientList.mphone}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.bconsultDate}</p>
+	                                            <p><fmt:formatDate value="${patientList.bconsultDate}" pattern="yyyy년 MM월 dd일"/></p>
 	                                        </td>
                                     	</tr>
                                 	</c:forEach>

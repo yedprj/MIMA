@@ -13,9 +13,6 @@ th, td {
 .doctors-appointment .doctors-table tr td .status {
 	margin-right: 30px;
 }
-	
-.doctors-appointment .doctors-table tr td .accept {
-}
 
 </style>
 
@@ -71,7 +68,12 @@ th, td {
 	                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
 	                <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
 	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-	                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+	                <li>
+		                <form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+	                </li>
 	            </ul>
 			</div>
 		</div>
@@ -141,11 +143,6 @@ th, td {
 														<span class="status cancel">취소완료</span>
 													</c:if>
 												</td>
-												<td>
-													<c:if test="${apptList.bookingStatus eq 'p'}">
-                                                    	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
-                                                    </c:if>
-                                                </td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -197,11 +194,6 @@ th, td {
 														<span class="status cancel">취소완료</span>
 													</c:if>
 												</td>
-												<td>
-                                                    <c:if test="${apptListSoon.bookingStatus eq 'p'}">
-                                                    	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
-                                                    </c:if>
-                                                </td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -299,6 +291,10 @@ th, td {
 		$(document).ready(function() {
 			$('#selectBox').val('${cri.category}').prop("selected", true);
 			searchCheck();
+			
+			$("#logoutBtn1").on("click", function(){
+				$('#logOutfrm1').submit();
+			});
 		});
 	
 </script>

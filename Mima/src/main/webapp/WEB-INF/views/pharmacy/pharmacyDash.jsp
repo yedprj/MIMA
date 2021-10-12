@@ -51,7 +51,12 @@
 					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile"><i class="fas fa-user"></i>약국 프로필</a></li>
 					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a id="logout" href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -170,3 +175,10 @@
     <span class="fa fa-arrow-up"></span>
 </button>
 
+<script>
+	$(function(){
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
+		});
+	});
+</script>

@@ -199,7 +199,8 @@
 	
 	<!-- 닥터 대쉬보드 나의 환자들 조회_J06 -->
 	<select id="patientList" resultType="MemberBookingVO">
-		SELECT DISTINCT M.NAME AS MNAME,
+		SELECT DISTINCT 
+				M.NAME AS MNAME,
 				M.MEMBER_NO AS MMEMBERNO,
 				M.GENDER AS MGENDER,
 		        M.PHONE AS MPHONE,
