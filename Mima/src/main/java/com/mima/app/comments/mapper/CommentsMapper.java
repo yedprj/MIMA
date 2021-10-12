@@ -22,10 +22,10 @@ public interface CommentsMapper {
 	public int getCountByMeditNo(CommentsVO vo);
 	
 	// 닥터 대쉬보드 메인 페이지 나의 후기_J
-	public List<CommentsVO> getlatestreviewList();
+	public List<CommentsVO> getlatestreviewList(int memberNo);
 	
 	// 닥터 대쉬보드 메인 페이지 나의 후기_J29
-	public List<CommentsVO> docReview();
+	public List<CommentsVO> docReview(int memberNo);
 	
 	// 닥터 대쉬보드 메인 페이지 나의 후기 카운트_J07
 	public int countDocReview(int memberNo);

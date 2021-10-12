@@ -14,6 +14,11 @@ th, td {
 	margin-right: 30px;
 }
 
+.doctors-appointment .doctors-table tr td .accept {
+	margin-right: 80px;
+}
+
+
 </style>
 
 <!--page-title-two-->
@@ -110,6 +115,7 @@ th, td {
 											<th>예약일</th>
 											<th>결제금액</th>
 											<th>예약상태</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody id="contentAll">
@@ -143,6 +149,11 @@ th, td {
 														<span class="status cancel">취소완료</span>
 													</c:if>
 												</td>
+												<td>
+													<c:if test="${apptList.bookingStatus eq 'p'}">
+	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
+	                                                </c:if>
+	                                            </td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -161,6 +172,7 @@ th, td {
 											<th>예약일</th>
 											<th>결제금액</th>
 											<th>예약상태</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody id="contentAll">
@@ -194,6 +206,11 @@ th, td {
 														<span class="status cancel">취소완료</span>
 													</c:if>
 												</td>
+												<td>
+													<c:if test="${apptListSoon.bookingStatus eq 'p'}">
+	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
+	                                                </c:if>
+	                                            </td>
 											</tr>
 										</c:forEach>
 									</tbody>

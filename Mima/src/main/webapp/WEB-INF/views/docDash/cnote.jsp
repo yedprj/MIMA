@@ -40,23 +40,27 @@ div {
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 										<label>진료일시</label>
-										<input type="text" name="consultDate" value="<fmt:formatDate value="${cnote.consultDate}" pattern="yy-MM-dd"/> (${cnote.consultTime})" readonly>
+										<input type="text" name="consultDate" value="<fmt:formatDate value="${cnote.consultDate}" pattern="yyyy-MM-dd"/> ${cnote.consultTime}" readonly>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 										<label>주소</label>
 										<input type="text" name="addr1" value="${cnote.addr1} ${cnote.addr2} ${cnote.addr3}" readonly>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-										<label>증상</label>
-										<textarea name="ptDiagnosis" readonly>${cnote.ptDiagnosis}</textarea>
+										<label>진료과목</label>
+										<input type="text" name="sub" value="${cnote.subject}" readonly>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-										<label>처치내용</label>
+										<label>증상</label>
+										<textarea name="ptsymptom" readonly>${cnote.ptSymptom}</textarea>
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
+										<label>평가</label>
 										<textarea name="ptAssessment" readonly>${cnote.ptAssessment}</textarea>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-										<label>히스토리</label>
-										<textarea name="pastHx"  readonly>${cnote.pastHx}</textarea>
+										<label>진단명</label>
+										<textarea name="ptDiagnosis" readonly>${cnote.ptDiagnosis}</textarea>
 									</div>
 								</div>
 					<div class="btn-box" style="margin-top: 40px;, margin-bottom: 20px;">

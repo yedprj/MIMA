@@ -66,26 +66,63 @@ th, td {
     <div class="content-container">
         <div class="outer-container">
             <div class="review-list">
-                <div class="title-box clearfix">
-                    <div class="text pull-left">
-                    	<h3>나의 문의</h3>
-                    </div>
-                </div>
-                <div class="comment-inner">
-                   	<c:forEach items="${docQna}" var="docQna">
-        				<div class="single-comment-box">
-           					<div class="comment" style="padding-left: 20px;">
-                				<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docQna.csDate}" pattern="yy-MM-dd"/></span>
-				                <p>${docQna.csTitle}</p>
-            				</div>
-        				</div>
-       				</c:forEach>
-                </div>
+            
+            <section class="questions-section bg-color-3 sec-pad">
+	<div class="auto-container">
+	    <div class="row clearfix">
+	        <div class="col-xl-8 col-lg-12 col-md-12 offset-xl-2 inner-column">
+	            <div class="sec-title centred">
+	                <p>Have any question?</p>
+	                <h2>Ask A Questions</h2>
+	            </div>
+	            <div class="form-inner">
+	                <form action="faq.html" method="post">
+	                    <div class="row clearfix">
+	                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+	                            <input type="text" name="name" placeholder="Your Phone" required="">
+	                        </div>
+	                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+	                            <input type="text" name="subject" placeholder="Subject" required="">
+	                        </div>
+	                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+	                            <textarea name="message" placeholder="Your Message"></textarea>
+	                        </div>
+	                        <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn centred">
+	                            <button type="submit" class="theme-btn-one">Send Message<i class="icon-Arrow-Right"></i></button>
+	                        </div>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</section>
+            
+                <div class="single-box">
+	                <div class="title-box">
+	                    <h3>문의하기</h3>
+	                </div>
+	                <div class="inner-box">
+	                    <form action="add-listing.html" method="post">
+	                        <div class="row clearfix">
+	                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+	                                <textarea name="message" placeholder="문의사항을 입력하세요."></textarea>
+	                            </div>
+	                        </div>
+	                    </form>
+	                </div>
+					<div class="btn-box">
+				        <a href="add-listing.html" class="theme-btn-one">문의하기<i class="icon-Arrow-Right"></i></a>
+				    </div>
+	            </div>
             </div>
          </div>
     </div>
 </div>
-<br><br>
+
+
+
+<br>
 <div class="right-panel">
     <div class="content-container">
         <div class="outer-container">

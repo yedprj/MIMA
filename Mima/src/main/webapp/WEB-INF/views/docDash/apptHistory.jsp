@@ -12,6 +12,10 @@ th, td {
 .doctors-appointment .doctors-table tr td .status {
 	margin-right: 30px;
 }
+
+.doctors-appointment .doctors-table tr td .print {
+	margin-right: 70px;
+}
 </style>
 
 <!-- doctors-dashboard -->
@@ -100,6 +104,7 @@ th, td {
 				                       <th>진료일</th>
 				                       <th>예약일</th>
 				                       <th>결제금액</th>
+				                       <th></th>
 				                   </tr>    
 				               </thead>
 				               <tbody>
@@ -169,9 +174,9 @@ th, td {
 <script>
 $(document).ready(function() {
 	 var actionForm = $('#actionForm');
-	 
+
 		$('#nameSearch');
-		
+
 		/* $(enter(event){
 			if(event.keyCode == 13){
 				

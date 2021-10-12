@@ -18,6 +18,7 @@
 	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE)
 	AND (B.BOOKING_STATUS = 'p'
 	OR B.BOOKING_STATUS = 'y')
+	AND DOC_NO = #{memberNo}
 </select>
 
 <!-- 닥터 대쉬보드 메인 페이지 오늘의 예약 카운트_J07 -->
@@ -25,6 +26,8 @@
     SELECT COUNT(*)
     FROM BOOKING
     WHERE CONSULT_DATE = TO_DATE(SYSDATE)
+    AND (BOOKING_STATUS = 'p'
+	OR BOOKING_STATUS = 'y')
     AND DOC_NO = #{memberNo}
 </select>
 
@@ -43,6 +46,7 @@
     ON B.PT_NO=M.MEMBER_NO
     WHERE ROWNUM < 6
     AND CONSULT_DATE < TO_DATE(SYSDATE)
+    AND DOC_NO = #{memberNo}
     ORDER BY CONSULT_DATE DESC
     ]]>
 </select>

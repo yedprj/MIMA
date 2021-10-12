@@ -65,9 +65,9 @@ public class PatnerDoctorController {
 		model.addAttribute("countGetList", bookingService.countGetList(memberNo));
 		model.addAttribute("countPatientList", bookingService.countPatientList(memberNo));
 		model.addAttribute("countDocReview", commentsService.countDocReview(memberNo));
-		model.addAttribute("bookingList", bookingService.getList());
-		model.addAttribute("getlatestapptList", bookingService.getlatestapptList());
-		model.addAttribute("getlatestreviewList", commentsService.getlatestreviewList());
+		model.addAttribute("bookingList", bookingService.getList(memberNo));
+		model.addAttribute("getlatestapptList", bookingService.getlatestapptList(memberNo));
+		model.addAttribute("getlatestreviewList", commentsService.getlatestreviewList(memberNo));
 		
 		return "docDash/docMain";
 	}
@@ -117,8 +117,14 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 나의 후기 페이지_J29
 	@GetMapping("doctor/docReview")
-	public String docReview(Model model, CommentsVO commentsvo) {
-		model.addAttribute("docReview", commentsService.docReview());
+	public String docReview(Model model, CommentsVO commentsvo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = mvo.getMemberNo();
+		
+		model.addAttribute("docReview", commentsService.docReview(memberNo));
 		
 		return "docDash/docReview";
 	}
@@ -177,9 +183,10 @@ public class PatnerDoctorController {
 		return "docDash/cnote";
 	}
 
-	// 닥터 처방전 새창_J06
+	// 닥터 처방전 새창_J06. J12
 	@GetMapping("doctor/prescription")
-	public String prescription() {
+	public String prescription(Model model,int bookingNo, PtInfoVO vo) {
+		vo.setBookingNo(bookingNo);
 		return "docDash/prescription";
 	}
 	

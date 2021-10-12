@@ -89,7 +89,7 @@ th, td {
                                         <th>환자명</th>
                                         <th>성별</th>
                                         <th>연락처</th>
-                                        <th>예약받은날</th>
+                                        <th>최근진료일</th>
                                     </tr>    
                                 </thead>
                                 <tbody>
@@ -99,7 +99,7 @@ th, td {
 	                                            <div class="name-box">
 	                                                <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png"></figure>
 	                                                <h5>${patientList.mname}</h5>
-	                                                <span class="ptno"># no.${patientList.mmemberNo}</span>
+	                                                <span class="ptno"># ${patientList.mmemberNo}</span>
 	                                            </div>
 	                                        </td>
 	                                        <td>
@@ -109,7 +109,7 @@ th, td {
 	                                            <p>${patientList.mphone}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p><fmt:formatDate value="${patientList.bconsultDate}" pattern="yyyy년 MM월 dd일"/></p>
+	                                            <p><fmt:formatDate value="${patientList.bconsultDate}" pattern="yyyy년 MM월 dd일"/>${patientList.bconsultTime}</p>
 	                                        </td>
                                     	</tr>
                                 	</c:forEach>

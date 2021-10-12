@@ -92,7 +92,9 @@ th, td {
         <div class="outer-container">
             <div class="review-list">
                 <div class="title-box clearfix">
-                    <div class="text pull-left"><h3>나의 후기</h3></div>
+                    <div class="text pull-left">
+                    	<h3>나의 후기</h3>
+                    </div>
                     
                     <div class="select-box pull-right">
                         <select class="wide">
@@ -104,24 +106,22 @@ th, td {
                 </div>
                 <div class="comment-inner">
                    	<c:forEach items="${docReview}" var="docReview">
-     <div class="single-comment-box">
-         <div class="comment">
-             <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt=""></figure>
-             <h4>${docReview.nickname}</h4>
-             <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReview.regDate}" pattern="yy-MM-dd"/></span>
-             <ul class="rating clearfix">
-              <c:forEach var="i" begin="1" end="${docReview.reviewPoint}">
-             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
-             	</c:forEach>
-             	<c:forEach var="i" begin="1" end="${5-docReview.reviewPoint}">
-             		<i class="icon-Star"></i>
-             	</c:forEach>
-             </ul>
-             <p>${docReview.contents}</p>
-         </div>
-     </div>
-    </c:forEach>
-                    </div>
+     					<div class="single-comment-box">
+         					<div class="comment" style="padding-left: 20px;">
+             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReview.regDate}" pattern="yy-MM-dd"/></span>
+					             <ul class="rating clearfix">
+					              <c:forEach var="i" begin="1" end="${docReview.reviewPoint}">
+					             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
+					             	</c:forEach>
+					             	<c:forEach var="i" begin="1" end="${5-docReview.reviewPoint}">
+					             		<i class="icon-Star"></i>
+					             	</c:forEach>
+					             </ul>
+             					<p>${docReview.contents}</p>
+				         </div>
+				     </div>
+				    </c:forEach>
+               </div>
                 </div>
                 <div class="pagination-wrapper">
                     <ul class="pagination">
