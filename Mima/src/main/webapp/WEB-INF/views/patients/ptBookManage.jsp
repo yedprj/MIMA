@@ -130,6 +130,7 @@ th, td {
                                                     	<button class="cancel" id="paymentCancel" name="paymentCancel">
                                                     		<i class="fas fa-times"></i>Cancel
                                                     	</button>
+                                                    	<input type="hidden" id="bookingNo" name="bookingNo" value="${ptbmList.bookingNo}"/>
 													</c:if>
 												</td>
 												<td>
@@ -141,6 +142,7 @@ th, td {
 										</c:forEach>
 									</tbody>
 								</table>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 							</div>
 						</div>
 					</div>
@@ -175,3 +177,30 @@ th, td {
 </button>
 
 <!-- End of .page_wrapper -->
+<script>
+	$(function() {
+		$('#paymentCancel').on('click', function(){
+			
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue = "${_csrf.token}";
+			var bookingNo = $('#paymentCancel').parent().children("input").val();
+			
+			console.log(bookingNo);
+			
+			$.ajax({
+				url : 'paymentCancel',
+				type : 'post',
+				data : {bookingNo : bookingNo},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				success : function(object) {
+					console.log(object);
+				},
+				error : function(reject) {
+					console.log(reject);
+				}
+			});
+		});
+	});
+</script>
