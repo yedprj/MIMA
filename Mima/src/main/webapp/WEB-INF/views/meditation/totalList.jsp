@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
-<link href="assets/css/responsive.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/assets/css/responsive.css" rel="stylesheet">
 
 
  <!--page-title-two-->
         <section class="page-title-two">
             <div class="title-box centred bg-color-2">
                 <div class="pattern-layer">
-                    <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-70.png);"></div>
-                    <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-71.png);"></div>
+                    <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-70.png);"></div>
+                    <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-71.png);"></div>
                 </div>
                 <div class="auto-container">
                     <div class="title">
@@ -37,7 +37,7 @@
         </section>
         <!--page-title-two end-->
 
-<!-- search bar -->
+	<!-- search bar -->
     <div class="boxed_wrapper">
         <div class="select-field bg-color-3">
             <div class="auto-container">
@@ -65,8 +65,7 @@
                                 <input type="text" name="name" placeholder="Ex. Name, Specialization..." required="">
                                 <button type="submit"><i class="icon-Arrow-Right"></i></button>
                             </div>
-                        </form>
-                        
+                        </form>  
                     </div>
                 </div>
             </div>
@@ -76,8 +75,8 @@
 
 
         <!-- news-section -->
-        <section class="blog-grid">
-            <div class="auto-container">
+        <section class="boxed_wrapper">
+            <div class="select-field bg-color-3 auto-container">
                 <div class="row clearfix">
                  <div class="col-lg-12 col-md-12 col-sm-12 sidebar-side">
                         <div class="blog-sidebar">

@@ -1,11 +1,18 @@
 package com.mima.app.member.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -238,6 +245,65 @@ public class PatientsController {
 		System.out.println("의사 리뷰 코멘트테이블입력 insert VO"+vo);
 		commentsService.insert(vo);
 		return  "patients/ptMain";
+	}
+	
+	// p.10/12 예약 취소
+	@PostMapping("patients/paymentCancel")
+	@ResponseBody
+	public int paymentCancel(int bookingNo) throws Exception {
+		
+		HttpURLConnection conn = null;
+		URL url = new URL("https://api.iamport.kr/users/getToken");	// 엑세스 토큰을 받아올 주소 입력
+		conn = (HttpURLConnection) url.openConnection();
+		
+		// 요청 방식 : POST
+		conn.setRequestMethod("POST");
+		
+		// Header 설정 (application/json 형식으로 데이터를 전송)
+		conn.setRequestProperty("Content-Type", "application/json");
+		conn.setRequestProperty("Accept", "application/json");		// 서버로부터 받을 Data를 JSON형식 타입으로 요청함
+		
+		// Data 설정
+		conn.setDoOutput(true);	// OutPutStream으로 POST 데이터를 넘겨주겠다는 옵션
+		
+		// 서버로 보낼 데이터 JSON 형태로 변환 (imp_apikey, imp_secret)
+		JSONObject obj = new JSONObject();
+		String impkey = "8316389304848891";
+		String impSecrect = "d52aa0e1cd1dad310f9216ad6139ff15081c4bfef8f1e71dac9d9a7d4421d8107d488a22c205bd7a";
+		obj.put("imp_key", impkey);
+		obj.put("imp_secret", impSecrect);
+		
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+		bw.write(obj.toString());
+		bw.flush();
+		bw.close();
+		
+		// 서버로부터 응답 데이터 받기
+		int result = 0;
+		int responseCode = conn.getResponseCode();	// 응답코드 받기
+		System.out.println("응답코드??" + responseCode);
+		
+		if (responseCode == 200) {	// 성공
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+			br.close();
+			
+			System.out.println("" + sb.toString());
+			result = 1;	// 환불 성공 시 정수값 1 반환
+		} else {
+			System.out.println(conn.getResponseMessage());	// 환불 실패 시 정수값 0반환 
+			result = 0;
+		}
+		
+		if (result == 1) {
+			
+		} 
+		
+		return result;
 	}
 
 }
