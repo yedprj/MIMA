@@ -165,7 +165,9 @@ public class PatnerDoctorController {
 	@PostMapping("doctor/updatePassword")
 	@ResponseBody
 	public int updatePassword(MemberVO vo) {
+		vo.setPassword(bCryptPasswordEncoder.encode(vo.getPassword()));
 		int result = memberService.updatePassword(vo);
+		
 		return result;
 	}
 	
