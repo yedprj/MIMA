@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -137,6 +138,26 @@ public class PatientsController {
 		memberService.ptPwChange(vo);
 		rttr.addAttribute("ptPwUpdateResult", vo.getMemberId());
 		return "redirect:/ptPwChange";
+	}
+	
+	//환자대쉬보드 프로필페이지 e.12
+	@GetMapping("patients/ptProfileDetail")
+	public void ptMyProfile(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		model.addAttribute("ptMyProfile",patientsService.ptSelectOne(memberNo));
+	}
+	
+	//환자대쉬보드 프로필 수정 - ajax - e.12
+	@PutMapping("/ptprofileUpdate")
+	@ResponseBody
+	public int ptprofileUpdate(@RequestBody MemberVO vo, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO sessionVO  = (MemberVO) session.getAttribute("session");
+		int memberNo = sessionVO.getMemberNo();
+		vo.setMemberNo(memberNo);
+		return patientsService.ptprofileUpdate(vo);
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/09
