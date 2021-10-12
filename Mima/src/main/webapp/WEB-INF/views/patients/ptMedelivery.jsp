@@ -390,7 +390,7 @@ function execDaumPostcode() {
 			$("input[name='addr1']").val("${pvo.delAddr}");
 			$("input[name='addr2']").val("${pvo.delAddr3}"); // 상세 주소
 			$("input[name='addr3']").val("${pvo.delAddr2}"); // 도로명 주소
-			$("input[name='postcode']").val("${pvo.delPostCode}");   // 우편번호
+			$("#postcode").val("${pvo.delPostCode}");   // 우편번호
 			$("input[name='pharmacyNo']").val("${pvo.delPharmacyNo}");   // 신청 약국 번호
 			$.ajax({
     			url : "phaNameSearch",
