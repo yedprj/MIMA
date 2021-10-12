@@ -514,19 +514,20 @@
 		<!-- K.10/10 약배달 신청 정보 등록 -->
 		<insert id="ptDeliveryInsert">
 			insert into patients (
-					MEMBER_NO
+					MEMBER_NO,
                     DEL_ADDR,
 					DEL_ADDR2,
 					DEL_ADDR3,
 					DEL_POST_CODE,
 					DEL_NOTE,
+					DEL_PHARMACY_NO
 			)values (
 					#{memberNo},
-					#{delAddr},
-					#{delAddr2},
-					#{delAddr3},
-					#{delPostCode},
-					#{delNote},
+					#{delAddr, jdbcType=VARCHAR},
+					#{delAddr2, jdbcType=VARCHAR},
+					#{delAddr3, jdbcType=VARCHAR},
+					#{delPostCode,jdbcType=VARCHAR},
+					#{delNote, jdbcType=VARCHAR},
 					#{delPharmacyNo}
 			)
 		</insert>

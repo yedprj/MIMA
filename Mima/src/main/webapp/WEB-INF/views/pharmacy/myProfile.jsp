@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
 .file-upload label {
     display: inline-block;
@@ -132,6 +133,7 @@ input::placeholder {
 					<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
 				</figure>
 				<div class="title-box centred">
+				
 					<div class="inner">
 						<h3>${profile.pharmacyInfo}</h3>
 						<p>${profile.profileContents}</p>

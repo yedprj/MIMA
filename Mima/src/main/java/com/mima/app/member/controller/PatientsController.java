@@ -209,7 +209,7 @@ public class PatientsController {
 	
 	
 	//약국 찾기 K.10/07
-	@PostMapping("pharmacy")
+	@PostMapping("patients/pharmacy")
 	@ResponseBody
 	public List<PartnerPharmacyVO> pharmacy(@RequestBody Criteria cri){
 		
@@ -220,28 +220,28 @@ public class PatientsController {
 	}
 	
 	//약배달 신청등록 K.10/09
-	@PostMapping("ptDeliveryInsert")
+	@PostMapping("patients/ptDeliveryInsert")
 	@ResponseBody
 	public int ptDeliveryInsert(@RequestBody PatientsVO vo ){
 		return patientsService.ptDeliveryInsert(vo);
 	}
 	
 	//약배달 정보수정 K.10/10
-	@PostMapping("ptDeliveryUpdate")
+	@PostMapping("patients/ptDeliveryUpdate")
 	@ResponseBody
 	public int ptDeliveryUpdate(@RequestBody PatientsVO vo ){
 		return patientsService.ptDeliveryUpdate(vo);
 	}
 	
 	//약배달신청 유무 수정 K.10/11
-	@PostMapping("deliberyStatusUpdate")
+	@PostMapping("patients/deliberyStatusUpdate")
 	@ResponseBody
 	public int deliberyStatusUpdate(@RequestBody MemberVO vo){
 		return memberService.deliveryStatusUpdate(vo);
 	}
 	
 	//약국 번호로 약국명 조회 K.10/10
-	@PostMapping("phaNameSearch")
+	@PostMapping("patients/phaNameSearch")
 	@ResponseBody
 	public PartnerPharmacyVO phaNameSearch(@RequestBody PartnerPharmacyVO vo){
 		return phaService.selectOne(vo.getMemberNo());
