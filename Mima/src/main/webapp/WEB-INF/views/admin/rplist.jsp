@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-
 <div class="boxed_wrapper">
 
 	<!-- doctors-dashboard -->
@@ -22,7 +21,7 @@
 						</div>
 						<div class="doctors-list">
 							<div class="table-outer">
-								<table class="table table-hover">
+								<table class="table table-hover" style="cursor:pointer">
 									<thead class="table-header">
 										<tr align="center">
 											<th>NO</th>

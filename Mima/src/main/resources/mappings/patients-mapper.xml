@@ -22,6 +22,15 @@
 		WHERE MEMBER_NO=#{memberNo}
 	</update>
 
+<!-- 관리자 회원정보조회 토탈카운트 e.13 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT (COUNT(A.MEMBER_NO)+ COUNT(B.MEMBER_NO)+ COUNT(C.MEMBER_NO)) AS TOTAL
+		FROM PATIENTS A FULL OUTER JOIN PARTNER_DOCTOR B
+		ON A.MEMBER_NO = B.MEMBER_NO
+		FULL OUTER JOIN PARTNER_PHARMACY C
+		ON B.MEMBER_NO = C.MEMBER_NO
+	</select>
+
 <!-- 관리자 회원정보조회(환자) e.29-->
 	<select id="getptList" resultType="PatientsVO"> 
 		SELECT   MEMBER_NO
