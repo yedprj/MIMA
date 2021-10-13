@@ -46,8 +46,8 @@ public class CommentsServiceImpl implements CommentsService {
 		CommentsVO vo = new CommentsVO();
 		vo.setCmainCategory(cmainCategory);
 		vo.setCmainNo(cmainNo);
+				
 		
-		log.info("================="+cri.getPageNum());
 		pageVo.setReplyCnt(commentsMapper.getCountByMeditNo(vo));
 		pageVo.setList(commentsMapper.getList(cri, cmainCategory, cmainNo));
 		log.info(vo.toString()+"~~~~~~~~~~~~~~~~~~~~코멘트vo");
@@ -76,6 +76,11 @@ public class CommentsServiceImpl implements CommentsService {
 	@Override
 	public int countDocReview(int memberNo) {
 		return commentsMapper.countDocReview(memberNo);
+	}
+
+	@Override
+	public String getNickname(CommentsVO vo) {
+		return commentsMapper.getNickname(vo);
 	}
 
 	// 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13

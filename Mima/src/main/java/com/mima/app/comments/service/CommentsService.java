@@ -28,6 +28,9 @@ public interface CommentsService {
 		// 닥터 대쉬보드 메인 페이지 나의 후기 카운트_J07
 		public int countDocReview(int memberNo);
 		
+		//s:1013 게시글 댓글 닉네임 가져오기
+		public String getNickname(CommentsVO vo);
+
 		// 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13
 		public List<CommentsVO> docReviewPage(Criteria cri, int memberNo);
 		
@@ -36,4 +39,5 @@ public interface CommentsService {
 		
 		// 닥터 대쉬보드 나의 후기 페이지 페이징_J13
 		public int docReviewCount(Criteria cri, int memberNo);
+
 }

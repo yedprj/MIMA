@@ -120,10 +120,13 @@
 	</insert>
 
 	<select id="read"
-		resultType="com.mima.app.meditation.domain.MeditationVO">
-		SELECT *
-		FROM MEDITATION
-		WHERE MEDITATION_NO=${meditationNo}
+		resultType="MeditationVO">
+		SELECT a.*,   (   SELECT 1 FROM LIKES
+                                WHERE MEMBER_NO = ${memberNo}
+                                AND LIKE_MAIN_NO = ${meditationNo}
+                       ) LIKES_NO   
+      FROM MEDITATION a
+      WHERE MEDITATION_NO=${meditationNo}
 	</select>
 
 	<update id="update">

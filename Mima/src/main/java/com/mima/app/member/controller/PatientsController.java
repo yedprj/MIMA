@@ -254,12 +254,6 @@ public class PatientsController {
 		return phaService.selectOne(vo.getMemberNo());
 	}
 	
-	//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
-	@GetMapping("patients/ptReviewFrm")
-	public String ptReviewFrm() {
-		return "patients/ptReviewFrm";
-	}
-	
 	//s:1007 코멘트 테이블에 입력
 	@PostMapping("/insert")
 	public String insertReview(CommentsVO vo) {
