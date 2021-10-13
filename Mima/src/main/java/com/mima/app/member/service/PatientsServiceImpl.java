@@ -169,7 +169,7 @@ public class PatientsServiceImpl implements PatientsService {
 	
 	//환자 대쉬보드 프로필 관리 한건조회 e.12
 	@Override
-	public PatientsVO ptSelectOne(int memberNo) {
+	public MemberVO ptSelectOne(int memberNo) {
 		return patientsMapper.ptSelectOne(memberNo);
 	}
 	

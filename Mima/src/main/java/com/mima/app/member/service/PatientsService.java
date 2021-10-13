@@ -89,7 +89,7 @@ public interface PatientsService {
 	public int getTotalPtqCount(Criteria cri);
 	
 	//환자 대쉬보드 프로필 관리 한건조회 e.12
-	public PatientsVO ptSelectOne(int memberNo);
+	public MemberVO ptSelectOne(int memberNo);
 	
 	//환자 대쉬보드 프로필 수정 e.12
 	public int ptprofileUpdate(MemberVO vo);
