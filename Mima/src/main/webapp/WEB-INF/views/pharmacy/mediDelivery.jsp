@@ -1,5 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<style>
+#delMemo {
+	position: relative; 
+	top: 0px; 
+	transition: top 0.1s;
+	cursor : pointer;
+}
+#delMemo:hover {
+	color : #39cabb;
+	cursor : pointer;
+}
+#trList td {
+    position: relative;
+}
+#delMemoHidden {
+	display: none;
+  	position: absolute;
+  	width: 150px;
+  	padding: 8px;
+  	left: 0;
+  	-webkit-border-radius: 8px;
+  	-moz-border-radius: 8px;  
+  	border-radius: 8px;
+  	background: #ebfaf8;;
+  	color: #39cabb;
+  	z-index : 100;
+	}
+#delMemo:hover + #delMemoHidden {
+  display: block;
+}
+.my-patients .title-box .search-form input[type='search']{
+	margin-left : 20px;
+}
+.doctors-appointment .doctors-table tr td p {
+    font-size: 16px;
+    line-height: 18px;
+    color: #061a3a;
+    padding: 5px 30px
+ }
+ .accept, .cancel{
+ 	cursor : pointer;
+ }
+</style>
 
 <!--page-title-two-->
 <section class="page-title-two">
@@ -51,7 +97,12 @@
 					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile"><i class="fas fa-user"></i>약국 프로필</a></li>
 					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a id="logout" href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -60,66 +111,198 @@
 	<div class="right-panel">
                 <div class="content-container">
                     <div class="outer-container">
-                        <div class="appointment-list">
-                            <div class="upper-box clearfix">
+                        <div id="allList" style="display: block;">
+                        <div class="appointment-list doctors-appointment my-patients">
+                            <div class="title-box upper-box clearfix">
                                 <div class="text pull-left">
-                                    <h3>약배달 관리</h3>
+                                    <h3>약배달 현황</h3>
                                 </div>
+                                <div class="btn-box pull-right">
+                                    <form action="my-patients.html" method="post" class="search-form">
+                                        <div class="form-group">
+                                            <input type="search" name="search-field" placeholder="Search" required="">
+                                            <button type="submit"><i class="far fa-search"></i></button>
+                                        </div>
+                                    </form>
+                                </div> 
                                 <div class="select-box pull-right">
-                                    <select class="wide">
-                                       <option data-display="상태 목록">상태 목록</option>
-                                       <option value="1">약배달 신청목록</option>
-                                       <option value="2">약배달 확인목록</option>
-                                       <option value="4">배달 확인목록</option>
+                                    <select class="wide" id="selectbox" name="selectbox" onchange="searchCheck()">
+                                       <option value="0" data-display="상태 목록">상태 목록</option>
+                                       <option value="1">약배달 등록/취소</option>
+                                       <option value="2">약배달 현황목록</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="single-item">
-                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/appointment-1.jpg" alt=""></figure>
-                                <div class="inner">
-                                    <h4>Mary Astor</h4>
-                                    <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-                                    </ul>
-                                    <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-item">
-                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/appointment-2.jpg" alt=""></figure>
-                                <div class="inner">
-                                    <h4>Rex Allen</h4>
-                                    <ul class="info-list clearfix">
-                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-                                    </ul>
-                                    <ul class="confirm-list clearfix">
-                                        <li><i class="fas fa-check"></i>Accept</li>
-                                        <li><i class="fas fa-times"></i>Cancel</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <!-- 1번 -->
+	                            <div class="single-item">
+	                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/appointment-1.jpg" alt=""></figure>
+	                                <div class="inner">
+	                                    <h4>Mary Astor</h4>
+	                                    <ul class="info-list clearfix">
+	                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
+	                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+	                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
+	                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
+	                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
+	                                    </ul>
+	                                    <ul class="confirm-list clearfix">
+	                                        <li><i class="fas fa-check"></i>Accept</li>
+	                                        <li><i class="fas fa-times"></i>Cancel</li>
+	                                    </ul>
+	                                </div>
+	                            </div> 
+	                            <div class="single-item">
+	                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/appointment-2.jpg" alt=""></figure>
+	                                <div class="inner">
+	                                    <h4>Rex Allen</h4>
+	                                    <ul class="info-list clearfix">
+	                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
+	                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
+	                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
+	                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
+	                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
+	                                    </ul>
+	                                    <ul class="confirm-list clearfix">
+	                                        <li><i class="fas fa-check"></i>Accept</li>
+	                                        <li><i class="fas fa-times"></i>Cancel</li>
+	                                    </ul>
+	                                </div>
+	                            </div>
+                        	</div>
                         </div>
-                        <div class="pagination-wrapper">
-                            <ul class="pagination">
+	                        <!-- 1번 끝 -->
+                      <!-- 2번 -->
+                      <div id="deliverys" style="display: none;">
+                       <div class="appointment-list doctors-appointment my-patients">
+                          <div class="title-box upper-box clearfix">
+                              <div class="text pull-left">
+                                  <h3>약배달 등록/취소</h3>
+                              </div>
+                              <div class="btn-box pull-right">
+                                  <form action="my-patients.html" method="post" class="search-form">
+                                      <div class="form-group">
+                                          <input type="search" name="search-field" placeholder="Search" required="">
+                                          <button type="submit"><i class="far fa-search"></i></button>
+                                      </div>
+                                  </form>
+                              </div> 
+                              <div class="select-box pull-right">
+                                  <select class="wide" id="selectboxs" name="selectboxs" onchange="searchChecks()">
+                                     <option value="0" data-display="상태 목록">상태 목록</option>
+                                     <option value="1">약배달 등록/취소</option>
+                                     <option value="2">약배달 현황목록</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="doctors-list">
+                              <div class="table-outer">
+                                  <table class="doctors-table">
+                                      <thead class="table-header">
+                                          <tr>
+                                              <th>배송인 이름</th>
+                                              <th>신청일자</th>
+                                              <th>주소</th>
+                                              <th>우편번호</th>
+                                              <th>처방전</th>
+                                              <th>배송메모</th>
+                                              <th>&nbsp;</th>
+                                              <th>&nbsp;</th>
+                                          </tr>    
+                                      </thead>
+                                      <tbody>
+                                      	<c:forEach var="del" items="${delivery}">
+                                          <tr id="trList">
+                                              <td>
+                                                  <div class="name-box">
+                                                      <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
+                                                      <h5>${del.name}</h5>
+                                                  </div>
+                                              </td>
+                                              <td><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
+                                              <td><p>${del.delAddr},</p><p>${del.delAddr2}  ${del.delAddr3 }</p></td>
+                                              <td class="text-center"><p>${del.delPostCode }</p></td>
+                                              <td class="text-center">처방전 파일</td>
+                                              <td><p id="delMemo"><c:if test="${not empty del.delNote}">메모 O</c:if></p>
+                                              	<c:if test="${not empty del.delNote}"><div id="delMemoHidden">${del.delNote}</div></c:if>
+                                              </td>
+                                              <td>
+                                                  <span class="accept" data-no="${del.bookingNo}"><i class="fas fa-pencil-alt"></i>배달등록</span>
+                                              </td>
+                                              <td>
+                                                  <span class="cancel" data-no="${del.bookingNo}" ><i class="fas fa-times"></i>반환</span>
+                                              </td>
+                                          </tr>
+                                          </c:forEach>
+                                      </tbody>    
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      
+						<div class="pagination-wrapper">
+							<ul class="pagination">
                                 <li><a href="clinic-1.html" class="current">1</a></li>
                                 <li><a href="clinic-1.html">2</a></li>
                                 <li><a href="clinic-1.html">3</a></li>
                                 <li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
-                            </ul>
-                        </div>
+							</ul>
+						</div>
+						
+						
                     </div>
                 </div>
             </div>
 </section>
 <!-- doctors-dashboard -->
+
+<!--Scroll to top-->
+<button class="scroll-top scroll-to-target" data-target="html">
+	<span class="fa fa-arrow-up"></span>
+</button>
+
+<script>
+	function searchCheck() {
+		var choose = $("#selectbox option:selected").val();
+
+		if (choose == '1') {
+			$("#deliverys").css('display','block');
+			$("#allList").css('display', 'none');
+			$("#selectboxs option:eq(0)").prop("selected", true);
+		}
+	}
+	
+	function searchChecks() {
+		var choose = $("#selectboxs option:selected").val();
+
+		if (choose == '2') {
+			$("#deliverys").css('display','none');
+			$("#allList").css('display', 'block');
+			$("#selectbox option:eq(0)").prop("selected", true);
+		}
+	}
+ 	
+	$(function(){
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
+		});
+		
+		// 배달 등록 btn
+		$("#trList > td").on("click",".accept",function(){
+			var bookingNo = $(this).data("no");
+			alert(bookingNo);
+			
+		}); // 배달 등록 btn end
+		
+		// 반환 btn
+		$("#trList > td").on("click",".cancel",function(){
+			var bookingNo = $(this).data("no");
+			alert("리턴:"+ bookingNo);
+			
+		}); // 반환 btn end
+	
+	}); // function end
+	
+	
+</script>
 

@@ -24,6 +24,7 @@ import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
+import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
 
 import lombok.extern.java.Log;
@@ -34,6 +35,7 @@ import lombok.extern.java.Log;
 public class PartnerPharmacyController {
 	
 	@Autowired PatnerPharmacyService partPhaService;
+	@Autowired MedDeliveryService deliverSerive;
 	@Autowired MemberService memberSerivce;
 	@Autowired BCryptPasswordEncoder cryptEncoder;
 
@@ -48,13 +50,23 @@ public class PartnerPharmacyController {
 		model.addAttribute("profile", partPhaService.selectOne(memberNo));
 	}
 	
-	// 약배달 관리페이지 [K]210929
+	// 약배달 전체관리페이지 [K]210929
 	@GetMapping("/mediDelivery")
 	public void mediDelivery(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
 		model.addAttribute("profile", partPhaService.selectOne(memberNo));
+		model.addAttribute("delivery", deliverSerive.memDelivery(vo.getMemberNo()));
+	}
+	
+	@GetMapping("/deliveryRegCancel")
+	public void deliveryRegCancel(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		model.addAttribute("profile", partPhaService.selectOne(vo.getMemberNo()));
+		model.addAttribute("delivery", deliverSerive.memDelivery(vo.getMemberNo()));
+		
 	}
 	
 	// 복약지도 관리페이지 [K]210929
