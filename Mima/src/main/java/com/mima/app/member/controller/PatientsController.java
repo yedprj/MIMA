@@ -159,7 +159,7 @@ public class PatientsController {
 	//환자대쉬보드 프로필 수정 - ajax - e.12
 	@PostMapping("patients/ptprofileUpdate")
 	@ResponseBody
-	public int ptprofileUpdate(@RequestBody MemberVO vo, Model model, HttpServletRequest request) {
+	public int ptprofileUpdate(MemberVO vo, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO sessionVO  = (MemberVO) session.getAttribute("session");
 		int memberNo = sessionVO.getMemberNo();
