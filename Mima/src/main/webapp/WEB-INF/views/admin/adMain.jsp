@@ -24,7 +24,13 @@
 											<h2>회원정보조회</h2>
 										</div>
 										<div class="table-content">
-											<img alt="" src="${pageContext.request.contextPath }/resources/assets/images/profilee.jpg" width="80px" height="80px">
+											<img alt="" src="${pageContext.request.contextPath }/resources/assets/images/profilee.jpg" width="55px" height="55px">
+											<!-- 토탈카운트 -->
+											<tbody>
+												<tr>
+													<td><p style="font-size:25px"> 총 : ${getTotalCount } 명</p></td>
+												</tr>
+											</tbody>
 										</div>
 										<div class="table-footer">
 											<div class="link">

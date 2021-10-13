@@ -60,8 +60,8 @@ public class PatnerDoctorController {
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
 		
 		int memberNo = mvo.getMemberNo();
-		
 		model.addAttribute("member", mvo);
+		model.addAttribute("clinicName", clinicName(request));
 		model.addAttribute("countGetList", bookingService.countGetList(memberNo));
 		model.addAttribute("countPatientList", bookingService.countPatientList(memberNo));
 		model.addAttribute("countDocReview", commentsService.countDocReview(memberNo));
@@ -80,6 +80,7 @@ public class PatnerDoctorController {
 		int memberNo = mvo.getMemberNo();
 		
 		model.addAttribute("member", mvo);
+		model.addAttribute("clinicName", clinicName(request));
 		model.addAttribute("apptList", bookingService.apptList(memberNo));
 		model.addAttribute("apptListSoon", bookingService.apptListSoon(memberNo));
 		model.addAttribute("apptListCanceled", bookingService.apptListCanceled(memberNo));
@@ -95,6 +96,8 @@ public class PatnerDoctorController {
 		int memberNo = mvo.getMemberNo();
 		
 		int total = bookingService.apptHistoryCount(cri, memberNo);
+		
+		model.addAttribute("clinicName", clinicName(request));
 		model.addAttribute("apptHistoryPage", bookingService.apptHistoryPage(cri, memberNo));
 		model.addAttribute("pageMaker", new PageVO(cri, total));
     
@@ -103,13 +106,17 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 나의 환자들 페이지_J29. J06
 	@GetMapping("doctor/patientList")
-	public String patientList(Model model, MemberBookingVO memberbookingvo, HttpServletRequest request) {
+	public String patientList(Model model, MemberBookingVO memberbookingvo, @ModelAttribute("cri") Criteria cri, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
 		int memberNo = mvo.getMemberNo();
+		
+		int total = memberService.patientListCount(cri, memberNo);
 	
 		model.addAttribute("member", mvo);
-		model.addAttribute("patientList", memberService.patientList(memberNo));
+		model.addAttribute("clinicName", clinicName(request));
+		model.addAttribute("patientListPage", memberService.patientListPage(cri, memberNo));
+		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
 		return "docDash/patientList";
 	}
@@ -117,20 +124,25 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 나의 후기 페이지_J29
 	@GetMapping("doctor/docReview")
-	public String docReview(Model model, CommentsVO commentsvo, HttpServletRequest request) {
+	public String docReview(Model model, CommentsVO commentsvo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
-
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
-		
 		int memberNo = mvo.getMemberNo();
 		
+		int total = commentsService.docReviewCount(cri, memberNo);
+		
+		model.addAttribute("clinicName", clinicName(request));
 		model.addAttribute("docReview", commentsService.docReview(memberNo));
+		model.addAttribute("docReviewPage", commentsService.docReviewPage(cri, memberNo));
+		model.addAttribute("docReviewPageOldest", commentsService.docReviewPageOldest(cri, memberNo));
+		model.addAttribute("pageMaker", new PageVO(cri,total));
 		
 		return "docDash/docReview";
 	}
 	
 	@GetMapping("doctor/docQna")
 	public String docQna(Model model, CscVO cscvo) {
+		
 		model.addAttribute("docQna", cscService.docQna());
 		
 		return "docDash/docQna";
@@ -188,6 +200,18 @@ public class PatnerDoctorController {
 	public String prescription(Model model,int bookingNo, PtInfoVO vo) {
 		vo.setBookingNo(bookingNo);
 		return "docDash/prescription";
+	}
+	
+	// 닥터 대쉬보드 병원 이름_J13
+	public String clinicName(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		int memberNo = mvo.getMemberNo();
+		
+		String clinicName = doctorService.clinicName(memberNo);
+		
+		return clinicName;
+		
 	}
 	
 	

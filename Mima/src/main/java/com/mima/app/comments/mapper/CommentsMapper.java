@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.session.domain.BookingVO;
 
 public interface CommentsMapper {
@@ -32,4 +33,14 @@ public interface CommentsMapper {
 	
 	//s:1013 게시글 댓글 닉네임 가져오기
 	public String getNickname(CommentsVO vo);
+
+	// 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13
+	public List<CommentsVO> docReviewPage(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
+	
+	// 닥터 대쉬보드 나의 후기 페이지 오래된순 페이징_J13
+	public List<CommentsVO> docReviewPageOldest(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
+	
+	// 닥터 대쉬보드 나의 후기 페이지 페이징_J13
+	public int docReviewCount(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
+
 }

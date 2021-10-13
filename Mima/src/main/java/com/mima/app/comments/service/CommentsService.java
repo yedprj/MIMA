@@ -30,4 +30,14 @@ public interface CommentsService {
 		
 		//s:1013 게시글 댓글 닉네임 가져오기
 		public String getNickname(CommentsVO vo);
+
+		// 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13
+		public List<CommentsVO> docReviewPage(Criteria cri, int memberNo);
+		
+		// 닥터 대쉬보드 나의 후기 페이지 오래된순 페이징_J13
+		public List<CommentsVO> docReviewPageOldest(Criteria cri, int memberNo);
+		
+		// 닥터 대쉬보드 나의 후기 페이지 페이징_J13
+		public int docReviewCount(Criteria cri, int memberNo);
+
 }

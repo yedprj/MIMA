@@ -7,31 +7,31 @@
 	WHERE BOOKING_NO = #{bookingNo}
 </select>
 
-<!-- 환자의 약배달 신청 등록 -->
-<insert id="deliveryInsert">
-	INSERT INTO MED_DELIVERY( 
-			MED_DELIVERY_NO, 
-			PHARMACY_NO, 
-			BOOKING_NO, 
-			DELIVERY_STATUS, 
-			PT_DELIVERY_AREA,
-			PT_DELIVERY_AREA2,
-			PT_DELIVERY_AREA3,
-			PT_NOTE,
-			PT_POSTCODE
-	) VALUES(
-			SEQ_MED_DELIVERY.NEXTVAL, 
-			#{pharmacyNo},
-			#{bookingNo},
-			'A',
-			#{ptDeliveryArea},
-			#{ptDeliveryArea2, jdbcType=VARCHAR },
-			#{ptDeliveryArea3, jdbcType=VARCHAR },
-			#{ptNote, jdbcType=VARCHAR},
-			#{ptPostcode}
-	)
-</insert>
+<select id="memDelivery" resultType="memDeliveryVO">
+	SELECT  M.PHARMACY_NO, 
+			MM.NAME, 
+			M.BOOKING_NO, 
+			B.CONSULT_DATE , 
+			M.PRESCRIPTION, 
+			P.DEL_ADDR, 
+			P.DEL_ADDR2, 
+			P.DEL_ADDR3,
+			P.DEL_POST_CODE, 
+			P.DEL_NOTE  
+	FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
+	WHERE B.BOOKING_NO = M.BOOKING_NO
+	AND B.PT_NO = P.MEMBER_NO
+	AND P.MEMBER_NO = MM.MEMBER_NO
+	AND M.PHARMACY_NO = #{pharmacyNo} 
+	AND M.DELIVERY_STATUS = 'n'
+	<![CDATA[ AND B.CONSULT_DATE <= TO_DATE(SYSDATE, 'YY/MM/DD') ]]>	
+</select>
 
+<update id="deliveryStatusUpdate">
+	UPDATE MED_DELIVERY
+		SET DELIVERY_STATUS = #{deliveryStatus} 
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
 
 
 

@@ -82,4 +82,23 @@ public class CommentsServiceImpl implements CommentsService {
 	public String getNickname(CommentsVO vo) {
 		return commentsMapper.getNickname(vo);
 	}
+
+	// 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13
+	@Override
+	public List<CommentsVO> docReviewPage(Criteria cri, int memberNo) {
+		return commentsMapper.docReviewPage(cri, memberNo);
+	}
+
+	// 닥터 대쉬보드 나의 후기 페이지 페이징 카운트_J13
+	@Override
+	public int docReviewCount(Criteria cri, int memberNo) {
+		return commentsMapper.docReviewCount(cri, memberNo);
+	}
+
+	// 닥터 대쉬보드 나의 후기 페이지 오래된순 페이징_J13
+	@Override
+	public List<CommentsVO> docReviewPageOldest(Criteria cri, int memberNo) {
+		return commentsMapper.docReviewPageOldest(cri, memberNo);
+	}
+	
 }

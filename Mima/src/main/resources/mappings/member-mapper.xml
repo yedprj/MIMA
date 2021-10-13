@@ -199,17 +199,121 @@
 	
 	<!-- 닥터 대쉬보드 나의 환자들 조회_J06 -->
 	<select id="patientList" resultType="MemberBookingVO">
-		SELECT DISTINCT 
-				M.NAME AS MNAME,
-				M.MEMBER_NO AS MMEMBERNO,
-				M.GENDER AS MGENDER,
-		        M.PHONE AS MPHONE,
-		        B.CONSULT_DATE AS BCONSULTDATE,
-		        B.CONSULT_TIME AS BCONSULTTIME
+		SELECT M.NAME AS MNAME,
+               M.MEMBER_NO AS MMEMBERNO,
+			   M.GENDER AS MGENDER,
+		       M.PHONE AS MPHONE,
+		       M.ADDR1 AS MADDR1,
+		       M.ADDR2 AS MADDR2,
+		       M.ADDR3 AS MADDR3,
+		       MAX(B.CONSULT_DATE) AS BCONSULTDATE
 		FROM MEMBER M JOIN BOOKING B
-		ON M.MEMBER_NO = B.PT_NO
+		ON (M.MEMBER_NO = B.PT_NO)
 		WHERE B.DOC_NO = #{memberNo}
+        AND B.BOOKING_STATUS = 'p'
+        GROUP BY M.NAME,
+                 M.MEMBER_NO,
+                 M.GENDER,
+                 M.PHONE,
+                 M.ADDR1,
+		         M.ADDR2,
+		         M.ADDR3
 	</select>
+	
+	<!-- 닥터 대쉬보드 나의 환자들 페이징_J13 -->
+	<select id="patientListCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM BOOKING B JOIN MEMBER M
+	    ON B.PT_NO = M.MEMBER_NO
+		WHERE
+		<if test ="cri.keyword != null">M.NAME LIKE '%'|| #{cri.keyword} || '%' AND</if>
+		B.PT_NO > 0
+		AND B.DOC_NO = #{memberNo}
+	</select>
+	
+	<!-- 닥터 대쉬보드 나의 환자들 페이징_J06 -->
+	<select id="patientListPage" resultType="MemberBookingVO">
+	
+		 SELECT *
+ 		 FROM( SELECT /*+INDEX_DESC(MEMBER MEMBER_PK) */
+        			  ROWNUM RN, A.*
+        	   FROM (SELECT M.NAME AS MNAME,
+			                M.MEMBER_NO AS MMEMBERNO,
+			                M.GENDER AS MGENDER,
+			                M.PHONE AS MPHONE,
+			                M.ADDR1 AS MADDR1,
+			                M.ADDR2 AS MADDR2,
+			                M.ADDR3 AS MADDR3,
+               				MAX(B.CONSULT_DATE) AS BCONSULTDATE
+                  	 FROM MEMBER M JOIN BOOKING B
+                  	 ON (M.MEMBER_NO = B.PT_NO)
+                  	 WHERE B.BOOKING_STATUS = 'p'
+                  	 AND DOC_NO = #{memberNo}
+                  	 GROUP BY M.NAME,
+                              M.MEMBER_NO,
+                              M.GENDER,
+                              M.PHONE,
+                              M.ADDR1,
+                              M.ADDR2,
+                              M.ADDR3) A
+        	   WHERE <if test ="cri.keyword != null">
+			  			MNAME LIKE '%'|| #{cri.keyword} || '%' AND
+			  		</if>
+        	   		 <![CDATA[
+        	   		 ROWNUM <= #{cri.pageNum} * #{cri.amount} 
+        	   ORDER BY MNAME)
+		 WHERE ROWNUM > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	
+	<!-- 페이징 -->
+	<!-- trim 한 것 따로 빼 낸것... -->
+		<sql id="criteria">
+			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+				<foreach collection="typeArr" item="type">
+					<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'T'.toString()">
+								TITLE LIKE '%'|| #{keyword} || '%'
+							</when>
+	
+							<when test="type =='C'.toString()">
+								CONTENT LIKE '%'|| #{keyword} || '%'
+							</when>
+	
+							<when test="type =='W'.toString()">
+								WRITER LIKE '%'|| #{keyword} || '%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		</sql>
+		
+		<sql id="criteriaPatientList">
+			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+				<foreach collection="#{cri.typeArr}" item="type">
+					<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+					<trim prefix="or">
+						<choose>
+							<when test="type == 'T'.toString()">
+								TITLE LIKE '%'|| #{cri.keyword} || '%'
+							</when>
+	
+							<when test="type =='C'.toString()">
+								CONTENT LIKE '%'|| #{cri.keyword} || '%'
+							</when>
+	
+							<when test="type =='W'.toString()">
+								WRITER LIKE '%'|| #{cri.keyword} || '%'
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		</sql>
+	<!-- total count -->
+	<!-- 페이징 end -->
 	
 	<!-- 닥터 진료내역 페이지 선택한 환자의 진료노트 조회_J10 -->
 	<select id="getCnote" resultType="PtInfoVO">
@@ -226,7 +330,7 @@
 		       B.SUBJECT,
 		       C.PT_DIAGNOSIS,
 		       C.PT_ASSESSMENT,
-		       P.PAST_HX
+		       C.PT_SYMPTOM
 		FROM MEMBER M, BOOKING B, CONSULTATION C, PATIENTS P
 		WHERE M.MEMBER_NO = B.PT_NO
 		AND   B.BOOKING_NO = C.BOOKING_NO

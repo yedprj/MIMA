@@ -56,7 +56,7 @@ public class AdminController {
 	
 	//e.29
 	//K 10/06 수정
-	//관리자 회원정보조회(환자)
+	//관리자 회원정보조회(환자,의사,약국)
 	@GetMapping("/adlist")
 	public String list(Model model, @ModelAttribute("cri") Criteria cri) {
 		int total = patientsService.getTotalPatientsCount(cri);
@@ -77,7 +77,11 @@ public class AdminController {
 	//e.29
 	//관리자 메인페이지
 	@GetMapping("/adMain")
-	public String adMain() { 
+	public String adMain(Model model) { 
+		
+		//관리자 회원정보조회 토탈카운트 e.13
+		model.addAttribute("getTotalCount",patientsService.getTotalCount());
+				
 		return "admin/adMain";
 	}
 	

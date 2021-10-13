@@ -22,6 +22,9 @@ public interface PatientsService {
 	//s:1004 자가진단표
 	public int updateAx(PatientsVO vo);
 
+	//관리자 회원정보조회 토탈카운트 e.13
+	public int getTotalCount();
+	
 	//관리자 회원정보조회(환자) e.29
 	public List<PatientsVO> getptList();
 	
@@ -86,7 +89,7 @@ public interface PatientsService {
 	public int getTotalPtqCount(Criteria cri);
 	
 	//환자 대쉬보드 프로필 관리 한건조회 e.12
-	public PatientsVO ptSelectOne(int memberNo);
+	public MemberVO ptSelectOne(int memberNo);
 	
 	//환자 대쉬보드 프로필 수정 e.12
 	public int ptprofileUpdate(MemberVO vo);
