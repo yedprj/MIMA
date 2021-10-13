@@ -332,13 +332,20 @@ public class PatnerDoctorController {
 			docVo = doctorService.getDocDetail(docVo);
 			System.out.print("테이블에 값 잇음");
 			model.addAttribute("item", docVo);
-			return "/docDash/docProfileDetail";
+			return "/docList/docProfileDetail";
 		}else {
 			System.out.print("테이블에 값 없음 노노 ");
 			model.addAttribute("message", "No details saved for this doctor!");
 			return "/tiles/errorPage";
 		}
 
+	}
+	
+	//p.10.13 의사 경력 등록
+	@PostMapping("docExperienceInsert")
+	public int docExperienceInsert() {
+		
+		return 1;
 	}
 	
 }

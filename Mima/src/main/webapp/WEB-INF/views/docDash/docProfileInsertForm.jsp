@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<style>
+.good-date {
+	height: 44px;
+    border: 1px solid #e5eded !important;
+    border-radius: 10px;
+    padding: 24px 20px;
+    color: #061a3a;
+    font-size: 14px;
+    font-weight: 500;
+}
+</style>
  <!-- s:1005 의사 프로파일 인서트 폼 -->
    <div class="boxed_wrapper">
 
@@ -62,6 +72,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="right-panel">
                 <div class="content-container">
                     <div class="outer-container">
@@ -191,63 +202,71 @@
 	                                <div class="title-box">
 	                                    <h3>Experience</h3>
 	                                </div>
-	                                <div class="inner-box">
-	                                        <div class="row clearfix" id="addEpxDiv">
-	                                            <!-- 경력1 -->
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>병원이름</label>
-	                                                <input type="text" id="title" name="title" required="">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>직위</label>
-	                                                <input type="text" id="detail" name="detail" required="">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>언제부터</label>
-	                                                <input type="date" id="fromDate" name="fromDate" required="" style="cursor:pointer">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>언제까지</label>
-	                                                <input type="date" id="toDate" name="toDate" required=""style="cursor:pointer">
-	                                            </div>
-	                                            <!-- 경력2 -->
-	                                            <!-- <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>병원이름</label>
-	                                                <input type="text" id="title2" name="title2" required="">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>직위</label>
-	                                                <input type="text" id="detail2" name="detali2" required="">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>언제부터</label>
-	                                                <input type="date" id="fromDate2" name="fromDate2" required=""style="cursor:pointer">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>언제까지</label>
-	                                                <input type="date" id="toDate2" name="toDate2" required=""style="cursor:pointer">
-	                                            </div> -->
-	                                            <!-- 경력3 -->
-	                                            <!-- <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>병원이름</label>
-	                                                <input type="text" id="title3" name="title3" required="">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>직위</label>
-	                                                <input type="text" id="detail3" name="detali3" required="">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>언제부터</label>
-	                                                <input type="date" id="fromDate3" name="fromDate3" required="" style="cursor:pointer">
-	                                            </div>
-	                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-	                                                <label>언제까지</label>
-	                                                <input type="date" id="toDate3" name="toDate3" required="" style="cursor:pointer">
-	                                            </div> -->
-	                                        </div>
-	                                    
+	                                
+									<div class="inner-box">
+										<div class="row clearfix" id="addEpxDiv">
+											<!-- 경력1 -->
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>병원이름</label>
+                                                <input type="text" id="title" name="title" required="required">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>직위</label>
+                                                <input type="text" id="detail" name="detail" required="required">
+                                            </div>
+                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                                <label>언제부터</label>
+                                                <input type="date" class="good-date" id="fromDate" name="fromDate" required="required" style="cursor:pointer">
+                                            </div>
+                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+                                                <label>언제까지</label>
+                                                <input type="date" class="good-date" id="toDate" name="toDate" required="required" style="cursor:pointer">
+                                            </div>
+                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group mt-4">
+                                            	<button id="insert" name="insert" class="theme-btn-one mt-3" style="padding:9px 30px; box-shadow: none;">등록</button>
+                                            	<button id="delete" name="delete" class="theme-btn-one mt-3" style="padding:9px 30px; box-shadow: none;">삭제</button>
+                                            </div>
+                                            
+
+											<!-- 경력2 -->
+                                            <!-- <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>병원이름</label>
+                                                <input type="text" id="title2" name="title2" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>직위</label>
+                                                <input type="text" id="detail2" name="detali2" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>언제부터</label>
+                                                <input type="date" id="fromDate2" name="fromDate2" required=""style="cursor:pointer">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>언제까지</label>
+                                                <input type="date" id="toDate2" name="toDate2" required=""style="cursor:pointer">
+                                            </div> -->
+	                                            
+											<!-- 경력3 -->
+                                            <!-- <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>병원이름</label>
+                                                <input type="text" id="title3" name="title3" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>직위</label>
+                                                <input type="text" id="detail3" name="detali3" required="">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>언제부터</label>
+                                                <input type="date" id="fromDate3" name="fromDate3" required="" style="cursor:pointer">
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                                <label>언제까지</label>
+                                                <input type="date" id="toDate3" name="toDate3" required="" style="cursor:pointer">
+                                            </div> -->
+										</div>
 	                                </div>
 	                            </div>
+	                            
 	                             <div class="single-box">
 	                                <div class="title-box">
 	                                    <h3>About Me</h3>
@@ -478,6 +497,29 @@
     		}
     	});//end of attachment btn delete event
     	
+    	$('#insert').on('click', function() {
+    		var title = $('#title').val();
+    		var detail = $('#detail').val();
+    		var fromDate = $('#fromDate').val();
+    		var toDate = $('#toDate').val();
+    		var memberNo = ${session.memberNo};
+    		
+    		$.ajax({
+    			url : '',
+    			type : 'post',
+    			data : {title : title,
+    					detail : detail,
+    					fromDate : fromDate,
+    					toDate : toDate,
+    					memberNo : memberNo},
+    			success : function(data){
+    				console.log(data);
+    			},
+    			error : function(reject) {
+    				console.log(reject);
+    			}
+    		});
+    	});
     	
     	
     });/* 페이지로드이벤트 끝 */
