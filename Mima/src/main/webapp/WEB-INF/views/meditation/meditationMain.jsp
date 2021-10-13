@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
+
  <!--Page Title-->
         <section class="page-title centred bg-color-1">
             <div class="pattern-layer">
@@ -22,10 +23,11 @@
         </section>
         <!--End Page Title-->
 
+ 
  <!--  추천명상 들어갈 자리!!!!-->
-        <section class="team-style-two bg-color-3">
+        <section class="team-style-two">
             <div class="auto-container">
-                <div> XX님을 위한 오늘의 추천명상</div>
+                <div style="margin-bottom:10px"><p style="font-size:30px"> ${session.nickname }님을 위한 오늘의 추천명상</p></div>
                 <div class="row clearfix">
                 	<c:forEach var="medit" items="${list }">
                     <div class="col-lg-3 col-md-6 col-sm-12 team-block">
@@ -61,7 +63,6 @@
         </section>
         <!-- End of 추천명상 들어갈 자리!!!! -->
         
-        
         <!--카테고리별 명상 -->
         <section class="clients-section bg-color-2">
             <div class="pattern-layer">
@@ -81,7 +82,8 @@
                 </div>
             </div>
         </section>
-        <!-- End of 카테고리별 명상 -->
+<!-- End of 카테고리별 명상 -->
+       
         
         
          <!-- 명상에 관해서 -->
@@ -96,13 +98,9 @@
                                     <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-38.png);"></div>
                                     <div class="pattern-3"></div>
                                 </div>
-                                <figure class="image image-1 paroller-2"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/stones.jpg" alt=""></figure>
+                                <figure class="image image-1 paroller-2" style="transform: translateY(-105px) translateX(-150px);"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/stones.jpg" alt=""></figure>
                                 <figure class="image image-2 paroller"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/monk.jpg" alt=""></figure>
-                                <div class="image-content">
-                                    <figure class="icon-box"><img src="${pageContext.request.contextPath}/resources/assets/images/medit/미마명상.png" alt=""></figure>
-                                    <span>지금 시작해 보세요</span>
-                                    <h4>명상</h4>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

@@ -26,4 +26,9 @@ public class MeditationVO {
 	
 	//게시글 하나에 들어가있는 첨부파일
 	private MeditAttachVO attachFile;
+	
+	//s:1013 로그인세션멤버번호담기
+	private int memberNo;
+	//s:1013 좋아요 1 또는 널!!!!
+	private int likesNo;
 }

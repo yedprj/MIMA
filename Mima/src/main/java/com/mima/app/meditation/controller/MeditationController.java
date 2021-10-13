@@ -3,6 +3,9 @@ package com.mima.app.meditation.controller;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
@@ -27,6 +30,7 @@ import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.meditation.domain.MeditationVO;
 import com.mima.app.meditation.service.MeditationService;
+import com.mima.app.member.domain.MemberVO;
 
 import lombok.extern.java.Log;
 
@@ -85,8 +89,15 @@ public class MeditationController {
 
 	// 단건조회-디테일 페이지
 	@GetMapping("/meditationDetail")
-	public void meditationDetail(Model model, MeditationVO vo, @ModelAttribute("cri") Criteria cri) {
-		System.out.println("before call read"+vo);
+	public void meditationDetail(Model model, MeditationVO vo, @ModelAttribute("cri") Criteria cri, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();	
+		MemberVO mvo = (MemberVO) session.getAttribute("session");	
+		log.info("dddd"+mvo.toString());
+		int memberNo = mvo.getMemberNo();
+		
+		log.info("before call read"+vo.toString());
+		vo.setMemberNo(memberNo);
 		vo = meditationService.read(vo);
 		System.out.println("after call read"+vo);
 		String uuid = vo.getAttachFile().getUuid();
@@ -101,9 +112,9 @@ public class MeditationController {
 	@GetMapping(value = "/video/{name}")
 	public ResponseEntity<ResourceRegion> getVideo(@RequestHeader HttpHeaders headers, @PathVariable String name)
 			throws IOException {
-		log.info("VideoController.getVideo");
+		//log.info("VideoController.getVideo");
 		UrlResource video = new UrlResource("file:c:/upload/" + name + ".mp4");
-		System.out.println(video+"명상컨트롤러 비디오");
+		//System.out.println(video+"명상컨트롤러 비디오");
 		ResourceRegion resourceRegion;
 		final long chunkSize = 1000000L;
 		long contentLength = video.contentLength();

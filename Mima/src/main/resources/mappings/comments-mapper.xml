@@ -7,6 +7,10 @@
 	WHERE CNO =#{cno}
 	</select>
 	
+	<select id="getNickname" resultType="String">
+	SELECT NICKNAME FROM MEMBER WHERE MEMBER_NO = #{commentWriterNo}
+	</select>
+	
 	<insert id="insert">
 		<selectKey keyProperty="cno" resultType="int" order="BEFORE">
 			SELECT SEQ_COMMENTS.NEXTVAL FROM DUAL
@@ -45,13 +49,14 @@
 	<!-- 한 명상글에 달린 댓글 리스트 -->
 	<select id="getList" resultType="CommentsVO">
 		select CMAIN_CATEGORY,
-				CMAIN_NO,
-				COMMENT_WRITER_NO,
-				CONTENTS,
-				REVIEW_POINT,
-				REG_DATE,
-				EDIT_DATE,
-				CNO
+				a.CMAIN_NO,
+				a.COMMENT_WRITER_NO,
+				a.CONTENTS,
+				a.REVIEW_POINT,
+				a.REG_DATE,
+				a.EDIT_DATE,
+				a.CNO,
+                b.NICKNAME
 			from (
 				SELECT /* + INDEX(COMMENTS, IDX_COMMENTS) */
 							ROWNUM RN, CMAIN_CATEGORY, CMAIN_NO, 
@@ -61,7 +66,8 @@
 							WHERE CMAIN_CATEGORY =  #{cmainCategory} AND CMAIN_NO = #{cmainNo}
 								AND CNO >0
 								<![CDATA[ AND ROWNUM <= #{cri.pageNum} * #{cri.amount}]]>
-								) a
+								) a JOIN MEMBER b
+                                ON (b.MEMBER_NO = a.COMMENT_WRITER_NO)
 								WHERE RN > (#{cri.pageNum}-1) *#{cri.amount}
 			
 	

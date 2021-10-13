@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <!--page-title-two-->
 <section class="page-title-two">
     <div class="title-box centred bg-color-2">
@@ -56,7 +57,7 @@
                                     <li><img src="${pageContext.request.contextPath}/resources/assets/images/medit/미마명상.png" alt="">
                                     	${item.teacherName }</li>
                                     <li><fmt:formatDate value="${item.regDate }" pattern="yyyy-MM-dd" /></li>
-                                    <li>Likes: ${item.meditationLike }</li>
+                                    <li id="likesNum">Likes: ${item.meditationLike }</li>
                                 </ul>
                                 <p>${item.contents }</p>
                                
@@ -82,12 +83,12 @@
                                 <input type="hidden" name="cmainNo" value="${item.meditationNo }">
                                 <input type="hidden" name="cmainCategory" value="medit">
                                 <!-- 세션에서 멤버 넘버 가져와서 넣어줄것 -->
-                                <input type="hidden" name="commentWriterNo" value="1">
+                                <input type="hidden" name="commentWriterNo" value="${session.memberNo }">
                                 
                                 <div class="col-lg-4 col-md-4 col-sm-12 form-group">
                                 
                                 <!-- 세션에서 이름 가져와서 넣어줄 것임 -->
-                                    <input type="text" name="writer" value="김밤빵Test" disabled>
+                                    <input type="text" name="writer" value="${session.name }" disabled>
                                 </div>
                                 
                                 <div class="col-lg-12 col-md-12 col-sm-12 form-group">
@@ -105,10 +106,10 @@
                  
                  <!-- 코멘트 코멘트  -->
                     <div class="comment-box">
-                        <div class="group-titleC">
+                        <div class="group-title">
                             <h3>Comments</h3>
                         </div>
-                        <div class="comment">
+                        <div class="comment-inner">
 	                        <ul class="chat">
 		                        <!-- 댓글 들어가는 부분~~ -->
 	                        </ul>
@@ -144,8 +145,8 @@
             	<input type="hidden" id="hiddenCno" name='cno'>
             	<div class="form-group">
 	                <label>댓글 작성자</label> 
-	                <input class="form-control" name='commentWriter' value='김밤빵이' disabled>
-	                <input type="hidden" class="form-control" name='commentWriterNo' value='1'>
+	                <input class="form-control" name='commentWriter' value='${session.name }' disabled>
+	                <input type="hidden" class="form-control" name='commentWriterNo' value='${session.memberNo }'>
               	</div>
               
               <div class="form-group">
@@ -188,6 +189,12 @@ let str = "";
 $(function(){
 	//댓글 페이지 링크 클릭시 댓글 제일 위로 이동
 	var offset = $('#endOfCForm').offset();
+	
+	//s:1013 페이지 불러 왔을 때 사용자가 명상 좋아요 한 수가 1이면 하트 색칠
+	if(${item.likesNo} ==1){
+	
+		$('#likeBtn').css("color", "rgb(255, 51, 51)");
+	}
 	
 	//페이지 로드시 댓글 리스트 불러오기
 	showList(${cri.pageNum});
@@ -279,20 +286,30 @@ $(function(){
 	   
 	   
 	   function makeLi(data) {
-		   return '<li>'
+		   let regDate = new Date(data.regDate);
+		   let nick = "${session.nickname}";
+		   var str = '<li class="comment">'
 		       +'<figure class="thumb-box">'
-		       +'    <img src="assets/images/news/comment-1.png" alt="">'
+		       +'    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/미마명상.png" alt="">'
 		       +'</figure>'
 		       +'<div class="comment-inner">'
-		       +'    <div class="comment-info">'
-			   +'		<h5>'+data.commentWriterNo+'</h5>'
-		       +'        <span class="comment-time">'+data.regDate+'</span>'
+		       +'    <div class="comment-info d-flex">'
+			   +'		<div class="mr-auto p-2"><h5>'+data.nickname+'</h5></div>'
+		       +'        <div class="p-2"><span class="comment-time">'+regDate.toLocaleDateString()+'</span></div>'
 		       +'     </div>'
-		       +'     <p>'+data.contents+'</p>'
-		       +'  		<a style="float:right; background-color:#fe5948; border: none; border-radius: 30px;" href="'+data.cno+'" id="replyDelete" class="btn btn-danger">삭제</a>'	
-		       +'       <a style="float:right; background-color:#39cabb; border: none; border-radius: 30px; margin-right:10px" href="'+data.cno+'" id="replyEdit" class="btn btn-info">수정</a>'
-		       +'</div>'
-		   	   +'</li>'
+		       +'     <div class="d-flex">'
+		       +'     <div class="mr-auto p-2"><p style="font-size:20px">'+data.contents+'</p></div>';
+		   	   
+			   if(nick == data.nickname){
+				   str += '<div class="p-2"><a style="float:right; background-color:#39cabb; border: none; border-radius: 30px; margin-right:10px" href="'+data.cno+'" id="replyEdit" class="btn btn-info">수정</a></div>'	
+			       +'<div class="p-2"><a style="float:right; background-color:#fe5948; border: none; border-radius: 30px;" href="'+data.cno+'" id="replyDelete" class="btn btn-danger">삭제</a></div>';
+	
+			   }
+			   str+= '</div>'
+				   +'     </div>'
+		   	   		+'</li>';
+			  
+			   	return str;
 		   }
 
 	   
@@ -365,7 +382,7 @@ $(function(){
 			var category=cmainCategory;
 			var postNo = cmainNo;
 			/* 멤버번호는 로그인 세션에서 가져올거임 */
-			var memberNo = 1;
+			var memberNo = ${session.memberNo};
 			var likeAjaxUrl;
 							
 			if ($(heart).css("color") == "rgb(255, 51, 51)") {
@@ -376,7 +393,7 @@ $(function(){
 					dataType : "json",
 					data : JSON.stringify({
 						likeMainNo : postNo,
-						category:category,
+						category: category,
 						memberNo : memberNo
 					}),
 					 beforeSend : function(xhr) {
@@ -384,8 +401,11 @@ $(function(){
 						},
 					contentType : 'application/json',
 					success : function(data) {
-						
-					}// success end
+						$('#likeBtn').css("color", "rgb(237, 222, 222)");
+					},// success end
+					error :function(err){
+						console.err(err);
+					}
 				}); //  ajax end
 				
 			} else {
@@ -396,7 +416,7 @@ $(function(){
 					dataType : "json",
 					data : JSON.stringify({
 						likeMainNo : postNo,
-						category:category,
+						category: category,
 						memberNo : memberNo
 					}),
 					 beforeSend : function(xhr) {
@@ -411,8 +431,7 @@ $(function(){
 				}); //  ajax end
 			}
 			
-			console.log(likeAjaxUrl);
-			console.log("===========좋아요 수==========");
+			
 			$.ajax({
 				url : likeAjaxUrl,
 				method : "put",
@@ -427,10 +446,13 @@ $(function(){
 				success : function() {
 					if (likeAjaxUrl == "updateLike") {
 						alert("이 명상을 좋아합니다!");
+						let num=${item.meditationLike }
+						$('#likesNum').text("Likes : "+(${item.meditationLike }+1));
 						$(heart).css("color", "rgb(255, 51, 51)");
 					} else {
 						alert("좋아요 취소 ㅠㅠ");
-						$(heart).css("color", "	rgb(237, 222, 222)");
+						$('#likesNum').text("Likes : "+(${item.meditationLike }-1));
+						$(heart).css("color", "rgb(237, 222, 222)");
 					}
 				}// success end
 			})

@@ -16,9 +16,9 @@ import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 
-import oracle.jdbc.proxy.annotation.Post;
+import lombok.extern.java.Log;
 
-
+@Log
 @RestController
 @RequestMapping("/replies/*")
 public class CommentsController {
@@ -35,7 +35,9 @@ public class CommentsController {
 		@GetMapping("/{cno}")
 		public CommentsVO read(CommentsVO vo){
 			
-		return commentsService.read(vo);
+			vo=commentsService.read(vo);
+			
+		return vo;
 		}
 		//등록
 		@PostMapping("/") //post: 파라미터 질의문자열(query string)->?id=100&pw=111&name=choi
