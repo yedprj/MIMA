@@ -24,34 +24,34 @@
 									<form action="add-listing.html" method="post">
 										<div class="row clearfix">
 											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고당한 원글번호</label> <input type="text"
-													value="${report.reportNo }" required="">
+												<label>신고당한 원글번호</label> 
+												<input type="text" value="${report.reportNo }" required="">
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고한 회원번호</label> <input type="text"
-													value="${report.memberNo }" required="">
+												<label>신고한 회원번호</label> 
+												<input type="text" value="${report.memberNo }" required="">
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고당한 회원번호</label> <input type="text"
-													value="${report.postNo }" required="">
+												<label>신고당한 회원번호</label> 
+												<input type="text" value="${report.postNo }" required="">
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고한 회원아이디</label> <input type="text"
-													value="${report.rmemberId }" required="">
+												<label>신고한 회원아이디</label> 
+												<input type="text" value="${report.rmemberId }" required="">
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고당한 회원아이디</label> <input type="text"
-													value="${report.reportId }" required="">
+												<label>신고당한 회원아이디</label> 
+												<input type="text" value="${report.reportId }" required="">
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고일</label> <input type="text"
-													placeholder="<fmt:formatDate value="${report.reportDate }"
+												<label>신고일</label> 
+												<input type="text" placeholder="<fmt:formatDate value="${report.reportDate }"
 														pattern="yy-MM-dd" />"
 													required="">
 											</div>
 											<div class="col-lg-12 col-md-12 col-sm-12 form-group">
-												<label>신고글</label> <input type="text" value="신고내역"
-													required="">
+												<label>신고글</label> 
+												<input type="text" value="신고내역" required="">
 											</div>
 										</div>
 									</form>

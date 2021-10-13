@@ -34,6 +34,12 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.updateAx(vo);
 	}	
 	
+	//관리자 회원정보조회 토탈카운트 e.13
+	@Override
+	public int getTotalCount() {
+		return patientsMapper.getTotalCount();
+	}
+	
 	//관리자 회원정보조회(환자) e.29
 	@Override
 	public List<PatientsVO> getptList() {
@@ -163,7 +169,7 @@ public class PatientsServiceImpl implements PatientsService {
 	
 	//환자 대쉬보드 프로필 관리 한건조회 e.12
 	@Override
-	public PatientsVO ptSelectOne(int memberNo) {
+	public MemberVO ptSelectOne(int memberNo) {
 		return patientsMapper.ptSelectOne(memberNo);
 	}
 	
@@ -191,6 +197,7 @@ public class PatientsServiceImpl implements PatientsService {
 		// TODO Auto-generated method stub
 		return patientsMapper.ptDeliveryUpdate(vo);
 	}
+	
 
 	
 }
