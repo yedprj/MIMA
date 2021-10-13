@@ -23,6 +23,10 @@ th, td {
 .cusBtn {
 	padding: 9px 28px;
 }
+
+.doctors-appointment .doctors-table tr td .print {
+	margin-right: 80px;
+}
 </style>
 
 <!-- doctors-dashboard -->
@@ -63,7 +67,7 @@ th, td {
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${member.name}</h3>
-						<p>MDS - Periodontology</p>
+						<p>${clinicName}</p>
 					</div>
 				</div>
 			</div>
@@ -79,8 +83,7 @@ th, td {
 					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 					<li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필
 							관리</a></li>
-					<li><a href="docProfileForm"><i class="fas fa-user"></i>진료
-							관리</a></li>
+					<li><a href="docProfileForm"><i class="fas fa-stethoscope"></i>진료관리</a></li>
 					<li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호
 							변경</a></li>
 					<li><a href="logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
@@ -141,7 +144,7 @@ th, td {
 										<i class="icon-Dashboard-2"></i>
 									</div>
 									<h3>${countDocReview}</h3>
-									<p>나의 리뷰 수</p>
+									<p>나의 후기 수</p>
 								</div>
 							</div>
 						</div>
@@ -157,7 +160,7 @@ th, td {
 					</div>
 					<div class="doctors-list">
 						<div class="table-outer">
-							<table class="doctors-table">
+							<table class="doctors-table table-hover">
 								<thead class="table-header">
 									<tr>
 										<th>환자명</th>
@@ -221,7 +224,7 @@ th, td {
 						</div>
 					</div>
 					<div class="doctors-list">
-						<div class="table-outer">
+						<div class="table-outer table-hover">
 							<table class="doctors-table">
 								<thead class="table-header">
 									<tr>
@@ -230,7 +233,6 @@ th, td {
 										<th>진료일</th>
 										<th>예약일</th>
 										<th>결제금액</th>
-										<th></th>
 										<th></th>
 									</tr>
 								</thead>

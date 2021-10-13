@@ -168,6 +168,11 @@
    			WHERE MEMBER_NO=#{memberNo}
 		</select>
 
-
+	<!-- 닥터 대쉬보드 병원 이름_J13 -->
+	<select id="clinicName" resultType="string">
+		SELECT CLINIC_INFO
+		FROM PARTNER_DOCTOR
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
 
 </mapper>

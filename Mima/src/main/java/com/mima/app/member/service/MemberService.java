@@ -2,8 +2,10 @@ package com.mima.app.member.service;
 
 import java.util.List;
 
+import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
+import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.domain.PtInfoVO;
 
 public interface MemberService {
@@ -57,6 +59,12 @@ public interface MemberService {
 	
 	// 닥터 나의 환자들 조회_J06
 	public List<MemberBookingVO> patientList(int memberNo);
+	
+	// 닥터 대쉬보드 나의 환자들 페이징_J13
+	public List<MemberBookingVO> patientListPage(Criteria cri, int memberNo);
+	
+	// 닥터 대쉬보드 나의 환자들 페이징 데이터 수 전체조회_J13
+	public int patientListCount(Criteria cri, int memberNo);
 	
 	// 닥터 진료내역 페이지 선택한 환자의 진료노트 조회_J10
 	public PtInfoVO getCnote(PtInfoVO vo);
