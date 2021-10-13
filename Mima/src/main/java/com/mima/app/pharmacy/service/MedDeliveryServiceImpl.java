@@ -27,4 +27,10 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 		return deliveryMapper.memDelivery(pharmacyNo);
 	}
 
+	// K.10/13 약배달 상태 변경
+	@Override
+	public int deliveryStatusUpdate(MedDeliveryVO vo) {
+		return deliveryMapper.deliveryStatusUpdate(vo);
+	}
+
 }

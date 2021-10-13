@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
+import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
@@ -58,6 +59,13 @@ public class PartnerPharmacyController {
 		int memberNo = vo.getMemberNo();
 		model.addAttribute("profile", partPhaService.selectOne(memberNo));
 		model.addAttribute("delivery", deliverSerive.memDelivery(vo.getMemberNo()));
+	}
+	
+	// 약배달 상태 업데이트
+	@PostMapping("/deliveryStatusUpdate")
+	@ResponseBody
+	public int deliveryStatusUpdate(MedDeliveryVO vo) {
+		return deliverSerive.deliveryStatusUpdate(vo);
 	}
 	
 	@GetMapping("/deliveryRegCancel")

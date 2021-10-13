@@ -23,8 +23,15 @@
 	AND B.PT_NO = P.MEMBER_NO
 	AND P.MEMBER_NO = MM.MEMBER_NO
 	AND M.PHARMACY_NO = #{pharmacyNo} 
-	AND M.DELIVERY_STATUS = 's'	
+	AND M.DELIVERY_STATUS = 'n'
+	<![CDATA[ AND B.CONSULT_DATE <= TO_DATE(SYSDATE, 'YY/MM/DD') ]]>	
 </select>
+
+<update id="deliveryStatusUpdate">
+	UPDATE MED_DELIVERY
+		SET DELIVERY_STATUS = #{deliveryStatus} 
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
 
 
 

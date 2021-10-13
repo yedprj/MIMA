@@ -12,4 +12,7 @@ public interface MedDeliveryService {
 	
 	// K.10/09 약배달 신청 한건 조회
 	public MedDeliveryVO selectOne(int bookingNo);
+	
+	// K.10/13 약배달 상태 변경
+	public int deliveryStatusUpdate(MedDeliveryVO vo);
 }
