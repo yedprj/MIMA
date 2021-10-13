@@ -287,187 +287,40 @@
 </section>
 <!-- doctors-dashboard -->
  <!-- appointment-section -->
-        <section class="appointment-section bg-color-3">
+ 		<div class="modal">
+        <section class="modal_content appointment-section bg-color-3">
             <div class="auto-container">
                 <div class="row clearfix">
-                    <div class="col-lg-8 col-md-12 col-sm-12 left-column">
+                    <div class="col-lg-12 col-md-12 col-sm-12 left-column">
                         <div class="appointment-information">
                             <div class="title-box">
-                                <h3>Appointment Information</h3>
+                                <h3>약배달 취소건</h3>
                             </div>
                             <div class="inner-box">
-                                <div class="single-box">
-                                    <h3>Are You a New Patient?</h3>
-                                    <div class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" checked="">
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Yes i have seen this doctor before</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input">
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">No i am a new patient</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="single-box">
-                                    <h3>Please Specify Your Sex</h3>
-                                    <div class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input" checked="">
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Male</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="custom-check-box">
-                                        <div class="custom-controls-stacked">
-                                            <label class="custom-control material-checkbox">
-                                                <input type="checkbox" class="material-control-input">
-                                                <span class="material-control-indicator"></span>
-                                                <span class="description">Female</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="information-form">
-                                    <h3>Your Information:</h3>
+                                    <h3>신청한 약배달은 취소시 신청한 고객님께 메세지와 함께 전송됩니다:</h3>
                                     <form action="book-appointment.html" method="post">
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>Your name</label>
-                                                <input type="text" name="name" placeholder="Enter your name" required="">
+                                                <label>취소 신청 약국</label>
+                                                <input type="text" name="name" value="${profile.pharmacyInfo}">
+                                                <input type="hidden" name="pharmacyNo"  >
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>Your email</label>
-                                                <input type="email" name="email" placeholder="Enter your email" required="">
+                                                <label>고객 성함</label>
+                                                <input type="text" name="customerName" >
+                                                <input type="hidden" name="bookingNo" >
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                                <label>Address</label>
-                                                <input type="text" name="address" placeholder="Address" required="">
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                                <label>City</label>
-                                                <select class="wide">
-                                                   <option data-display="Select City">Select City</option>
-                                                   <option value="1">Select Text 01</option>
-                                                   <option value="2">Select Text 02</option>
-                                                   <option value="3">Select Text 03</option>
-                                                   <option value="4">Select Text 04</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                                <label>State</label>
-                                                <select class="wide">
-                                                   <option data-display="Select State">Select State</option>
-                                                   <option value="1">Select Text 01</option>
-                                                   <option value="2">Select Text 02</option>
-                                                   <option value="3">Select Text 03</option>
-                                                   <option value="4">Select Text 04</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                                <label>Zip</label>
-                                                <input type="text" name="zip" placeholder="Zip" required="">
-                                            </div>
-                                            <div class="col-lg-6 col-md-12 col-sm-12 form-group">
-                                                <label>Birthday</label>
-                                                <input type="text" name="birthday" placeholder="Date" required="">
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                                <label>Note to the doctor (optional)</label>
-                                                <textarea name="message" placeholder="Write your not..."></textarea>
+                                                <label>(취소사유)</label>
+                                                <textarea name="message" placeholder="취소하는 구체적인 이유를 고객님께 전달하세요..."></textarea>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="payment-information">
-                                    <h3>Payment Information:</h3>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 single-column">
-                                            <div class="form-group">
-                                                <label>Name on card</label>
-                                                <input type="text" name="card_name" placeholder="Adam Smith" required="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12 col-sm-12 single-column">
-                                            <div class="form-group">
-                                                <label>Card number</label>
-                                                <input type="text" name="card_number" placeholder="xxxx-xxxx-xxxx-xxxx" required="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12 col-sm-12 single-column">
-                                            <div class="form-group">
-                                                <label></label>
-                                                <ul class="card-list clearfix">
-                                                    <li><a href="book-appointment.html"><img src="assets/images/resource/card-1.png" alt=""></a></li>
-                                                    <li><a href="book-appointment.html"><img src="assets/images/resource/card-2.png" alt=""></a></li>
-                                                    <li><a href="book-appointment.html"><img src="assets/images/resource/card-3.png" alt=""></a></li>
-                                                    <li><a href="book-appointment.html"><img src="assets/images/resource/card-4.png" alt=""></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12 col-sm-12 single-column">
-                                            <div class="form-group">
-                                                <label>Expiration date</label>
-                                                <input type="text" name="expiration_date" placeholder="mm/yy" required="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12 col-sm-12 single-column">
-                                            <div class="form-group">
-                                                <label>Security code</label>
-                                                <input type="text" name="ccv" placeholder="CCV" required="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12 col-sm-12 single-column">
-                                            <div class="custom-check-box">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox">
-                                                        <input type="checkbox" class="material-control-input">
-                                                        <span class="material-control-indicator"></span>
-                                                        <span class="description">I accept <a href="book-appointment.html">terms</a> and <a href="book-appointment.html">conditions</a> and general policy</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12 right-column">
-                        <div class="booking-information">
-                            <div class="title-box">
-                                <h3>Booking Summary</h3>
-                            </div>
-                            <div class="inner-box">
-                                <div class="single-box">
-                                    <ul class="clearfix">
-                                        <li>Date<span>07/10/2020</span></li>
-                                        <li>Time<span>09:30AM</span></li>
-                                        <li>Doctor name<span>Dr. Agnes Ayres</span></li>
-                                    </ul>
-                                </div>
-                                <div class="single-box">
-                                    <ul class="clearfix">
-                                        <li>General Consultation<span>$50</span></li>
-                                        <li>Back Pain<span>$60</span></li>
-                                    </ul>
-                                </div>
-                                <div class="total-box">
-                                    <h5>Total<span>$110</span></h5>
-                                </div>
-                            </div>
-                            <div class="btn-box">
-                                <a href="confirm.html" class="theme-btn-one">Confirm and Pay<i class="icon-Arrow-Right"></i></a>
+		                        <div class="btn-box">
+		                            <a href="confirm.html" class="theme-btn-one">약배달 취소 및 반환<i class="icon-Arrow-Right"></i></a>
+		                        </div>
                             </div>
                         </div>
                     </div>
@@ -475,6 +328,7 @@
             </div>
         </section>
         <!-- appointment-section end -->
+        </div>
 
 <!--Scroll to top-->
 <button class="scroll-top scroll-to-target" data-target="html">
