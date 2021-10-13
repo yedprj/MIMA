@@ -2,6 +2,9 @@ package com.mima.app.member.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.session.domain.PtInfoVO;
@@ -57,6 +60,12 @@ public interface MemberMapper {
 	
 	// 닥터 나의 환자들 조회_J06
 	public List<MemberBookingVO> patientList(int memberNo);
+	
+	// 닥터 대쉬보드 나의 환자들 페이징_J13
+	public List<MemberBookingVO> patientListPage(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
+	
+	// 닥터 대쉬보드 나의 환자들 페이징 데이터 수 전체조회_J13
+	public int patientListCount(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
 	
 	// 닥터 진료내역 페이지 선택한 환자의 진료노트 조회_J10
 	public PtInfoVO getCnote(PtInfoVO vo);

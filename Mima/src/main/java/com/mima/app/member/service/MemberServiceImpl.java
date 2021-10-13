@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.member.domain.MemberBookingVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.mapper.MemberMapper;
@@ -113,6 +114,18 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberBookingVO> patientList(int memberNo) {
 		return memberMapper.patientList(memberNo);
 	}
+	
+	// 닥터 나의 환자들 페이징_J13
+	@Override
+	public List<MemberBookingVO> patientListPage(Criteria cri, int memberNo) {
+		return memberMapper.patientListPage(cri, memberNo);
+	}
+
+	// 닥터 나의 환자들 페이징 카운트_J13
+	@Override
+	public int patientListCount(Criteria cri, int memberNo) {
+		return memberMapper.patientListCount(cri, memberNo);
+	}
 
 	@Override
 	public PtInfoVO getCnote(PtInfoVO vo) {
@@ -142,5 +155,7 @@ public class MemberServiceImpl implements MemberService {
 	public int updatePassword(MemberVO vo) {
 		return memberMapper.updatePassword(vo);
 	}
+
+
 
 }

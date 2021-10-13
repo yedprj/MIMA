@@ -87,6 +87,12 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 		return partnerDoctorMapper.checkDocDetail(vo);
 	}
 
+	// 닥터 대쉬보드 병원 이름_J13
+	@Override
+	public String clinicName(int memberNo) {
+		return partnerDoctorMapper.clinicName(memberNo);
+	}
+
 
 
 }

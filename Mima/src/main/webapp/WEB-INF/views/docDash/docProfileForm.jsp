@@ -11,14 +11,14 @@
                 </div>
                 <div class="auto-container">
                     <div class="title">
-                        <h1>진료 관리</h1>
+                        <h1>진료관리</h1>
                     </div>
                 </div>
             </div>
             <div class="lower-content">
                 <ul class="bread-crumb clearfix">
                     <li><a href="${pageContext.request.contextPath}">Home</a></li>
-                    <li>진료 관리</li>
+                    <li>진료관리</li>
                 </ul>
             </div>
         </section>
@@ -50,7 +50,7 @@
 			                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 			                <!-- s:1005 insertForm, subject Form -->
 			                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
-			                <li><a href="docProfileForm" class="current"><i class="fas fa-user"></i>진료 관리</a></li>
+			                <li><a href="docProfileForm" class="current"><i class="fas fa-stethoscope"></i>진료관리</a></li>
 			                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 			                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 			            </ul>

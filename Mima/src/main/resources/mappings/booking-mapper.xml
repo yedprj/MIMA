@@ -121,7 +121,7 @@
 <select id="apptHistoryCount" resultType="int">
 	SELECT COUNT(*) 
 	FROM BOOKING B JOIN MEMBER M
-                ON B.PT_NO = M.MEMBER_NO
+    ON B.PT_NO = M.MEMBER_NO
 	WHERE
 	<if test ="cri.keyword != null">M.NAME LIKE '%'|| #{cri.keyword} || '%' AND</if>
 	B.PT_NO > 0
@@ -157,8 +157,8 @@
 				AND DOC_NO = #{memberNo}
 		  ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC)
 	WHERE RN > (#{cri.pageNum}-1)* #{cri.amount}]]>
-	
 </select>
+
 
 <!-- 페이징 -->
 <!-- trim 한 것 따로 빼 낸것... -->

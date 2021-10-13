@@ -78,15 +78,14 @@
 	<!-- 닥터 대쉬보드 메인 페이지 나의 후기 -->
 	<select id="getlatestreviewList" resultType="CommentsVO">
 		<![CDATA[
-		SELECT C.CMAIN_NO,
-               C.CONTENTS,
-               C.REVIEW_POINT,
-               C.REG_DATE
-        FROM COMMENTS C JOIN MEMBER M
-        ON C.CMAIN_NO = M.MEMBER_NO
+		SELECT CMAIN_NO,
+               CONTENTS,
+               REVIEW_POINT,
+               REG_DATE
+        FROM COMMENTS
         WHERE ROWNUM < 6
-        AND C.CMAIN_NO = #{memberNo}
-        ORDER BY C.REG_DATE DESC
+        AND CMAIN_NO = #{memberNo}
+        ORDER BY REG_DATE DESC
 		]]>
 	</select>
 	
@@ -104,11 +103,116 @@
 		]]>
 	</select>
 	
-	<!-- 닥터 대쉬보드 나의 후기 카운트_J07 -->
+	<!-- 닥터 대쉬보드 메인 페이지 나의 후기 카운트_J07 -->
 	<select id="countDocReview" resultType="int">
 		SELECT COUNT(CNO)
         FROM COMMENTS
         WHERE CMAIN_NO = #{memberNo}
 	</select>
 	
+	<!-- trim 한 것 따로 빼 낸것... -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{keyword} || '%'
+						</when>
+						<when test="type =='delivery'.toString()">
+							DELIVERT_AREA LIKE '%'|| #{keyword} || '%'
+						</when>
+						
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<sql id="criteriaDocReview">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="#{cri.typeArr}" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'T'.toString()">
+							TITLE LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+
+						<when test="type =='W'.toString()">
+							WRITER LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- total count -->
+	<!-- 닥터 대쉬보드 나의 후기 페이지 페이징_J13-->
+	<select id="docReviewCount" resultType="int">
+		SELECT COUNT(*) FROM COMMENTS
+		WHERE
+		<include refid="criteriaDocReview"></include>
+		CMAIN_NO > 0
+	</select>
+
+	<!-- 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13-->
+	<select id="docReviewPage" resultType="CommentsVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
+					 ROWNUM RN,
+					 CMAIN_CATEGORY,
+					 CMAIN_NO,
+					 COMMENT_WRITER_NO,
+					 CONTENTS,
+					 REVIEW_POINT,
+					 REG_DATE,
+					 EDIT_DATE,
+					 CNO
+				FROM COMMENTS
+				WHERE <include refid="criteriaDocReview"></include>
+						<![CDATA[
+						ROWNUM <= #{cri.pageNum} * #{cri.amount}
+				AND CMAIN_NO = #{memberNo}
+				ORDER BY REG_DATE DESC )
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	
+	<!-- 닥터 대쉬보드 나의 후기 페이지 오래된순 페이징_J13-->
+	<select id="docReviewPageOldest" resultType="CommentsVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
+					 ROWNUM RN,
+					 CMAIN_CATEGORY,
+					 CMAIN_NO,
+					 COMMENT_WRITER_NO,
+					 CONTENTS,
+					 REVIEW_POINT,
+					 REG_DATE,
+					 EDIT_DATE,
+					 CNO
+				FROM COMMENTS
+				WHERE <include refid="criteriaDocReview"></include>
+						<![CDATA[
+						ROWNUM <= #{cri.pageNum} * #{cri.amount}
+				AND CMAIN_NO = #{memberNo}
+				ORDER BY REG_DATE )
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	<!-- 페이징 end -->
+
 </mapper>

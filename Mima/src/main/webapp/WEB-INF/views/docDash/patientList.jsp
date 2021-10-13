@@ -42,7 +42,7 @@ th, td {
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${session.name}</h3>
-						<p>MDS - Periodontology</p>
+						<p>${clinicName}</p>
 					</div>
 				</div>
 			</div>
@@ -55,7 +55,7 @@ th, td {
 	                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
 	                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 	                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
-	                <li><a href="docProfileForm"><i class="fas fa-user"></i>진료 관리</a></li>
+	                <li><a href="docProfileForm"><i class="fas fa-stethoscope"></i>진료관리</a></li>
 	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 	                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 	            </ul>
@@ -73,9 +73,12 @@ th, td {
 							<span>담당 환자들을 확인할 수 있습니다.</span>
                         </div>
                         <div class="btn-box pull-right">
-                            <form action="my-patients.html" method="post" class="search-form">
+                            <form action="patientList" method="get" class="search-form" id="actionForm">
                                 <div class="form-group">
-                                    <input type="search" name="search-field" placeholder="Search">
+                                	<input type="hidden" id="pageNum" name="pageNum" value="1">
+	              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
+                                
+                                    <input type="search" id="keyword" name="keyword" onKeypress="enter();" placeholder="환자명을 입력하세요." value="${cri.keyword}">
                                     <button type="submit"><i class="far fa-search"></i></button>
                                 </div>
                             </form>
@@ -89,27 +92,33 @@ th, td {
                                         <th>환자명</th>
                                         <th>성별</th>
                                         <th>연락처</th>
+                                        <th>주소</th>
                                         <th>최근진료일</th>
                                     </tr>    
                                 </thead>
                                 <tbody>
-                                	<c:forEach items="${patientList}" var="patientList">
+                                	<c:forEach items="${patientListPage}" var="patientListPage">
                                 		<tr>
 	                                        <td>
 	                                            <div class="name-box">
-	                                                <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png"></figure>
-	                                                <h5>${patientList.mname}</h5>
-	                                                <span class="ptno"># ${patientList.mmemberNo}</span>
+	                                                <figure class="image">
+	                                                	<img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png">
+	                                                </figure>
+	                                                <h5>${patientListPage.mname}</h5>
+	                                                <span class="ptno"># ${patientListPage.mmemberNo}</span>
 	                                            </div>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.mgender}</p>
+	                                            <p>${patientListPage.mgender}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p>${patientList.mphone}</p>
+	                                            <p>${patientListPage.mphone}</p>
 	                                        </td>
 	                                        <td>
-	                                            <p><fmt:formatDate value="${patientList.bconsultDate}" pattern="yyyy년 MM월 dd일"/>${patientList.bconsultTime}</p>
+	                                            <p>${patientListPage.maddr1}</p>
+	                                        </td>
+	                                        <td>
+	                                            <p><fmt:formatDate value="${patientListPage.bconsultDate}" pattern="yyyy-MM-dd"/></p>
 	                                        </td>
                                     	</tr>
                                 	</c:forEach>
@@ -119,6 +128,25 @@ th, td {
                     </div>
                 </div>
 			</div>
+			
+			<!-- pagination  -->
+			<div class="pagination-wrapper">
+				<ul class="pagination">
+					<c:if test="${pageMaker.prev}">
+						<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/doctor/patientList?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
+					</c:if>
+						
+					<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+						<li class="paginate_button"><a href="${pageContext.request.contextPath}/doctor/patientList?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
+					</c:forEach>
+						
+					<c:if test="${pageMaker.next}">
+						<li class="paginate_button next"><a href="${pageContext.request.contextPath}/doctor/patientList?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
+					</c:if>
+				</ul>
+			</div>
+			<!-- pagination end -->
+			
 		</div>
 	</div>
 </section>
@@ -130,3 +158,18 @@ th, td {
 </button>
 
 <!-- End of .page_wrapper -->
+
+<script>
+$(document).ready(function() {
+	 var actionForm = $('#actionForm');
+
+		$('#nameSearch');
+
+		/* $(enter(event){
+			if(event.keyCode == 13){
+				
+			}
+		}); */
+		
+	});
+</script>
