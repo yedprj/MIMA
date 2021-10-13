@@ -37,6 +37,9 @@ public class ConsultationController {
 		//s:1004
 		@Autowired PatientsService patientsService;
 	
+		//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
+		@GetMapping("/ptReviewFrm")
+		public void ptReviewFrm() {}
 	
 		//s:0930 진료 시작 테스트 페이지로 이동
 		@GetMapping("/consultationStart2")
