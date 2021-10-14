@@ -157,14 +157,21 @@ public class PatientsController {
 	}
 	
 	//환자대쉬보드 프로필 수정 - ajax - e.12
-	@PostMapping("patients/ptprofileUpdate")
+	@PostMapping("/ptprofileUpdate")
 	@ResponseBody
-	public int ptprofileUpdate(MemberVO vo, Model model, HttpServletRequest request) {
+	public String ptprofileUpdate(MemberVO vo, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		MemberVO sessionVO  = (MemberVO) session.getAttribute("session");
-		int memberNo = sessionVO.getMemberNo();
+		vo  = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
 		vo.setMemberNo(memberNo);
-		return patientsService.ptprofileUpdate(vo);
+		int result = patientsService.ptprofileUpdate(vo);
+		if(result == 1) {
+			model.addAttribute("result","수정이 완료되었습니다.");
+		}else {
+			model.addAttribute("result","수정에 실패하였습니다.");
+		}
+		
+		return "patients/ptProfileDetail";
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/09
