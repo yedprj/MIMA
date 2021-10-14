@@ -172,7 +172,7 @@ th, td {
 										<th></th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="bookingList">
 									<c:forEach items="${bookingList}" var="bookingList">
 										<tr>
 											<td>
@@ -183,7 +183,7 @@ th, td {
 															alt="">
 													</figure>
 													<h5>${bookingList.name}</h5>
-													<span class="ptno">#${bookingList.ptNo}</span>
+													<!--이거 필요없음 지울게여 <span class="ptno">#${bookingList.ptNo}</span> -->
 												</div>
 											</td>
 											<td>${bookingList.bookingNo}</td>
@@ -202,13 +202,14 @@ th, td {
 													<span class="status cancel">취소완료</span>
 												</c:if></td>
 											<td><c:if test="${bookingList.bookingStatus eq 'p'}">
-													<span class="accept"><i class="fas fa-check"></i>진료
-														시작하기</span>
+													<a href="${bookingList.bookingNo}" class="accept move"><i class="fas fa-check"></i>진료
+														시작하기</a>
 												</c:if></td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						</div>
 					</div>
 				</div>
@@ -317,7 +318,47 @@ th, td {
 </section>
 <!-- doctors-dashboard -->
 
-<!--Scroll to top-->
-<button class="scroll-top scroll-to-target" data-target="html">
-	<span class="fa fa-arrow-up"></span>
-</button>
+<script>
+$(function(){
+	
+	/* s:1014 진료시작 버튼 이벤트 붙이기 */
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	$('#bookingList').on('click','.move', function(e){
+		
+		e.preventDefault();
+		let bookingNo =$(this).attr("href");
+		alert('진료를 시작합니다.', bookingNo);
+		let url="";
+		//uuid 구해서 링크 받아오기 s:1011
+		$.ajax({ 
+            url: '${pageContext.request.contextPath}/socket/getRmId',
+            type: 'GET',
+            cache: false, 
+            data: {
+               bookingNo: bookingNo
+            },
+            beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					//xhr.setRequestHeader("aa", "bb");
+			},
+			async: false,
+            success: function(data) {
+                        console.log(data.roomId);
+                        url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
+                        console.log(url);
+                      },
+            error: function(jqXHR, textStatus, err){
+                 alert('text status '+textStatus+', err '+err);
+             }
+          })
+		socket.send(url);
+
+		window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
+	})
+
+
+});//end of page on load
+</script>

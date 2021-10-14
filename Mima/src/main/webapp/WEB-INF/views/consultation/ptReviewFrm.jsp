@@ -79,7 +79,7 @@
                                  <input type="hidden" id="cmainNo" name="cmainNo" value="3" >
                                 <input type="hidden" id="commentWriterNo" name="commentWriterNo" value="${session.memberNo }" >
                                     <div class="row clearfix">
-                                        
+                                        ${bookingNo }
                                         <div class="col-lg-6 col-md-12 col-sm-12 form-group">
                                             <label></label>
                                             <input type="text" name="name" value="${session.name }" disabled>

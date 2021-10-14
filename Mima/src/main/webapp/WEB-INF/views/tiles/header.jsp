@@ -32,27 +32,6 @@
 							<ul class="navigation clearfix">
 							
 								<!-- li 부분 더 필요하면 만들어서 사용하면 됨 -->
-								<!-- 홈 nav 시작 -->
-								<li class="current dropdown"><a href="${pageContext.request.contextPath}/">홈</a>
-									<ul>
-										<li><a href="index.html">Home Page 01</a></li>
-										<li><a href="index-2.html">Home Page 02</a></li>
-										<li><a href="index-3.html">Home Page 03</a></li>
-										<li><a href="index-4.html">Home Page 04</a></li>
-										<li><a href="index-5.html">Home Page 05</a></li>
-										<li><a href="index-onepage.html">OnePage Home</a></li>
-										<li><a href="index-rtl.html">RTL Home</a></li>
-										<li class="dropdown"><a href="index.html">Header Style</a>
-											<ul>
-												<li><a href="index.html">Header Style 01</a></li>
-												<li><a href="index-2.html">Header Style 02</a></li>
-												<li><a href="index-3.html">Header Style 03</a></li>
-												<li><a href="index-5.html">Header Style 04</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<!-- 홈 nav 끝 -->
 								
 								<!-- 진료예약 nav 시작 -->
 								<li class="dropdown"><a href="${pageContext.request.contextPath}/patients/reservationForm">진료예약</a>
@@ -68,9 +47,10 @@
 												<li><a href="message.html">노인장애</a></li>
 												<li><a href="my-profile.html">해리장애(다중인격)</a></li>
 											</ul></li>
-										<li><a href="doctors-1.html">빠른 진료상담</a></li>
-										<li><a href="doctors-2.html">추천의사</a></li>
-										<li><a href="doctors-3.html">의사검색</a></li>
+										<li><a href="#">빠른 진료상담</a></li>
+										<li><a href="#">추천의사</a></li>
+										<!-- s:1014 전체 의사 리스트로 이동 -->
+										<li><a href="${pageContext.request.contextPath}/getTotalDocList">의사검색</a></li>
 									</ul>
 								</li>
 								<!-- 진료예약 nav 끝 -->
@@ -78,47 +58,19 @@
 								<!-- 마음 챙김 nav 시작-->
 								<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/meditationMain">마음챙김</a>
 									<ul>
-										<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/totalList"> 전체명상리스트</a>
-										<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/meditationInsertForm"> 명상 등록</a>
-										<li class="dropdown"><a href="patient-dashboard.html">Patient Dashboard</a>
-											<ul>
-												<li><a href="patient-dashboard.html">Dashboard</a></li>
-												<li><a href="favourite-doctors.html">Favourite
-														Doctors</a></li>
-												<li><a href="schedule-timing-2.html">Scheduleddddd
-														Timing</a></li>
-												<li><a href="message-2.html">Messagesddddd</a></li>
-												<li><a href="patient-profile.html">My Profile</a></li>
-												<li><a href="change-password-2.html">Change
-														Password</a></li>
-												<li><a href="login-2.html">Logout</a></li>
-											</ul>
-										</li>
-										<li class="dropdown"><a href="submit.html">의사 프로필 테스트</a>
-										<!-- s:1005 의사프로필 페이지/리뷰페이지 테스트 링크 -->
-										<!-- p.10/06 컨트롤러 수정으로 페이지 링크 수정 -->
-											<ul>
-												<li><a href="${pageContext.request.contextPath}/doctor/docMain">대시보드</a></li>
-												<li><a href="${pageContext.request.contextPath}/doctor/docProfileInsertForm">의사프로필 인서트 폼</a></li>
-												<li><a href="${pageContext.request.contextPath}/doctor/docProfileForm">의사 진료시간 인서트 폼</a></li>
-												<li><a href="${pageContext.request.contextPath}/docProfileDetail">의사 프로필 상세페이지</a></li>
-												<li><a href="${pageContext.request.contextPath}/doctor/docReviewList">의사 리뷰 리스트 페이지</a></li>
-												<li><a href="${pageContext.request.contextPath}/doctor/docReviewDetail">의사 리뷰 상세페이지</a></li>
-											</ul>
-										</li>
-										<li><a href="book-appointment.html">Book Appointment</a></li>
-										<li><a href="register-page.html">Register Page</a></li>
+										<li><a href="${pageContext.request.contextPath}/meditation/totalList"> 전체명상리스트</a>
+										<li><a href="${pageContext.request.contextPath}/meditation/meditationInsertForm"> 명상 등록</a>
 									</ul>
 								</li>
 								<!-- 마음 챙김 nav 끝 -->
 								
 								<!-- 포스트 잇 nav 시작 -->
-								<li class="dropdown"><a href="${pageContext.request.contextPath}/post/mindPostIt2">포스트 잇</a>
+								<li><a href="${pageContext.request.contextPath}/post/mindPostIt2">포스트 잇</a>
 								</li>
 								<!-- 포스트 잇 nav 끝 -->
 								
 								<!-- 문의 nav 시작 -->
-								<li class="dropdown"><a href="index.html">문의</a>
+								<!-- <li class="dropdown"><a href="index.html">문의</a>
 									<div class="megamenu">
 										<div class="row clearfix">
 											<div class="col-lg-6 col-md-12 col-sm-12 column">
@@ -155,7 +107,7 @@
 											</div>
 										</div>
 									</div>
-								</li>
+								</li> -->
 								<!-- 문의 nav 끝 -->
 								
 								<!-- 로그인 nav 시작 -->
@@ -164,9 +116,7 @@
 									
 										<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
 										<!-- 링트 수정 p.10/06 -->
-										<li><a href="${pageContext.request.contextPath}/doctor/docMain">닥터 대쉬보드</a>
-										
-										</li>
+										<li><a href="${pageContext.request.contextPath}/doctor/docMain">닥터 대쉬보드</a></li>
 										<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash">약국 대쉬보드</a></li>
 										<li><a href="${pageContext.request.contextPath}/patients/ptMain">환자 대쉬보드</a></li>
 									</ul>
@@ -251,9 +201,9 @@
 		<div class="contact-info">
 			<h4>Contact Info</h4>
 			<ul>
-				<li>Chicago 12, Melborne City, USA</li>
-				<li><a href="tel:+8801682648101">+88 01682648101</a></li>
-				<li><a href="mailto:info@example.com">info@example.com</a></li>
+				<li>대구 중구 국채보상로 537 5층(상서동)</li>
+				<li>+82 053-421-2460</li>
+				<li><a href="mailto:info@example.com">info@miraclemind.com</a></li>
 			</ul>
 		</div>
 		<div class="social-links">

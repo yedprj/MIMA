@@ -322,9 +322,7 @@ public class PatnerDoctorController {
 	@GetMapping("/docProfileDetail")
 	public String docProfileDetail(DocInfoVO docVo, Model model, MemberVO mVo, HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		mVo = (MemberVO) session.getAttribute("session");
-		System.out.println(mVo);
+		System.out.println("넘겨받은 멤버보"+mVo);
 		docVo = doctorService.checkDocDetail(mVo);
 		
 		System.out.println(docVo+"보 값 널 확인");
