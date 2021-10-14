@@ -57,13 +57,21 @@
 }
 
 .modal_content{
-  width:500px; height:300px;
+  width:500px;
   background:#fff; border-radius:10px;
-  position:relative; top:50%; left:50%;
-  margin-top:-300px; margin-left:-200px;
+  position:relative; top:35%; left:50%;
+  margin-top:-300px; 
+  margin-left:-200px;
   text-align:center;
   box-sizing:border-box; padding:74px 0;
   line-height:23px; cursor:pointer;
+}
+.appointment-section, .registration-section {
+    padding: 0px;
+}
+#modalContentCss {
+	padding-right: 0px;
+    padding-left: 0px;
 }
 </style>
 
@@ -291,25 +299,25 @@
         <section class="modal_content appointment-section bg-color-3">
             <div class="auto-container">
                 <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12 left-column">
+                    <div id="modalContentCss" class="col-lg-12 col-md-12 col-sm-12 left-column">
                         <div class="appointment-information">
                             <div class="title-box">
                                 <h3>약배달 취소건</h3>
                             </div>
                             <div class="inner-box">
                                 <div class="information-form">
-                                    <h3>신청한 약배달은 취소시 신청한 고객님께 메세지와 함께 전송됩니다:</h3>
+                                    <h3>약배달 취소시 신청한 고객님께 메세지와 함께 전송됩니다</h3>
                                     <form action="book-appointment.html" method="post">
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>취소 신청 약국</label>
                                                 <input type="text" name="name" value="${profile.pharmacyInfo}">
-                                                <input type="hidden" name="pharmacyNo"  >
+                                                <input id="returnPhaNo" type="hidden" name="pharmacyNo"  >
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>고객 성함</label>
                                                 <input type="text" name="customerName" >
-                                                <input type="hidden" name="bookingNo" >
+                                                <input id="returnBookingNo" type="hidden" name="bookingNo" >
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                                 <label>(취소사유)</label>
@@ -319,7 +327,8 @@
                                     </form>
                                 </div>
 		                        <div class="btn-box">
-		                            <a href="confirm.html" class="theme-btn-one">약배달 취소 및 반환<i class="icon-Arrow-Right"></i></a>
+		                            <a id="delReturnBtn" class="theme-btn-one">약배달 취소 및 반환<i class="icon-Arrow-Right"></i></a>
+		                            <button id="cancelBtn" class="cancel-btn">취소</button>
 		                        </div>
                             </div>
                         </div>
@@ -400,12 +409,22 @@
 		// 반환 btn
 		$("#trList > td").on("click",".cancel",function(){
 			var bookingNo = $(this).data("no");
+			var name = $(this).data("name");
+			$("input[name='customerName']").val(name);
 			
-			$(".modal").fadeIn();
+			$(".modal").fadeIn();			
 			  
-			$(".modal_content").click(function(){
+			$("#cancelBtn").click(function(){
 			    $(".modal").fadeOut();
 			});
+			
+			$("#delReturnBtn").click(function(){
+				
+			});
+			
+			
+			
+			
 			
 		}); // 반환 btn end
 	
