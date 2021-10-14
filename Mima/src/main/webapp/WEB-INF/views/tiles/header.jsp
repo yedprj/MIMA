@@ -142,7 +142,7 @@
 					</sec:authorize>
 				</div>
 				
-<div id="msgStack"></div>
+			<div id="msgStack"></div>
 			</div>
 		</div>
 	</div>
@@ -177,6 +177,7 @@
 						</form>
 					</sec:authorize>
 				</div>
+				<div id="msgStack"></div>
 			</div>
 		</div>
 	</div>

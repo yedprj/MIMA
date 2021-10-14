@@ -87,6 +87,7 @@ function onOpen(){
 
 // toast생성 및 추가
 function onMessage(evt){
+	console.log("main.jsp", evt);
     var data = evt.data;
     console.log(data);
     // toast
@@ -101,9 +102,6 @@ function onMessage(evt){
 };	
 </script>
 <!--s:1009 end of sockJS -->
-
-
-
 
 
 <!-- page wrapper -->
