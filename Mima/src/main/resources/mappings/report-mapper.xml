@@ -4,7 +4,7 @@
 
 	<select id="reportRead" resultType="ReportVO">
 		SELECT REPORT_NO FROM REPORT
-		WHERE REPORT_MNO = #{reportMNo}
+		WHERE REPORT_MNO = #{reportMno}
 		AND POST_NO = #{postNo}
 	</select>
 
@@ -14,15 +14,13 @@
 		REPORT_NO,
 		POST_NO,
 		MEMBER_NO,
-		REPORT_MNO,
-		REPORT_DATE
+		REPORT_MNO
 		)
 		VALUES (
 		SEQ_REPORT.NEXTVAL,
 		#{postNo},
 		#{memberNo},
-		#{reportMNo},
-		SYSDATE
+		#{reportMno}
 		)
 	</insert>
 

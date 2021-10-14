@@ -2,6 +2,82 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.pharmacy.mapper.MedDeliveryMapper">
 
+<sql id="criteria">
+	<trim prefix="AND(" suffix=")" prefixOverrides="OR">
+		<foreach collection="cri.typeArr" item="type">
+			<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+			<trim prefix="or">
+				<choose>
+					<when test="cri.type == 'N'.toString()">
+						NAME LIKE '%'|| #{cri.keyword} || '%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>
+
+
+<!-- 복약지도 -->
+<select id="ptEducation" resultType="memDeliveryVO">
+	SELECT *
+	FROM (
+	        SELECT /*+INDEX_DESC(MED_DELIVERY MED_DELIVERY_PK)  */
+	        ROWNUM RN, M.PT_EDUCATION, M.DELIVERY_STATUS, M.PHARMACY_NO, 
+	                MM.NAME,MM.PHONE, M.BOOKING_NO, B.CONSULT_DATE , 
+	                P.DEL_ADDR, P.DEL_ADDR2, P.DEL_ADDR3, P.DEL_POST_CODE
+	        FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
+	        WHERE B.BOOKING_NO = M.BOOKING_NO
+	        AND B.PT_NO = P.MEMBER_NO
+	        AND P.MEMBER_NO = MM.MEMBER_NO
+	        AND M.PHARMACY_NO = #{pharmacyNo}
+	        AND M.DELIVERY_STATUS = 'p'
+	        AND M.PT_EDUCATION = 'n'
+	        <include refid="criteria"></include>
+	        <![CDATA[
+	        and ROWNUM <= #{cri.pageNum} * #{cri.amount}
+	     )
+	where RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+</select>
+
+<!-- k. 10/14 복약지도 수 -->
+<select id="ptEducationCnt" resultType="int">
+	SELECT  COUNT(*)
+	FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
+	WHERE B.BOOKING_NO = M.BOOKING_NO
+	AND B.PT_NO = P.MEMBER_NO
+	AND P.MEMBER_NO = MM.MEMBER_NO
+	AND M.PHARMACY_NO = #{pharmacyNo}
+	AND M.DELIVERY_STATUS = 'p'
+	AND M.PT_EDUCATION = 'n'
+</select>
+
+<!-- k. 10/14 오늘의 배달수 -->
+<select id="deliveryCnt" resultType="int">
+	SELECT COUNT(*)
+	FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
+	WHERE B.BOOKING_NO = M.BOOKING_NO
+	AND B.PT_NO = P.MEMBER_NO
+	AND P.MEMBER_NO = MM.MEMBER_NO
+	AND M.PHARMACY_NO = #{pharmacyNo}
+	AND M.DELIVERY_STATUS = 'n'
+	AND B.CONSULT_DATE = TO_DATE(SYSDATE, 'YY-MM-DD')
+</select>
+
+<!-- 오늘의 배달건수 -->
+<select id="todayDelivery" resultType="memDeliveryVO">
+
+	SELECT M.PHARMACY_NO, MM.NAME, M.BOOKING_NO, B.CONSULT_DATE , M.PRESCRIPTION, P.DEL_ADDR, P.DEL_ADDR2, P.DEL_ADDR3,P.DEL_POST_CODE , P.DEL_NOTE  
+	FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
+	WHERE B.BOOKING_NO = M.BOOKING_NO
+	AND B.PT_NO = P.MEMBER_NO
+	AND P.MEMBER_NO = MM.MEMBER_NO
+	AND M.PHARMACY_NO = #{pharmacyNo}
+	AND M.DELIVERY_STATUS = 'n'
+	AND B.CONSULT_DATE = TO_DATE(SYSDATE, 'YY-MM-DD')
+	
+</select>
+
 <select id="selectOne" resultType="medDeliveryVO">
 	SELECT * FROM MED_DELIVERY
 	WHERE BOOKING_NO = #{bookingNo}
@@ -15,6 +91,7 @@
 	AND PHARMACY_NO = #{pharmacyNo}
 </select>
 
+<!-- 약배달 등록 / 취소 -->
 <select id="memDelivery" resultType="memDeliveryVO">
 	SELECT  M.PHARMACY_NO, 
 			MM.NAME, 
@@ -35,12 +112,14 @@
 	<![CDATA[ AND B.CONSULT_DATE <= TO_DATE(SYSDATE, 'YY/MM/DD') ]]>	
 </select>
 
+<!-- 배달 상태변경 -->
 <update id="deliveryStatusUpdate">
 	UPDATE MED_DELIVERY
 		SET DELIVERY_STATUS = #{deliveryStatus} 
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
 
+<!-- 취소이유 등록 -->
 <update id="delCancel">
 	UPDATE MED_DELIVERY
 	SET DELIVERY_DECLINE = #{deliveryDecline},
