@@ -100,12 +100,15 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-12.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">정신분석 / 정신치료</a>
+							<a href="doctors-dashboard.html" style="font-size: 16pt;">정신분석 / 정신치료</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
+							<a href="doctors-dashboard.html" class="theme-btn-one">View
+								List<i class="icon-Arrow-Right"></i>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -124,7 +127,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-13.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">스트레스 / 트라우마</a>
+							<a href="doctors-dashboard.html" style="font-size: 16pt;">스트레스 / 트라우마</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -151,7 +154,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-14.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">기분장애 / 공황 • 불안장애</a>
+							<a href="doctors-dashboard.html" style="font-size: 16pt;">기분 • 공황 • 불안장애</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -178,7 +181,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-15.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">신경증 / 성격장애</a>
+							<a href="doctors-dashboard.html" style="font-size: 16pt;">신경증 / 성격장애</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -205,7 +208,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-16.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">직장인 정신건강</a>
+							<a href="doctors-dashboard.html" style="font-size: 16pt;">직장인 정신건강</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -232,7 +235,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-17.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">중독장애</a>
+							<a href="doctors-dashboard.html" style="font-size: 16pt;">중독장애</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -259,7 +262,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-18.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">노인장애</a>
+							<a href="doctors-dashboard.html" style="font-size: 16pt;">노인장애</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -286,7 +289,7 @@
 							<img src="${pageContext.request.contextPath}/resources/assets/images/icons/icon-19.png" alt="">
 						</figure>
 						<h3>
-							<a href="doctors-dashboard.html">해리장애(다중인격)</a>
+							<a href="doctors-dashboard.html" style="font-size: 16pt;">해리장애(다중인격)</a>
 						</h3>
 						<div class="link">
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
@@ -998,3 +1001,6 @@
 <!-- agent-section -->
 
 
+<script>
+
+</script>
