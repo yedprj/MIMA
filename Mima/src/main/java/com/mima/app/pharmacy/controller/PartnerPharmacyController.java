@@ -63,6 +63,8 @@ public class PartnerPharmacyController {
 		model.addAttribute("ptEduCnt", deliverSerive.ptEducationCnt(memberNo));
 		// 오늘의 약배달 등록 및 취소
 		model.addAttribute("delivery", deliverSerive.todayDelivery(vo.getMemberNo()));
+		// 리뷰 수
+		model.addAttribute("reviewCnt", commentsService.phaReviewCnt(vo.getMemberNo()));
 	}
 	
 	// 약배달 전체관리페이지 [K]210929
@@ -133,17 +135,19 @@ public class PartnerPharmacyController {
 	// 프로필 수정 - ajax [K]210929
 	@PutMapping("/profileUpdate")
 	@ResponseBody
-	public int profileUpdate(@RequestBody PartnerPharmacyVO vo, Model model) {
+	public int profileUpdate(@RequestBody PartnerPharmacyVO vo, Model model ) {
 		return partPhaService.profileUpdate(vo);
 	}
 	
 	// 리뷰페이지 [K]210929
 	@GetMapping("/review")
-	public void review(Model model, HttpServletRequest request) {
+	public void review(Model model, HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		model.addAttribute("profile", partPhaService.selectOne(vo.getMemberNo()));
-		model.addAttribute("review", commentsService.phaReviewList(vo.getMemberNo()));
+		model.addAttribute("review", commentsService.phaReviewList(cri,vo.getMemberNo()));
+		model.addAttribute("reviewCnt", commentsService.phaReviewCnt(vo.getMemberNo()));
+		model.addAttribute("pageMaker", new PageVO(cri,commentsService.phaReviewCnt(vo.getMemberNo())));
 	}
 	
 	// 문의페이지 [K]211006

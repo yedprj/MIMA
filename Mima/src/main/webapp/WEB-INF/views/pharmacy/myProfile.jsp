@@ -151,7 +151,12 @@ input::placeholder {
 					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile" class="current"><i class="fas fa-user"></i>약국 프로필</a></li>
 					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate?memberNo=${session.memberNo}"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a id="logout" href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -391,6 +396,10 @@ function execDaumPostcode() {
 
 /* 페이지 로드 이벤트 */
 $(function(){
+	
+	$("#logoutBtn1").on("click", function(){
+		$('#logOutfrm1').submit();
+	});
 	
 	
 	var csrfHeaderName = "${_csrf.headerName}";

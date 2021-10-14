@@ -221,17 +221,52 @@
 	</select>
 	<!-- 페이징 end -->
 	
+	<sql id="criteriaPhaReview">
+		<trim prefix="AND(" suffix=") " prefixOverrides="OR">
+			<foreach collection="#{cri.typeArr}" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'N'.toString()">
+							NICKNAME LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
 	
 	<!-- K. 10/14 약국 후기 조회-->
 	<select id="phaReviewList" resultType="CommentsVO">
-		SELECT C.*, 
-			   M.NICKNAME,
-			   M.GENDER
+		SELECT *
+		FROM(
+		        SELECT ROWNUM RN, C.*, 
+		                    M.NICKNAME,
+		                    M.GENDER
+				FROM COMMENTS C , MEMBER M
+				WHERE C.COMMENT_WRITER_NO = M.MEMBER_NO
+				AND C.CMAIN_CATEGORY = 'pha'
+				AND C.CMAIN_NO = #{cmainNo}
+				<include refid="criteriaPhaReview"></include>
+	        	<![CDATA[
+	        	and ROWNUM <= #{cri.pageNum} * #{cri.amount}
+		        ORDER BY C.CNO DESC
+		        )
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	
+	<!-- K.10/14 약국 후기 수 -->
+	<select id="phaReviewCnt" resultType="int">
+		SELECT COUNT(*)
 		FROM COMMENTS C , MEMBER M
 		WHERE C.COMMENT_WRITER_NO = M.MEMBER_NO
 		AND C.CMAIN_CATEGORY = 'pha'
 		AND C.CMAIN_NO = #{cmainNo}
-		ORDER BY CNO DESC
 	</select>
 
 </mapper>
