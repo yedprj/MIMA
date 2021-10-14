@@ -330,7 +330,9 @@ $(function(){
 		
 		e.preventDefault();
 		let bookingNo =$(this).attr("href");
-		alert('진료를 시작합니다.', bookingNo);
+		console.log("예약번호 ", bookingNo);
+		
+		alert('진료를 시작합니다.');
 		let url="";
 		//uuid 구해서 링크 받아오기 s:1011
 		$.ajax({ 
@@ -346,7 +348,8 @@ $(function(){
 			},
 			async: false,
             success: function(data) {
-                        console.log(data.roomId);
+                        console.log("진료방 시작후 방번호",data.roomId);
+                        console.log("진료방 시작후 환자번호",data.ptNo);
                         url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
                         console.log(url);
                       },
@@ -354,8 +357,9 @@ $(function(){
                  alert('text status '+textStatus+', err '+err);
              }
           })
-		socket.send(url);
-
+		//소켓메세지 보내기
+          socket.send(url);
+		
 		window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
 	})
 

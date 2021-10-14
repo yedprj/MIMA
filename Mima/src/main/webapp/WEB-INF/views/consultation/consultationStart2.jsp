@@ -43,6 +43,7 @@ $(function(){
                  alert('text status '+textStatus+', err '+err);
              }
           })
+         
 		socket.send(url);
 
 		window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');

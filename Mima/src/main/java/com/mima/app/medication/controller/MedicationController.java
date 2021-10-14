@@ -31,7 +31,7 @@ import lombok.extern.java.Log;
 
 @Log
 @Controller
-@RequestMapping("/medication/*")
+@RequestMapping("/consultation/*")
 public class MedicationController {
 	
 	// 약검색 페이지 [K]211001

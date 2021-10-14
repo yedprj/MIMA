@@ -75,7 +75,6 @@ public class ConsultationController {
 			if (result == 1) {
 				rttr.addFlashAttribute("result", vo.getPreSelfAx());
 			}
-
 			return "redirect:/consultation/preSelfAssessmentFrm";
 		}
 
@@ -89,22 +88,27 @@ public class ConsultationController {
 			model.addAttribute("pt", ptVo);
 		}
 	
-	
-	
 		// s:1003 노드에서 요청해서 예약기록 조회
 		@GetMapping("/getBookingInfo")
 		@ResponseBody
 		public BookingVO getBookingInfo(BookingVO vo, MemberVO memberSessionVo, HttpServletRequest requset) {
-			
 			vo=bookingService.getBookingInfo(vo);
 			return  vo;
 		}
-	
 		
+		
+		//s:1014 노드에서 요청, 환자의 경우 진료+의사정보 조회
+		@GetMapping("/getSessionInfo")
+		@ResponseBody
+		public PtInfoVO getSessionInfo(PtInfoVO vo, BookingVO bookVo, HttpServletRequest requset) {
+			vo=consultationService.getSessionInfo(bookVo);
+			return  vo;
+		}
+	
 		//s:1012 노드에서 요청 진료기록 저장 ajax
 		@PostMapping("/consultInsertAjax")
 		@ResponseBody
-		public int consultInsertAjax(BookingVO vo, MemberVO memberSessionVo, ConsultationVO conVo, HttpServletRequest requset) {
+		public int consultInsertAjax(BookingVO vo, ConsultationVO conVo) {
 			System.out.println("111노드에서 넘긴 정보" + conVo);
 			
 			vo.setBookingNo(conVo.getBookingNo());
@@ -120,12 +124,22 @@ public class ConsultationController {
 			return  result;
 		}
 		
-		//s:1012 노드에서 요청 처방전 저장 ajax
-		@PostMapping("/medInsertAjax")
+		//s:1014 노드에서 요청 처방전 저장 ajax
+		@GetMapping("/medInsertAjax")
 		@ResponseBody
-		public BookingVO medInsertAjax(BookingVO vo, MemberVO memberSessionVo, HttpServletRequest requset) {
+		public void medInsertAjax(ConsultationVO conVo) {
 			
-			vo=bookingService.getBookingInfo(vo);
-			return  vo;
+			System.out.println("처방전 정보 확인"+ conVo);
+			int result =consultationService.medInsert(conVo);
+			System.out.println("입력된 값"+result);
+		}
+		//s:1014 노드에서 요청 처방전 저장 ajax
+		@GetMapping("/medDeliveryInsertAjax")
+		@ResponseBody
+		public void medDeliveryInsertAjax(ConsultationVO conVo) {
+			
+			System.out.println("처방전 정보 확인"+ conVo);
+			int result =consultationService.medDeliveryInsert(conVo);
+			System.out.println("입력된 값"+result);
 		}
 }
