@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.meditation.domain.MeditAttachVO;
@@ -42,6 +43,7 @@ public class PartnerPharmacyController {
 	@Autowired MedDeliveryService deliverSerive;
 	@Autowired MemberService memberSerivce;
 	@Autowired BCryptPasswordEncoder cryptEncoder;
+	@Autowired CommentsService commentsService;
 
 	
 	
@@ -137,7 +139,11 @@ public class PartnerPharmacyController {
 	
 	// 리뷰페이지 [K]210929
 	@GetMapping("/review")
-	public void review() {
+	public void review(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		model.addAttribute("profile", partPhaService.selectOne(vo.getMemberNo()));
+		model.addAttribute("review", commentsService.phaReviewList(vo.getMemberNo()));
 	}
 	
 	// 문의페이지 [K]211006
