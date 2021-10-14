@@ -505,11 +505,10 @@
 		
 		<!-- 환자 대쉬보드 프로필 수정 e.12 -->
 		<update id="ptprofileUpdate">
-			UPDATE MEMBER
-				SET
-					EMAIL=#{email},
-					PHONE=#{phone}
-			WHERE MEMBER_NO=#{memberNo}
+			UPDATE MEMBER SET
+					EMAIL = #{email},
+					PHONE = #{phone}
+			WHERE MEMBER_NO = #{memberNo}
 		</update>
 		
 		<!-- K.10/10 약배달 정보확인 -->

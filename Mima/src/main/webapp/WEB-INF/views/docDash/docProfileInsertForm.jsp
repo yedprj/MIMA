@@ -349,14 +349,10 @@
 
     /* 페이지 로드 이벤트 */
     $(function(){
-    	
-    	
+
     	var csrfHeaderName = "${_csrf.headerName}";
     	var csrfTokenValue = "${_csrf.token}";
-    	
-    	
-        
-       
+  
    		//s:1006 폼 전체 취소 버튼 누르면 의사메인으로 돌아가도록
     	$('#insertResetBtn').on('click', function(){
     		alert("취소하겠습니까? 의사 대시보드 메인으로 돌아갑니닷!");
