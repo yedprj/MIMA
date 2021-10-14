@@ -80,14 +80,10 @@
 		<div class="sec-title centred">
 			<p>진료과목</p>
 			<h2>Browse by specialist</h2>
-			<!-- s:1007 의사 프로필 상세페이지 -> 들어갈때 의사번호넘겨줘야함 -->
-			<a class="theme-btn-one" href="${pageContext.request.contextPath}/docProfileDetail">의사 프로필 디테일 페이지</a>
+			
 			<!-- s:1007 환자가 진료 끝나고 의사리뷰남기는 페이지 -->
 			<a class="theme-btn-one" href="${pageContext.request.contextPath}/patients/ptReviewFrm">진료 후 리뷰남기는 폼</a>
-			<!-- s:1004 자가진단 폼페이지 -->
-			<a class="theme-btn-one" href="${pageContext.request.contextPath}/consultation/preSelfAssessmentFrm">진료전 스트레스 자가검진</a>
-			<!-- s:0930 진료시작 페이지 테스트 링크 -->
-			<a class="theme-btn-one" href="${pageContext.request.contextPath}/consultation/consultationStart2">진료시작페이지222</a>
+			
 		</div>
 		<div class="row clearfix">
 			<div class="col-lg-3 col-md-6 col-sm-12 category-block">

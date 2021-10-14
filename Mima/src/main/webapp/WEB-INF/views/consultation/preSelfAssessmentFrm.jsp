@@ -839,7 +839,7 @@ $(function(){
 	})		
 			
 			
-	//멤버번호 하드코딩한거 나중에 고치기		
+	let memberNo = ${session.memberNo}	
 	//그리고 그 모달 결과값을 테이블에 저장하기
 	$('#selfTestBtn').on('click', function(){
 		alert("저장되었습니다. 나머지 항목을 입력하고 저장해 주세요");
@@ -849,7 +849,7 @@ $(function(){
 			dataType : "json",
 			data : JSON.stringify({
 				preSelfAx : result,
-				memberNo: 2
+				memberNo: memberNo
 			}),
 			 beforeSend : function(xhr) {
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
@@ -863,13 +863,13 @@ $(function(){
 	
 	// 두번째 폼 제출버튼 이벤트 -> 404 accessError
 	$("#form2SubmitBtn").on('click', function(){
-		alert("소중한 시간 감사해요 미마님. 진료 때 봽겠습니다.");
+		alert("소중한 시간 감사해요. ${session.name}님. 진료 때 봽겠습니다.");
 		$.ajax({
 			url : '../consultation/preSelfInfo',
 			method : "POST",
 			dataType : "json",
 			data : JSON.stringify({
-				memberNo: 2,
+				memberNo: memberNo,
 				pastHx: $('#pastSession').val(),
 				sessionReason:$('#reason').val(),
 				preDiagnosis:$('#pastDiagnosis').val(),
@@ -882,14 +882,12 @@ $(function(){
 			contentType : 'application/json',
 			success : function(data) {
 				console.log(data);
-				location.href="${pageContext.request.contextPath}/ptMain"
+				location.href="${pageContext.request.contextPath}/patients/ptMain"
 			}// success end
 		})
 		
 	})
-	
-	
-	
+
 })//end of 페이지 온로드
 
 

@@ -39,18 +39,14 @@ public class ConsultationController {
 	
 		//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
 		@GetMapping("/ptReviewFrm")
-		public void ptReviewFrm() {}
+		public void ptReviewFrm(Model model, BookingVO vo) {
+			model.addAttribute("bookingNo", vo);
+		}
 	
 		//s:0930 진료 시작 테스트 페이지로 이동
 		@GetMapping("/consultationStart2")
 		public void consultationStart2(Model model, BookingVO vo) {
 			model.addAttribute("bookingNo", vo);
-		}
-		
-		//s:0929 진료 시작 테스트 페이지로 이동
-		@GetMapping("/consultationStart")
-		public void consultationStart(Model model, BookingVO vo) {
-			//나중에 예약 번호를 넘겨줄 거예요
 		}
 		
 		//s:1003 자가검진 페이지

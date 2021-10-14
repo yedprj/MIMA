@@ -20,8 +20,7 @@
 									src="${pageContext.request.contextPath}/resources/assets/images/footer-logo.png" alt=""></a>
 							</figure>
 							<div class="text">
-								<p>Lorem ipsum is placeholder text commonly used in the
-									graphic, print, and publishing .</p>
+								<p>미라클 마인드!<br> 단순 정신겅강의학 진료 예약 플랫폼이 아닌<br> 당신의 마음을 다독여 줄 수 있는 미마가 되겠습니다.</p>
 							</div>
 						</div>
 					</div>
@@ -32,12 +31,11 @@
 							</div>
 							<div class="widget-content">
 								<ul class="links clearfix">
-									<li><a href="index.html">About Us</a></li>
-									<li><a href="index.html">Listing</a></li>
-									<li><a href="index.html">How It Works</a></li>
-									<li><a href="index.html">Our Services</a></li>
-									<li><a href="index.html">Our Blog</a></li>
-									<li><a href="index.html">Contact Us</a></li>
+									<li><a href="#">미라클 마인드</a></li>
+									<li><a href="#">진료 예약 방법</a></li>
+									<li><a href="#">진료 방법</a></li>
+									<li><a href="${pageContext.request.contextPath}/meditation/aboutMedit">명상에 대해</a></li>
+									<li><a href="#">Contact Us</a></li>
 								</ul>
 							</div>
 						</div>
@@ -49,12 +47,11 @@
 							</div>
 							<div class="widget-content">
 								<ul class="links clearfix">
-									<li><a href="index.html">Specialist</a></li>
-									<li><a href="index.html">Clinic</a></li>
-									<li><a href="index.html">Hospital</a></li>
-									<li><a href="index.html">Download App</a></li>
-									<li><a href="index.html">Join as a Doctor</a></li>
-									<li><a href="index.html">Privacy Policy</a></li>
+									<li><a href="${pageContext.request.contextPath}/meditation/totalList">명상 리스트</a></li>
+									<li><a href="${pageContext.request.contextPath}/getTotalDocList">전문의 리스트</a></li>
+									<li><a href="#">약국 전체 리스트</a></li>
+									<li><a href="${pageContext.request.contextPath}/partnerJoinForm">파트너로 가입하기</a></li>
+									<li><a href="#">Privacy Policy</a></li>
 								</ul>
 							</div>
 						</div>
@@ -66,12 +63,9 @@
 							</div>
 							<div class="widget-content">
 								<ul class="info-list clearfix">
-									<li><i class="fas fa-map-marker-alt"></i> Flat 20,
-										Reynolds Neck, North Helenaville, FV77 8WS</li>
-									<li><i class="fas fa-microphone"></i> <a
-										href="tel:23055873407">+2(305) 587-3407</a></li>
-									<li><i class="fas fa-envelope"></i> <a
-										href="mailto:info@example.com">info@example.com</a></li>
+									<li><i class="fas fa-map-marker-alt"></i>대구 중구 국채보상로 537 5층(상서동)</li>
+									<li><i class="fas fa-microphone"></i>+82 053-421-2460</li>
+									<li><i class="fas fa-envelope"></i> <a href="mailto:info@example.com">info@miraclemind.com</a></li>
 								</ul>
 							</div>
 						</div>
@@ -85,12 +79,12 @@
 			<div class="inner-box clearfix">
 				<div class="copyright pull-left">
 					<p>
-						<a href="index.html">Docpro</a> &copy; 2020 All Right Reserved
+						<a href="index.html">Miracle Mind</a> &copy; 2021 All Right Reserved
 					</p>
 				</div>
 				<ul class="footer-nav pull-right clearfix">
-					<li><a href="index.html">Terms of Service</a></li>
-					<li><a href="index.html">Privacy Policy</a></li>
+					<li><a href="#">Terms of Service</a></li>
+					<li><a href="#">Privacy Policy</a></li>
 				</ul>
 			</div>
 		</div>

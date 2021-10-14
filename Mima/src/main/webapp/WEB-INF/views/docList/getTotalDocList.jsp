@@ -248,7 +248,6 @@
 	 /* 타이틀 클릭 시 상세페이지로 넘어가면서 페이지넘&어마운트 같이 가져가기 */
 	 $(".move").on('click', function(e){
 		 e.preventDefault();
-		 $('#meditationNo').remove();
 		 actionForm.append('<input type="hidden" id="memberNo" name="memberNo" value="'+ $(this).attr("href") +'">');
 		 actionForm.attr("action", "docProfileDetail");
 		 actionForm.submit();
