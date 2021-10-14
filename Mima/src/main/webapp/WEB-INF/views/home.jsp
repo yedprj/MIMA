@@ -106,8 +106,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="정신분석">
 							</a>
 						</div>
 					</div>
@@ -133,8 +134,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="스트레스">
 							</a>
 						</div>
 					</div>
@@ -160,8 +162,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="기분">
 							</a>
 						</div>
 					</div>
@@ -187,8 +190,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="신경증">
 							</a>
 						</div>
 					</div>
@@ -214,8 +218,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="직장인">
 							</a>
 						</div>
 					</div>
@@ -241,8 +246,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="중독">
 							</a>
 						</div>
 					</div>
@@ -268,8 +274,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="노인">
 							</a>
 						</div>
 					</div>
@@ -295,8 +302,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="해리">
 							</a>
 						</div>
 					</div>
@@ -850,6 +858,174 @@
 <!-- testimonial-style-two end -->
 
 
-<script>
 
+<!-- news-section -->
+<section class="news-section pt-115">
+	<div class="auto-container">
+		<div class="sec-title centred">
+			<p>News & Article</p>
+			<h2>Stay Update With Docpro</h2>
+		</div>
+		<div class="row clearfix">
+			<div class="col-lg-4 col-md-6 col-sm-12 news-block">
+				<div class="news-block-one wow fadeInUp animated animated"
+					data-wow-delay="00ms" data-wow-duration="1500ms">
+					<div class="inner-box">
+						<figure class="image-box">
+							<img src="${pageContext.request.contextPath}/resources/assets/images/news/news-1.jpg" alt="">
+							<a href="blog-details" class="link"><i class="fas fa-link"></i></a>
+							<span class="category">Featured</span>
+						</figure>
+						<div class="lower-content">
+							<h3>
+								<a href="blog-details.html">Including animation in your
+									design system</a>
+							</h3>
+							<ul class="post-info">
+								<li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-1.png" alt=""><a
+									href="index.html">Eva Green</a></li>
+								<li>April 10, 2020</li>
+							</ul>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing sed.</p>
+							<div class="link">
+								<a href="blog-details.html"><i class="icon-Arrow-Right"></i></a>
+							</div>
+							<div class="btn-box">
+								<a href="blog-details.html" class="theme-btn-one">Read more<i
+									class="icon-Arrow-Right"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 news-block">
+				<div class="news-block-one wow fadeInUp animated animated"
+					data-wow-delay="300ms" data-wow-duration="1500ms">
+					<div class="inner-box">
+						<figure class="image-box">
+							<img src="${pageContext.request.contextPath}/resources/assets/images/news/news-2.jpg" alt="">
+							<a href="blog-details" class="link"><i class="fas fa-link"></i></a>
+							<span class="category">Featured</span>
+						</figure>
+						<div class="lower-content">
+							<h3>
+								<a href="blog-details.html">Baking can be done with a few
+									things.</a>
+							</h3>
+							<ul class="post-info">
+								<li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-2.png" alt=""><a
+									href="index.html">George Clooney</a></li>
+								<li>April 09, 2020</li>
+							</ul>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing sed.</p>
+							<div class="link">
+								<a href="blog-details.html"><i class="icon-Arrow-Right"></i></a>
+							</div>
+							<div class="btn-box">
+								<a href="blog-details.html" class="theme-btn-one">Read more<i
+									class="icon-Arrow-Right"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 news-block">
+				<div class="news-block-one wow fadeInUp animated animated"
+					data-wow-delay="600ms" data-wow-duration="1500ms">
+					<div class="inner-box">
+						<figure class="image-box">
+							<img src="${pageContext.request.contextPath}/resources/assets/images/news/news-3.jpg" alt="">
+							<a href="blog-details" class="link"><i class="fas fa-link"></i></a>
+							<span class="category">Featured</span>
+						</figure>
+						<div class="lower-content">
+							<h3>
+								<a href="blog-details.html">Great food is not just eating
+									energy.</a>
+							</h3>
+							<ul class="post-info">
+								<li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-3.png" alt=""><a
+									href="index.html">George Clooney</a></li>
+								<li>April 08, 2020</li>
+							</ul>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing sed.</p>
+							<div class="link">
+								<a href="blog-details.html"><i class="icon-Arrow-Right"></i></a>
+							</div>
+							<div class="btn-box">
+								<a href="blog-details.html" class="theme-btn-one">Read more<i
+									class="icon-Arrow-Right"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- news-section end -->
+
+
+<!-- agent-section -->
+<section class="agent-section">
+	<div class="auto-container">
+		<div class="inner-container bg-color-2">
+			<div class="row clearfix">
+				<div class="col-lg-6 col-md-12 col-sm-12 left-column">
+					<div class="content_block_3">
+						<div class="content-box">
+							<h3>Emergency call</h3>
+							<div class="support-box">
+								<div class="icon-box">
+									<i class="fas fa-phone"></i>
+								</div>
+								<span>Telephone</span>
+								<h3>
+									<a href="tel:11165458856">+(111) 65_458_856</a>
+								</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-12 col-sm-12 right-column">
+					<div class="content_block_4">
+						<div class="content-box">
+							<h3>Sign up for Email</h3>
+							<form action="index.html" method="post" class="subscribe-form">
+								<div class="form-group">
+									<input type="email" name="email" placeholder="Your Email"
+										required="">
+									<button type="submit" class="theme-btn-one">
+										Submit now<i class="icon-Arrow-Right"></i>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<form id="frm" style="display: none;" action="subjectDoclist" method="post">
+		<input id="category1" name="category1">
+		<input id="category2" name="category2">
+		<input id="category3" name="category3">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		<button type="submit"></button>
+	</form>
+</section>
+<!-- agent-section -->
+
+<script>
+	function docSubjectProfile(ths){
+		
+		var subject = $(ths).children("#subject").val();
+		
+		var category1 = $('#category1').val(subject);
+		var category2 = $('#category2').val(subject);
+		var category3 = $('#category3').val(subject);
+		
+		$('#frm').find('button').click();
+		
+	}
 </script>

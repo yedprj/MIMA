@@ -83,7 +83,7 @@
 
 	<!--s:1008 전체 의사 숫자 total  count -->
 	<select id="totalDocNumCount" resultType="int">
-		SELECT COUNT(*) FROM 
+		 SELECT COUNT(*) FROM
 		 (
          SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
 				ROWNUM RN,
@@ -174,5 +174,23 @@
 		FROM PARTNER_DOCTOR
 		WHERE MEMBER_NO = #{memberNo}
 	</select>
-
+	
+	<!-- 닥터 진료과목에 따라 리스트 출력 P.10/14 -->
+	<select id="subjectDoclist" resultType="DocInfoVO">
+		SELECT M.MEMBER_NO,
+			   M.NAME,
+			   M.GENDER,
+			   M.ADDR1,
+			   D.PROFILE_PHOTO,
+			   D.PROFILE_CONTENTS,
+			   D.PROFILE_EDUCATION,
+			   D.COMMENTSCNT
+		FROM MEMBER M JOIN PARTNER_DOCTOR D
+		ON (M.MEMBER_NO = D.MEMBER_NO)
+		JOIN MENTAL_SUBJECT S
+		ON (D.MEMBER_NO = S.DOC_NO)
+		WHERE S.CATEGORY_1 = #{category1}
+		OR S.CATEGORY_2 = #{category2}
+		OR S.CATEGORY_3 = #{category3}
+	</select>
 </mapper>

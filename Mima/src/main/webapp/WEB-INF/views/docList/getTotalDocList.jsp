@@ -25,7 +25,7 @@
             <div class="lower-content">
                 <div class="auto-container">
                     <ul class="bread-crumb clearfix">
-                        <li><a href="">Home</a></li>
+                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                         <li>전체 의사 리스트</li>
                     </ul>
                 </div>
