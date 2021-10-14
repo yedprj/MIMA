@@ -8,6 +8,7 @@ import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
@@ -68,6 +69,9 @@ public interface PatientsMapper {
 	
 	//전체 데이터 수 조회 진료내역 페이징 e.6
 	public int getTotalPthCount(Criteria cri);
+	
+	//환자대쉬보드 내가 찜한 의사 e.14
+	public List<DocInfoVO> ptDoctor();
 	
 	//환자대쉬보드 Main 나의후기 e.5
 	public List<CommentsVO> ptMainreList(int memberNo);

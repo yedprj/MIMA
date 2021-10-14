@@ -111,11 +111,11 @@
 									<div class="row clearfix">
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>이름</label> <input type="text"
-												value="${ptMyProfile.name }" required="">
+												value="${ptMyProfile.name }" required="" disabled>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>아이디</label> <input type="text"
-												value="${ptMyProfile.memberId }" required="">
+												value="${ptMyProfile.memberId }" required="" disabled>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>이메일</label> <input type="text"
@@ -127,11 +127,11 @@
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>성별</label> <input type="text"
-												value="${ptMyProfile.gender }" required="">
+												value="${ptMyProfile.gender }" required="" disabled>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>주민등록번호</label> <input type="text"
-												value="${ptMyProfile.identifyNo }" required="">
+												value="${ptMyProfile.identifyNo }" required="" disabled>
 										</div>
 									</div>
 								</div>
@@ -181,6 +181,30 @@
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
 		
+		
+		//사진 미리보기
+    	const input = document.getElementById('fileInput');
+    	const profileImg =document.getElementById('profileImg');
+    	//var videoSource=document.createElement('source');
+    	//videoSource.setAttribute('src', "c:upload/"+datas.uuid+datas.vfileName);
+    	
+    	input.addEventListener('change', function() {
+    	  const files = this.files || [];
+
+    	  if (!files.length) return;
+    	  
+    	  const reader = new FileReader();
+
+    	  reader.onload = function (e) {
+    		profileImg.setAttribute('src', e.target.result);
+    	  };
+    	  
+    	  reader.onprogress = function (e) {
+    	    console.log('progress: ', Math.round((e.loaded * 100) / e.total));
+    	  };
+    	  
+    	  reader.readAsDataURL(files[0]);
+    	});//End of 비디오 미리보기
 		
 		/* var result = '<c:out value="${result}"/>';
 
