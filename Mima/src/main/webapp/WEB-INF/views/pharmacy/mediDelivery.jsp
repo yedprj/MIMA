@@ -215,7 +215,9 @@
 														<span class="status pending">신청접수</span>
 													</c:if>
                                               </td>
-                                              <td class="text-center"><p>${phaDel.ptEducation }</p></td>
+                                              <td class="text-center"><c:if test="${phaDel.ptEducation eq 'n'}">
+														<p>O</p>
+													</c:if></td>
                                               <td>
                                                   
                                               </td>

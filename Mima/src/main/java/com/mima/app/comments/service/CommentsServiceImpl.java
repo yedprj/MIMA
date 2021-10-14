@@ -100,5 +100,11 @@ public class CommentsServiceImpl implements CommentsService {
 	public List<CommentsVO> docReviewPageOldest(Criteria cri, int memberNo) {
 		return commentsMapper.docReviewPageOldest(cri, memberNo);
 	}
+
+	// K.10/14 약국 리뷰 조회
+	@Override
+	public List<CommentsVO> phaReviewList(int cmainNo) {
+		return commentsMapper.phaReviewList(cmainNo);
+	}
 	
 }

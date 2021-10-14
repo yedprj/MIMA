@@ -39,5 +39,8 @@ public interface CommentsService {
 		
 		// 닥터 대쉬보드 나의 후기 페이지 페이징_J13
 		public int docReviewCount(Criteria cri, int memberNo);
+		
+		// K.10/14 약국 리뷰 조회
+		public List<CommentsVO> phaReviewList(int cmainNo);
 
 }

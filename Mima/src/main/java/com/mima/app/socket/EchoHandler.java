@@ -19,14 +19,20 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
+import com.mima.app.session.service.ConsultationService;
+
+import lombok.extern.java.Log;
+
 
 //s:1009 https://stothey0804.github.io/project/WebSocketExam/ 참고 로그인중인 유저에게 알람보내기
 
+@Log
 @Controller
 @RequestMapping("/socket/*")
 public class EchoHandler extends TextWebSocketHandler{
 	
 	@Autowired BookingService bookingService;
+	@Autowired ConsultationService consultationService;
 	
 	//로그인한 전체 유저
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
@@ -58,7 +64,9 @@ public class EchoHandler extends TextWebSocketHandler{
 			System.out.println(users+" users 보기");
 			sessions.add(session); //전체 유저에 저장(이거 근데 필요 없을거같은데)
 		}
+		System.out.println(users);
 	}
+	
 	// 클라이언트가 Data 전송 시
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -67,11 +75,20 @@ public class EchoHandler extends TextWebSocketHandler{
 		System.out.println(senderId);
 		// 특정 유저에게 보내기
 		String msg = message.getPayload();
-		System.out.println(msg);
+		System.out.println("url 받아온 것 "+msg);
+		
+		String bknum = msg.substring(msg.lastIndexOf("=")+1);
+		int num = Integer.parseInt(bknum);
+		String ptId = consultationService.checkPtId(num);
+		log.info("환자아이디======="+ptId);
 		if(msg != null) {
 			TextMessage tmpMsg = new TextMessage("<a target=\"_blank\" href="+msg+">진료실이 준비되었습니다. 이동하기</a>");
+			TextMessage confirmMsg = new TextMessage("<p>환자께 알림을 보냈습니다.</p>");
 			System.out.println(tmpMsg.toString());
-			users.get("user1").sendMessage(tmpMsg);
+			if(users.get(ptId) != null) {
+				users.get(ptId).sendMessage(tmpMsg);				
+			}
+			users.get(senderId).sendMessage(confirmMsg);
 			System.out.println("msg sent");
 		}
 	}

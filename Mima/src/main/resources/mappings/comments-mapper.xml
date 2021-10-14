@@ -220,5 +220,18 @@
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	<!-- 페이징 end -->
+	
+	
+	<!-- K. 10/14 약국 후기 조회-->
+	<select id="phaReviewList" resultType="CommentsVO">
+		SELECT C.*, 
+			   M.NICKNAME,
+			   M.GENDER
+		FROM COMMENTS C , MEMBER M
+		WHERE C.COMMENT_WRITER_NO = M.MEMBER_NO
+		AND C.CMAIN_CATEGORY = 'pha'
+		AND C.CMAIN_NO = #{cmainNo}
+		ORDER BY CNO DESC
+	</select>
 
 </mapper>

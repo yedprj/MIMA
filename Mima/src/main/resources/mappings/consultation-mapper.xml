@@ -38,4 +38,34 @@
 	    )
 </insert>
 
+<select id="checkPtId" resultType="String">
+	select member_id from member where member_no=(select pt_no from booking where booking_no=#{bookingNo})
+</select>
+
+<update id="medInsert">
+	update consultation set
+	prescription =#{prescription} where booking_no = #{bookingNo}
+</update>
+
+<insert id="medDeliveryInsert">
+	INSERT INTO MED_DELIVERY
+    		(	MED_DELIVERY_NO,
+				PHARMACY_NO,
+				BOOKING_NO,
+				PRESCRIPTION
+			)
+	VALUES
+		(
+			SEQ_MED_DELIVERY.NEXTVAL,
+			(SELECT DEL_PHARMACY_NO FROM PATIENTS WHERE MEMBER_NO= (SELECT PT_NO FROM BOOKING WHERE BOOKING_NO =#{bookingNo})),
+			#{bookingNo},
+			#{prescription}
+		)
+</insert>
+
+<select id="getSessionInfo" resultType="PtInfoVO">
+
+</select>
+
+
 </mapper>

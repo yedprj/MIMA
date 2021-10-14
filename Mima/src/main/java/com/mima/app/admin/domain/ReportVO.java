@@ -18,4 +18,5 @@ public class ReportVO {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date checkDate;			// 신고 확인일
 	private String reportResult;	// 신고 조치 여부
+	
 }
