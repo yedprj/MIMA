@@ -101,6 +101,19 @@ public class PatientsController {
 		return "patients/ptHistory";
 	}
 	
+	//환자대쉬보드 내가 찜한 의사 e.14
+	@GetMapping("patients/ptDoctor")
+	public String ptDoctor(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = vo.getMemberNo();
+		
+		model.addAttribute("ptDoctorList", patientsService.ptDoctor());
+		return "patients/ptDoctor";
+	}
+	
 	//환자대쉬보드 나의후기 페이지 e.5
 	@GetMapping("patients/ptReview")
 	public String ptReview(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
