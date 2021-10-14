@@ -93,6 +93,10 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 		return partnerDoctorMapper.clinicName(memberNo);
 	}
 
-
+	// p.10/14 의사 진료과목에 대한 리스트
+	@Override
+	public List<DocInfoVO> subjectDoclist(String category1, String category2, String category3) { 
+		return partnerDoctorMapper.subjectDoclist(category1, category2, category3);
+	}
 
 }

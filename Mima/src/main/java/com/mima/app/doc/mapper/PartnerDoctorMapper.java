@@ -35,4 +35,7 @@ public interface PartnerDoctorMapper {
 	
 	// 닥터 대쉬보드 병원 이름_J13
 	public String clinicName(int memberNo);
+	
+	// p.10/14 의사 진료과목에 대한 리스트
+	public List<DocInfoVO> subjectDoclist(@Param("category1") String category1, @Param("category2") String category2, @Param("category3") String category3);
 }

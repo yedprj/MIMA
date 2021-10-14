@@ -489,6 +489,7 @@
     			targetLi.remove();
     			//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
     			$(preview).removeAttr('src');
+    			$(preview).attr('src', "${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png");
     			
     		}
     	});//end of attachment btn delete event

@@ -106,8 +106,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="정신분석">
 							</a>
 						</div>
 					</div>
@@ -133,8 +134,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="스트레스">
 							</a>
 						</div>
 					</div>
@@ -160,8 +162,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="기분">
 							</a>
 						</div>
 					</div>
@@ -187,8 +190,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="신경증">
 							</a>
 						</div>
 					</div>
@@ -214,8 +218,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="직장인">
 							</a>
 						</div>
 					</div>
@@ -241,8 +246,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="중독">
 							</a>
 						</div>
 					</div>
@@ -268,8 +274,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="노인">
 							</a>
 						</div>
 					</div>
@@ -295,8 +302,9 @@
 							<a href="doctors-dashboard.html"><i class="icon-Arrow-Right"></i></a>
 						</div>
 						<div class="btn-box">
-							<a href="doctors-dashboard.html" class="theme-btn-one">View
+							<a href="javascript:void(0);" class="theme-btn-one" onclick="docSubjectProfile(this)">View
 								List<i class="icon-Arrow-Right"></i>
+								<input type="hidden" id="subject" name="subject" value="해리">
 							</a>
 						</div>
 					</div>
@@ -997,10 +1005,27 @@
 			</div>
 		</div>
 	</div>
+	<form id="frm" style="display: none;" action="subjectDoclist" method="post">
+		<input id="category1" name="category1">
+		<input id="category2" name="category2">
+		<input id="category3" name="category3">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		<button type="submit"></button>
+	</form>
 </section>
 <!-- agent-section -->
 
 
 <script>
-
+	function docSubjectProfile(ths){
+		
+		var subject = $(ths).children("#subject").val();
+		
+		var category1 = $('#category1').val(subject);
+		var category2 = $('#category2').val(subject);
+		var category3 = $('#category3').val(subject);
+		
+		$('#frm').find('button').click();
+		
+	}
 </script>

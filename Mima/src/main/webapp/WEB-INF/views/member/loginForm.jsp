@@ -75,8 +75,7 @@
 								</div>
 							</div>
 
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
 							<div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
 								<button type="submit" class="theme-btn-one">
