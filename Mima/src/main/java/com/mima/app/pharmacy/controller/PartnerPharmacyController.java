@@ -78,6 +78,13 @@ public class PartnerPharmacyController {
 	}
 	
 	// 약배달 상태 업데이트
+	@PostMapping("/ptEduStatusUpdate")
+	@ResponseBody
+	public int ptEduStatusUpdate(int bookingNo) {
+		return deliverSerive.ptEduStatusUpdate(bookingNo);
+	}
+	
+	// 약배달 상태 업데이트
 	@PostMapping("/deliveryStatusUpdate")
 	@ResponseBody
 	public int deliveryStatusUpdate(MedDeliveryVO vo) {

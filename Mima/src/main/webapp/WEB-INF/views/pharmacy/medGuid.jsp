@@ -197,7 +197,7 @@
 													</c:if>
                                               </td>
                                               <td>
-                                                  <span class="cancel" data-no="${del.bookingNo}" data-name="${del.name}"><i class="fas fa-pencil-alt"></i>복약지도완료</span>
+                                                  <span class="cancel" data-no="${ptEdu.bookingNo}" data-name="${del.name}"><i class="fas fa-pencil-alt"></i>복약지도완료</span>
                                               </td>
                                           </tr>
                                           </c:forEach>
@@ -233,4 +233,47 @@
 		$("[name='pageNum']").val(p)
 		$("#medGuid").submit();
 	});
+	
+	$(function(){
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
+		});
+		
+		// "cancel" btn - 복약지도 완료
+		$("#trList > td").on("click",".cancel",function(){
+			$("#message").val("");
+			var bookingNo = $(this).data("no");
+			var name = $(this).data("name");
+			var thisTr = $(this).parent().parent();
+			
+			var result = confirm("복약지도가 완료되었습니까?");
+			
+			if(result){
+				$.ajax({
+					url : 'ptEduStatusUpdate',
+					type : 'post',
+					data : { 
+						bookingNo : bookingNo
+					},
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},		 
+					success : function(data) {
+						if(data > 0 ){
+							console.log(data);
+							thisTr.remove();
+						}else {
+							alert("성공적으로 처리되지 못했습니다.")
+						}
+					}
+				});// ajax end
+			} else { return; } 
+			
+			
+		}); // 반환 btn end
+	
+	}); // function end
 </script>

@@ -70,4 +70,10 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 		return deliveryMapper.ptEducation(pharmacyNo, cri);
 	}
 
+	// K. 10/14 복약지도 완료처리
+	@Override
+	public int ptEduStatusUpdate(int bookingNo) {
+		return deliveryMapper.ptEduStatusUpdate(bookingNo);
+	}
+
 }

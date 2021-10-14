@@ -119,6 +119,13 @@
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
 
+<!-- 배달 상태변경 -->
+<update id="ptEduStatusUpdate">
+	UPDATE MED_DELIVERY
+		SET PT_EDUCATION = 'y'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
+
 <!-- 취소이유 등록 -->
 <update id="delCancel">
 	UPDATE MED_DELIVERY

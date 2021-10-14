@@ -37,4 +37,6 @@ public interface MedDeliveryMapper {
 	// K. 10/14 복약지도관리
 	public List<MemDeliveryVO> ptEducation(@Param("pharmacyNo") int pharmacyNo,@Param("cri") Criteria cri);
 	
+	// K.10/14 복약지도 완료처리
+	public int ptEduStatusUpdate(int bookingNo);
 }
