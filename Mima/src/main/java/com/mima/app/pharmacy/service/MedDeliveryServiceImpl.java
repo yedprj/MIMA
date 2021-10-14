@@ -33,4 +33,16 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 		return deliveryMapper.deliveryStatusUpdate(vo);
 	}
 
+	// K.10/14 약배달 취소
+	@Override
+	public int delCancel(MedDeliveryVO vo) {
+		return deliveryMapper.delCancel(vo);
+	}
+
+	// K.10/14 약국별 약배달 현황
+	@Override
+	public List<MedDeliveryVO> phaSelectOne(int pharmacyNo) {
+		return deliveryMapper.phaSelectOne(pharmacyNo);
+	}
+
 }

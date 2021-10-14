@@ -7,6 +7,14 @@
 	WHERE BOOKING_NO = #{bookingNo}
 </select>
 
+<select id="phaSelectOne" resultType="medDeliveryVO">
+	SELECT M.*, MM.NAME, B.CONSULT_DATE
+	FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
+	WHERE M.BOOKING_NO = B.BOOKING_NO
+	AND B.PT_NO = MM.MEMBER_NO
+	AND PHARMACY_NO = #{pharmacyNo}
+</select>
+
 <select id="memDelivery" resultType="memDeliveryVO">
 	SELECT  M.PHARMACY_NO, 
 			MM.NAME, 
@@ -33,6 +41,12 @@
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
 
+<update id="delCancel">
+	UPDATE MED_DELIVERY
+	SET DELIVERY_DECLINE = #{deliveryDecline},
+	DELIVERY_STATUS = 'c'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
 
 
 </mapper>

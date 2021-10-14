@@ -20,4 +20,5 @@ public interface PartnerPharmacyMapper {
 	// k.10/11 - 약국 수정시 멤버 주소 변경
 	public int phaAddrUpdate(MemberVO vo);
 	
+	
 }

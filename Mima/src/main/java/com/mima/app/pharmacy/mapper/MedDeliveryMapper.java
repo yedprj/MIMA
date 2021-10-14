@@ -15,4 +15,10 @@ public interface MedDeliveryMapper {
 	
 	// K.10/13 약배달 상태 변경
 	public int deliveryStatusUpdate(MedDeliveryVO vo);
+	
+	// k. 10/14 약배달 취소
+	public int delCancel(MedDeliveryVO vo);
+	
+	// K.10/14 약배달 목록 조회
+	public List<MedDeliveryVO> phaSelectOne(int pharmacyNo);
 }

@@ -73,6 +73,16 @@
 	padding-right: 0px;
     padding-left: 0px;
 }
+.doctors-appointment .doctors-table tr td .status.pending {
+    margin-right: 30px;
+}
+.doctors-appointment .doctors-table tr td .status {
+	margin-right: 30px;
+}
+
+.doctors-appointment .doctors-table tr td .accept {
+	margin-right: 80px;
+}
 </style>
 
 <!--page-title-two-->
@@ -162,40 +172,63 @@
                                 </div>
                             </div>
                             <!-- 1번 -->
-	                            <div class="single-item">
-	                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/appointment-1.jpg" alt=""></figure>
-	                                <div class="inner">
-	                                    <h4>Mary Astor</h4>
-	                                    <ul class="info-list clearfix">
-	                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-	                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-	                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-	                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-	                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-	                                    </ul>
-	                                    <ul class="confirm-list clearfix">
-	                                        <li><i class="fas fa-check"></i>Accept</li>
-	                                        <li><i class="fas fa-times"></i>Cancel</li>
-	                                    </ul>
-	                                </div>
-	                            </div> 
-	                            <div class="single-item">
-	                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/appointment-2.jpg" alt=""></figure>
-	                                <div class="inner">
-	                                    <h4>Rex Allen</h4>
-	                                    <ul class="info-list clearfix">
-	                                        <li><i class="fas fa-clock"></i>15 Oct 2020, 09:30AM</li>
-	                                        <li><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</li>
-	                                        <li><i class="fas fa-hourglass-start"></i>Cardiology Test, Diabetic Diagnose</li>
-	                                        <li><i class="fas fa-envelope"></i><a href="mailto:anna@example.com">anna@example.com</a></li>
-	                                        <li><i class="fas fa-phone"></i><a href="tel:2265458856">+(22) 65_458_856</a></li>
-	                                    </ul>
-	                                    <ul class="confirm-list clearfix">
-	                                        <li><i class="fas fa-check"></i>Accept</li>
-	                                        <li><i class="fas fa-times"></i>Cancel</li>
-	                                    </ul>
-	                                </div>
-	                            </div>
+	                            <div class="doctors-list">
+                              <div class="table-outer">
+                                  <table class="doctors-table">
+                                      <thead class="table-header">
+                                          <tr>
+                                              <th>신청번호</th>
+                                              <th>신청이름</th>
+                                              <th>신청일자</th>
+                                              <th>취소(사유)</th>
+                                              <th>배달상태</th>
+                                              <th>복약지도상태</th>
+                                              <th>&nbsp;</th>
+                                              <th>&nbsp;</th>
+                                          </tr>    
+                                      </thead>
+                                      <tbody>
+                                      	<c:forEach var="phaDel" items="${phaDelivery}">
+                                          <tr id="trList">
+                                              <td><p>${phaDel.medDeliveryNo}</p></td>
+                                              <td>
+                                                  <div class="name-box">
+                                                      <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
+                                                      <h5>${phaDel.name}</h5>
+                                                  </div>
+                                              </td>
+                                              <td><p><fmt:formatDate value="${phaDel.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
+                                              <td><p id="delMemo"><c:if test="${not empty phaDel.deliveryDecline}">취소 O</c:if></p>
+                                              	<c:if test="${not empty phaDel.deliveryDecline}"><div id="delMemoHidden">${phaDel.deliveryDecline}</div></c:if>
+                                              </td>
+                                              <td class="text-center">
+                                              		<c:if test="${phaDel.deliveryStatus eq 'p'}">
+														<span class="status">배달완료</span>
+													</c:if>
+													<c:if test="${phaDel.deliveryStatus eq 'y'}">
+														<span class="status pending">배달예정</span>
+													</c:if>
+													<c:if test="${phaDel.deliveryStatus eq 'c'}">
+														<span class="status cancel">신청취소</span>
+													</c:if>
+													<c:if test="${phaDel.deliveryStatus eq 'n'}">
+														<span class="status pending">신청접수</span>
+													</c:if>
+                                              </td>
+                                              <td class="text-center"><p>${phaDel.ptEducation }</p></td>
+                                              <td>
+                                                  
+                                              </td>
+                                              <td>
+                                                  
+                                              </td>
+                                          </tr>
+                                          </c:forEach>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+	                            
                         	</div>
                         </div>
 	                        <!-- 1번 끝 -->
@@ -257,7 +290,9 @@
                                                   <span class="accept" data-no="${del.bookingNo}" data-name="${del.name}"><i class="fas fa-pencil-alt"></i>배달등록</span>
                                               </td>
                                               <td>
-                                                  <span class="cancel" data-no="${del.bookingNo}" data-name="${del.name}"><i class="fas fa-times"></i>반환</span>
+                                                  <span class="cancel" data-no="${del.bookingNo}" 
+                                                  	data-phano="${del.pharmacyNo}"
+                                                  data-name="${del.name}"><i class="fas fa-times"></i>반환</span>
                                               </td>
                                           </tr>
                                           </c:forEach>
@@ -321,7 +356,7 @@
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                                 <label>(취소사유)</label>
-                                                <textarea name="message" placeholder="취소하는 구체적인 이유를 고객님께 전달하세요..."></textarea>
+                                                <textarea id="message" name="message" placeholder="취소하는 구체적인 이유를 고객님께 전달하세요..."></textarea>
                                             </div>
                                         </div>
                                     </form>
@@ -408,9 +443,15 @@
 		
 		// 반환 btn
 		$("#trList > td").on("click",".cancel",function(){
+			$("#message").val("");
 			var bookingNo = $(this).data("no");
 			var name = $(this).data("name");
+			var pharmacyNo = $(this).data("data-phano");
+			var thisTr = $(this).parent().parent();
+			
 			$("input[name='customerName']").val(name);
+			$("#returnPhaNo").val(pharmacyNo);
+			$("#returnBookingNo").val(bookingNo);
 			
 			$(".modal").fadeIn();			
 			  
@@ -420,7 +461,35 @@
 			
 			$("#delReturnBtn").click(function(){
 				
-			});
+				var message = $("#message").val();
+				if (message == ''){
+					alert("취소하는 사유를 간단하게 적어주세요!");
+					return;
+				}else {
+					$.ajax({
+						url : 'delCancel',
+						type : 'post',
+						data : { 
+							bookingNo : bookingNo,
+							deliveryStatus : "c",
+							deliveryDecline : message
+						},
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						},		 
+						success : function(data) {
+							if(data > 0 ){
+								console.log(data);
+								alert("약배달 신청이 취소되었습니다.")
+								$(".modal").fadeOut();
+								thisTr.remove();
+							}else {
+								alert("배송등록이 실패했습니다!")
+							}
+						}
+					});// ajax end
+				}
+			}); // cancelBtn end
 			
 			
 			
