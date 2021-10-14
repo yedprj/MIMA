@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mima.app.comments.service.CommentsService;
+import com.mima.app.criteria.domain.Criteria;
+import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.service.MemberService;
@@ -39,6 +43,7 @@ public class PartnerPharmacyController {
 	@Autowired MedDeliveryService deliverSerive;
 	@Autowired MemberService memberSerivce;
 	@Autowired BCryptPasswordEncoder cryptEncoder;
+	@Autowired CommentsService commentsService;
 
 	
 	
@@ -48,7 +53,16 @@ public class PartnerPharmacyController {
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
+		// 약국한건 조회
 		model.addAttribute("profile", partPhaService.selectOne(memberNo));
+		// 오늘의 배달예약수
+		model.addAttribute("cnt", deliverSerive.deliveryCnt(memberNo));
+		// 오늘의 배달관리
+		model.addAttribute("todayDel", deliverSerive.phaSelectOne(memberNo));
+		// 복약지도수
+		model.addAttribute("ptEduCnt", deliverSerive.ptEducationCnt(memberNo));
+		// 오늘의 약배달 등록 및 취소
+		model.addAttribute("delivery", deliverSerive.todayDelivery(vo.getMemberNo()));
 	}
 	
 	// 약배달 전체관리페이지 [K]210929
@@ -63,6 +77,13 @@ public class PartnerPharmacyController {
 		model.addAttribute("delivery", deliverSerive.memDelivery(vo.getMemberNo()));
 		// 약배달 현황
 		model.addAttribute("phaDelivery", deliverSerive.phaSelectOne(memberNo));
+	}
+	
+	// 약배달 상태 업데이트
+	@PostMapping("/ptEduStatusUpdate")
+	@ResponseBody
+	public int ptEduStatusUpdate(int bookingNo) {
+		return deliverSerive.ptEduStatusUpdate(bookingNo);
 	}
 	
 	// 약배달 상태 업데이트
@@ -90,7 +111,15 @@ public class PartnerPharmacyController {
 	
 	// 복약지도 관리페이지 [K]210929
 	@GetMapping("/medGuid")
-	public void medGuid() {}
+	public void medGuid(Model model, HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int total = deliverSerive.ptEducationCnt(vo.getMemberNo());
+		model.addAttribute("profile", partPhaService.selectOne(vo.getMemberNo()));
+		model.addAttribute("ptEducation",deliverSerive.ptEducation(vo.getMemberNo(),cri));
+		model.addAttribute("pageMaker", new PageVO(cri,total));
+		
+	}
 	
 	// 프로필 페이지 [K]210929
 	@GetMapping("/myProfile")
@@ -110,7 +139,11 @@ public class PartnerPharmacyController {
 	
 	// 리뷰페이지 [K]210929
 	@GetMapping("/review")
-	public void review() {
+	public void review(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		model.addAttribute("profile", partPhaService.selectOne(vo.getMemberNo()));
+		model.addAttribute("review", commentsService.phaReviewList(vo.getMemberNo()));
 	}
 	
 	// 문의페이지 [K]211006

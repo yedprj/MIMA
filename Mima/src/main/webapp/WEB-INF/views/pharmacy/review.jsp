@@ -62,7 +62,7 @@
                     <div class="outer-container">
                         <div class="review-list">
                             <div class="title-box clearfix">
-                                <div class="text pull-left"><h3>Reviews List</h3></div>
+                                <div class="text pull-left"><h3>약국 리뷰 후기</h3></div>
                                 <div class="select-box pull-right">
                                     <select class="wide">
                                        <option data-display="Any Time">Any Time</option>

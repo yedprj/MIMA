@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
-import com.mima.app.member.domain.PatientsVO;
-import com.mima.app.session.domain.BookingVO;
 
 public interface CommentsMapper {
 	//CURD
@@ -42,5 +40,8 @@ public interface CommentsMapper {
 	
 	// 닥터 대쉬보드 나의 후기 페이지 페이징_J13
 	public int docReviewCount(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
+	
+	// K.10/14 약국 리뷰 조회
+	public List<CommentsVO> phaReviewList(int cmainNo);
 
 }

@@ -20,6 +20,10 @@ public class MemDeliveryVO {
 	private String delAddr3;		// 상세주소
 	private String delPostCode;		// 우편번호
 	private String delNote;			// 배송메모
+	private String phone;			// 연락처
+	private String ptEducation;		// 복약지도
+	private String deliveryStatus;	// 배달유무
+	
 	
 
 }
