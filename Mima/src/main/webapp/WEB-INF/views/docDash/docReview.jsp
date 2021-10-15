@@ -76,37 +76,45 @@ th, td {
                     </div>
                     
                     <div class="select-box pull-right">
-                        <select class="wide" id="selectBox" name="selectBox" onchange="searchCheck()" value="${cri.keyword}">
+                        <select class="wide" id="selectBox" name="selectBox" onchange="searchCheck()">
                            <option value="latest">최신순</option>
                            <option value="oldest">오래된순</option>
                         </select>
+                        <script type="text/javascript">
+                        	$("#selectBox").val("${cri.keyword}")
+                        </script>
                     </div>
+                   
                     
                 </div>
                
                <div class="comment-inner" id="latest" style="display:block;">
                    	<c:forEach items="${docReviewPage}" var="docReviewPage">
      					<div class="single-comment-box">
-         					<div class="comment" style="padding-left: 20px;">
-             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
-					             <ul class="rating clearfix">
-					              <c:forEach var="i" begin="1" end="${docReviewPage.reviewPoint}">
-					             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
-					             	</c:forEach>
-					             	<c:forEach var="i" begin="1" end="${5-docReviewPage.reviewPoint}">
-					             		<i class="icon-Star"></i>
-					             	</c:forEach>
-					             </ul>
-             					<p>${docReviewPage.contents}</p>
-				         </div>
-				     </div>
+         					<div class="comment">
+         						<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+	             					<h4>${docReviewPage.nickname}</h4>
+	             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
+					             	<ul class="rating clearfix">
+						            	<c:forEach var="i" begin="1" end="${docReviewPage.reviewPoint}">
+						             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
+						             	</c:forEach>
+						             	<c:forEach var="i" begin="1" end="${5-docReviewPage.reviewPoint}">
+						             		<i class="icon-Star"></i>
+						             	</c:forEach>
+					                </ul>
+             						<p>${docReviewPage.contents}</p>
+				         	</div>
+				    	</div>
 				    </c:forEach>
                </div>
                
-               <div class="comment-inner" id="oldest" style="display:none;">
+               <%-- <div class="comment-inner" id="oldest" style="display:none;">
                    	<c:forEach items="${docReviewPageOldest}" var="docReviewPageOldest">
      					<div class="single-comment-box">
-         					<div class="comment" style="padding-left: 20px;">
+         					<div class="comment">
+         						<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+	             					<h4>${docReviewPageOldest.nickname}</h4>
              					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPageOldest.regDate}" pattern="yy-MM-dd"/></span>
 					             <ul class="rating clearfix">
 					              <c:forEach var="i" begin="1" end="${docReviewPageOldest.reviewPoint}">
@@ -120,22 +128,22 @@ th, td {
 				         </div>
 				     </div>
 				    </c:forEach>
-               </div>
+               </div> --%>
                
             </div>
                 <!-- pagination  -->
 				<div class="pagination-wrapper">
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous"><a href="docReview?pageNum=${pageMaker.startPage-1}">이전</a></li>
+							<li class="paginate_button previous"><a href="docReview?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
 						</c:if>
 							
 						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-							<li class="paginate_button"><a href="docReview?pageNum=${num}">${num}</a></li>
+							<li class="paginate_button"><a href="docReview?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
 						</c:forEach>
 							
 						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a href="docReview?pageNum=${pageMaker.endPage+1}">다음</a></li>
+							<li class="paginate_button next"><a href="docReview?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
 						</c:if>
 					</ul>
 				</div>
@@ -156,18 +164,20 @@ th, td {
 		function searchCheck() {
 			var choose = $("#selectBox option:selected").val();
 			
-			if (choose == 'latest') {
+		/* 	if (choose == 'latest') {
 				$("#latest").css('display', 'block');   
 				$("#oldest").css('display', 'none');
 			} else if (choose == 'oldest') {
 				$("#latest").css('display', 'none');   
 				$("#oldest").css('display', 'block');
-			}
+			} */
+			
+			location.href="docReview?pageNum=1&keyword="+choose
 		}
 		
 		$(document).ready(function() {
 			$('#selectBox').val('${cri.category}').prop("selected", true);
-			searchCheck();
+			//searchCheck();
 			
 			$("#logoutBtn1").on("click", function(){
 				$('#logOutfrm1').submit();

@@ -25,7 +25,7 @@
             <div class="lower-content">
                 <div class="auto-container">
                     <ul class="bread-crumb clearfix">
-                        <li><a href="">Home</a></li>
+                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                         <li>전체 의사 리스트</li>
                     </ul>
                 </div>
@@ -128,8 +128,11 @@
                                         <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt="">
                                         </figure>
                                         <div class="content-box">
-                                            <div class="like-box"><a href="${item.memberNo }"><i
-                                                        class="far fa-heart"></i></a></div>
+                                        <!-- e.15 like -->
+                                            <a class="like-box" href="${item.memberNo }">
+                                        <input type="hidden" name="likeMainNo" value="${item.memberNo}">
+                                            <i
+                                                        class="far fa-heart"></i></a>
                                             <ul class="name-box clearfix">
                                                 <li class="name">
                                                     <h3><a class="move" href="${item.memberNo }">Dr.${item.name } num ${item.memberNo }</a></h3>
@@ -242,6 +245,11 @@
     
     
     <script>
+    
+    var csrfHeaderName = "${_csrf.headerName}";
+    var csrfTokenValue = "${_csrf.token}";
+
+    
  $(document).ready(function() {
 	 var actionForm = $('#actionForm');
 	 
@@ -254,6 +262,29 @@
 	 });
 	 
 	 
+	 $(".like-box").on('click',function(e){
+		 e.preventDefault();
+		 console.log($('.like-box input').val());
+		 var like = $('.like-box input').val();
+		$.ajax({
+			url : "likes/likesInsert",
+			method : "post",
+			data :{
+				memberNo : "${session.memberNo}",
+				category : "doc",
+				likeMainNo: like}, 
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function() {
+				alert("좋아요가 되었습니다");
+			}
+			
+			
+		})
+		 
+	 });
+	 
 	 /* 교재 312 */
 	 $("#pageButton a").on("click", function(e){
 		 e.preventDefault(); //a tag, submit
@@ -263,7 +294,7 @@
 		 
 		 actionForm.submit();
 	 });
-
-	
     });
+  
+
 </script>

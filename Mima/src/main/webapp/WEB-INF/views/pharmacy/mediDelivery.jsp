@@ -79,9 +79,8 @@
 .doctors-appointment .doctors-table tr td .status {
 	margin-right: 30px;
 }
-
-.doctors-appointment .doctors-table tr td .accept {
-	margin-right: 80px;
+#checkIcon {
+	color : #39cabb;
 }
 </style>
 
@@ -176,7 +175,7 @@
                               <div class="table-outer">
                                   <table class="doctors-table">
                                       <thead class="table-header">
-                                          <tr>
+                                          <tr class="text-center">
                                               <th>신청번호</th>
                                               <th>신청이름</th>
                                               <th>신청일자</th>
@@ -184,12 +183,11 @@
                                               <th>배달상태</th>
                                               <th>복약지도상태</th>
                                               <th>&nbsp;</th>
-                                              <th>&nbsp;</th>
                                           </tr>    
                                       </thead>
                                       <tbody>
                                       	<c:forEach var="phaDel" items="${phaDelivery}">
-                                          <tr id="trList">
+                                          <tr class="text-center" id="trList">
                                               <td><p>${phaDel.medDeliveryNo}</p></td>
                                               <td>
                                                   <div class="name-box">
@@ -198,10 +196,10 @@
                                                   </div>
                                               </td>
                                               <td><p><fmt:formatDate value="${phaDel.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
-                                              <td><p id="delMemo"><c:if test="${not empty phaDel.deliveryDecline}">취소 O</c:if></p>
+                                              <td><p id="delMemo"><c:if test="${not empty phaDel.deliveryDecline}">취소 <i id="checkIcon" class="fas fa-check-circle"></i></c:if></p>
                                               	<c:if test="${not empty phaDel.deliveryDecline}"><div id="delMemoHidden">${phaDel.deliveryDecline}</div></c:if>
                                               </td>
-                                              <td class="text-center">
+                                              <td>
                                               		<c:if test="${phaDel.deliveryStatus eq 'p'}">
 														<span class="status">배달완료</span>
 													</c:if>
@@ -215,10 +213,9 @@
 														<span class="status pending">신청접수</span>
 													</c:if>
                                               </td>
-                                              <td class="text-center"><p>${phaDel.ptEducation }</p></td>
-                                              <td>
-                                                  
-                                              </td>
+                                              <td ><c:if test="${phaDel.ptEducation eq 'n'}">
+														<p>지도</p><i id="checkIcon" class="fas fa-check-circle"></i>
+													</c:if></td>
                                               <td>
                                                   
                                               </td>
@@ -259,7 +256,7 @@
                               <div class="table-outer">
                                   <table class="doctors-table">
                                       <thead class="table-header">
-                                          <tr>
+                                          <tr class="text-center">
                                               <th>배송인 이름</th>
                                               <th>신청일자</th>
                                               <th>주소</th>
@@ -279,7 +276,7 @@
                                                       <h5>${del.name}</h5>
                                                   </div>
                                               </td>
-                                              <td><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
+                                              <td class="text-center"><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
                                               <td><p>${del.delAddr},</p><p>${del.delAddr2}  ${del.delAddr3 }</p></td>
                                               <td class="text-center"><p>${del.delPostCode }</p></td>
                                               <td class="text-center">처방전 파일</td>
@@ -446,8 +443,9 @@
 			$("#message").val("");
 			var bookingNo = $(this).data("no");
 			var name = $(this).data("name");
-			var pharmacyNo = $(this).data("data-phano");
+			var pharmacyNo = $(this).data("phano");
 			var thisTr = $(this).parent().parent();
+			
 			
 			$("input[name='customerName']").val(name);
 			$("#returnPhaNo").val(pharmacyNo);
@@ -466,6 +464,7 @@
 					alert("취소하는 사유를 간단하게 적어주세요!");
 					return;
 				}else {
+					
 					$.ajax({
 						url : 'delCancel',
 						type : 'post',
@@ -481,12 +480,18 @@
 							if(data > 0 ){
 								console.log(data);
 								alert("약배달 신청이 취소되었습니다.")
+								
+								// socket 테스트 (보내는 번호, 받는사람 번호, 메세지가 넘어가야함)
+								socket.send("med="+bookingNo+"="+message+"="+pharmacyNo+"");
+								
 								$(".modal").fadeOut();
 								thisTr.remove();
+								
 							}else {
 								alert("배송등록이 실패했습니다!")
 							}
 						}
+						
 					});// ajax end
 				}
 			}); // cancelBtn end

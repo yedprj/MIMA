@@ -28,6 +28,7 @@ import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
+import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.member.service.MemberService;
@@ -101,6 +102,20 @@ public class PatientsController {
 		return "patients/ptHistory";
 	}
 	
+	//환자대쉬보드 내가 찜한 의사 e.14
+	@GetMapping("patients/ptDoctor")
+	public List<LikesVO> ptDoctor(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		List<LikesVO> list = new ArrayList<LikesVO>();
+		list = patientsService.ptDoctor(memberNo);
+		System.out.println(list);
+		model.addAttribute("ptDoctorList", list);
+		return list; 
+		 
+	}
+	
 	//환자대쉬보드 나의후기 페이지 e.5
 	@GetMapping("patients/ptReview")
 	public String ptReview(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
@@ -114,22 +129,6 @@ public class PatientsController {
 		model.addAttribute("ptReviewList", patientsService.ptReviewList(memberNo, cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptReview";
-	}
-	
-	//환자대쉬보드 나의문의 페이지 e.6
-	@GetMapping("patients/ptQna")
-	public String ptQna(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
-		HttpSession session = request.getSession();
-		
-		MemberVO vo = (MemberVO) session.getAttribute("session");
-		int memberNo = vo.getMemberNo();
-		
-		int total = patientsService.getTotalPtqCount(cri);
-		
-		model.addAttribute("ptQna", patientsService.ptQna(memberNo));
-		model.addAttribute("getPtqList", patientsService.getPtqList(cri));
-		model.addAttribute("pageMaker", new PageVO(cri,total));
-		return "patients/ptQna";
 	}
 	
 	// 환자 대쉬보드 비밀번호 변경 페이지 수정 폼 e.11

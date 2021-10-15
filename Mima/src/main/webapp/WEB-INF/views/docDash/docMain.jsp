@@ -169,7 +169,6 @@ th, td {
 										<th>예약일</th>
 										<th>결제금액</th>
 										<th>예약상태</th>
-										<th></th>
 									</tr>
 								</thead>
 								<tbody id="bookingList">
@@ -179,11 +178,10 @@ th, td {
 												<div class="name-box">
 													<figure class="image">
 														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
+															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png">
 													</figure>
 													<h5>${bookingList.name}</h5>
-													<!--이거 필요없음 지울게여 <span class="ptno">#${bookingList.ptNo}</span> -->
+													<span class="ptno">#${bookingList.ptNo}</span>
 												</div>
 											</td>
 											<td>${bookingList.bookingNo}</td>
@@ -200,10 +198,6 @@ th, td {
 													<span class="status pending">결제예정</span>
 												</c:if> <c:if test="${bookingList.bookingStatus eq 'c'}">
 													<span class="status cancel">취소완료</span>
-												</c:if></td>
-											<td><c:if test="${bookingList.bookingStatus eq 'p'}">
-													<a href="${bookingList.bookingNo}" class="accept move"><i class="fas fa-check"></i>진료
-														시작하기</a>
 												</c:if></td>
 										</tr>
 									</c:forEach>
@@ -234,7 +228,6 @@ th, td {
 										<th>진료일</th>
 										<th>예약일</th>
 										<th>결제금액</th>
-										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -259,16 +252,6 @@ th, td {
 													value="${getlatestapptList.bookingDate}" pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${getlatestapptList.price}" /></td>
-											<td>
-												<button class="view" id="cnote"
-													onclick="window.open('cnote?bookingNo=${getlatestapptList.bookingNo}', '진료노트', 'width=1100, height=800, scrollbars=yes')">
-													<i class="fas fa-eye"></i>진료노트
-												</button>
-												<button class="print" id="prescription"
-													onclick="window.open('prescription?bookingNo=${getlatestapptList.bookingNo}', '처방전', 'width=1100, height=800, scrollbars=yes')">
-													<i class="fas fa-print"></i>처방전
-												</button>
-											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -291,7 +274,9 @@ th, td {
 						<c:forEach items="${getlatestreviewList}"
 							var="getlatestreviewList">
 							<div class="single-comment-box">
-								<div class="comment" style="padding-left: 20px;">
+								<div class="comment">
+									<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+	             					<h4>${getlatestreviewList.nickname}</h4>
 									<span class="comment-time"><i
 										class="fas fa-calendar-alt"></i>
 									<fmt:formatDate value="${getlatestreviewList.regDate}"

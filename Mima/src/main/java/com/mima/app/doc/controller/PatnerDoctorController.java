@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -79,11 +80,14 @@ public class PatnerDoctorController {
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
 		int memberNo = mvo.getMemberNo();
 		
+		int total = bookingService.apptManageCount(cri, memberNo);
+		
 		model.addAttribute("member", mvo);
 		model.addAttribute("clinicName", clinicName(request));
-		model.addAttribute("apptList", bookingService.apptList(memberNo));
-		model.addAttribute("apptListSoon", bookingService.apptListSoon(memberNo));
-		model.addAttribute("apptListCanceled", bookingService.apptListCanceled(memberNo));
+		model.addAttribute("apptListPage", bookingService.apptListPage(cri, memberNo));
+		model.addAttribute("apptListSoonPage", bookingService.apptListSoonPage(cri, memberNo));
+		model.addAttribute("apptListCanceledPage", bookingService.apptListCanceledPage(cri, memberNo));
+		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
 		return "docDash/apptManage";
 	}
@@ -132,9 +136,12 @@ public class PatnerDoctorController {
 		int total = commentsService.docReviewCount(cri, memberNo);
 		
 		model.addAttribute("clinicName", clinicName(request));
-		model.addAttribute("docReview", commentsService.docReview(memberNo));
-		model.addAttribute("docReviewPage", commentsService.docReviewPage(cri, memberNo));
-		model.addAttribute("docReviewPageOldest", commentsService.docReviewPageOldest(cri, memberNo));
+		/* model.addAttribute("docReview", commentsService.docReview(memberNo)); */
+		if (cri.getKeyword() == null || cri.getKeyword().equals("latest")) {
+			model.addAttribute("docReviewPage", commentsService.docReviewPage(cri, memberNo));
+		} else {
+			model.addAttribute("docReviewPage", commentsService.docReviewPageOldest(cri, memberNo));
+		}
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		
 		return "docDash/docReview";
@@ -278,7 +285,7 @@ public class PatnerDoctorController {
 	
 	
 	//s:1006 첨부파일 등록 폼---의사 프로필사진
-	@PostMapping("/docAjaxInsert")
+	@PostMapping("doctor/docAjaxInsert")
 	@ResponseBody
 	// 업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
@@ -344,6 +351,16 @@ public class PatnerDoctorController {
 	public int docExperienceInsert() {
 		
 		return 1;
+	}
+	
+	// p.10/14 의사 진료과목에 따른 리스트 페이지
+	@PostMapping("/subjectDoclist")
+	public String subjectDoclist(String category1, String category2, String category3, Model model) {
+		
+		model.addAttribute("list", doctorService.subjectDoclist(category1, category2, category3));
+		model.addAttribute("category", category1);
+		
+		return "/docList/getSubjectDocList";
 	}
 	
 }

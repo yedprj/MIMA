@@ -84,14 +84,16 @@
 	<!-- 닥터 대쉬보드 메인 페이지 나의 후기 -->
 	<select id="getlatestreviewList" resultType="CommentsVO">
 		<![CDATA[
-		SELECT CMAIN_NO,
-               CONTENTS,
-               REVIEW_POINT,
-               REG_DATE
-        FROM COMMENTS
+		SELECT C.CMAIN_NO,
+               C.CONTENTS,
+               C.REVIEW_POINT,
+               C.REG_DATE,
+               M.NICKNAME
+        FROM COMMENTS C JOIN MEMBER M
+        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         WHERE ROWNUM < 6
         AND CMAIN_NO = #{memberNo}
-        ORDER BY REG_DATE DESC
+        ORDER BY C.REG_DATE DESC
 		]]>
 	</select>
 	
@@ -101,9 +103,10 @@
 		SELECT C.CMAIN_NO,
                C.CONTENTS,
                C.REVIEW_POINT,
-               C.REG_DATE
+               C.REG_DATE,
+               M.NICKNAME
         FROM COMMENTS C JOIN MEMBER M
-        ON C.CMAIN_NO = M.MEMBER_NO
+        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         AND C.CMAIN_NO = #{memberNo}
         ORDER BY C.REG_DATE DESC
 		]]>
@@ -173,7 +176,7 @@
 		SELECT COUNT(*) FROM COMMENTS
 		WHERE
 		<include refid="criteriaDocReview"></include>
-		CMAIN_NO > 0
+		CMAIN_NO = #{memberNo}
 	</select>
 
 	<!-- 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13-->
@@ -181,20 +184,22 @@
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
 					 ROWNUM RN,
-					 CMAIN_CATEGORY,
-					 CMAIN_NO,
-					 COMMENT_WRITER_NO,
-					 CONTENTS,
-					 REVIEW_POINT,
-					 REG_DATE,
-					 EDIT_DATE,
-					 CNO
-				FROM COMMENTS
+					 C.CMAIN_CATEGORY,
+					 C.CMAIN_NO,
+					 C.COMMENT_WRITER_NO,
+					 C.CONTENTS,
+					 C.REVIEW_POINT,
+					 C.REG_DATE,
+					 C.EDIT_DATE,
+					 C.CNO,
+                     M.NICKNAME
+				FROM COMMENTS C JOIN MEMBER M
+				ON C.COMMENT_WRITER_NO = M.MEMBER_NO
 				WHERE <include refid="criteriaDocReview"></include>
 						<![CDATA[
 						ROWNUM <= #{cri.pageNum} * #{cri.amount}
-				AND CMAIN_NO = #{memberNo}
-				ORDER BY REG_DATE DESC )
+				AND C.CMAIN_NO = #{memberNo}
+				ORDER BY C.REG_DATE DESC )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	
@@ -203,22 +208,72 @@
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
 					 ROWNUM RN,
-					 CMAIN_CATEGORY,
-					 CMAIN_NO,
-					 COMMENT_WRITER_NO,
-					 CONTENTS,
-					 REVIEW_POINT,
-					 REG_DATE,
-					 EDIT_DATE,
-					 CNO
-				FROM COMMENTS
+					 C.CMAIN_CATEGORY,
+					 C.CMAIN_NO,
+					 C.COMMENT_WRITER_NO,
+					 C.CONTENTS,
+					 C.REVIEW_POINT,
+					 C.REG_DATE,
+					 C.EDIT_DATE,
+					 C.CNO,
+                     M.NICKNAME
+				FROM COMMENTS C JOIN MEMBER M
+				ON C.COMMENT_WRITER_NO = M.MEMBER_NO
 				WHERE <include refid="criteriaDocReview"></include>
 						<![CDATA[
 						ROWNUM <= #{cri.pageNum} * #{cri.amount}
-				AND CMAIN_NO = #{memberNo}
-				ORDER BY REG_DATE )
+				AND C.CMAIN_NO = #{memberNo}
+				ORDER BY C.REG_DATE )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	<!-- 페이징 end -->
+	
+	<sql id="criteriaPhaReview">
+		<trim prefix="AND(" suffix=") " prefixOverrides="OR">
+			<foreach collection="#{cri.typeArr}" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="type == 'N'.toString()">
+							NICKNAME LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+
+						<when test="type =='C'.toString()">
+							CONTENT LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	
+	<!-- K. 10/14 약국 후기 조회-->
+	<select id="phaReviewList" resultType="CommentsVO">
+		SELECT *
+		FROM(
+		        SELECT ROWNUM RN, C.*, 
+		                    M.NICKNAME,
+		                    M.GENDER
+				FROM COMMENTS C , MEMBER M
+				WHERE C.COMMENT_WRITER_NO = M.MEMBER_NO
+				AND C.CMAIN_CATEGORY = 'pha'
+				AND C.CMAIN_NO = #{cmainNo}
+				<include refid="criteriaPhaReview"></include>
+	        	<![CDATA[
+	        	and ROWNUM <= #{cri.pageNum} * #{cri.amount}
+		        ORDER BY C.CNO DESC
+		        )
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	
+	<!-- K.10/14 약국 후기 수 -->
+	<select id="phaReviewCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM COMMENTS C , MEMBER M
+		WHERE C.COMMENT_WRITER_NO = M.MEMBER_NO
+		AND C.CMAIN_CATEGORY = 'pha'
+		AND C.CMAIN_NO = #{cmainNo}
+	</select>
 
 </mapper>

@@ -1,5 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<style>
+#delMemo {
+	position: relative; 
+	top: 0px; 
+	transition: top 0.1s;
+	cursor : pointer;
+}
+#delMemo:hover {
+	color : #39cabb;
+	cursor : pointer;
+}
+#trList td {
+    position: relative;
+}
+#delMemoHidden {
+	display: none;
+  	position: absolute;
+  	width: 150px;
+  	padding: 8px;
+  	left: 0;
+  	-webkit-border-radius: 8px;
+  	-moz-border-radius: 8px;  
+  	border-radius: 8px;
+  	background: #ebfaf8;;
+  	color: #39cabb;
+  	z-index : 100;
+	}
+#delMemo:hover + #delMemoHidden {
+  display: block;
+}
+.doctors-appointment .doctors-table tr td p {
+    font-size: 16px;
+    line-height: 18px;
+    color: #061a3a;
+    padding: 5px 30px
+ }
+ .accept, .cancel{
+ 	cursor : pointer;
+ }
+</style>
+
 <!--page-title-two-->
 <section class="page-title-two">
 	<div class="title-box centred bg-color-2">
@@ -79,7 +122,7 @@
 									<div class="icon-box">
 										<i class="icon-Dashboard-1"></i>
 									</div>
-									<h3>2375</h3>
+									<h3>${cnt}</h3>
 									<p>오늘 약 배달 수</p>
 								</div>
 							</div>
@@ -96,7 +139,7 @@
 									<div class="icon-box">
 										<i class="icon-Dashboard-2"></i>
 									</div>
-									<h3>320</h3>
+									<h3>${ptEduCnt}</h3>
 									<p>오늘 복약지도수</p>
 								</div>
 							</div>
@@ -113,7 +156,7 @@
 									<div class="icon-box">
 										<i class="icon-Dashboard-3"></i>
 									</div>
-									<h3>275</h3>
+									<h3>${reviewCnt }</h3>
 									<p>리뷰수</p>
 								</div>
 							</div>
@@ -122,47 +165,58 @@
 				</div>
 				<div class="doctors-appointment">
 					<div class="title-box">
-						<h3>약 배달 관리</h3>
+						<h3>오늘의 약배달</h3>
 						<div class="btn-box">
-							<a href="patient-dashboard.html" class="theme-btn-one">신청목록관리<i
-								class="icon-Arrow-Right"></i></a> <a href="patient-dashboard.html"
-								class="theme-btn-two">오늘 배달 목록</a>
+							<a id="medDeliveryBtn" class="theme-btn-one">오늘의 배달목록<i
+								class="icon-Arrow-Right"></i></a> 
 						</div>
 					</div>
 					<div class="doctors-list">
 						<div class="table-outer">
-							<table class="doctors-table">
-								<thead class="table-header">
-									<tr>
-										<th>신청자 성함</th>
-										<th>예약 날짜</th>
-										<th>배달 날짜</th>
-										<th>처방전</th>
-										<th>&nbsp;</th>
-										<th>&nbsp;</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<div class="name-box">
-												<figure class="image">
-													<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
-												</figure>
-												<h5>Amelia Anna</h5>
-												<span class="designation">#LK1024T01</span>
-											</div>
-										</td>
-										<td><p>20 Oct 2020</p> <span class="time">10:30AM</span></td>
-										<td><p>General</p><td>
-										<td><p>Old Patient</p></td>
-										<td><span class="accept"><i class="fas fa-check"></i>Accept</span></td>
-										<td><span class="cancel"><i class="fas fa-times"></i>Cancel</span></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+                             <table class="doctors-table">
+                                 <thead class="table-header">
+                                     <tr>
+                                         <th>배송인 이름</th>
+                                         <th>신청일자</th>
+                                         <th>주소</th>
+                                         <th>우편번호</th>
+                                         <th>처방전</th>
+                                         <th>배송메모</th>
+                                         <th>&nbsp;</th>
+                                         <th>&nbsp;</th>
+                                     </tr>    
+                                 </thead>
+                                 <tbody>
+                                 	<c:forEach var="del" items="${delivery}">
+                                     <tr id="trList">
+                                         <td>
+                                             <div class="name-box">
+                                                 <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
+                                                 <h5>${del.name}</h5>
+                                             </div>
+                                         </td>
+                                         <td><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
+                                         <td><p>${del.delAddr},</p><p>${del.delAddr2}  ${del.delAddr3 }</p></td>
+                                         <td class="text-center"><p>${del.delPostCode }</p></td>
+                                         <td class="text-center">처방전 파일</td>
+                                         <td><p id="delMemo"><c:if test="${not empty del.delNote}">메모 O</c:if></p>
+                                         	<c:if test="${not empty del.delNote}"><div id="delMemoHidden">${del.delNote}</div></c:if>
+                                         </td>
+                                         <td>
+                                             <span class="accept" data-no="${del.bookingNo}" data-name="${del.name}"><i class="fas fa-pencil-alt"></i>배달등록</span>
+                                         </td>
+                                         <td>
+                                             <span class="cancel" data-no="${del.bookingNo}" 
+                                             	data-phano="${del.pharmacyNo}"
+                                             data-name="${del.name}"><i class="fas fa-times"></i>반환</span>
+                                         </td>
+                                     </tr>
+                                     </c:forEach>
+                                 </tbody>
+                             </table>
+                         </div>
 					</div>
+					<br><br>
 				</div>
 			</div>
 		</div>
@@ -180,5 +234,10 @@
 		$("#logoutBtn1").on("click", function(){
 			$('#logOutfrm1').submit();
 		});
+		
+		$("#medDeliveryBtn").on("click",function(){
+			location.href= "mediDelivery";
+		});
+		
 	});
 </script>

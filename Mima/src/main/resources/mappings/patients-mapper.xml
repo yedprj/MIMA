@@ -361,6 +361,17 @@
 	</select>
 <!-- 페이징 end -->
 
+<!-- 환자대쉬보드 내가 찜한 의사 e.14 -->
+<select id = "ptDoctor" resultType="LikesVO">
+SELECT 
+    MEMBER_NO,
+    LIKE_DATE,
+    CATEGORY,
+    LIKE_MAIN_NO
+FROM LIKES 
+WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
+</select>
+
 <!-- 환자대쉬보드 Main 나의후기 e.5-->
 <select id="ptMainreList" resultType="CommentsVO">
 	<![CDATA[
@@ -426,70 +437,6 @@
 	</select>
 	<!-- 페이징 end -->
 
-	<!--환자대쉬보드 나의문의 페이지 e.6 -->
-	<select id="ptQna" resultType="QnaVO">
-		SELECT  C.CS_NO AS QNA_NO,
-                C.CS_TITLE AS QNA_TITLE,
-	            C.CS_DATE AS QNA_DATE,
-                M.NAME AS QNA_NAME
-		FROM CSC C JOIN MEMBER M
-        ON (C.MEMBER_NO = M.MEMBER_NO)
-        WHERE C.MEMBER_NO=#{memberNo}
-	</select>
-
-	<!-- 나의문의 페이징 e.7-->
-	<!-- trim 한 것 따로 빼 낸것... -->
-		<sql id="criteriasc">
-			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-				<foreach collection="typeArr" item="type">
-					<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
-					<trim prefix="or">
-						<choose>
-							<when test="type == 'T'.toString()">
-								TITLE LIKE '%'|| #{keyword} || '%'
-							</when>
-	
-							<when test="type =='C'.toString()">
-								CONTENT LIKE '%'|| #{keyword} || '%'
-							</when>
-	
-							<when test="type =='W'.toString()">
-								WRITER LIKE '%'|| #{keyword} || '%'
-							</when>
-						</choose>
-					</trim>
-				</foreach>
-			</trim>
-		</sql>
-		
-		<!-- total count -->
-		<select id="getTotalPtqCount" resultType="int">
-			SELECT COUNT(*) FROM CSC
-			WHERE
-			<include refid="criteriasc"></include>
-			CS_NO > 0
-		</select>
-	
-		<select id="getPtqList" 
-			resultType="QnaVO">
-			SELECT *
-			FROM( SELECT /*+INDEX_DESC(QNA QNA_PK) */
-				ROWNUM RN, C.CS_NO AS QNA_NO,
-                C.CS_TITLE AS QNA_TITLE,
-	            C.CS_DATE AS QNA_DATE,
-                M.NAME AS QNA_NAME
-			FROM CSC C JOIN MEMBER M
-	        ON (C.MEMBER_NO = M.MEMBER_NO)
-			WHERE
-			
-			<include refid="criteriasc"></include>
-					<![CDATA[
-					ROWNUM <= #{pageNum} * #{amount}				
-					)
-			WHERE RN > (#{pageNum}-1)* #{amount} ]]>
-		</select>
-		<!-- 페이징 end -->
-		
 		<!-- 환자 대쉬보드 프로필 관리 e.12-->
 		<select id="ptSelectOne" resultType="MemberVO">
 			SELECT 
