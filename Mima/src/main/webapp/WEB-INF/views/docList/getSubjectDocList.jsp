@@ -20,28 +20,28 @@
 			</div>
 			<div class="auto-container">
 				<div class="title">
-					<c:if test="${category1 eq '정신분석' }">
+					<c:if test="${category eq '정신분석' }">
 						<h1>정신분석 / 정신치료 전문의 리스트</h1>
 					</c:if>
-					<c:if test="${category1 eq '스트레스' }">
+					<c:if test="${category eq '스트레스' }">
 						<h1>스트레스 / 트라우마 전문의 리스트</h1>
 					</c:if>
-					<c:if test="${category1 eq '기분' }">
+					<c:if test="${category eq '기분' }">
 						<h1>기분 / 공황 / 불안장애 전문의 리스트</h1>
 					</c:if>
-					<c:if test="${category1 eq '신경증' }">
+					<c:if test="${category eq '신경증' }">
 						<h1>신경증 / 성격장애 전문의 리스트</h1>
 					</c:if>
-					<c:if test="${category1 eq '직장인' }">
+					<c:if test="${category eq '직장인' }">
 						<h1>직장인 정신건강 전문의 리스트</h1>
 					</c:if>
-					<c:if test="${category1 eq '중독' }">
+					<c:if test="${category eq '중독' }">
 						<h1>중독장애 전문의 리스트</h1>
 					</c:if>
-					<c:if test="${category1 eq '노인' }">
+					<c:if test="${category eq '노인' }">
 						<h1>노인장애 전문의 리스트</h1>
 					</c:if>
-					<c:if test="${category1 eq '해리' }">
+					<c:if test="${category eq '해리' }">
 						<h1>해리장애(다중인격) 전문의 리스트</h1>
 					</c:if>	
 				</div>
@@ -51,28 +51,28 @@
 			<div class="auto-container">
 				<ul class="bread-crumb clearfix">
 					<li><a href="${pageContext.request.contextPath}/">Home</a></li>
-					<c:if test="${category1 eq '정신분석' }">
+					<c:if test="${category eq '정신분석' }">
 						<li>정신분석 / 정신치료 전문의 리스트</li>
 					</c:if>
-					<c:if test="${category1 eq '스트레스' }">
+					<c:if test="${category eq '스트레스' }">
 						<li>스트레스 / 트라우마 전문의 리스트</li>
 					</c:if>
-					<c:if test="${category1 eq '기분' }">
+					<c:if test="${category eq '기분' }">
 						<li>기분 / 공황 / 불안장애 전문의 리스트</li>
 					</c:if>
-					<c:if test="${category1 eq '신경증' }">
+					<c:if test="${category eq '신경증' }">
 						<li>신경증 / 성격장애 전문의 리스트</li>
 					</c:if>
-					<c:if test="${category1 eq '직장인' }">
+					<c:if test="${category eq '직장인' }">
 						<li>직장인 정신건강 전문의 리스트</li>
 					</c:if>
-					<c:if test="${category1 eq '중독' }">
+					<c:if test="${category eq '중독' }">
 						<li>중독장애 전문의 리스트</li>
 					</c:if>
-					<c:if test="${category1 eq '노인' }">
+					<c:if test="${category eq '노인' }">
 						<li>노인장애 전문의 리스트</li>
 					</c:if>
-					<c:if test="${category1 eq '해리' }">
+					<c:if test="${category eq '해리' }">
 						<li>해리장애(다중인격) 전문의 리스트</li>
 					</c:if>	
 				</ul>
@@ -85,37 +85,7 @@
 	<section class="clinic-section doctors-page-section">
 		<div class="auto-container">
 			<div class="row clearfix d-flex justify-content-center">
-				<div class="col-lg-2 col-md-12 col-sm-12 content-side"></div>
-				<div class="col-lg-8 col-md-12 col-sm-12 content-side">
-					<!-- 아이템 정렬 바 시작 -->
-					<div class="item-shorting clearfix">
-						<div class="right-column pull-right clearfix">
-							<div class="short-box clearfix">
-								<div class="select-box">
-									<select class="wide">
-										<option data-display="Sort by">Sort by</option>
-										<option value="스트레스">스트레스/트라우마</option>
-										<option value="기분">기분장애/공황•불안장애</option>
-										<option value="신경">신경증/성격장애</option>
-										<option value="직장">직장인 정신건강</option>
-										<option value="중독">중독장애</option>
-										<option value="노인">노인장애</option>
-										<option value="해리">해리장애(다중인격)</option>
-									</select>
-								</div>
-							</div>
-							<div class="menu-box">
-								<button class="list-view on">
-									<i class="icon-List"></i>
-								</button>
-								<button class="grid-view">
-									<i class="icon-Grid"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-					<!-- 아이템 정렬 바 끝 -->
-
+				<div class="col-lg-10 col-md-12 col-sm-12 content-side">
 					<!-- 의사 리스트 랩퍼 시작 -->
 					<div class="wrapper list">
 						<!-- 의사 블록 컨텐츠 리스트 -->
