@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!--page-title-two-->
 <section class="page-title-two">
 	<div class="title-box centred bg-color-2">
@@ -51,86 +52,98 @@
 					<li><a id="profile" href="${pageContext.request.contextPath}/pharmacy/myProfile"><i class="fas fa-user"></i>약국 프로필</a></li>
 					<li><a id="pwUpdate" href="${pageContext.request.contextPath}/pharmacy/pwUpdate"><i
 							class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a id="logout" href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 	
 	<div class="right-panel">
-                <div class="content-container">
-                    <div class="outer-container">
-                        <div class="review-list">
-                            <div class="title-box clearfix">
-                                <div class="text pull-left"><h3>약국 리뷰 후기</h3></div>
-                                <div class="select-box pull-right">
-                                    <select class="wide">
-                                       <option data-display="Any Time">Any Time</option>
-                                       <option value="1">Latest Reviews</option>
-                                       <option value="2">Oldest Reviews</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="comment-inner">
-                                <div class="single-comment-box">
-                                    <div class="comment">
-                                        <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt=""></figure>
-                                        <h4>Terry Bradshaw</h4>
-                                        <span class="comment-time"><i class="fas fa-calendar-alt"></i>15 Sep 2020, 09:30AM</span>
-                                        <ul class="rating clearfix">
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li class="light"><i class="icon-Star"></i></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ux tempor incididunt labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                                        <a href="review.html" class="replay-btn"><i class="fas fa-share"></i>Reply Now</a>
-                                    </div>
-                                    <div class="comment replay-comment">
-                                        <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png" alt=""></figure>
-                                        <h4>Rex Allen</h4>
-                                        <span class="comment-time"><i class="fas fa-calendar-alt"></i>14 Sep 2020, 09:30AM</span>
-                                        <ul class="rating clearfix">
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li class="light"><i class="icon-Star"></i></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ux tempor incididunt labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                                        <a href="review.html" class="replay-btn"><i class="fas fa-share"></i>Reply Now</a>
-                                    </div>
-                                </div>
-                                <div class="single-comment-box">
-                                    <div class="comment">
-                                        <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-3.png" alt=""></figure>
-                                        <h4>Julia Jhones</h4>
-                                        <span class="comment-time"><i class="fas fa-calendar-alt"></i>15 Sep 2020, 09:30AM</span>
-                                        <ul class="rating clearfix">
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li class="light"><i class="icon-Star"></i></li>
-                                        </ul>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ux tempor incididunt labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                                        <a href="review.html" class="replay-btn"><i class="fas fa-share"></i>Reply Now</a>
-                                    </div>
-                                </div>
-                              
-                            </div>
+        <div class="content-container">
+            <div class="outer-container">
+                <div class="review-list">
+                    <div class="title-box clearfix">
+                        <div class="text pull-left">
+                        	<h3>약국 리뷰 후기</h3>
+                        	<span>약배송을 받은 고객님들의 배송후 리뷰를 조회할 수 있습니다.</span>
                         </div>
-                        <div class="pagination-wrapper">
-                            <ul class="pagination">
-                                <li><a href="clinic-1.html" class="current">1</a></li>
-                                <li><a href="clinic-1.html">2</a></li>
-                                <li><a href="clinic-1.html">3</a></li>
-                                <li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
-                            </ul>
+                        <div class="btn-box pull-right">
+                        	<h3>리뷰 수 : ${reviewCnt}</h3>
+                 			<form id="review"  action="review" method="get" >
+                                 <input type="hidden" name="type" value="N">
+                                 <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+								 <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+								 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                             </form>
                         </div>
                     </div>
+                    <div class="comment-inner">
+                    	<c:forEach var="review" items="${review}">
+                        <div class="single-comment-box">
+                            <div class="comment">
+                                <figure class="comment-thumb">
+                                	<c:if test="${review.gender eq '여'}">
+                                		<img src="${pageContext.request.contextPath}/resources/assets/images/icons/girl.png" alt="여자아이콘">
+                                	</c:if>
+                                	<c:if test="${review.gender eq '남'}">
+                                		<img src="${pageContext.request.contextPath}/resources/assets/images/icons/man.png" alt="남자아이콘">
+                                	</c:if>
+                                </figure>
+                                <h4>${review.nickname }</h4>
+                                <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${review.regDate}" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></span>
+                                <ul class="rating clearfix">
+	                                <c:forEach var="i" begin="1" end="${review.reviewPoint}">
+	                                    <li><i class="icon-Star"></i></li>
+						           	</c:forEach>
+						           	<c:forEach var="i" begin="1" end="${5-review.reviewPoint}">
+										<li class="light"><i class="icon-Star"></i></li>
+						           	</c:forEach>
+                                </ul>
+                                <p>${review.contents }</p>
+                            </div>
+                        </div>
+                        </c:forEach>
+                      
+                    </div>
                 </div>
+                <div class="pagination-wrapper">
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev }">
+							<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">이전</a></li>
+						</c:if>
+							
+						<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+							<li class="paginate_button"><a href="${num}" > ${num}</a></li>
+						</c:forEach>
+						<c:if test="${pageMaker.next }">
+							<li class="paginate_button next"><a href="${pageMaker.endPage+1 }">다음</a></li>
+						</c:if>
+					</ul>
+				</div>
             </div>
+        </div>
+    </div>
 </section>
         <!-- doctors-dashboard -->
+<script>
+	$(function(){
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
+		});
+		
+		$(".pagination a").on("click", function(e) {
+			e.preventDefault(); // a, submit 기능을 막음
+			var p = $(this).attr("href")
+			$("[name='pageNum']").val(p)
+			$("#review").submit();
+		});
+		
+		
+		
+	});
+</script>

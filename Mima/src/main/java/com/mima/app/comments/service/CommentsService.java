@@ -41,6 +41,9 @@ public interface CommentsService {
 		public int docReviewCount(Criteria cri, int memberNo);
 		
 		// K.10/14 약국 리뷰 조회
-		public List<CommentsVO> phaReviewList(int cmainNo);
+		public List<CommentsVO> phaReviewList(@Param("cri") Criteria cri, @Param("cmainNo") int cmainNo);
+		
+		// K. 10/14 약국 리뷰 갯수
+		public int phaReviewCnt(int cmainNo);
 
 }

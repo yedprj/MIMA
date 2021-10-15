@@ -167,7 +167,7 @@
                               <div class="table-outer">
                                   <table class="doctors-table">
                                       <thead class="table-header">
-                                          <tr>
+                                          <tr class="text-center">
                                               <th>신청인</th>
                                               <th>신청일자</th>
                                               <th>연락처</th>
@@ -185,9 +185,9 @@
                                                       <h5>${ptEdu.name}</h5>
                                                   </div>
                                               </td>
-                                              <td><p><fmt:formatDate value="${ptEdu.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
+                                              <td class="text-center"><p><fmt:formatDate value="${ptEdu.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
                                               <td class="text-center"><p>${ptEdu.phone }</p></td>
-                                              <td><p>${ptEdu.delAddr},</p><p>${ptEdu.delAddr2}  ${ptEdu.delAddr3 }</p></td>
+                                              <td class="text-center"><p>${ptEdu.delAddr},</p><p>${ptEdu.delAddr2}  ${ptEdu.delAddr3 }</p></td>
                                               <td class="text-center">
                                               		<c:if test="${ptEdu.deliveryStatus eq 'p'}">
 														<span class="status">배달완료</span>
@@ -196,7 +196,7 @@
 														<span class="status pending">미배달</span>
 													</c:if>
                                               </td>
-                                              <td>
+                                              <td class="text-center">
                                                   <span class="cancel" data-no="${ptEdu.bookingNo}" data-name="${del.name}"><i class="fas fa-pencil-alt"></i>복약지도완료</span>
                                               </td>
                                           </tr>
@@ -210,14 +210,14 @@
 						<div class="pagination-wrapper" >
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev }">
-									<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/pharmacy/medGuid?pageNum=${pageMaker.startPage-1 }">이전</a></li>
+									<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">이전</a></li>
 								</c:if>
 									
 								<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
 									<li class="paginate_button"><a href="${num}" >${num}</a></li>
 								</c:forEach>
 								<c:if test="${pageMaker.next }">
-									<li class="paginate_button next"><a href="${pageContext.request.contextPath }/pharmacy/medGuid?pageNum=${pageMaker.endPage+1 }">다음</a></li>
+									<li class="paginate_button next"><a href="${pageMaker.endPage+1 }">다음</a></li>
 								</c:if>
 							</ul>
 						</div>

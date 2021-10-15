@@ -156,7 +156,7 @@
 									<div class="icon-box">
 										<i class="icon-Dashboard-3"></i>
 									</div>
-									<h3>275</h3>
+									<h3>${reviewCnt }</h3>
 									<p>리뷰수</p>
 								</div>
 							</div>
