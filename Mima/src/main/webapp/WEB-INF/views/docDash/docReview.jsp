@@ -76,11 +76,15 @@ th, td {
                     </div>
                     
                     <div class="select-box pull-right">
-                        <select class="wide" id="selectBox" name="selectBox" onchange="searchCheck()" value="${cri.keyword}">
+                        <select class="wide" id="selectBox" name="selectBox" onchange="searchCheck()">
                            <option value="latest">최신순</option>
                            <option value="oldest">오래된순</option>
                         </select>
+                        <script type="text/javascript">
+                        	$("#selectBox").val("${cri.keyword}")
+                        </script>
                     </div>
+                   
                     
                 </div>
                
@@ -105,7 +109,7 @@ th, td {
 				    </c:forEach>
                </div>
                
-               <div class="comment-inner" id="oldest" style="display:none;">
+               <%-- <div class="comment-inner" id="oldest" style="display:none;">
                    	<c:forEach items="${docReviewPageOldest}" var="docReviewPageOldest">
      					<div class="single-comment-box">
          					<div class="comment">
@@ -124,22 +128,22 @@ th, td {
 				         </div>
 				     </div>
 				    </c:forEach>
-               </div>
+               </div> --%>
                
             </div>
                 <!-- pagination  -->
 				<div class="pagination-wrapper">
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous"><a href="docReview?pageNum=${pageMaker.startPage-1}">이전</a></li>
+							<li class="paginate_button previous"><a href="docReview?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
 						</c:if>
 							
 						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-							<li class="paginate_button"><a href="docReview?pageNum=${num}">${num}</a></li>
+							<li class="paginate_button"><a href="docReview?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
 						</c:forEach>
 							
 						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a href="docReview?pageNum=${pageMaker.endPage+1}">다음</a></li>
+							<li class="paginate_button next"><a href="docReview?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
 						</c:if>
 					</ul>
 				</div>
@@ -160,18 +164,20 @@ th, td {
 		function searchCheck() {
 			var choose = $("#selectBox option:selected").val();
 			
-			if (choose == 'latest') {
+		/* 	if (choose == 'latest') {
 				$("#latest").css('display', 'block');   
 				$("#oldest").css('display', 'none');
 			} else if (choose == 'oldest') {
 				$("#latest").css('display', 'none');   
 				$("#oldest").css('display', 'block');
-			}
+			} */
+			
+			location.href="docReview?pageNum=1&keyword="+choose
 		}
 		
 		$(document).ready(function() {
 			$('#selectBox').val('${cri.category}').prop("selected", true);
-			searchCheck();
+			//searchCheck();
 			
 			$("#logoutBtn1").on("click", function(){
 				$('#logOutfrm1').submit();

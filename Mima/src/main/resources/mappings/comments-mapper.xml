@@ -176,7 +176,7 @@
 		SELECT COUNT(*) FROM COMMENTS
 		WHERE
 		<include refid="criteriaDocReview"></include>
-		CMAIN_NO > 0
+		CMAIN_NO = #{memberNo}
 	</select>
 
 	<!-- 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13-->

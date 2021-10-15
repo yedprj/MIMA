@@ -56,6 +56,30 @@ public class BookingServiceImpl implements BookingService {
 		return bookingMapper.apptListCanceled(memberNo);
 	}
 
+	// 닥터 대쉬보드 예약관리 모두보기 페이징_J15
+	@Override
+	public List<BookingVO> apptListPage(Criteria cri, int memberNo) {
+		return bookingMapper.apptListPage(cri, memberNo);
+	}
+
+	// 닥터 대쉬보드 예약관리 예정된 목록 페이징_J15
+	@Override
+	public List<BookingVO> apptListSoonPage(Criteria cri, int memberNo) {
+		return bookingMapper.apptListSoonPage(cri, memberNo);
+	}
+
+	// 닥터 대쉬보드 예약관리 최소된 목록 페이징_J15
+	@Override
+	public List<BookingVO> apptListCanceledPage(Criteria cri, int memberNo) {
+		return bookingMapper.apptListCanceledPage(cri, memberNo);
+	}
+
+	// 닥터 대쉬보드 예약관리 페이징 카운트_J15
+	@Override
+	public int apptManageCount(Criteria cri, int memberNo) {
+		return bookingMapper.apptManageCount(cri, memberNo);
+	}
+	
 	@Override
 	public List<BookingVO> apptHistoryList(int memberNo) {
 		return bookingMapper.apptHistoryList(memberNo);
@@ -103,5 +127,7 @@ public class BookingServiceImpl implements BookingService {
 	public int updateBookingStatus(int bookingNo) {
 		return bookingMapper.updateBookingStatus(bookingNo);
 	}
+
+
 
 }

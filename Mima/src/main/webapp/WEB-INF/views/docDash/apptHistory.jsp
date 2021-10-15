@@ -82,13 +82,16 @@ th, td {
                             <h3>진료내역</h3>
 							<span>지난 진료내역을 조회합니다. 목록은 진료일순으로 보여집니다.</span>
                         </div>
+                        
                         <div class="btn-box pull-right">
+                             
                             <form action="apptHistory" method="get" class="search-form" id="actionForm">
                             	<div class="form-group">
-			                    	<input type="hidden" id="pageNum" name="pageNum" value="1">
+			                    	<input type="hidden" id="pageNum" name="pageNum" value="${pageMaker.cri.pageNum}">
 	              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
+	              					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	              					
-			                        <input type="search" id="keyword" name="keyword" onKeypress="enter();" placeholder="환자명을 입력하세요." value="${cri.keyword}">
+			                        <input type="search" id="keyword" name="keyword" onKeypress="enter();" placeholder="환자명을 입력하세요.">
 			                        <button type="submit"><i class="fas fa-search"></i></button>
 			                    </div>
                             </form>
@@ -147,15 +150,15 @@ th, td {
 				<div class="pagination-wrapper">
 					<ul class="pagination">
 						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/doctor/apptHistory?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
+							<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">이전</a></li>
 						</c:if>
 							
 						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-							<li class="paginate_button"><a href="${pageContext.request.contextPath}/doctor/apptHistory?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
+							<li class="paginate_button"><a href="${num}">${num}</a></li>
 						</c:forEach>
 							
 						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a href="${pageContext.request.contextPath}/doctor/apptHistory?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
+							<li class="paginate_button next"><a href="${pageMaker.endPage+1}">다음</a></li>
 						</c:if>
 					</ul>
 				</div>
@@ -176,6 +179,13 @@ $(document).ready(function() {
 	 var actionForm = $('#actionForm');
 
 		$('#nameSearch');
+		
+		$(".pagination a").on("click", function(e) {
+	         e.preventDefault();
+	         var p = $(this).attr("href")
+	         $("[name='pageNum']").val(p)
+	         actionForm.submit();
+	      });
 
 		/* $(enter(event){
 			if(event.keyCode == 13){

@@ -102,6 +102,15 @@ th, td {
 							</select>
 						</div>
 						
+						<form>
+							<div class="form-group">
+								<input type="hidden" name="type" value="">
+		                    	<input type="hidden" id="pageNum" name="pageNum" value="${pageMaker.cri.pageNum}">
+              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
+              					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+			                </div>
+						</form>
+						
 					</div>
 					<div class="doctors-appointment">
 						<div class="doctors-list" id="all" style="display: block;">
@@ -118,7 +127,7 @@ th, td {
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${apptList}" var="apptList">
+										<c:forEach items="${apptListPage}" var="apptList">
 											<tr>
 												<td>
 													<div class="name-box">
@@ -170,7 +179,7 @@ th, td {
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${apptListSoon}" var="apptListSoon">
+										<c:forEach items="${apptListSoonPage}" var="apptListSoon">
 											<tr>
 												<td>
 													<div class="name-box">
@@ -226,7 +235,7 @@ th, td {
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${apptListCanceled}" var="apptListCanceled">
+										<c:forEach items="${apptListCanceledPage}" var="apptListCanceled">
 											<tr>
 												<td>
 													<div class="name-box">
@@ -264,18 +273,54 @@ th, td {
 						</div>
 						
 						<!-- pagination  -->
-						<div class="pagination-wrapper">
+						<div class="pagination-wrapper" id="allPage" style="display: block;">
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev}">
-									<li class="paginate_button previous"><a href="apptManage?pageNum=${pageMaker.startPage-1}">이전</a></li>
+									<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">이전</a></li>
 								</c:if>
 									
 								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-									<li class="paginate_button"><a href="apptManage?pageNum=${num}">${num}</a></li>
+									<li class="paginate_button"><a href="${num}">${num}</a></li>
 								</c:forEach>
 									
 								<c:if test="${pageMaker.next}">
-									<li class="paginate_button next"><a href="apptManage?pageNum=${pageMaker.endPage+1}">다음</a></li>
+									<li class="paginate_button next"><a href="${pageMaker.endPage+1}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
+						
+						<!-- pagination  -->
+						<div class="pagination-wrapper" id="soonPage" style="display: none;">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="${num}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="${pageMaker.endPage+1}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
+						
+						<!-- pagination  -->
+						<div class="pagination-wrapper" id="canceledPage" style="display: none;">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="${num}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="${pageMaker.endPage+1}">다음</a></li>
 								</c:if>
 							</ul>
 						</div>
@@ -305,14 +350,23 @@ th, td {
 				$("#all").css('display','block');
 				$("#soon").css('display', 'none');   
 				$("#canceled").css('display', 'none');
+				$("#allPage").css('display','block');
+				$("#soonPage").css('display', 'none');   
+				$("#canceledPage").css('display', 'none');
 			} else if (choose == 'soon') {
 				$("#all").css('display','none');
 				$("#soon").css('display', 'block');   
 				$("#canceled").css('display', 'none');
+				$("#allPage").css('display','none');
+				$("#soonPage").css('display', 'block');   
+				$("#canceledPage").css('display', 'none');
 			} else if (choose == 'canceled') {
 				$("#all").css('display','none');
 				$("#soon").css('display', 'none');   
 				$("#canceled").css('display', 'block');
+				$("#allPage").css('display','none');
+				$("#soonPage").css('display', 'none');   
+				$("#canceledPage").css('display', 'block');
 			}
 		}
 		
