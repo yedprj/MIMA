@@ -46,7 +46,7 @@ th, td {
         </div>
         <div class="profile-info">
             <ul class="list clearfix">
-					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="ptMain" ><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
 					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
@@ -85,23 +85,23 @@ th, td {
 				                       <th>결제상태</th>
 				                   </tr>    
 				               </thead>
-				               <tbody>
+				               <tbody id="ptHxList">
 				               	<c:forEach items="${ptHistoryList}" var="ptHistoryList">
 									<tr>
 										<td>
 											<div class="name-box">
 	                                             <h5>${ptHistoryList.name}</h5>
-	                                            <span class="ptno">#${ptHistoryList.ptNo}</span>
 	                                        </div>
 	                                    </td>
-										<td>${ptHistoryList.bookingNo}</td>
+										<td id="bkNo">${ptHistoryList.bookingNo}</td>
 										<td>
 											<fmt:formatDate value="${ptHistoryList.consultDate}" pattern="yy-MM-dd"/>
 											<span class="time">${ptHistoryList.consultTime}</span>
 										</td>
 										<td><fmt:formatDate value="${ptHistoryList.bookingDate}" pattern="yy-MM-dd"/></td>
 										<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${ptHistoryList.price}" /></td>
-										<td>${ptHistoryList.payStatus}</td>
+										<!-- s:1015 후기 작성 버튼 -->
+										<td id="${ptHistoryList.bookingNo}"><button id="reviewBtn" >후기쓰기</button></td>
 									</tr>
 								</c:forEach>
                                </tbody>    
@@ -133,7 +133,19 @@ th, td {
 </section>
 <!-- doctors-dashboard -->
 
-<!--Scroll to top-->
-<button class="scroll-top scroll-to-target" data-target="html">
-    <span class="fa fa-arrow-up"></span>
-</button>
+<script type="text/javascript">
+//page on load
+$(function(){
+	
+	//리뷰 버튼 누르면 예약번호 가져와서 리뷰쓰기 폼으로 넘어가기
+	$('#ptHxList').on('click', '#reviewBtn', function(){
+		let bkNo= $(this).parent().attr('id');
+		window.open("${pageContext.request.contextPath}/consultation/ptReviewFrm?bookingNo="+bkNo, "review", "width=680,height=950");
+		console.log($(this));
+		$(this).attr('disabled', true);
+	})
+	
+	
+});//end of page on load
+
+</script>

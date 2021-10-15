@@ -82,7 +82,7 @@
 			<h2>Browse by specialist</h2>
 			
 			<!-- s:1007 환자가 진료 끝나고 의사리뷰남기는 페이지 -->
-			<a class="theme-btn-one" href="${pageContext.request.contextPath}/patients/ptReviewFrm">진료 후 리뷰남기는 폼</a>
+			<a class="theme-btn-one" href="${pageContext.request.contextPath}/consultation/ptReviewFrm">진료 후 리뷰남기는 폼</a>
 			
 		</div>
 		<div class="row clearfix">
