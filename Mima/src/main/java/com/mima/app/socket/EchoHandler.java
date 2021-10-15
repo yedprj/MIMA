@@ -91,18 +91,22 @@ public class EchoHandler extends TextWebSocketHandler{
 				// 예약번호로 환자 NO 찾기
 				BookingVO vo= bookingService.getRoomId(bookingNo);
 				// 부킹번호로 환자 ID 찾기
-				String ptId = consultationService.checkPtId(bookingNo);
+				String ptId = consultationService.checkPtId(bookingNo); // 테스트 완료 
 				
 				log.info("*******취소내용:"+delMessage);
 				log.info("*******받는사람ID: "+ptId + ", 받는사람 : "+ vo.getPtNo());
 				log.info("*******보내는사람Id: "+ senderId + " , 보내는사람 : "+ pharmacyNo );
 				
-				TextMessage tmpMsg = new TextMessage("<p>약배달 신청이 취소되었습니다.</p>");
+				 
+				TextMessage tmpMsg = new TextMessage("<p>약배달 신청이 취소되었습니다.</p><br><a href='pharmacyDash'>자세히보기</a>");
+				TextMessage confirmMsg = new TextMessage("<p>환자에게 알람이 전송되었습니다.</p>");
+				
 				if(users.get(ptId) != null) {
-					users.get(ptId).sendMessage(tmpMsg);				
+					users.get(ptId).sendMessage(tmpMsg);  				
 				}
+				users.get(senderId).sendMessage(confirmMsg);
 			}
- 		}
+ 		} // 약국 알람 end
 		else {
 			String bknum = msg.substring(msg.lastIndexOf("=")+1);
 			int num = Integer.parseInt(bknum);
