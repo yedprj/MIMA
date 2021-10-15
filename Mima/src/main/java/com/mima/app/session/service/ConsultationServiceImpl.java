@@ -3,6 +3,7 @@ package com.mima.app.session.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.domain.ConsultationVO;
 import com.mima.app.session.domain.PtInfoVO;
@@ -51,6 +52,16 @@ public class ConsultationServiceImpl implements ConsultationService {
 	@Override
 	public PtInfoVO getSessionInfo(BookingVO vo) {
 		return consultationMapper.getSessionInfo(vo);
+	}
+
+	@Override
+	public int ptReviewInsert(CommentsVO vo) {
+		return consultationMapper.ptReviewInsert(vo);
+	}
+
+	@Override
+	public CommentsVO checkRv(CommentsVO vo) {
+		return consultationMapper.checkRv(vo);
 	}
 
 }

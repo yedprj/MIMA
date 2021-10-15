@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.member.service.PatientsService;
@@ -39,8 +40,23 @@ public class ConsultationController {
 	
 		//s:1007 환자가 의사 리뷰 입력하는 폼으로 이동
 		@GetMapping("/ptReviewFrm")
-		public void ptReviewFrm(Model model, BookingVO vo) {
-			model.addAttribute("bookingNo", vo);
+		public void ptReviewFrm(Model model, BookingVO vo, PtInfoVO ptVo) {
+			ptVo = consultationService.getSessionInfo(vo);
+			ptVo.setBookingNo(vo.getBookingNo());
+			System.out.println("의사정보?"+ptVo);
+			model.addAttribute("doc", ptVo);
+		}
+		
+		//s:1015 리뷰 인서트 ajax
+		@PostMapping("/ptReviewInsert")
+		@ResponseBody
+		public int ptReviewInsert(CommentsVO vo) {
+			log.info("코멘트 보 확인"+ vo);
+			//한명이 의사한명에게 리뷰 하나만 쓰게 테이블 확인
+			/* vo = consultationService.checkRv(vo); */		
+			int result = consultationService.ptReviewInsert(vo);
+				
+			return result;
 		}
 	
 		//s:0930 진료 시작 테스트 페이지로 이동

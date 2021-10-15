@@ -65,7 +65,39 @@
 
 <select id="getSessionInfo" resultType="PtInfoVO">
 
+SELECT 
+		MEMBER_NO,
+        NAME
+FROM MEMBER 
+	WHERE MEMBER_NO =(SELECT DOC_NO FROM BOOKING WHERE BOOKING_NO=#{bookingNo})
 </select>
 
+<insert id="ptReviewInsert">
+     INSERT INTO COMMENTS(
+			CMAIN_CATEGORY,
+			CMAIN_NO,
+			COMMENT_WRITER_NO,
+			CONTENTS,
+			REVIEW_POINT,
+			REG_DATE,
+			CNO,
+			BOOKING_NO
+			)
+			VALUES(
+			#{cmainCategory},
+			#{cmainNo},
+			#{commentWriterNo},
+			#{contents},
+			#{reviewPoint},
+			SYSDATE,
+			SEQ_COMMENTS.NEXTVAL,
+			#{bookingNo}
+			)
+</insert>
+
+<select id="checkRv" resultType="CommentsVO">
+select * From comments
+where cmain_No=#{cmainNo} AND COMMENT_WRITER_NO=#{commentWriterNo} AND CMAIN_CATEGORY =#{cmainCategory}
+</select>
 
 </mapper>

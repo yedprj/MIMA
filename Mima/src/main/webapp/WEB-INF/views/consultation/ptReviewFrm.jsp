@@ -23,7 +23,7 @@
 
         <!--page-title-two-->
         <section class="page-title-two">
-            <div class="title-box centred bg-color-2">
+            <div class="title-box centred bg-color-2" style="height:120px">
                 <div class="pattern-layer">
                     <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-70.png);"></div>
                     <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/assets/images/shape/shape-71.png);"></div>
@@ -47,7 +47,7 @@
 
 
         <!-- submit-review -->
-        <section class="submit-review bg-color-3">
+        <section class="submit-review bg-color-3" style="padding-top:30px">
             <div class="pattern">
                 <div class="pattern-1" style="background-image: url(assets/images/shape/shape-85.png);"></div>
                 <div class="pattern-2" style="background-image: url(assets/images/shape/shape-86.png);"></div>
@@ -56,7 +56,7 @@
                 <div class="review-box">
                     <div class="content-box">
                         <div class="title-inner">
-                            <h3>Write a Review for Dr. 들어갈거임 </h3>
+                            <h3>Write a Review for Dr.${doc.name } </h3>
                             <p>리뷰를 남겨 주시면 감사하겠습니다 :)</p>
                         </div>
                         <div class="content-inner">
@@ -73,10 +73,12 @@
                                 
                             </div>
                             <div class="form-inner">
-                                <form action="insert" method="post" id="reviewInsertFrm">
+                                <form method="post" id="reviewInsertFrm">
                                 <input type="hidden" id="cmainCategory" name="cmainCategory" value="doc" >
                                 <!-- 의사 번호 (이건 예약번호로 조회해서 넣어주기) -->
-                                 <input type="hidden" id="cmainNo" name="cmainNo" value="3" >
+                                 <input type="hidden" id="cmainNo" name="cmainNo" value="${doc.memberNo }" >
+                                 <input type="hidden" id="bookingNo" name="bookingNo" value="${doc.bookingNo }" >
+                                 
                                 <input type="hidden" id="commentWriterNo" name="commentWriterNo" value="${session.memberNo }" >
                                     <div class="row clearfix">
                                         ${bookingNo }
@@ -88,7 +90,7 @@
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
                                             <label>리뷰를 남겨 주세요!</label>
-                                            <textarea name="contents"></textarea>
+                                            <textarea id="contents" name="contents"></textarea>
                                         </div>
                                        
                                         <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
@@ -108,12 +110,17 @@
     
     <script type="text/javascript">
     
-    
+
+    var csrfHeaderName = "${_csrf.headerName}";
+    var csrfTokenValue = "${_csrf.token}";
+
+
     $('.starRev span').click(function(){
     	  $(this).parent().children('span').removeClass('on');
     	  $(this).addClass('on').prevAll('span').addClass('on');
     	  return false;
     	});
+    //리뷰 등록 버튼이벤트
     $('#reviewInsertBtn').on('click', function(){
 	    let stars={};
 	    stars = $('.starRev').find('.on');
@@ -121,10 +128,32 @@
 	    let str='<input type="hidden" id="reviewPoint" name="reviewPoint" value="'+starNum+'\">'
 	    
 	    $('#reviewInsertFrm').append(str);
-	    $('#reviewInsertFrm').submit();
-	    
-    	
-    })
+	    $.ajax({
+			url : "ptReviewInsert",
+			method : "POST",
+			data : {
+				cmainCategory:$('#cmainCategory').val(),
+				cmainNo:$('#cmainNo').val(),
+				commentWriterNo:$('#commentWriterNo').val(),
+				contents:$('#contents').val(),
+				reviewPoint: $('#reviewPoint').val(),
+				bookingNo : $('#bookingNo').val()
+			},
+		 	beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(data) {
+				console.log(data);
+				if(data ==1){
+					alert("리뷰가 저장되었습니다!");
+					window.close();
+				}
+			},// success end
+			error: function (err){
+				console.error(err);
+			}
+		})//  ajax end
+    })//리뷰 인서트 버튼 이벤트 끝
     
 </script>
  

@@ -1,5 +1,6 @@
 package com.mima.app.session.mapper;
 
+import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.domain.ConsultationVO;
 import com.mima.app.session.domain.PtInfoVO;
@@ -24,5 +25,15 @@ public interface ConsultationMapper {
 	
 	//s:1014 노드에서 요청, 환자의 경우 진료+의사정보 조회
 	public PtInfoVO getSessionInfo(BookingVO vo);
+	
+	//s:1015 리뷰등록 전 리뷰 유무 확인
+	public CommentsVO checkRv(CommentsVO vo);
+	
+	//s:1015 환자가 의사 리뷰 등록
+	public int ptReviewInsert(CommentsVO vo);
+	
+	
+	
+	
 		
 }

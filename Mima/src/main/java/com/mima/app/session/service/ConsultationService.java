@@ -1,5 +1,6 @@
 package com.mima.app.session.service;
 
+import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.domain.ConsultationVO;
 import com.mima.app.session.domain.PtInfoVO;
@@ -25,4 +26,8 @@ public interface ConsultationService {
 	//s:1012 노드에서 호출, 처방전 인서트-> 약배달
 	public int medDeliveryInsert(ConsultationVO vo);
 	
+	//s:1015 리뷰등록 전 리뷰 유무 확인
+	public CommentsVO checkRv(CommentsVO vo);
+	//s:1015 환자가 의사 리뷰 등록
+	public int ptReviewInsert(CommentsVO vo);
 }
