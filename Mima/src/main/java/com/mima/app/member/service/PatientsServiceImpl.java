@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.member.mapper.PatientsMapper;
@@ -134,9 +134,9 @@ public class PatientsServiceImpl implements PatientsService {
 	
 	//환자대쉬보드 내가 찜한 의사 e.14
 	@Override
-	public List<DocInfoVO> ptDoctor() {
-		return patientsMapper.ptDoctor();
-	}
+	public List<LikesVO> ptDoctor(int memberNo) {
+		return patientsMapper.ptDoctor(memberNo);
+	}   
 	
 	//환자대쉬보드 Main 나의후기 e.5
 	@Override
@@ -154,24 +154,6 @@ public class PatientsServiceImpl implements PatientsService {
 	@Override
 	public int getTotalPtrvCount(Criteria cri) {
 		return patientsMapper.getTotalPtrvCount(cri);
-	}
-
-	//환자대쉬보드 나의문의 페이지 e.6
-	@Override
-	public List<QnaVO> ptQna(int memberNo) {
-		return patientsMapper.ptQna(memberNo);
-	}
-
-	//전체조회 나의문의 페이징 e.7
-	@Override
-	public List<QnaVO> getPtqList(Criteria cri) {
-		return patientsMapper.getPtqList(cri);
-	}
-
-	//전체 데이터 수 조회 나의문의 페이징 e.7
-	@Override
-	public int getTotalPtqCount(Criteria cri) {
-		return patientsMapper.getTotalPtqCount(cri);
 	}
 	
 	//환자 대쉬보드 프로필 관리 한건조회 e.12

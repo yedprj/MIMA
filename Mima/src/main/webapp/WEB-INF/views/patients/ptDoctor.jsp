@@ -50,10 +50,9 @@ th, td {
 				<ul class="list clearfix">
 					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
-					<li><a href="ptDoctor"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
+					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
 					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
 					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="ptQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
@@ -62,95 +61,64 @@ th, td {
 			</div>
 		</div>
 	</div>
-	
+	<!-- doctor-dashboard -->
 	<div class="right-panel">
-        <div class="content-container">
-            <div class="outer-container">
-                <div class="doctors-appointment my-patients">
-                    <div class="title-box clearfix">
-                        <div class="text pull-left">
-                            <h3>내가 찜한 의사</h3>
+                <div class="content-container">
+                    <div class="outer-container">
+                        <div class="favourite-doctors">
+                            <div class="title-box">
+                                <h3>내가 찜한 의사</h3>
 							<span>담당 의사들을 확인할 수 있습니다.</span>
-                        </div>
-                        <div class="btn-box pull-right">
-                            <form action="patientList" method="get" class="search-form" id="actionForm">
-                                <div class="form-group">
-                                	<input type="hidden" id="pageNum" name="pageNum" value="1">
-	              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
-                                
-                                    <input type="search" id="keyword" name="keyword" onKeypress="enter();" placeholder="의사명을 입력하세요." value="${cri.keyword}">
-                                    <button type="submit"><i class="far fa-search"></i></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="doctors-list">
-                        <div class="table-outer">
-                            <table class="doctors-table">
-                                <thead class="table-header">
-                                    <tr>
-                                        <th>의사명</th>
-                                        <th>성별</th>
-                                        <th>병원이름</th>
-                                        <th>병원 전화번호</th>
-                                        <th>병원 이메일</th>
-                                    </tr>    
-                                </thead>
-                                <tbody>
+                            </div>
+                            ${list }
+                            <div class="doctors-list">
+                                <div class="row clearfix">
+                               	 <tbody>
                                 	<c:forEach items="${ptDoctorList}" var="ptDoctorList">
-                                		<tr>
-	                                        <td>
-	                                            <div class="name-box">
-	                                                <figure class="image">
-	                                                	<img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png">
-	                                                </figure>
-	                                                <h5>${ptDoctorList.name}</h5>
-	                                                <span class="ptno"># ${ptDoctorList.memberNo}</span>
-	                                            </div>
-	                                        </td>
-	                                        <td>
-	                                            <p>${ptDoctorList.gender}</p>
-	                                        </td>
-	                                        <td>
-	                                            <p>${ptDoctorList.clinicInfo}</p>
-	                                        </td>
-	                                        <td>
-	                                            <p>${ptDoctorList.clinicPhone}</p>
-	                                        </td>
-	                                        <td>
-	                                            <p>${ptDoctorList.clinicEmail}</p>
-	                                        </td>
-                                    	</tr>
-                                	</c:forEach>
-                                </tbody>    
-                            </table>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 doctors-block">
+                                        <div class="team-block-three">
+                                            <div class="inner-box">
+                                                <figure class="image-box">
+                                                    <img src="assets/images/team/team-21.jpg" alt="">
+                                                    <a href="doctors-details.html"><i class="far fa-heart"></i></a>
+                                                </figure>
+                                                <div class="lower-content">
+                                                    <ul class="name-box clearfix">
+                                                        <li class="name"><h3>${ptDoctorList.memberNo}</h3></li>
+                                                    </ul>
+                                                    <span class="designation">${ptDoctorList.likeDate}</span>
+                                                    <div class="rating-box clearfix">
+                                                        <ul class="rating clearfix">
+                                                        </ul>
+                                                    </div>
+                                                    <div class="location-box">
+                                                        <p><i class="fas fa-map-marker-alt"></i>${ptDoctorList.category}</p>
+                                                    </div>
+                                                    <div class="lower-box clearfix">
+                                                        <span class="text">${ptDoctorList.likeMainNo}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </c:forEach>
+                                    </tbody>
+                                </div>
+                            </div>
+                            <div class="pagination-wrapper">
+                                <ul class="pagination">
+                                    <li><a href="favourite-doctors.html" class="current">1</a></li>
+                                    <li><a href="favourite-doctors.html">2</a></li>
+                                    <li><a href="favourite-doctors.html">3</a></li>
+                                    <li><a href="favourite-doctors.html"><i class="icon-Arrow-Right"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-			</div>
-			
-			<!-- pagination  -->
-			<div class="pagination-wrapper">
-				<ul class="pagination">
-					<c:if test="${pageMaker.prev}">
-						<li class="paginate_button previous"><a href="${pageContext.request.contextPath}/doctor/patientList?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
-					</c:if>
-						
-					<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-						<li class="paginate_button"><a href="${pageContext.request.contextPath}/doctor/patientList?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
-					</c:forEach>
-						
-					<c:if test="${pageMaker.next}">
-						<li class="paginate_button next"><a href="${pageContext.request.contextPath}/doctor/patientList?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
-					</c:if>
-				</ul>
-			</div>
-			<!-- pagination end -->
-			
-		</div>
-	</div>
+            </div>
 </section>
-<!-- doctors-dashboard -->
+
 
 <!--Scroll to top-->
 <button class="scroll-top scroll-to-target" data-target="html">

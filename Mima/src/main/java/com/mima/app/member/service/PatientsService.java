@@ -10,6 +10,7 @@ import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
@@ -72,7 +73,7 @@ public interface PatientsService {
 	public int getTotalPthCount(Criteria cri);
 	
 	//환자대쉬보드 내가 찜한 의사 e.14
-	public List<DocInfoVO> ptDoctor();
+	public List<LikesVO> ptDoctor(int memberNo);
 	
 	//환자대쉬보드 Main 나의후기 e.5
 	public List<CommentsVO> ptMainreList(int memberNo);
@@ -82,15 +83,6 @@ public interface PatientsService {
 	
 	//전체 데이터 수 조회 나의후기 페이징 e.6
 	public int getTotalPtrvCount(Criteria cri);
-	
-	//환자대쉬보드 나의문의 페이지 e.6
-	public List<QnaVO> ptQna(int memberNo);
-	
-	//전체조회 나의문의 페이징 e.7
-	public List<QnaVO> getPtqList(Criteria cri);
-	
-	//전체 데이터 수 조회 나의문의 페이징 e.7
-	public int getTotalPtqCount(Criteria cri);
 	
 	//환자 대쉬보드 프로필 관리 한건조회 e.12
 	public MemberVO ptSelectOne(int memberNo);
