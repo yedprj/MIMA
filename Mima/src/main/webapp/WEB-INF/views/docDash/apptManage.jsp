@@ -115,7 +115,6 @@ th, td {
 											<th>예약일</th>
 											<th>결제금액</th>
 											<th>예약상태</th>
-											<th></th>
 										</tr>
 									</thead>
 									<tbody id="contentAll">
@@ -149,11 +148,6 @@ th, td {
 														<span class="status cancel">취소완료</span>
 													</c:if>
 												</td>
-												<td>
-													<c:if test="${apptList.bookingStatus eq 'p'}">
-	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
-	                                                </c:if>
-	                                            </td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -268,6 +262,24 @@ th, td {
 								</table>
 							</div>
 						</div>
+						
+						<!-- pagination  -->
+						<div class="pagination-wrapper">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="apptManage?pageNum=${pageMaker.startPage-1}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="apptManage?pageNum=${num}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="apptManage?pageNum=${pageMaker.endPage+1}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
 						
 					</div>
 				</div>

@@ -224,10 +224,6 @@ th, td {
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${ptMainhisList.price}" /></td>
 											<td>${ptMainhisList.payStatus}</td>
-											<td><span class="print"><i class="fas fa-print"></i>처방전</span>
-											</td>
-											<td><span class="view"><i class="fas fa-eye"></i>진료노트</span>
-											</td>
 										</tr>
 									</c:forEach>
 								</tbody>

@@ -87,26 +87,30 @@ th, td {
                <div class="comment-inner" id="latest" style="display:block;">
                    	<c:forEach items="${docReviewPage}" var="docReviewPage">
      					<div class="single-comment-box">
-         					<div class="comment" style="padding-left: 20px;">
-             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
-					             <ul class="rating clearfix">
-					              <c:forEach var="i" begin="1" end="${docReviewPage.reviewPoint}">
-					             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
-					             	</c:forEach>
-					             	<c:forEach var="i" begin="1" end="${5-docReviewPage.reviewPoint}">
-					             		<i class="icon-Star"></i>
-					             	</c:forEach>
-					             </ul>
-             					<p>${docReviewPage.contents}</p>
-				         </div>
-				     </div>
+         					<div class="comment">
+         						<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+	             					<h4>${docReviewPage.nickname}</h4>
+	             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
+					             	<ul class="rating clearfix">
+						            	<c:forEach var="i" begin="1" end="${docReviewPage.reviewPoint}">
+						             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
+						             	</c:forEach>
+						             	<c:forEach var="i" begin="1" end="${5-docReviewPage.reviewPoint}">
+						             		<i class="icon-Star"></i>
+						             	</c:forEach>
+					                </ul>
+             						<p>${docReviewPage.contents}</p>
+				         	</div>
+				    	</div>
 				    </c:forEach>
                </div>
                
                <div class="comment-inner" id="oldest" style="display:none;">
                    	<c:forEach items="${docReviewPageOldest}" var="docReviewPageOldest">
      					<div class="single-comment-box">
-         					<div class="comment" style="padding-left: 20px;">
+         					<div class="comment">
+         						<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+	             					<h4>${docReviewPageOldest.nickname}</h4>
              					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPageOldest.regDate}" pattern="yy-MM-dd"/></span>
 					             <ul class="rating clearfix">
 					              <c:forEach var="i" begin="1" end="${docReviewPageOldest.reviewPoint}">
