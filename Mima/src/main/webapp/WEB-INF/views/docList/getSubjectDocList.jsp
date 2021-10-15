@@ -20,7 +20,30 @@
 			</div>
 			<div class="auto-container">
 				<div class="title">
-					<h1>미마의 전체 의사 리스트</h1>
+					<c:if test="${category1 eq '정신분석' }">
+						<h1>정신분석 / 정신치료 전문의 리스트</h1>
+					</c:if>
+					<c:if test="${category1 eq '스트레스' }">
+						<h1>스트레스 / 트라우마 전문의 리스트</h1>
+					</c:if>
+					<c:if test="${category1 eq '기분' }">
+						<h1>기분 / 공황 / 불안장애 전문의 리스트</h1>
+					</c:if>
+					<c:if test="${category1 eq '신경증' }">
+						<h1>신경증 / 성격장애 전문의 리스트</h1>
+					</c:if>
+					<c:if test="${category1 eq '직장인' }">
+						<h1>직장인 정신건강 전문의 리스트</h1>
+					</c:if>
+					<c:if test="${category1 eq '중독' }">
+						<h1>중독장애 전문의 리스트</h1>
+					</c:if>
+					<c:if test="${category1 eq '노인' }">
+						<h1>노인장애 전문의 리스트</h1>
+					</c:if>
+					<c:if test="${category1 eq '해리' }">
+						<h1>해리장애(다중인격) 전문의 리스트</h1>
+					</c:if>	
 				</div>
 			</div>
 		</div>
@@ -28,7 +51,30 @@
 			<div class="auto-container">
 				<ul class="bread-crumb clearfix">
 					<li><a href="${pageContext.request.contextPath}/">Home</a></li>
-					<li>전체 의사 리스트</li>
+					<c:if test="${category1 eq '정신분석' }">
+						<li>정신분석 / 정신치료 전문의 리스트</li>
+					</c:if>
+					<c:if test="${category1 eq '스트레스' }">
+						<li>스트레스 / 트라우마 전문의 리스트</li>
+					</c:if>
+					<c:if test="${category1 eq '기분' }">
+						<li>기분 / 공황 / 불안장애 전문의 리스트</li>
+					</c:if>
+					<c:if test="${category1 eq '신경증' }">
+						<li>신경증 / 성격장애 전문의 리스트</li>
+					</c:if>
+					<c:if test="${category1 eq '직장인' }">
+						<li>직장인 정신건강 전문의 리스트</li>
+					</c:if>
+					<c:if test="${category1 eq '중독' }">
+						<li>중독장애 전문의 리스트</li>
+					</c:if>
+					<c:if test="${category1 eq '노인' }">
+						<li>노인장애 전문의 리스트</li>
+					</c:if>
+					<c:if test="${category1 eq '해리' }">
+						<li>해리장애(다중인격) 전문의 리스트</li>
+					</c:if>	
 				</ul>
 			</div>
 		</div>
@@ -48,7 +94,7 @@
 								<div class="select-box">
 									<select class="wide">
 										<option data-display="Sort by">Sort by</option>
-										<option value="스트">스트레스/트라우마</option>
+										<option value="스트레스">스트레스/트라우마</option>
 										<option value="기분">기분장애/공황•불안장애</option>
 										<option value="신경">신경증/성격장애</option>
 										<option value="직장">직장인 정신건강</option>
@@ -131,8 +177,6 @@
 									</div>
 								</div>
 							</c:forEach>
-
-
 						</div>
 						<!-- 의사 블록 컨텐츠 끝 -->
 
@@ -183,7 +227,6 @@
 										</div>
 									</div>
 								</c:forEach>
-
 							</div>
 						</div>
 						<!-- 의사 그리드 컨텐츠 리스트 끝 -->
