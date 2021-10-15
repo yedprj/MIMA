@@ -102,6 +102,15 @@ th, td {
 							</select>
 						</div>
 						
+						<form>
+							<div class="form-group">
+								<input type="hidden" name="type" value="">
+		                    	<input type="hidden" id="pageNum" name="pageNum" value="${pageMaker.cri.pageNum}">
+              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
+              					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+			                </div>
+						</form>
+						
 					</div>
 					<div class="doctors-appointment">
 						<div class="doctors-list" id="all" style="display: block;">
@@ -115,11 +124,10 @@ th, td {
 											<th>예약일</th>
 											<th>결제금액</th>
 											<th>예약상태</th>
-											<th></th>
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${apptList}" var="apptList">
+										<c:forEach items="${apptListPage}" var="apptList">
 											<tr>
 												<td>
 													<div class="name-box">
@@ -149,11 +157,6 @@ th, td {
 														<span class="status cancel">취소완료</span>
 													</c:if>
 												</td>
-												<td>
-													<c:if test="${apptList.bookingStatus eq 'p'}">
-	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
-	                                                </c:if>
-	                                            </td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -176,7 +179,7 @@ th, td {
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${apptListSoon}" var="apptListSoon">
+										<c:forEach items="${apptListSoonPage}" var="apptListSoon">
 											<tr>
 												<td>
 													<div class="name-box">
@@ -232,7 +235,7 @@ th, td {
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${apptListCanceled}" var="apptListCanceled">
+										<c:forEach items="${apptListCanceledPage}" var="apptListCanceled">
 											<tr>
 												<td>
 													<div class="name-box">
@@ -269,6 +272,60 @@ th, td {
 							</div>
 						</div>
 						
+						<!-- pagination  -->
+						<div class="pagination-wrapper" id="allPage" style="display: block;">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="${num}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="${pageMaker.endPage+1}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
+						
+						<!-- pagination  -->
+						<div class="pagination-wrapper" id="soonPage" style="display: none;">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="${num}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="${pageMaker.endPage+1}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
+						
+						<!-- pagination  -->
+						<div class="pagination-wrapper" id="canceledPage" style="display: none;">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="${pageMaker.startPage-1}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="${num}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="${pageMaker.endPage+1}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
+						
 					</div>
 				</div>
 			</div>
@@ -293,14 +350,23 @@ th, td {
 				$("#all").css('display','block');
 				$("#soon").css('display', 'none');   
 				$("#canceled").css('display', 'none');
+				$("#allPage").css('display','block');
+				$("#soonPage").css('display', 'none');   
+				$("#canceledPage").css('display', 'none');
 			} else if (choose == 'soon') {
 				$("#all").css('display','none');
 				$("#soon").css('display', 'block');   
 				$("#canceled").css('display', 'none');
+				$("#allPage").css('display','none');
+				$("#soonPage").css('display', 'block');   
+				$("#canceledPage").css('display', 'none');
 			} else if (choose == 'canceled') {
 				$("#all").css('display','none');
 				$("#soon").css('display', 'none');   
 				$("#canceled").css('display', 'block');
+				$("#allPage").css('display','none');
+				$("#soonPage").css('display', 'none');   
+				$("#canceledPage").css('display', 'block');
 			}
 		}
 		

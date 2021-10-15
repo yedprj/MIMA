@@ -84,14 +84,16 @@
 	<!-- 닥터 대쉬보드 메인 페이지 나의 후기 -->
 	<select id="getlatestreviewList" resultType="CommentsVO">
 		<![CDATA[
-		SELECT CMAIN_NO,
-               CONTENTS,
-               REVIEW_POINT,
-               REG_DATE
-        FROM COMMENTS
+		SELECT C.CMAIN_NO,
+               C.CONTENTS,
+               C.REVIEW_POINT,
+               C.REG_DATE,
+               M.NICKNAME
+        FROM COMMENTS C JOIN MEMBER M
+        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         WHERE ROWNUM < 6
         AND CMAIN_NO = #{memberNo}
-        ORDER BY REG_DATE DESC
+        ORDER BY C.REG_DATE DESC
 		]]>
 	</select>
 	
@@ -101,9 +103,10 @@
 		SELECT C.CMAIN_NO,
                C.CONTENTS,
                C.REVIEW_POINT,
-               C.REG_DATE
+               C.REG_DATE,
+               M.NICKNAME
         FROM COMMENTS C JOIN MEMBER M
-        ON C.CMAIN_NO = M.MEMBER_NO
+        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         AND C.CMAIN_NO = #{memberNo}
         ORDER BY C.REG_DATE DESC
 		]]>
@@ -173,7 +176,7 @@
 		SELECT COUNT(*) FROM COMMENTS
 		WHERE
 		<include refid="criteriaDocReview"></include>
-		CMAIN_NO > 0
+		CMAIN_NO = #{memberNo}
 	</select>
 
 	<!-- 닥터 대쉬보드 나의 후기 페이지 최신순 페이징_J13-->
@@ -181,20 +184,22 @@
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
 					 ROWNUM RN,
-					 CMAIN_CATEGORY,
-					 CMAIN_NO,
-					 COMMENT_WRITER_NO,
-					 CONTENTS,
-					 REVIEW_POINT,
-					 REG_DATE,
-					 EDIT_DATE,
-					 CNO
-				FROM COMMENTS
+					 C.CMAIN_CATEGORY,
+					 C.CMAIN_NO,
+					 C.COMMENT_WRITER_NO,
+					 C.CONTENTS,
+					 C.REVIEW_POINT,
+					 C.REG_DATE,
+					 C.EDIT_DATE,
+					 C.CNO,
+                     M.NICKNAME
+				FROM COMMENTS C JOIN MEMBER M
+				ON C.COMMENT_WRITER_NO = M.MEMBER_NO
 				WHERE <include refid="criteriaDocReview"></include>
 						<![CDATA[
 						ROWNUM <= #{cri.pageNum} * #{cri.amount}
-				AND CMAIN_NO = #{memberNo}
-				ORDER BY REG_DATE DESC )
+				AND C.CMAIN_NO = #{memberNo}
+				ORDER BY C.REG_DATE DESC )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	
@@ -203,20 +208,22 @@
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
 					 ROWNUM RN,
-					 CMAIN_CATEGORY,
-					 CMAIN_NO,
-					 COMMENT_WRITER_NO,
-					 CONTENTS,
-					 REVIEW_POINT,
-					 REG_DATE,
-					 EDIT_DATE,
-					 CNO
-				FROM COMMENTS
+					 C.CMAIN_CATEGORY,
+					 C.CMAIN_NO,
+					 C.COMMENT_WRITER_NO,
+					 C.CONTENTS,
+					 C.REVIEW_POINT,
+					 C.REG_DATE,
+					 C.EDIT_DATE,
+					 C.CNO,
+                     M.NICKNAME
+				FROM COMMENTS C JOIN MEMBER M
+				ON C.COMMENT_WRITER_NO = M.MEMBER_NO
 				WHERE <include refid="criteriaDocReview"></include>
 						<![CDATA[
 						ROWNUM <= #{cri.pageNum} * #{cri.amount}
-				AND CMAIN_NO = #{memberNo}
-				ORDER BY REG_DATE )
+				AND C.CMAIN_NO = #{memberNo}
+				ORDER BY C.REG_DATE )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	<!-- 페이징 end -->

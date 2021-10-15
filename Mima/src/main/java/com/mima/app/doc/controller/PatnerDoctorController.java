@@ -80,11 +80,14 @@ public class PatnerDoctorController {
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
 		int memberNo = mvo.getMemberNo();
 		
+		int total = bookingService.apptManageCount(cri, memberNo);
+		
 		model.addAttribute("member", mvo);
 		model.addAttribute("clinicName", clinicName(request));
-		model.addAttribute("apptList", bookingService.apptList(memberNo));
-		model.addAttribute("apptListSoon", bookingService.apptListSoon(memberNo));
-		model.addAttribute("apptListCanceled", bookingService.apptListCanceled(memberNo));
+		model.addAttribute("apptListPage", bookingService.apptListPage(cri, memberNo));
+		model.addAttribute("apptListSoonPage", bookingService.apptListSoonPage(cri, memberNo));
+		model.addAttribute("apptListCanceledPage", bookingService.apptListCanceledPage(cri, memberNo));
+		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
 		return "docDash/apptManage";
 	}
@@ -133,9 +136,12 @@ public class PatnerDoctorController {
 		int total = commentsService.docReviewCount(cri, memberNo);
 		
 		model.addAttribute("clinicName", clinicName(request));
-		model.addAttribute("docReview", commentsService.docReview(memberNo));
-		model.addAttribute("docReviewPage", commentsService.docReviewPage(cri, memberNo));
-		model.addAttribute("docReviewPageOldest", commentsService.docReviewPageOldest(cri, memberNo));
+		/* model.addAttribute("docReview", commentsService.docReview(memberNo)); */
+		if (cri.getKeyword() == null || cri.getKeyword().equals("latest")) {
+			model.addAttribute("docReviewPage", commentsService.docReviewPage(cri, memberNo));
+		} else {
+			model.addAttribute("docReviewPage", commentsService.docReviewPageOldest(cri, memberNo));
+		}
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		
 		return "docDash/docReview";
