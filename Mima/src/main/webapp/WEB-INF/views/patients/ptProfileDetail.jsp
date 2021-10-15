@@ -54,23 +54,15 @@
 				</div>
 				<div class="profile-info">
 					<ul class="list clearfix">
-						<li><a href="ptMain" class="current"><i
-								class="fas fa-columns"></i>대쉬보드</a></li>
-						<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의
-								예약관리</a></li>
-						<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의
-								진료내역</a></li>
-						<li><a href="patientList"><i class="fas fa-wheelchair"></i>내가
-								찜한 의사</a></li>
-						<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-						<li><a href="ptQna"><i class="fas fa-comments"></i>나의 문의</a></li>
-						<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약
-								배달관리</a></li>
-						<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필
-								관리</a></li>
-						<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호
-								변경</a></li>
-						<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
+					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
+					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
+					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
+					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
+					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
+					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
+					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
 					</ul>
 				</div>
 			</div>
@@ -130,8 +122,6 @@
 												value="${ptMyProfile.gender }" required="" disabled>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-											<label>주민등록번호</label> <input type="text"
-												value="${ptMyProfile.identifyNo }" required="" disabled>
 										</div>
 									</div>
 								</div>
