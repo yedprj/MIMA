@@ -73,7 +73,7 @@
                         	<span>약배송을 받은 고객님들의 배송후 리뷰를 조회할 수 있습니다.</span>
                         </div>
                         <div class="btn-box pull-right">
-                        	<h3>약국 리뷰 수 : ${reviewCnt}</h3>
+                        	<h3>리뷰 수 : ${reviewCnt}</h3>
                  			<form id="review"  action="review" method="get" >
                                  <input type="hidden" name="type" value="N">
                                  <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
@@ -118,7 +118,7 @@
 						</c:if>
 							
 						<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-							<li class="paginate_button"><a href="${num}" >${num}</a></li>
+							<li class="paginate_button"><a href="${num}" > ${num}</a></li>
 						</c:forEach>
 						<c:if test="${pageMaker.next }">
 							<li class="paginate_button next"><a href="${pageMaker.endPage+1 }">다음</a></li>
@@ -142,6 +142,8 @@
 			$("[name='pageNum']").val(p)
 			$("#review").submit();
 		});
+		
+		
 		
 	});
 </script>

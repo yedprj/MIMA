@@ -443,8 +443,9 @@
 			$("#message").val("");
 			var bookingNo = $(this).data("no");
 			var name = $(this).data("name");
-			var pharmacyNo = $(this).data("data-phano");
+			var pharmacyNo = $(this).data("phano");
 			var thisTr = $(this).parent().parent();
+			
 			
 			$("input[name='customerName']").val(name);
 			$("#returnPhaNo").val(pharmacyNo);
@@ -463,6 +464,7 @@
 					alert("취소하는 사유를 간단하게 적어주세요!");
 					return;
 				}else {
+					
 					$.ajax({
 						url : 'delCancel',
 						type : 'post',
@@ -478,12 +480,18 @@
 							if(data > 0 ){
 								console.log(data);
 								alert("약배달 신청이 취소되었습니다.")
+								
+								// socket 테스트 (보내는 번호, 받는사람 번호, 메세지가 넘어가야함)
+								socket.send("med="+bookingNo+"="+message+"="+pharmacyNo+"");
+								
 								$(".modal").fadeOut();
 								thisTr.remove();
+								
 							}else {
 								alert("배송등록이 실패했습니다!")
 							}
 						}
+						
 					});// ajax end
 				}
 			}); // cancelBtn end

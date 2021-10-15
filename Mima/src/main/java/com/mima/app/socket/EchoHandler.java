@@ -77,19 +77,47 @@ public class EchoHandler extends TextWebSocketHandler{
 		String msg = message.getPayload();
 		System.out.println("url 받아온 것 "+msg);
 		
-		String bknum = msg.substring(msg.lastIndexOf("=")+1);
-		int num = Integer.parseInt(bknum);
-		String ptId = consultationService.checkPtId(num);
-		log.info("환자아이디======="+ptId);
-		if(msg != null) {
-			TextMessage tmpMsg = new TextMessage("<a target=\"_blank\" href="+msg+">진료실이 준비되었습니다. 이동하기</a>");
-			TextMessage confirmMsg = new TextMessage("<p>환자께 알림을 보냈습니다.</p>");
-			System.out.println(tmpMsg.toString());
-			if(users.get(ptId) != null) {
-				users.get(ptId).sendMessage(tmpMsg);				
+		// K. 10/15 소켓 테스트
+		log.info(msg);
+		if(msg.substring(0,3).equals("med")) {
+			log.info("*****수민테스트*****"+msg);
+			String[] strs = msg.split("=");
+			log(strs.toString());
+			if(strs != null && strs.length == 4) {
+				int bookingNo = Integer.parseInt(strs[1]);
+				String delMessage = strs[2];
+				int pharmacyNo = Integer.parseInt(strs[3]);
+
+				// 예약번호로 환자 NO 찾기
+				BookingVO vo= bookingService.getRoomId(bookingNo);
+				// 부킹번호로 환자 ID 찾기
+				String ptId = consultationService.checkPtId(bookingNo);
+				
+				log.info("*******취소내용:"+delMessage);
+				log.info("*******받는사람ID: "+ptId + ", 받는사람 : "+ vo.getPtNo());
+				log.info("*******보내는사람Id: "+ senderId + " , 보내는사람 : "+ pharmacyNo );
+				
+				TextMessage tmpMsg = new TextMessage("<p>약배달 신청이 취소되었습니다.</p>");
+				if(users.get(ptId) != null) {
+					users.get(ptId).sendMessage(tmpMsg);				
+				}
 			}
-			users.get(senderId).sendMessage(confirmMsg);
-			System.out.println("msg sent");
+ 		}
+		else {
+			String bknum = msg.substring(msg.lastIndexOf("=")+1);
+			int num = Integer.parseInt(bknum);
+			String ptId = consultationService.checkPtId(num);
+			log.info("환자아이디======="+ptId);
+			if(msg != null) {
+				TextMessage tmpMsg = new TextMessage("<a target=\"_blank\" href="+msg+">진료실이 준비되었습니다. 이동하기</a>");
+				TextMessage confirmMsg = new TextMessage("<p>환자께 알림을 보냈습니다.</p>");
+				System.out.println(tmpMsg.toString());
+				if(users.get(ptId) != null) {
+					users.get(ptId).sendMessage(tmpMsg);				
+				}
+				users.get(senderId).sendMessage(confirmMsg);
+				System.out.println("msg sent");
+			}
 		}
 	}
 	// 연결 해제될 때
