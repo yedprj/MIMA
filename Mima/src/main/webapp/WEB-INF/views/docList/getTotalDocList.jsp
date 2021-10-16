@@ -114,7 +114,7 @@
                         <!-- 의사 리스트 랩퍼 시작 -->
                         <div class="wrapper list">
                             <!-- 의사 블록 컨텐츠 리스트 -->
-                            <div class="clinic-list-content list-item">
+                            <div class="clinic-list-content list-item" id="docList">
                             
                             	<c:forEach  var="item" items="${list }">
                                 <div class="clinic-block-one">
@@ -129,10 +129,8 @@
                                         </figure>
                                         <div class="content-box">
                                         <!-- e.15 like -->
-                                            <a class="like-box" href="${item.memberNo }">
-                                        <input type="hidden" name="likeMainNo" value="${item.memberNo}">
-                                            <i
-                                                        class="far fa-heart"></i></a>
+                                            <button type="button" class="like-box">
+                                            <i class="far fa-heart" id="${item.memberNo}"></i></button>
                                             <ul class="name-box clearfix">
                                                 <li class="name">
                                                     <h3><a class="move" href="${item.memberNo }">Dr.${item.name } num ${item.memberNo }</a></h3>
@@ -165,7 +163,6 @@
                                 </div>
                             	</c:forEach>
 
-                              
                             </div>
                             <!-- 의사 블록 컨텐츠 끝 -->
 
@@ -262,9 +259,9 @@
 	 });
 	 
 	 
-	 $(".like-box").on('click',function(e){
+	 $("#docList").on('click','.like-box',function(e){
 		 e.preventDefault();
-		 console.log($('.like-box input').val());
+		 console.log($(this).children().attr('id'));
 		 var like = $('.like-box input').val();
 		$.ajax({
 			url : "likes/likesInsert",

@@ -7,7 +7,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -244,10 +243,11 @@ public class PatnerDoctorController {
 		String path="docDash/docProfileInsertForm";
 		//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 있으면 값을 가져와서 넘겨주고 수정할 수 있도록
 		if( docVo != null) {
-			System.out.print("테이블에 값 잇음");
+			System.out.print("테이블에 값 잇음!!");
 			expVo.setMemberNo(docVo.getMemberNo());
 			model.addAttribute("doc", doctorService.getDocDetail(docVo));
 			model.addAttribute("expList", experienceService.getExpList(expVo));
+			 path="docDash/docProfileEditForm";
 			return path;
 		}else {
 			//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 없으면 바로 인서트 할 수 있도록
