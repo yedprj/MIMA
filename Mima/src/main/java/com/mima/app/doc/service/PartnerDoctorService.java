@@ -6,6 +6,7 @@ import java.util.List;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.member.domain.MemberVO;
 
 public interface PartnerDoctorService {
@@ -35,5 +36,8 @@ public interface PartnerDoctorService {
 	
 	// p.10/14 의사 진료과목에 대한 리스트
 	public List<DocInfoVO> subjectDoclist(String category1, String category2, String category3);
+	
+	// e.17 환자대쉬보드 의사 좋아요 삭제
+	public int deleteDocLike(LikesVO vo);
 
 }

@@ -26,10 +26,8 @@
 										<tr align="center">
 											<th>NO</th>
 											<th>신고당한 원글번호</th>
-											<th>신고당한 회원번호</th>
-											<th>신고당한 회원아이디</th>
-											<th>신고한 회원번호</th>
-											<th>신고한 회원아이디</th>
+											<th>신고당한 회원이름</th>
+											<th>신고한 회원이름</th>
 											<th>신고일</th>
 											<th>신고 확인일</th>
 											<th>신고 조치 여부</th>
@@ -41,10 +39,8 @@
 												onclick="location.href='rpget?reportNo=${rmember.reportNo}'">
 												<td>${rmember.reportNo }</td>
 												<td>${rmember.postNo }</td>
-												<td>${rmember.reportMno }</td>
-												<td>${rmember.reportId }</td>
-												<td>${rmember.memberNo }</td>
-												<td>${rmember.rmemberId }</td>
+												<td>${rmember.reported }</td>
+												<td>${rmember.reporter }</td>
 												<td><fmt:formatDate value="${rmember.reportDate }"
 														pattern="yy-MM-dd" /></td>
 												<td><fmt:formatDate value="${rmember.checkDate }"

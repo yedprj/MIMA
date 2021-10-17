@@ -342,6 +342,7 @@ public class PatnerDoctorController {
 		model.addAttribute("list", doctorService.getTotalDocList(cri) );
 		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
+		
 		return "/docList/getTotalDocList";
 	}
 
@@ -378,6 +379,7 @@ public class PatnerDoctorController {
 	public String subjectDoclist(String category1, String category2, String category3, Model model) {
 		
 		model.addAttribute("list", doctorService.subjectDoclist(category1, category2, category3));
+		System.out.println("==========================" + category1);
 		model.addAttribute("category", category1);
 		
 		return "/docList/getSubjectDocList";

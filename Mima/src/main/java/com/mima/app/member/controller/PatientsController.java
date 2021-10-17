@@ -55,7 +55,6 @@ public class PatientsController {
 	@Autowired MedDeliveryService deliveryService; // K.10/09 약배달
 	@Autowired MemberService memberService; // K.10/11 약배달 신청 유무
 
-
 	//e.4
 	//환자대쉬보드 메인 페이지
 	@GetMapping("patients/ptMain")
@@ -110,7 +109,10 @@ public class PatientsController {
 		int memberNo = vo.getMemberNo();
 		List<LikesVO> list = new ArrayList<LikesVO>();
 		list = patientsService.ptDoctor(memberNo);
+
 		System.out.println("리스트 확인"+list);
+		System.out.println("보 확인!!!!"+ vo);
+
 		model.addAttribute("ptDoctorList", list);
 		return list; 
 		 
