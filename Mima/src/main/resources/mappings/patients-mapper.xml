@@ -572,4 +572,20 @@
 			WHERE MEMBER_NO = #{memberNo}
 		</update>
  	
+ 	<!-- K. 10/17 환자 약배달 현황 목록 -->
+ 	<select id="ptDeliveryStatusList" resultType="PtDeliveryVO">
+ 		SELECT B.BOOKING_NO , B.CONSULT_DATE, B.SUBJECT,
+                                        (SELECT DISTINCT MM.NAME 
+                                         FROM MEMBER MM , BOOKING BB 
+                                         WHERE MM.MEMBER_NO = BB.DOC_NO
+                                         AND MM.MEMBER_NO = B.DOC_NO) "DOC_NAME", 
+                                        (SELECT DISTINCT PH.PHARMACY_INFO 
+                                        FROM PARTNER_PHARMACY PH , MED_DELIVERY MDD 
+                                        WHERE PH.MEMBER_NO = MDD.PHARMACY_NO
+                                        AND PH.MEMBER_NO = MD.PHARMACY_NO) "PHARMACY_NAME",
+		MD.DELIVERY_STATUS
+		FROM BOOKING B, MED_DELIVERY MD
+		WHERE B.BOOKING_NO = MD.BOOKING_NO
+		AND B.PT_NO = #{memberNo}
+ 	</select>
 </mapper>

@@ -256,18 +256,33 @@ th, td {
 										<th>진료의사</th>
 										<th>신청약국</th>
 										<th>약배달 배송현황</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									
-										<tr>
-											<td>2021-10-17</td>
-											<td>기분장애/불안장애</td>
-											<td>Dr.정현숙</td>
-											<td>하나약국</td>
-											<td>배송시작</td>
+									<c:forEach var="del" items="${ptDeliveryStatusList}">
+										<tr style="height:80px;">
+											<td><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
+											<td><p>${del.subject}</p></td>
+											<td><p><b>Dr.</b> ${del.docName}<p></td>
+											<td><p>${del.pharmacyName}</p></td>
+											<td>
+												<c:if test="${del.deliveryStatus eq 'p'}">
+													<span class="status">배달완료</span>
+												</c:if>
+												<c:if test="${del.deliveryStatus eq 'y'}">
+													<span class="status pending">수령완료</span>
+												</c:if>
+												<c:if test="${del.deliveryStatus eq 'c'}">
+													<span class="status cancel">신청취소</span>
+												</c:if>
+												<c:if test="${del.deliveryStatus eq 'n'}">
+													<span class="status pending">배송시작</span>
+												</c:if>
+											</td>
+											<td></td>
 										</tr>
-									
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
