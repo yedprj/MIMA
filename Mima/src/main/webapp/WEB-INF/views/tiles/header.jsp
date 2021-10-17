@@ -38,14 +38,14 @@
 									<ul>
 										<li class="dropdown"><a href="doctors-dashboard.html">진료과목</a>
 											<ul>
-												<li><a href="doctors-dashboard.html">정신분석 / 정신치료</a></li>
-												<li><a href="appointment.html">스트레스 / 트라우마 </a></li>
-												<li><a href="my-patients.html">기분장애 / 공황 • 불안장애</a></li>
-												<li><a href="add-listing.html">신경증 / 성격장애</a></li>
-												<li><a href="schedule-timing.html">직장인 정신건강</a></li>
-												<li><a href="review.html">중독장애</a></li>
-												<li><a href="message.html">노인장애</a></li>
-												<li><a href="my-profile.html">해리장애(다중인격)</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/analysis">정신분석 / 정신치료</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/stress">스트레스 / 트라우마 </a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/emotion">기분장애 / 공황 • 불안장애</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/neurosis">신경증 / 성격장애</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/work">직장인 정신건강</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/addic">중독장애</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/geri">노인장애</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/dd">해리장애(다중인격)</a></li>
 											</ul></li>
 										<li><a href="#">빠른 진료상담</a></li>
 										<li><a href="#">추천의사</a></li>
