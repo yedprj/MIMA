@@ -109,7 +109,10 @@ public class PatientsController {
 		int memberNo = vo.getMemberNo();
 		List<LikesVO> list = new ArrayList<LikesVO>();
 		list = patientsService.ptDoctor(memberNo);
+
+		System.out.println("리스트 확인"+list);
 		System.out.println("보 확인!!!!"+ vo);
+
 		model.addAttribute("ptDoctorList", list);
 		return list; 
 		 

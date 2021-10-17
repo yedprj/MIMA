@@ -140,10 +140,10 @@
                                         </figure>
                                         <div class="content-box">
                                         <!-- e.15 like -->
-                                        <input type="hidden" name="likeMainNo" value="${item.memberNo}">
+
                                             <button type="button" class="like-box">
-                                            <i id="${item.memberNo}" class="fas fa-heart fa-2x" style="color:rgb(246, 238, 238)"></i></button>
-                                            
+                                            <i class="far fa-heart" id="${item.memberNo}"></i></button>
+
                                             <ul class="name-box clearfix">
                                                 <li class="name">
                                                     <h3><a class="move" href="${item.memberNo }">Dr.${item.name } num ${item.memberNo }</a></h3>
@@ -269,105 +269,74 @@
        actionForm.append('<input type="hidden" id="memberNo" name="memberNo" value="'+ $(this).attr("href") +'">');
        actionForm.attr("action", "docProfileDetail");
        actionForm.submit();
-    });
+    });/* 타이틀 클릭 시 상세페이지로 넘어가면서 페이지넘&어마운트 같이 가져가기  끝*/
     
-    
+    //의사좋아요 클릭이벤트 시작
     $("#docList").on('click','.like-box',function(e){
        e.preventDefault();
        var like = $(this).children().attr('id');
        
        const heart = $(this).children();
        
-       if ($(heart).css("color") == "rgb(255, 51, 51)") {
-    	   //삭제
-    	   $.ajax({
-	         url : "likes/likesDelete",
-	         method : "delete",
-	         dataType: 'json',
-	         data : JSON.stringify({
-	            memberNo : "${session.memberNo}",
-	            category : "doc",
-	            likeMainNo: like}),
-	         contentType: 'application/json',
-	         beforeSend : function(xhr) {
-	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-	         },
-	         success : function(data) {
-	            if (data == 1) {
-		            alert("좋아요가 취소되었습니다");
-		            $(heart).css("color", "rgb(237, 222, 222)");
-	            } else {
-	            	alert('좋아요 실패');
-	            }
-	         }
-       })
+       if ($(하트).css("color") == "rgb(255, 51, 51)") {
+                //삭제 ajax 시작
+                $.ajax({
+                    url : "likes/likesDelete",
+                    method : "delete",
+                    dataType: 'json',
+                    data : JSON.stringify({
+                        memberNo : "${session.memberNo}",
+                        category : "doc",
+                        likeMainNo: like}),
+                    contentType: 'application/json',
+                    beforeSend : function(xhr) {
+                        xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+                    },
+                    success : function(data) {
+                        if (data == 1) {
+                            alert("좋아요가 취소되었습니다");
+                            $(하트).css("color", "rgb(237, 222, 222)");
+                        } else {
+                            alert('좋아요 실패');
+                        }
+                    }
+            })//삭제 ajax 끝
        } else {
-	      $.ajax({
-	         url : "likes/likesInsert",
-	         method : "post",
-	         dataType: 'json',
-	         data : JSON.stringify({
-	            memberNo : "${session.memberNo}",
-	            category : "doc",
-	            likeMainNo: like}),
-	         contentType: 'application/json',
-	         beforeSend : function(xhr) {
-	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-	         },
-	         success : function(data) {
-	            if (data == 1) {
-	            	alert("좋아요가 되었습니다");
-		            $(heart).css("color", "rgb(255, 51, 51)");	
-	            } else {
-	            	alert('좋아요 실패');
-	            }
-	            }
-	            
-	         })
-    	   
-       }
-       
-         
-         
-         
-         
-      })
-       
+           //insert ajax 시작
+         $.ajax({
+            url : "likes/likesInsert",
+            method : "post",
+            dataType: 'json',
+            data : JSON.stringify({
+               memberNo : "${session.memberNo}",
+               category : "doc",
+               likeMainNo: like}),
+            contentType: 'application/json',
+            beforeSend : function(xhr) {
+               xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+            },
+            success : function(data) {
+               if (data == 1) {
+                  alert("좋아요가 되었습니다");
+                  $(하트).css("color", "rgb(255, 51, 51)");   
+               } else {
+                  alert('좋아요 실패');
+               }
+               }
+               
+            })//insert ajax 끝  
+        }
+      })//의사좋아요 클릭이벤트 끝
+        
+        /* 교재 312 페이지네이션 */
+        $("#pageButton a").on("click", function (e) {
+            e.preventDefault(); //a tag, submit
+
+            var p = $(this).attr("href");
+            $('[name="pageNum"]').val(p);
+
+            actionForm.submit();
+        });   /* 끝 페이지네이션 */
     });
-    
-    /* 교재 312 */
-    $("#pageButton a").on("click", function(e){
-       e.preventDefault(); //a tag, submit
-       
-       var p=$(this).attr("href");
-       $('[name="pageNum"]').val(p);
-       
-       actionForm.submit();
-    });
-
-  
-/*  	$('.like-box').on('click', function() {
- 		
- 		let heart = $(this).children();
- 		let memberNo = $(this).children().attr('id');
- 		
- 		alert('클릭됨');
- 		$(heart).css("color", "rgb(255, 51, 51)");
- 		
- 		$.ajax({
- 			url: 'doctorLikeInsert',
- 			method: 'post',
- 			data: {memberNo : memberNo},
- 			dataType: 'json',
- 	        beforeSend : function(xhr) {
- 	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
- 	         },
- 	        success: function(data) {
- 	        	console.log(data);
- 	        }
- 		})
- 	}) */
-
-
 
 </script>

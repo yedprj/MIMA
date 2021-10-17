@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.mapper.DocAvailabilityMapper;
+import com.mima.app.member.domain.MemberVO;
 
 @Service
 public class DocAvailabilityServiceImpl implements DocAvailabilityService {
@@ -20,6 +21,16 @@ public class DocAvailabilityServiceImpl implements DocAvailabilityService {
 	@Override
 	public int insert(DocAvailabilityVO vo) {
 		return docAvailabilityMapper.insert(vo);
+	}
+
+	@Override
+	public DocAvailabilityVO checkAvail(MemberVO vo) {
+		return docAvailabilityMapper.checkAvail(vo);
+	}
+
+	@Override
+	public int update(DocAvailabilityVO vo) {
+		return docAvailabilityMapper.update(vo);
 	}
 
 }
