@@ -98,6 +98,16 @@ public interface PatientsMapper {
 	// 약배달 정보 수정 K.10/10
 	public int ptDeliveryUpdate(PatientsVO vo);
 	
+	// 환자 대쉬보드 메인 나의 예약수 카운트_J17
+	public int ptMyListCount (int memberNo);
+	
+	// 환자 대쉬보드 메인 진료내역 수 카운트_J17
+	public int ptMyHistoryCount (int memberNo);
+	
+	// 환자 대쉬보드 메인 나의 후기수 카운트_J17
+	public int ptMyReviewCount (int memberNo);
+	
 	// 환자 약배달현황 목록 K. 10/17
 	public List<PtDeliveryVO>ptDeliveryStatusList(int memberNo);
+
 }

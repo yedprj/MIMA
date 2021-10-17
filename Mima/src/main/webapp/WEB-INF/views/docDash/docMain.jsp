@@ -22,10 +22,19 @@ th, td {
 
 .cusBtn {
 	padding: 9px 28px;
+	margin-top: 20px;
 }
 
 .doctors-appointment .doctors-table tr td .print {
 	margin-right: 80px;
+}
+
+.doctors-appointment .title-box h3 {
+	margin-bottom: 5px;
+}
+
+.doctors-appointment .title-box .btn-box .theme-btn-one {
+	margin-top: 20px;
 }
 </style>
 
@@ -80,13 +89,17 @@ th, td {
 					<li><a href="patientList"><i class="fas fa-wheelchair"></i>나의
 							환자들</a></li>
 					<li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 					<li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필
 							관리</a></li>
 					<li><a href="docProfileForm"><i class="fas fa-stethoscope"></i>진료관리</a></li>
 					<li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호
 							변경</a></li>
-					<li><a href="logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -153,6 +166,7 @@ th, td {
 				<div class="doctors-appointment">
 					<div class="title-box">
 						<h3>오늘의 예약</h3>
+						<span>오늘 진행되는 접수를 보여줍니다.</span>
 						<div class="btn-box">
 							<a href="apptManage" class="theme-btn-one">예약관리<i
 								class="icon-Arrow-Right"></i></a>
@@ -213,6 +227,7 @@ th, td {
 				<div class="doctors-appointment">
 					<div class="title-box">
 						<h3>진료내역</h3>
+						<span>최근 진료 5건을 조회합니다.</span>
 						<div class="btn-box">
 							<a href="apptHistory" class="theme-btn-one">전체보기<i
 								class="icon-Arrow-Right"></i></a>
@@ -264,7 +279,8 @@ th, td {
 
 				<div class="review-list">
 					<div class="title-box">
-						<h3>나의 후기</h3><br>
+						<h3>나의 후기</h3>
+						<span>최근 후기 5건을 조회합니다.</span>
 						<div class="btn-box">
 							<a href="docReview" class="theme-btn-one cusBtn">전체보기<i
 								class="icon-Arrow-Right"></i></a>
@@ -347,7 +363,11 @@ $(function(){
 		
 		window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
 	})
-
+	
+	// 로그아웃_J17
+	$("#logoutBtn1").on("click", function(){
+		$('#logOutfrm1').submit();
+	});
 
 });//end of page on load
 </script>

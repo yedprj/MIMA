@@ -69,7 +69,6 @@ th, td {
 	                <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
 	                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
 	                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
-	                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 	                <li><a href="docProfileInsertForm"><i class="fas fa-user"></i>프로필 관리</a></li>
 	                <li><a href="docProfileForm"><i class="fas fa-stethoscope"></i>진료관리</a></li>
 	                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
@@ -124,6 +123,7 @@ th, td {
 											<th>예약일</th>
 											<th>결제금액</th>
 											<th>예약상태</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody id="contentAll">
@@ -157,6 +157,11 @@ th, td {
 														<span class="status cancel">취소완료</span>
 													</c:if>
 												</td>
+												<td>
+													<c:if test="${apptList.bookingStatus eq 'p'}">
+	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
+	                                                </c:if>
+	                                            </td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -271,6 +276,8 @@ th, td {
 								</table>
 							</div>
 						</div>
+						</div>
+						</div>
 						
 						<!-- pagination  -->
 						<div class="pagination-wrapper" id="allPage" style="display: block;">
@@ -326,8 +333,8 @@ th, td {
 						</div>
 						<!-- pagination end -->
 						
-					</div>
-				</div>
+					
+				
 			</div>
 
 		</div>
@@ -374,6 +381,7 @@ th, td {
 			$('#selectBox').val('${cri.category}').prop("selected", true);
 			searchCheck();
 			
+			// 로그아웃_J17
 			$("#logoutBtn1").on("click", function(){
 				$('#logOutfrm1').submit();
 			});

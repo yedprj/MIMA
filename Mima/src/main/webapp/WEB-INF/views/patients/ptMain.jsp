@@ -84,7 +84,7 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-3"></i>
 									</div>
-									<h3>3</h3>
+									<h3>${ptMyListCount}</h3>
 									<p>나의 예약 수</p>
 								</div>
 							</div>
@@ -101,8 +101,8 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-1"></i>
 									</div>
-									<h3>11</h3>
-									<p>진료 내역 수</p>
+									<h3>${ptMyHistoryCount}</h3>
+									<p>진료내역 수</p>
 								</div>
 							</div>
 						</div>
@@ -118,7 +118,7 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-2"></i>
 									</div>
-									<h3>12</h3>
+									<h3>${ptMyReviewCount}</h3>
 									<p>나의 후기 수</p>
 								</div>
 							</div>

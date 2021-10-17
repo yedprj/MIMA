@@ -52,7 +52,7 @@
                               
                                 <h3>${session.name}</h3>
 
-                                <p>MDS - Periodontology</p>
+                                <p>${clinicName}</p>
                             </div>
                         </div>
                     </div>
@@ -63,11 +63,15 @@
 			                <li><a href="apptHistory"><i class="fas fa-calendar-alt"></i>진료내역</a></li>
 			                <li><a href="patientList"><i class="fas fa-wheelchair"></i>나의 환자들</a></li>
 			                <li><a href="docReview"><i class="fas fa-star"></i>나의 후기</a></li>
-			                <li><a href="docQna"><i class="fas fa-comments"></i>나의 문의</a></li>
 			                <li><a href="docProfileInsertForm" class="current"><i class="fas fa-user"></i>프로필 관리</a></li>
 			                <li><a href="docProfileForm"><i class="fas fa-stethoscope"></i>진료관리</a></li>
 			                <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-			                <li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+			                <li>
+			                	<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+									<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+								</form>
+							</li>
 			            </ul>
                     </div>
                 </div>
@@ -518,6 +522,10 @@
     		});
     	});
     	
+    	// 로그아웃_J17
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
+		});
     	
     });/* 페이지로드이벤트 끝 */
     </script>

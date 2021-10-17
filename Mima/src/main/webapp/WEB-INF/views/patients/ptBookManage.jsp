@@ -101,6 +101,8 @@ th, td {
 											<th>예약일</th>
 											<th>결제금액</th>
 											<th>결제상태</th>
+											<th>예약상태</th>
+
 											<th></th>
 										</tr>
 									</thead>
