@@ -3,6 +3,24 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<style>
+	#noticeBtn{
+		cursor: pointer;
+		position: relative;
+	    display: inline-block;
+	    width: 50px;
+	    height: 50px;
+	    line-height: 50px;
+	    background: #fff;
+	    border-radius: 50%;
+	    text-align: center;
+	    font-size: 24px;
+	    border: 1px solid #e5eded;
+	    color: #061a3a;
+	    box-shadow: 0 10px 30px #d5edea;
+	}
+	
+</style>
 <!-- preloader -->
 <div class="preloader"></div>
 <!-- preloader -->
@@ -38,14 +56,14 @@
 									<ul>
 										<li class="dropdown"><a href="doctors-dashboard.html">진료과목</a>
 											<ul>
-												<li><a href="doctors-dashboard.html">정신분석 / 정신치료</a></li>
-												<li><a href="appointment.html">스트레스 / 트라우마 </a></li>
-												<li><a href="my-patients.html">기분장애 / 공황 • 불안장애</a></li>
-												<li><a href="add-listing.html">신경증 / 성격장애</a></li>
-												<li><a href="schedule-timing.html">직장인 정신건강</a></li>
-												<li><a href="review.html">중독장애</a></li>
-												<li><a href="message.html">노인장애</a></li>
-												<li><a href="my-profile.html">해리장애(다중인격)</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/analysis">정신분석 / 정신치료</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/stress">스트레스 / 트라우마 </a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/emotion">기분장애 / 공황 • 불안장애</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/neurosis">신경증 / 성격장애</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/work">직장인 정신건강</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/addic">중독장애</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/geri">노인장애</a></li>
+												<li><a href="${pageContext.request.contextPath}/subject/dd">해리장애(다중인격)</a></li>
 											</ul></li>
 										<li><a href="#">빠른 진료상담</a></li>
 										<li><a href="#">추천의사</a></li>
@@ -126,6 +144,26 @@
 					</nav>
 				</div>
 				<!-- 로그인 로그아웃 p.30 -->
+				<!-- K. 10/17 알림 -->
+				<div class="right-column pull-right">
+                     <div class="author-box">
+                         <div class="icon-box  nice-select"  tabindex="0" >
+                              <a id="noticeBtn" href="#"><i class="icon-Bell"></i></a>
+                              <ul class="list">
+                         		<li data-value="" data-display="알림내역" class="option selected focus">알림내역</li>
+                         		<c:if test="${not empty notice }">
+                         			<c:forEach var="notice" items="${notice}">
+                         				<li data-value="${notice.type }" class="option">${notice.userMemberNo }</li>	
+                         			</c:forEach>
+                         		</c:if>
+                         	</ul>
+                         </div>
+                         <div id="noticeSelect">
+                         	
+                         </div>
+       	             </div>
+                </div>
+                <!-- 알림 end -->
 				<div class="btn-box">
 					<sec:authorize access="isAnonymous()">
 						<a href="${pageContext.request.contextPath}/login" class="theme-btn-one"><i
@@ -226,5 +264,22 @@
 		$("#logoutBtn").on("click", function(){
 			$('#logOutfrm').submit();
 		});
+		
+		$("#noticeBtn").on("click", function(){
+			$("#noticeSelect").css("display","block");
+			console.log(csrfHeaderName);
+			console.log(csrfTokenValue);
+		});
+		
+		// K. 10/17 알림 테스트
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		// 세션을 어떻게 비교해야할지...
+		
+		if (csrfHeaderName != ""){
+			console.log(csrfHeaderName);
+			console.log(csrfTokenValue);
+		}
+		
 	});
 </script>

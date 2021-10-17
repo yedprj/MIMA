@@ -28,26 +28,18 @@
 												<input type="text" value="${report.reportNo }" required="">
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고한 회원번호</label> 
-												<input type="text" value="${report.memberNo }" required="">
+												<label>신고당한 회원이름</label> <input type="text"
+													value="${report.reported }" required="">
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고당한 회원번호</label> 
-												<input type="text" value="${report.postNo }" required="">
-											</div>
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고한 회원아이디</label> 
-												<input type="text" value="${report.rmemberId }" required="">
-											</div>
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고당한 회원아이디</label> 
-												<input type="text" value="${report.reportId }" required="">
-											</div>
-											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label>신고일</label> 
-												<input type="text" placeholder="<fmt:formatDate value="${report.reportDate }"
-														pattern="yy-MM-dd" />"
+												<label>신고일</label> <input type="text"
+													placeholder="<fmt:formatDate value="${report.reportDate }"
+															pattern="yy-MM-dd" />"
 													required="">
+											</div>
+											<div class="col-lg-6 col-md-6 col-sm-12 form-group">
+												<label>신고한 회원이름</label> <input type="text"
+													value="${report.reporter }" required="">
 											</div>
 											<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 												<label>신고글</label> 

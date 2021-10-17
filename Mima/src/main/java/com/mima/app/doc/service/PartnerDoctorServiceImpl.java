@@ -10,6 +10,7 @@ import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.doc.mapper.MentalSubjectMapper;
 import com.mima.app.doc.mapper.PartnerDoctorMapper;
+import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.meditation.mapper.MeditAttachMapper;
 import com.mima.app.member.domain.ExperienceVO;
@@ -97,6 +98,12 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 	@Override
 	public List<DocInfoVO> subjectDoclist(String category1, String category2, String category3) { 
 		return partnerDoctorMapper.subjectDoclist(category1, category2, category3);
+	}
+
+	// e.17 환자대쉬보드 의사 좋아요 삭제
+	@Override
+	public int deleteDocLike(LikesVO vo) {
+		return partnerDoctorMapper.deleteDocLike(vo);
 	}
 
 }

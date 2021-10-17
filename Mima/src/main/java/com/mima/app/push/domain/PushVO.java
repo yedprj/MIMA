@@ -10,7 +10,7 @@ public class PushVO {
 	private int toMemberNo;		// 알람 받는 회원 번호
 	private int userMemberNo;	// 알람 보내는 회원 번호
 	private String type;		// 알람 종류 ??
-	private String contentId;	// 컨텐츠 번호 ?? 
+	private int contentId;	// 컨텐츠 번호, ex) 취소 예약번호
 	private String message;		// 알람 내용
 	private String pushDt;		// 이동할 주소 ?? 
 	private Date pushDate;		// 알람 발생 일시

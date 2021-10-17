@@ -23,13 +23,24 @@ public class DocAvailabilityController {
 	@PostMapping("/insertAvail")
 	@ResponseBody
 	public int docProfileInsert(Model model, DocAvailabilityVO vo) {
-		log.info("ahhhhhhhhhhhhhhhhhhhh");
 		System.out.println("doc doc doc"+vo.toString());
 		int result = docAvailabilityService.insert(vo);
 		if(result == 1) {
 			model.addAttribute("msg", "success");
 		}
 		return 1;
-	}		
+	}
+	
+	//s:1017 ajax 진료가능 요일시간 update
+		@PostMapping("/updateAvail")
+		@ResponseBody
+		public int docProfileUpdate(Model model, DocAvailabilityVO vo) {
+			System.out.println("avail update"+vo.toString());
+			int result = docAvailabilityService.update(vo);
+			if(result == 1) {
+				model.addAttribute("msg", "success");
+			}
+			return 1;
+		}
 	
 }

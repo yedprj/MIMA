@@ -276,6 +276,9 @@
 		WHERE
 		<include refid="criterias"></include>
 		BOOKING_NO > 0
+		<![CDATA[
+		AND CONSULT_DATE>=TO_DATE(SYSDATE)
+		]]>
 	</select>
 
 	<!-- 환자 대쉬보드 예약관리 페이지_J17 -->
@@ -336,7 +339,7 @@
 		   B.CONSULT_TIME,
 		   M.NAME
     FROM BOOKING B JOIN MEMBER M
-    ON B.PT_NO=M.MEMBER_NO
+    ON B.DOC_NO=M.MEMBER_NO
     WHERE ROWNUM < 6 AND CONSULT_DATE < TO_DATE(SYSDATE) AND MEMBER_NO=#{memberNo}
     ORDER BY CONSULT_DATE DESC
  ]]>
@@ -382,7 +385,7 @@
 		ROWNUM RN, B.BOOKING_NO, B.PT_NO, B.DOC_NO, B.BOOKING_DATE, B.PRICE,
 		B.BOOKING_STATUS, B.CONSULT_DATE, B.CONSULT_TIME, M.NAME
 		FROM BOOKING B JOIN MEMBER M
-		ON B.PT_NO = M.MEMBER_NO
+		ON B.DOC_NO = M.MEMBER_NO
 		WHERE B.BOOKING_STATUS = 'y' AND M.MEMBER_NO=#{memberNo} AND
 				<![CDATA[
 				ROWNUM <= #{cri.pageNum} * #{cri.amount}				
@@ -542,4 +545,20 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 			WHERE MEMBER_NO = #{memberNo}
 		</update>
  	
+ 	<!-- K. 10/17 환자 약배달 현황 목록 -->
+ 	<select id="ptDeliveryStatusList" resultType="PtDeliveryVO">
+ 		SELECT B.BOOKING_NO , B.CONSULT_DATE, B.SUBJECT,
+                                        (SELECT DISTINCT MM.NAME 
+                                         FROM MEMBER MM , BOOKING BB 
+                                         WHERE MM.MEMBER_NO = BB.DOC_NO
+                                         AND MM.MEMBER_NO = B.DOC_NO) "DOC_NAME", 
+                                        (SELECT DISTINCT PH.PHARMACY_INFO 
+                                        FROM PARTNER_PHARMACY PH , MED_DELIVERY MDD 
+                                        WHERE PH.MEMBER_NO = MDD.PHARMACY_NO
+                                        AND PH.MEMBER_NO = MD.PHARMACY_NO) "PHARMACY_NAME",
+		MD.DELIVERY_STATUS
+		FROM BOOKING B, MED_DELIVERY MD
+		WHERE B.BOOKING_NO = MD.BOOKING_NO
+		AND B.PT_NO = #{memberNo}
+ 	</select>
 </mapper>

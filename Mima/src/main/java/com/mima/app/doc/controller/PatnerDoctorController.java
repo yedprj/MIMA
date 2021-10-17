@@ -7,7 +7,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,10 @@ import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.domain.DocInfoVO;
+import com.mima.app.doc.domain.MentalSubjectVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.doc.service.DocAvailabilityService;
+import com.mima.app.doc.service.MentalSubjectService;
 import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.member.domain.ExperienceVO;
@@ -52,6 +54,8 @@ public class PatnerDoctorController {
 	@Autowired MemberService memberService;
 	@Autowired ExperienceService experienceService;
 	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired DocAvailabilityService docAvailabilityService;
+	@Autowired MentalSubjectService mentalSubjectService;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("doctor/docMain")
@@ -249,10 +253,11 @@ public class PatnerDoctorController {
 		
 		//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 있으면 값을 가져와서 넘겨주고 수정할 수 있도록
 		if( docVo != null) {
-			System.out.print("테이블에 값 잇음");
+			System.out.print("테이블에 값 잇음!!");
 			expVo.setMemberNo(docVo.getMemberNo());
 			model.addAttribute("doc", doctorService.getDocDetail(docVo));
 			model.addAttribute("expList", experienceService.getExpList(expVo));
+			 path="docDash/docProfileEditForm";
 			return path;
 		}else {
 			//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 없으면 바로 인서트 할 수 있도록
@@ -264,10 +269,25 @@ public class PatnerDoctorController {
 
 	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
 	@GetMapping("doctor/docProfileForm")
-	public String docProfileFrom(Model model, DocAvailabilityVO vo, HttpServletRequest request) {
+	public String docProfileFrom(Model model, MemberVO mVo, DocAvailabilityVO availVo, MentalSubjectVO subVo, HttpServletRequest request ) {
 		
-		// 닥터 프로필 병원 이름 호출_J17
+		//s:1017 added.
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
+		
+		String clinicName=doctorService.clinicName(mVo.getMemberNo());
+		
+		availVo = docAvailabilityService.checkAvail(mVo);
+		System.out.println("checking 진료가능시간 전체"+ availVo);
+		subVo = mentalSubjectService.getPriceCategory(mVo.getMemberNo());
+		System.out.println("checking 진료과목 전체"+ subVo);
+		
+		model.addAttribute("cName", clinicName);
+		model.addAttribute("time", availVo);
+		model.addAttribute("sub", subVo);
+  	// 닥터 프로필 병원 이름 호출_J17
 		model.addAttribute("clinicName", clinicName(request));
+
 		
 		return "docDash/docProfileForm";
 	}
@@ -331,6 +351,7 @@ public class PatnerDoctorController {
 		model.addAttribute("list", doctorService.getTotalDocList(cri) );
 		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
+		
 		return "/docList/getTotalDocList";
 	}
 
@@ -367,6 +388,7 @@ public class PatnerDoctorController {
 	public String subjectDoclist(String category1, String category2, String category3, Model model) {
 		
 		model.addAttribute("list", doctorService.subjectDoclist(category1, category2, category3));
+		System.out.println("==========================" + category1);
 		model.addAttribute("category", category1);
 		
 		return "/docList/getSubjectDocList";
