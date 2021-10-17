@@ -235,6 +235,44 @@ th, td {
 						</div>
 					</div>
 				</div>
+				
+				<!-- K. 10/ 17 배송현황 -->
+				<br>
+				<div class="doctors-appointment">
+					<div class="title-box">
+						<h3>배송현황</h3>
+						<div class="btn-box">
+							<a href="ptHistory" class="theme-btn-one">자세히 보기<i
+								class="icon-Arrow-Right"></i></a>
+						</div>
+					</div>
+					<div class="doctors-list">
+						<div class="table-outer">
+							<table class="doctors-table">
+								<thead class="table-header">
+									<tr>
+										<th>진료일</th>
+										<th>진료과목</th>
+										<th>진료의사</th>
+										<th>신청약국</th>
+										<th>약배달 배송현황</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+										<tr>
+											<td>2021-10-17</td>
+											<td>기분장애/불안장애</td>
+											<td>Dr.정현숙</td>
+											<td>하나약국</td>
+											<td>배송시작</td>
+										</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
 				<br>
 

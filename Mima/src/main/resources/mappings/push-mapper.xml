@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.push.mapper.PushMapper">
 	
+	<!--K.10/17 MEMBER_NO 알람 내용 확인 -->
+	<select id="selectMemberPush" resultType="pushVO">
+		SELECT 	PUSH_NO, 
+				TO_MEMBER_NO, 
+				USER_MEMBER_NO, 
+				TYPE, 
+				CONTENT_ID,
+				MESSAGE, 
+				PUSH_DATE
+		FROM PUSH
+		WHERE TO_MEMBER_NO = #{toMemberNo}
+	</select>
+	
 	<!-- K. 10/16 약 배달 취소 알람 -->
 	<insert id="delCancelAlarm">
 		insert into push(

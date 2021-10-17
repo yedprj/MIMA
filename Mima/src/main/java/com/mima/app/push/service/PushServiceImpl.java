@@ -1,5 +1,7 @@
 package com.mima.app.push.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,13 @@ public class PushServiceImpl implements PushService {
 	@Override
 	public int delCancelAlarm(PushVO vo) {
 		return pushMapper.delCancelAlarm(vo);
+	}
+
+	// K. 10/17 회원별 알림건 조회
+	@Override
+	public List<PushVO> selectMemberPush(int toMemberNo) {
+		// TODO Auto-generated method stub
+		return pushMapper.selectMemberPush(toMemberNo);
 	}
 
 }
