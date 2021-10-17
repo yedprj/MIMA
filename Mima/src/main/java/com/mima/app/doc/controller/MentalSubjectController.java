@@ -29,5 +29,17 @@ public class MentalSubjectController {
 				model.addAttribute("msg", "success");
 			}
 			return 1;
-		}		
+		}
+		
+		//s:1017
+		//ajax 진료목록 가격 update
+			@PostMapping("/updateSub")
+			@ResponseBody
+			public int docProfileUpdate(Model model, MentalSubjectVO vo) {
+				int result = mentalSubjectService.update(vo);
+				if(result == 1) {
+					model.addAttribute("msg", "success");
+				}
+				return 1;
+			}	
 }

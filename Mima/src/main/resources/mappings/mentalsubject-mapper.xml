@@ -24,6 +24,21 @@
 		)
 	</insert>
 	
+	
+	<!-- s:1017 진료과목 update -->
+	<update id="update">
+	UPDATE MENTAL_SUBJECT
+		SET
+			CATEGORY_1=#{category1},
+			PRICE_1=#{price1},
+			CATEGORY_2=#{category2},
+			PRICE_2=#{price2},
+			CATEGORY_3=#{category3},
+			PRICE_3=#{price3},
+		WHERE DOC_NO=#{docNo}
+	</update>
+	
+	
 	<!-- 진료과목 금액 가져오기 p.10/07 -->
 	<select id="getPriceCategory" resultType="MentalSubjectVO">
 		SELECT CATEGORY_1,

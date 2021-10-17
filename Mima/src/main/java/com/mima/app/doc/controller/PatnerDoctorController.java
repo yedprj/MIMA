@@ -26,7 +26,10 @@ import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.doc.domain.DocAvailabilityVO;
 import com.mima.app.doc.domain.DocInfoVO;
+import com.mima.app.doc.domain.MentalSubjectVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
+import com.mima.app.doc.service.DocAvailabilityService;
+import com.mima.app.doc.service.MentalSubjectService;
 import com.mima.app.doc.service.PartnerDoctorService;
 import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.member.domain.ExperienceVO;
@@ -51,6 +54,8 @@ public class PatnerDoctorController {
 	@Autowired MemberService memberService;
 	@Autowired ExperienceService experienceService;
 	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired DocAvailabilityService docAvailabilityService;
+	@Autowired MentalSubjectService mentalSubjectService;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("doctor/docMain")
@@ -259,7 +264,22 @@ public class PatnerDoctorController {
 
 	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
 	@GetMapping("doctor/docProfileForm")
-	public String docProfileFrom(Model model, DocAvailabilityVO vo) {
+	public String docProfileFrom(Model model, MemberVO mVo, DocAvailabilityVO availVo, MentalSubjectVO subVo, HttpServletRequest request ) {
+		
+		//s:1017 added.
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
+		
+		String clinicName=doctorService.clinicName(mVo.getMemberNo());
+		
+		availVo = docAvailabilityService.checkAvail(mVo);
+		System.out.println("checking 진료가능시간 전체"+ availVo);
+		subVo = mentalSubjectService.getPriceCategory(mVo.getMemberNo());
+		System.out.println("checking 진료과목 전체"+ subVo);
+		
+		model.addAttribute("cName", clinicName);
+		model.addAttribute("time", availVo);
+		model.addAttribute("sub", subVo);
 		
 		return "docDash/docProfileForm";
 	}

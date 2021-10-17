@@ -35,4 +35,23 @@
 			)
 	</insert>
 	
+	<!-- s:1017 의사 가능시간 전체 조회 -->
+	<select id="checkAvail" resultType="DocAvailabilityVO">
+	SELECT * FROM DOC_AVAILABILITY WHERE DOC_NO=#{memberNo}
+	</select>
+	
+	<update id="update">
+		UPDATE DOC_AVAILABILITY
+			SET 
+				MON=#{mon},
+				TUE=#{tue},
+				WED=#{wed},
+				THU=#{thu},
+				FRI=#{fri},
+				SAT=#{sat},
+				SUN=#{sun},
+				EDIT_DATE=SYSDATE
+			WHERE DOC_NO=#{docNo}
+	</update>
+	
 </mapper>

@@ -29,5 +29,11 @@ public class MentalSubjectServiceImpl implements MentalSubjectService {
 	public MentalSubjectVO categorySelect(int docNo) {
 		return mentalSubjectMapper.categorySelect(docNo);
 	}
+	
+	//s:1017 update subjects
+	@Override
+	public int update(MentalSubjectVO vo) {
+		return mentalSubjectMapper.update(vo);
+	}
 
 }

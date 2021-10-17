@@ -36,7 +36,7 @@
 
                                 <h3>${session.name}</h3>
 
-                                <p>MDS - Periodontology</p>
+                                <p>${cName }</p>
                             </div>
                         </div>
                     </div>
@@ -71,40 +71,44 @@
                                     <!-- row start -->
                                         <div class="row clearfix" id="addEpxDiv">
                                         <!-- 월화수목금토일 시간설정 -->
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group d-flex justify-content-center align-items-end">
+                                            <div><br> </div>
 	                                             <div class="form-check form-check-inline">
-													  <input class="form-check-input" type="checkbox" id="mon" value="mon">
-													  <label class="form-check-label" for="inlineCheckbox1">월</label>
+													  <label class="form-check-label" for="mon" style="font-size:20px">
+													  <input class="form-check-input" type="checkbox" id="mon" value="mon"> 월요일</label>
 												</div>
                                             </div>
                                             <div class="col-lg-9 col-md-6 col-sm-12 form-group">
                                                 <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
 	                                            <input type="text" name="mon_time" id="mon_time" placeholder="${placeholder}" required="">
                                             </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group  d-flex justify-content-center align-items-end">
                                                 <div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="tue" value="tue">
-												  <label class="form-check-label" for="inlineCheckbox2">화</label>
+                                                <div> <br></div>
+												  <label class="form-check-label" for="tue" style="font-size:20px">
+												  <input class="form-check-input" type="checkbox" id="tue" value="tue"> 화요일</label>
 												</div>
                                             </div>
                                             <div class="col-lg-9 col-md-6 col-sm-12 form-group">
                                                 <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
 	                                            <input type="text" id="tue_time" name="tue_time" placeholder="${placeholder}" required="">
                                             </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="wed" value="wed">
-												  <label class="form-check-label" for="inlineCheckbox3">수</label>
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group d-flex justify-content-center align-items-end">
+                                                <div class="form-check form-check-inline ">
+                                                <div> <br></div>
+												  <label class="form-check-label" for="wed" style="font-size:20px">
+												  <input class="form-check-input" type="checkbox" id="wed" value="wed"> 수요일</label>
 												</div>
                                             </div>
                                             <div class="col-lg-9 col-md-6 col-sm-12 form-group">
                                                 <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
 	                                            <input type="text"  id="wed_time" name="wed_time" placeholder="${placeholder}" required="">
                                             </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group  d-flex justify-content-center align-items-end">
 	                                             <div class="form-check form-check-inline">
-													  <input class="form-check-input" type="checkbox" id="thu" value="thu">
-													  <label class="form-check-label" for="inlineCheckbox1">목</label>
+	                                             <div><br></div>
+													  <label class="form-check-label" for="thu" style="font-size:20px">
+													  <input class="form-check-input" type="checkbox" id="thu" value="thu"> 목요일</label>
 												</div>
                                             </div>
 
@@ -112,10 +116,11 @@
                                                 <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
 	                                            <input type="text" id="thu_time" name="thu_time" placeholder="${placeholder}" required="">
                                             </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group  d-flex justify-content-center align-items-end">
                                                 <div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="fri" value="fri">
-												  <label class="form-check-label" for="inlineCheckbox2">금</label>
+                                                <div><br></div>
+												  <label class="form-check-label" for="fri" style="font-size:20px">
+												  <input class="form-check-input" type="checkbox" id="fri" value="fri"> 금요일</label>
 												</div>
 
                                             </div>
@@ -123,20 +128,24 @@
                                                 <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
 	                                            <input type="text" id="fri_time" name="fri_time" placeholder="${placeholder}" required="">
                                             </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group  d-flex justify-content-center align-items-end">
                                                 <div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="sat" value="sat">
-												  <label class="form-check-label" for="inlineCheckbox2">토</label>
+                                                <div><br></div>
+												  
+												  <label class="form-check-label" for="sat" style="font-size:20px">
+												  <input class="form-check-input" type="checkbox" value="sat"> 토요일</label>
 												</div>
                                             </div>
                                             <div class="col-lg-9 col-md-6 col-sm-12 form-group">
                                                 <label>가능시간, 시작 시간을 기준으로 작성하되 띄어쓰기로 구분해 주세요</label>
 	                                            <input type="text" id="sat_time" name="sat_time" placeholder="${placeholder}" required="">
                                             </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
+                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group  d-flex justify-content-center align-items-end" style="height:83px">
                                                 <div class="form-check form-check-inline">
-												  <input class="form-check-input" type="checkbox" id="sun" value="sun">
-												  <label class="form-check-label" for="inlineCheckbox2">일</label>
+                                                <div><br></div>
+												  
+												  <label class="form-check-label" for="sun" style="font-size:20px">
+												  <input class="form-check-input" type="checkbox" id="sun" value="sun"> 일요일</label>
 												</div>
                                             </div>
                                             <div class="col-lg-9 col-md-6 col-sm-12 form-group">
@@ -160,11 +169,23 @@
                                     <span>진료명과 진료비를 설정해주세요.</span>
                                 </div>
                                 <div class="inner-box" style="padding-bottom:20px">
-                                    <form action="add-listing.html" method="post">
+                                    <form id="insertSubFrm" action="insertSub" method="post">
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>진료명1</label>
-                                                <input type="text" id="category1" name="category1" required="required">
+												<label for="category1">진료명1</label>
+												   <div class="select-box">
+			                                        <select class="wide" name="category1" id="category1">
+			                                           <option data-display="진료 과목을 선택하세요">과목</option>
+			                                           <option value="정신분석">정신분석 / 정신치료</option>
+			                                           <option value="스트레스">스트레스 / 트라우마</option>
+			                                           <option value="기분">기분장애 / 공황 • 불안장애</option>
+			                                           <option value="신경증">신경증 / 성격장애</option>
+			                                           <option value="직장인">직장인 정신건강</option>
+			                                           <option value="중독">중독장애</option>
+			                                           <option value="노인">노인장애</option>
+			                                           <option value="해리">해리장애(다중인격)</option>
+			                                        </select>
+			                                    </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>금액</label>
@@ -172,7 +193,19 @@
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료명2</label>
-                                                <input type="text" id="category2" name="category2" required="">
+                                                <div class="select-box">
+			                                        <select class="wide" name="category2" id="category2">
+			                                           <option data-display="진료 과목을 선택하세요">과목</option>
+			                                           <option value="정신분석">정신분석 / 정신치료</option>
+			                                           <option value="스트레스">스트레스 / 트라우마</option>
+			                                           <option value="기분">기분장애 / 공황 • 불안장애</option>
+			                                           <option value="신경증">신경증 / 성격장애</option>
+			                                           <option value="직장인">직장인 정신건강</option>
+			                                           <option value="중독">중독장애</option>
+			                                           <option value="노인">노인장애</option>
+			                                           <option value="해리">해리장애(다중인격)</option>
+			                                        </select>
+			                                    </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>금액</label>
@@ -180,7 +213,19 @@
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료명3</label>
-                                                <input type="text"id="category3" name="category3" required="">
+                                                <div class="select-box">
+			                                        <select class="wide"  name="category3" id="category3">
+			                                           <option data-display="진료 과목을 선택하세요">과목</option>
+			                                           <option value="정신분석">정신분석 / 정신치료</option>
+			                                           <option value="스트레스">스트레스 / 트라우마</option>
+			                                           <option value="기분">기분장애 / 공황 • 불안장애</option>
+			                                           <option value="신경증 / 성격장애">신경증 / 성격장애</option>
+			                                           <option value="직장인">직장인 정신건강</option>
+			                                           <option value="중독">중독장애</option>
+			                                           <option value="노인">노인장애</option>
+			                                           <option value="해리">해리장애(다중인격)</option>
+			                                        </select>
+			                                    </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>금액</label>
@@ -213,12 +258,74 @@ $(function(){
 
 	let docNo = ${session.memberNo};
 	
+	//페이지 들어왔을 때 테이블 검색해서 값이 있으면 수정, 없으면 입력
+	if( "${time}" != ""){
+		if("${time.mon}" != ""){
+			$('#mon').prop("checked", true);
+			$('#mon_time').val("${time.mon}");
+		}
+		if("${time.tue}" != ""){
+			$('#tue').prop("checked", true);
+			$('#tue_time').val("${time.tue}");
+		}
+		if("${time.wed}" != ""){
+			$('#wed').prop("checked", true);
+			$('#wed_time').val("${time.wed}");
+		}
+		if("${time.thu}" != ""){
+			$('#thu').prop("checked", true);
+			$('#thu_time').val("${time.thu}");
+		}
+		if("${time.fri}" != ""){
+			$('#fri').prop("checked", true);
+			$('#fri_time').val("${time.fri}");
+		}
+		if("${time.sat}" != ""){
+			$('#sat').prop("checked", true);
+			$('#sat_time').val("${time.sat}");
+		}
+		if("${time.sun}" != ""){
+			$('#sun').prop("checked", true);
+			$('#sun_time').val("${time.sun}");
+		}
+		$("#availableFrm").attr('action', 'updateAvail');
+		$("#saveAvailBtn").text("수정하기");
+	}
+	
+	if("${sub}" != ""){
+		if("${sub.category1}" !=""){
+			 $('#category1').val("${sub.category1}").prop("selected", true);
+			 console.log("${sub.category1}")
+		}
+		if("${sub.price1}" !=""){
+			 $('#price1').val("${sub.price1}");
+		}
+		if("${sub.category2}" !=""){
+			$("#category2").val("${sub.category2}").prop("selected", true);
+			 console.log($("#category2").val("${sub.category2}"))
+		}
+		if("${sub.price2}" !=""){
+			 $('#price2').val("${sub.price2}");
+		}
+		if("${sub.category3}" !=""){
+			 $('#category3').val("${sub.category3}");
+		}
+		if("${sub.price3}" !=""){
+			 $('#price3').val("${sub.price3}");
+		}
+		$("#insertSubFrm").attr('action', 'updateSub');
+		$("#subjectPriceInsertBtn").text("수정하기");
+	}
+	
+	
+	
 	//진료가능시간 등록 버튼 이벤트
 	$("#saveAvailBtn").on('click', function(){
+		let url = $("#availableFrm").attr('action');
 		
 		//ajax start
 		$.ajax({
-			url : '../docAvail/insertAvail',
+			url : '../docAvail/'+url,
 			method : "POST",
 			data : {
 				docNo: docNo,
@@ -250,18 +357,19 @@ $(function(){
 	
 	//진료 과목과 가격 등록 버튼 이벤트
 	$("#subjectPriceInsertBtn").on('click', function(){
+		let url = $("#insertSubFrm").attr('action');
 		
 		//ajax start
 		$.ajax({
-			url : '../subject/insertSub',
+			url : '../subject/'+url,
 			method : "POST",
 			data : {
 				docNo: docNo,
-				category1 : $('#category1').val(),
+				category1 : $('#category1 option:selected').val(),
 				price1 : $('#price1').val(),
-				category2 : $('#category2').val(),
+				category2 : $('#category2 option:selected').val(),
 				price2 : $('#price2').val(),
-				category3 : $('#category3').val(),
+				category3 : $('#category3 option:selected').val(),
 				price3 : $('#price3').val(),
 			},
 			beforeSend : function(xhr) {
@@ -284,9 +392,5 @@ $(function(){
 	})//진료 과목과 가격 등록 버튼 이벤트 끝 
 	
 	
-	
-
-
-
 })/* end of 페이지 온 로드 */
 </script>

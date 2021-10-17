@@ -319,14 +319,35 @@
     /* 페이지 로드 이벤트 */
     $(function(){
 
-    	var fromD1 = "${expList[0].fromDate}";
+    	//경력 날짜 입력... s:1017
+      	var fromD1 = "${expList[0].fromDate}";
       	var toD1 =  "${expList[0].toDate}";
       	var fromD2 = "${expList[1].fromDate}";
       	var toD2 =  "${expList[1].toDate}";
       	var fromD3 = "${expList[2].fromDate}";
       	var toD3 =  "${expList[2].toDate}";
-    	
-      	console.log(fromD1);
+		
+      	var strArr = fromD1.split(' ');
+      	fromD1 = strArr[5]+"/"+strArr[1]+"/"+strArr[2];
+      	
+      	strArr = toD1.split(' ');
+      	toD1 = strArr[5]+"/"+strArr[1]+"/"+strArr[2];
+      	
+      	strArr = fromD2.split(' ');
+      	frofromD2mD1 = strArr[5]+"/"+strArr[1]+"/"+strArr[2];
+      	
+      	strArr = toD2.split(' ');
+      	frotoD2mD1 = strArr[5]+"/"+strArr[1]+"/"+strArr[2];
+      	
+      	strArr = fromD3.split(' ');
+      	frofromD3mD1 = strArr[5]+"/"+strArr[1]+"/"+strArr[2];
+      	
+      	strArr = toD3.split(' ');
+      	toD3 = strArr[5]+"/"+strArr[1]+"/"+strArr[2];
+      	
+      //경력 날짜 입력... s:1017 아니 이래도 근데 forEach라서 못넣겠어 ㅠㅠ
+      	
+      	
       	
     	var csrfHeaderName = "${_csrf.headerName}";
     	var csrfTokenValue = "${_csrf.token}";
