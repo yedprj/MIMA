@@ -228,20 +228,21 @@
 <!-- 페이징 end -->
 	
 <!-- e.4 -->
-<!--환자대쉬보드 Main 오늘의예약-->
+<!-- 환자대쉬보드 Main 오늘의 예약_J17 -->
 <select id="ptgetList" resultType="BookingVO">
 	SELECT B.BOOKING_NO,
-		   B.PT_NO,
-		   B.DOC_NO,
-		   B.BOOKING_DATE,
-		   B.PRICE,
-		   B.BOOKING_STATUS,
-		   B.CONSULT_DATE,
-		   B.CONSULT_TIME,
-		   M.NAME
+           B.PT_NO,
+           B.DOC_NO,
+           B.BOOKING_DATE,
+           B.PRICE,
+           B.BOOKING_STATUS,
+           B.CONSULT_DATE,
+           B.CONSULT_TIME,
+           M.NAME
 	FROM BOOKING B JOIN MEMBER M
-	ON B.PT_NO=M.MEMBER_NO
-	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE) AND MEMBER_NO=#{memberNo}
+	ON B.DOC_NO = M.MEMBER_NO
+	WHERE B.CONSULT_DATE = TO_DATE(SYSDATE)
+	AND PT_NO = #{memberNo}
 </select>
 
 <!-- 예약관리 페이징 e.5-->
@@ -277,21 +278,50 @@
 		BOOKING_NO > 0
 	</select>
 
-	<select id="ptbmList" 
-		resultType="BookingVO">
+	<!-- 환자 대쉬보드 예약관리 페이지_J17 -->
+	<select id="ptbmList" resultType="BookingVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
-		ROWNUM RN, B.BOOKING_NO, B.PT_NO, B.DOC_NO, B.BOOKING_DATE, B.PRICE,
-		B.BOOKING_STATUS, B.CONSULT_DATE, B.CONSULT_TIME, M.NAME
-		FROM BOOKING B JOIN MEMBER M
-		ON B.PT_NO=M.MEMBER_NO
-		WHERE B.CONSULT_DATE=TO_DATE(SYSDATE) AND M.MEMBER_NO=#{memberNo} AND
-				<![CDATA[
-				ROWNUM <= #{cri.pageNum} * #{cri.amount}				
-				)
+					 ROWNUM RN,
+					 B.BOOKING_NO,
+					 B.PT_NO,
+					 B.DOC_NO,
+					 B.BOOKING_DATE,
+					 B.PRICE,
+					 B.BOOKING_STATUS,
+					 B.CONSULT_DATE,
+					 B.CONSULT_TIME,
+					 M.NAME
+			  FROM BOOKING B JOIN MEMBER M
+			  ON B.DOC_NO = M.MEMBER_NO
+			  WHERE B.CONSULT_DATE >= TO_DATE(SYSDATE)
+			  AND B.PT_NO = #{memberNo}
+			  AND  <![CDATA[
+				  ROWNUM <= #{cri.pageNum} * #{cri.amount} )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 <!-- 페이징 end -->
+
+<!-- 환자 대쉬보드 메인 나의 예약 카운트_J17 -->
+<select id="ptMyListCount" resultType="int">
+	SELECT COUNT(*)
+	FROM BOOKING
+	WHERE <![CDATA[
+		  CONSULT_DATE >= TO_DATE(SYSDATE) ]]>
+	AND (BOOKING_STATUS = 'p'
+	OR BOOKING_STATUS = 'y')
+	AND PT_NO = #{memberNo}
+</select>
+
+<!-- 환자 대쉬보드 메인 진료내역수 카운트_J17 -->
+<select id="ptMyHistoryCount" resultType="int">
+	SELECT COUNT(*)
+	FROM BOOKING
+	WHERE <![CDATA[
+		  CONSULT_DATE < TO_DATE(SYSDATE) ]]>
+	AND (BOOKING_STATUS = 'p')
+	AND PT_NO = #{memberNo}
+</select>
 
 <!-- 환자대쉬보드 Main 진료내역 e.5-->
 <select id="ptMainhisList" resultType="BookingVO">
@@ -372,20 +402,27 @@ FROM LIKES
 WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 </select>
 
-<!-- 환자대쉬보드 Main 나의후기 e.5-->
+<!-- 환자 대쉬보드 Main 나의후기 e.5 _J17 -->
 <select id="ptMainreList" resultType="CommentsVO">
-	<![CDATA[
-		SELECT C.CMAIN_NO,
-               C.COMMENT_WRITER_NO,
-               C.CONTENTS,
-               C.REVIEW_POINT,
-               C.REG_DATE,
-               M.NICKNAME
-        FROM COMMENTS C JOIN MEMBER M
-        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
-        WHERE ROWNUM < 6 AND MEMBER_NO=#{memberNo}
-        ORDER BY REG_DATE DESC
-		]]>
+	SELECT C.CMAIN_NO,
+           C.COMMENT_WRITER_NO,
+           C.CONTENTS,
+           C.REVIEW_POINT,
+           C.REG_DATE,
+           M.NAME
+    FROM COMMENTS C JOIN MEMBER M
+    ON C.CMAIN_NO = M.MEMBER_NO
+    WHERE <![CDATA[
+    	  ROWNUM < 6 ]]>
+    AND COMMENT_WRITER_NO = #{memberNo}
+	ORDER BY REG_DATE DESC
+</select>
+
+<!-- 환자 대쉬보드 메인 나의 후기 수 카운트_J17 -->
+<select id="ptMyReviewCount" resultType="int">
+	SELECT COUNT (CNO)
+	FROM COMMENTS
+	WHERE COMMENT_WRITER_NO = #{memberNo}
 </select>
 
 <!-- 나의후기 페이징 e.6-->

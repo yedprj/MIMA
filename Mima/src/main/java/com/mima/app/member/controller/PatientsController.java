@@ -69,6 +69,9 @@ public class PatientsController {
 		model.addAttribute("list", patientsService.ptgetList(memberNo));
 		model.addAttribute("ptMainhisList", patientsService.ptMainhisList(memberNo));
 		model.addAttribute("ptMainreList", patientsService.ptMainreList(memberNo));
+		model.addAttribute("ptMyListCount", patientsService.ptMyListCount(memberNo));
+		model.addAttribute("ptMyHistoryCount", patientsService.ptMyHistoryCount(memberNo));
+		model.addAttribute("ptMyReviewCount", patientsService.ptMyReviewCount(memberNo));
 		return "patients/ptMain";
 	}
 	

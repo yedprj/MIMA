@@ -220,15 +220,31 @@
 		         M.ADDR3
 	</select>
 	
-	<!-- 닥터 대쉬보드 나의 환자들 페이징_J13 -->
+	<!-- 닥터 대쉬보드 나의 환자들 페이징 카운트_J13. J17 -->
 	<select id="patientListCount" resultType="int">
 		SELECT COUNT(*) 
-		FROM BOOKING B JOIN MEMBER M
-	    ON B.PT_NO = M.MEMBER_NO
-		WHERE
-		<if test ="cri.keyword != null">M.NAME LIKE '%'|| #{cri.keyword} || '%' AND</if>
-		B.PT_NO > 0
-		AND B.DOC_NO = #{memberNo}
+        FROM ( SELECT M.NAME AS MNAME,
+			                M.MEMBER_NO AS MMEMBERNO,
+			                M.GENDER AS MGENDER,
+			                M.PHONE AS MPHONE,
+			                M.ADDR1 AS MADDR1,
+			                M.ADDR2 AS MADDR2,
+			                M.ADDR3 AS MADDR3,
+               				MAX(B.CONSULT_DATE) AS BCONSULTDATE
+                  	 FROM MEMBER M JOIN BOOKING B
+                  	 ON (M.MEMBER_NO = B.PT_NO)
+                  	 WHERE <if test ="cri.keyword != null">M.NAME LIKE '%'|| #{cri.keyword} || '%' AND</if>
+                     B.PT_NO > 0
+                  	 AND DOC_NO = #{memberNo}
+                  	 AND B.BOOKING_STATUS = 'p'
+                  	 GROUP BY M.NAME,
+                              M.MEMBER_NO,
+                              M.GENDER,
+                              M.PHONE,
+                              M.ADDR1,
+                              M.ADDR2,
+                              M.ADDR3 )
+		
 	</select>
 	
 	<!-- 닥터 대쉬보드 나의 환자들 페이징_J06 -->

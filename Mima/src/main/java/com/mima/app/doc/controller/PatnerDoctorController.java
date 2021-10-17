@@ -163,8 +163,9 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 패스워드 변경 페이지 수정 폼_J04
 	@GetMapping("doctor/docPwChangeForm")
-	public String pwUpdateForm() {
-		
+	public String pwUpdateForm(Model model, HttpServletRequest request) {
+		// 닥터 프로필 병원 이름 호출_J17
+		model.addAttribute("clinicName", clinicName(request));
 		return "docDash/docPwChange";
 	}
 	
@@ -242,6 +243,10 @@ public class PatnerDoctorController {
 		docVo = doctorService.checkDocDetail(mVo);
 		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
 		String path="docDash/docProfileInsertForm";
+		
+		// 닥터 프로필 병원 이름 호출_J17
+		model.addAttribute("clinicName", clinicName(request));
+		
 		//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 있으면 값을 가져와서 넘겨주고 수정할 수 있도록
 		if( docVo != null) {
 			System.out.print("테이블에 값 잇음");
@@ -259,7 +264,10 @@ public class PatnerDoctorController {
 
 	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
 	@GetMapping("doctor/docProfileForm")
-	public String docProfileFrom(Model model, DocAvailabilityVO vo) {
+	public String docProfileFrom(Model model, DocAvailabilityVO vo, HttpServletRequest request) {
+		
+		// 닥터 프로필 병원 이름 호출_J17
+		model.addAttribute("clinicName", clinicName(request));
 		
 		return "docDash/docProfileForm";
 	}
@@ -267,6 +275,7 @@ public class PatnerDoctorController {
 	//s:1006 의사프로필등록
 	@PostMapping("/register")
 	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
+		
 		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
 		//s:1006 파트너의사테이블에 저장
 		doctorService.docProfileInsert(vo);

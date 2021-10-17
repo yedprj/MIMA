@@ -97,6 +97,7 @@ th, td {
 											<th>결제금액</th>
 											<th>결제상태</th>
 											<th>예약상태</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody id="contentAll">
@@ -130,11 +131,6 @@ th, td {
                                                     	<input type="hidden" id="bookingNo" name="bookingNo" value="${ptbmList.bookingNo}"/>
 													</c:if>
 												</td>
-												<td>
-													<c:if test="${ptbmList.bookingStatus eq 'p'}">
-	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
-	                                                </c:if>
-	                                            </td>
 											</tr>
 										</c:forEach>
 									</tbody>

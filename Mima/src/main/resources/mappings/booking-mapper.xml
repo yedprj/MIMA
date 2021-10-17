@@ -144,7 +144,7 @@
 	WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 </select>
 
-<!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
+<!-- 닥터 대쉬보드 진료내역 페이징 카운트_J06. J17 -->
 <select id="apptHistoryCount" resultType="int">
 	SELECT COUNT(*) 
 	FROM BOOKING B JOIN MEMBER M
@@ -153,6 +153,9 @@
 	<if test ="cri.keyword != null">M.NAME LIKE '%'|| #{cri.keyword} || '%' AND</if>
 	B.PT_NO > 0
 	AND B.DOC_NO = #{memberNo}
+	<![CDATA[
+	AND CONSULT_DATE < TO_DATE(SYSDATE)
+	]]>
 </select>
 	
 <!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
