@@ -3,6 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt"%>
 
+<style>
+	.like-box {
+		background-color: white;
+	}
+	
+	.fill-heart {
+		color: rgb(255, 51, 51);
+	}
+
+</style>
+
         <div class="boxed_wrapper">
 
         <!-- preloader -->
@@ -43,29 +54,29 @@
                             <div class="form-group clearfix">
                                 <select class="wide" name="type">
                                   <option value=""
-												<c:out value="${pageMaker.cri.type == null ? 'selected':'' }"/>
-											>선택</option>
-											<option value="A" 
-												<c:out value="${pageMaker.cri.type eq 'A'? 'selected':'' }"/>
-											>지역</option>
-											<option value="C"
-												<c:out value="${pageMaker.cri.type eq 'C'? 'selected':'' }"/>
-											>카테고리</option>
-											<option value="D"
-												<c:out value="${pageMaker.cri.type eq 'W'? 'selected':'' }"/>
-											>의사</option>
-											<option value="AC"
-												<c:out value="${pageMaker.cri.type eq 'TC'? 'selected':'' }"/>
-											>지역 or 카테고리</option>
-											<option value="AD" 
-												<c:out value="${pageMaker.cri.type eq 'TW'? 'selected':'' }"/>
-											>지역 or 의사</option>
-											<option value="ADC"
-												<c:out value="${pageMaker.cri.type eq 'TWC'? 'selected':'' }"/>
-											>지역 or 카테고리 or 의사</option>
+                                    <c:out value="${pageMaker.cri.type == null ? 'selected':'' }"/>
+                                 >선택</option>
+                                 <option value="A" 
+                                    <c:out value="${pageMaker.cri.type eq 'A'? 'selected':'' }"/>
+                                 >지역</option>
+                                 <option value="C"
+                                    <c:out value="${pageMaker.cri.type eq 'C'? 'selected':'' }"/>
+                                 >카테고리</option>
+                                 <option value="D"
+                                    <c:out value="${pageMaker.cri.type eq 'W'? 'selected':'' }"/>
+                                 >의사</option>
+                                 <option value="AC"
+                                    <c:out value="${pageMaker.cri.type eq 'TC'? 'selected':'' }"/>
+                                 >지역 or 카테고리</option>
+                                 <option value="AD" 
+                                    <c:out value="${pageMaker.cri.type eq 'TW'? 'selected':'' }"/>
+                                 >지역 or 의사</option>
+                                 <option value="ADC"
+                                    <c:out value="${pageMaker.cri.type eq 'TWC'? 'selected':'' }"/>
+                                 >지역 or 카테고리 or 의사</option>
                                 </select>
                                 <input type="hidden" id="pageNum" name="pageNum" value="1">
-		              			<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
+                             <input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
                                 <input type="search" id="keyword" name="keyword" placeholder="Search">
                                 <button type="submit"><i class="icon-Arrow-Right"></i></button>
                             </div>
@@ -114,9 +125,9 @@
                         <!-- 의사 리스트 랩퍼 시작 -->
                         <div class="wrapper list">
                             <!-- 의사 블록 컨텐츠 리스트 -->
-                            <div class="clinic-list-content list-item">
+                            <div class="clinic-list-content list-item" id="docList">
                             
-                            	<c:forEach  var="item" items="${list }">
+                               <c:forEach  var="item" items="${list }">
                                 <div class="clinic-block-one">
                                     <div class="inner-box">
                                         <div class="pattern">
@@ -129,10 +140,10 @@
                                         </figure>
                                         <div class="content-box">
                                         <!-- e.15 like -->
-                                            <a class="like-box" href="${item.memberNo }">
                                         <input type="hidden" name="likeMainNo" value="${item.memberNo}">
-                                            <i
-                                                        class="far fa-heart"></i></a>
+                                            <button type="button" class="like-box">
+                                            <i id="${item.memberNo}" class="fas fa-heart fa-2x" style="color:rgb(246, 238, 238)"></i></button>
+                                            
                                             <ul class="name-box clearfix">
                                                 <li class="name">
                                                     <h3><a class="move" href="${item.memberNo }">Dr.${item.name } num ${item.memberNo }</a></h3>
@@ -163,9 +174,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            	</c:forEach>
+                               </c:forEach>
 
-                              
                             </div>
                             <!-- 의사 블록 컨텐츠 끝 -->
 
@@ -221,20 +231,20 @@
                     <div class="col-lg-2 col-md-12 col-sm-12 content-side"></div>
                     <div class="pagination-wrapper centred">
                        <div id="pageButton">
-		                    <ul class="pagination">
-		                    	<c:if test="${pageMaker.prev }">
-		                    	<li><a href="${pageMaker.startPage-1 }"><i class="icon-Arrow-Left"></i></a></li>
-		                    	</c:if>
-		                    	
-		                    	<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-		                        <li><a href="${num }" class="current">${num }</a></li>
-		                        </c:forEach>
-		                        
-		                        <c:if test="${pageMaker.next }">
-		                        <li><a href="${pageMaker.endPage+1 }"><i class="icon-Arrow-Right"></i></a></li>
-		                        </c:if>
-		                    </ul>
-	                    </div>
+                          <ul class="pagination">
+                             <c:if test="${pageMaker.prev }">
+                             <li><a href="${pageMaker.startPage-1 }"><i class="icon-Arrow-Left"></i></a></li>
+                             </c:if>
+                             
+                             <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+                              <li><a href="${num }" class="current">${num }</a></li>
+                              </c:forEach>
+                              
+                              <c:if test="${pageMaker.next }">
+                              <li><a href="${pageMaker.endPage+1 }"><i class="icon-Arrow-Right"></i></a></li>
+                              </c:if>
+                          </ul>
+                       </div>
                     </div>
                 </div>
             </div>
@@ -251,50 +261,113 @@
 
     
  $(document).ready(function() {
-	 var actionForm = $('#actionForm');
-	 
-	 /* 타이틀 클릭 시 상세페이지로 넘어가면서 페이지넘&어마운트 같이 가져가기 */
-	 $(".move").on('click', function(e){
-		 e.preventDefault();
-		 actionForm.append('<input type="hidden" id="memberNo" name="memberNo" value="'+ $(this).attr("href") +'">');
-		 actionForm.attr("action", "docProfileDetail");
-		 actionForm.submit();
-	 });
-	 
-	 
-	 $(".like-box").on('click',function(e){
-		 e.preventDefault();
-		 console.log($('.like-box input').val());
-		 var like = $('.like-box input').val();
-		$.ajax({
-			url : "likes/likesInsert",
-			method : "post",
-			data :{
-				memberNo : "${session.memberNo}",
-				category : "doc",
-				likeMainNo: like}, 
-			beforeSend : function(xhr) {
-				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-			},
-			success : function() {
-				alert("좋아요가 되었습니다");
-			}
-			
-			
-		})
-		 
-	 });
-	 
-	 /* 교재 312 */
-	 $("#pageButton a").on("click", function(e){
-		 e.preventDefault(); //a tag, submit
-		 
-		 var p=$(this).attr("href");
-		 $('[name="pageNum"]').val(p);
-		 
-		 actionForm.submit();
-	 });
+    var actionForm = $('#actionForm');
+    
+    /* 타이틀 클릭 시 상세페이지로 넘어가면서 페이지넘&어마운트 같이 가져가기 */
+    $(".move").on('click', function(e){
+       e.preventDefault();
+       actionForm.append('<input type="hidden" id="memberNo" name="memberNo" value="'+ $(this).attr("href") +'">');
+       actionForm.attr("action", "docProfileDetail");
+       actionForm.submit();
     });
+    
+    
+    $("#docList").on('click','.like-box',function(e){
+       e.preventDefault();
+       var like = $(this).children().attr('id');
+       
+       const heart = $(this).children();
+       
+       if ($(heart).css("color") == "rgb(255, 51, 51)") {
+    	   //삭제
+    	   $.ajax({
+	         url : "likes/likesDelete",
+	         method : "delete",
+	         dataType: 'json',
+	         data : JSON.stringify({
+	            memberNo : "${session.memberNo}",
+	            category : "doc",
+	            likeMainNo: like}),
+	         contentType: 'application/json',
+	         beforeSend : function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	         },
+	         success : function(data) {
+	            if (data == 1) {
+		            alert("좋아요가 취소되었습니다");
+		            $(heart).css("color", "rgb(237, 222, 222)");
+	            } else {
+	            	alert('좋아요 실패');
+	            }
+	         }
+       })
+       } else {
+	      $.ajax({
+	         url : "likes/likesInsert",
+	         method : "post",
+	         dataType: 'json',
+	         data : JSON.stringify({
+	            memberNo : "${session.memberNo}",
+	            category : "doc",
+	            likeMainNo: like}),
+	         contentType: 'application/json',
+	         beforeSend : function(xhr) {
+	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	         },
+	         success : function(data) {
+	            if (data == 1) {
+	            	alert("좋아요가 되었습니다");
+		            $(heart).css("color", "rgb(255, 51, 51)");	
+	            } else {
+	            	alert('좋아요 실패');
+	            }
+	            }
+	            
+	         })
+    	   
+       }
+       
+         
+         
+         
+         
+      })
+       
+    });
+    
+    /* 교재 312 */
+    $("#pageButton a").on("click", function(e){
+       e.preventDefault(); //a tag, submit
+       
+       var p=$(this).attr("href");
+       $('[name="pageNum"]').val(p);
+       
+       actionForm.submit();
+    });
+
   
+/*  	$('.like-box').on('click', function() {
+ 		
+ 		let heart = $(this).children();
+ 		let memberNo = $(this).children().attr('id');
+ 		
+ 		alert('클릭됨');
+ 		$(heart).css("color", "rgb(255, 51, 51)");
+ 		
+ 		$.ajax({
+ 			url: 'doctorLikeInsert',
+ 			method: 'post',
+ 			data: {memberNo : memberNo},
+ 			dataType: 'json',
+ 	        beforeSend : function(xhr) {
+ 	            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+ 	         },
+ 	        success: function(data) {
+ 	        	console.log(data);
+ 	        }
+ 		})
+ 	}) */
+
+
 
 </script>

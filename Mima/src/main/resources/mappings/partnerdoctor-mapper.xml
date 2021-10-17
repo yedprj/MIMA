@@ -2,41 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mima.app.doc.mapper.PartnerDoctorMapper">
 
-<!-- 닥터프로필인서트갑미다 s:1006 -->
-<insert id="docProfileInsert">
-	INSERT INTO PARTNER_DOCTOR(
-				MEMBER_NO,
-				PROFILE_PHOTO,
-				PROFILE_CONTENTS,
-				PROFILE_EDUCATION,
-				CLINIC_INFO,
-				CLINIC_PHONE,
-				CLINIC_EMAIL,
-				REG_DATE
+	<!-- 닥터프로필인서트갑미다 s:1006 -->
+	<insert id="docProfileInsert">
+		INSERT INTO PARTNER_DOCTOR(
+		MEMBER_NO,
+		PROFILE_PHOTO,
+		PROFILE_CONTENTS,
+		PROFILE_EDUCATION,
+		CLINIC_INFO,
+		CLINIC_PHONE,
+		CLINIC_EMAIL,
+		REG_DATE
 		)
-	VALUES(
-			#{memberNo},
-			#{profilePhoto},
-			#{profileContents},
-			#{profileEducation},
-			#{clinicInfo},
-			#{clinicPhone},
-			#{clinicEmail},
-			sysdate
+		VALUES(
+		#{memberNo},
+		#{profilePhoto},
+		#{profileContents},
+		#{profileEducation},
+		#{clinicInfo},
+		#{clinicPhone},
+		#{clinicEmail},
+		sysdate
 		)
-</insert>
+	</insert>
 
-<!-- s:1007 프로필 등록 시 주소 멤버 테이블에 업데이트 -->
-<update id="docAddrUpdate">
-	UPDATE MEMBER
+	<!-- s:1007 프로필 등록 시 주소 멤버 테이블에 업데이트 -->
+	<update id="docAddrUpdate">
+		UPDATE MEMBER
 		SET
-			ADDR1=#{addr1},
-			EDIT_DATE=sysdate,
-			ADDR2=#{addr2},
-			ADDR3=#{addr3},
-			POSTCODE=#{postcode}
-	WHERE MEMBER_NO=#{memberNo}
-</update>
+		ADDR1=#{addr1},
+		EDIT_DATE=sysdate,
+		ADDR2=#{addr2},
+		ADDR3=#{addr3},
+		POSTCODE=#{postcode}
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
 
 
 
@@ -45,18 +45,19 @@
 	<!-- s:1008 의사 리뷰 수 업데이트 -->
 	<update id="updateCommentsCnt">
 		UPDATE partner_Doctor
-		SET COMMENTSCNT = COMMENTSCNT + #{amount}
+		SET COMMENTSCNT = COMMENTSCNT +
+		#{amount}
 		WHERE
 		member_NO=#{cmainNo}
 	</update>
 
 
 	<!--s:1008 검색조건 따로 뺀거. -->
-	<sql id="criteria" >
+	<sql id="criteria">
 		<if test="category !=null and category!=''">
 			CATEGORY=#{category}
-				AND
-	 	</if>
+			AND
+		</if>
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach collection="typeArr" item="type">
 				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
@@ -68,7 +69,7 @@
 
 						<when test="type =='C'.toString()">
 							CATEGORY_1 LIKE '%'|| #{keyword} || '%'
-						
+
 						</when>
 
 						<when test="type =='D'.toString()">
@@ -81,28 +82,28 @@
 	</sql>
 
 
-	<!--s:1008 전체 의사 숫자 total  count -->
+	<!--s:1008 전체 의사 숫자 total count -->
 	<select id="totalDocNumCount" resultType="int">
-		 SELECT COUNT(*) FROM
-		 (
-         SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
-				ROWNUM RN,
-				a.MEMBER_NO,
-				a.NAME,
-				a.GENDER,
-				a.ADDR1,
-				b.PROFILE_PHOTO,
-				b.PROFILE_CONTENTS,
-				b.PROFILE_EDUCATION,
-				b.COMMENTSCNT,
-				C.CATEGORY_1,
-				C.CATEGORY_2,
-				C.CATEGORY_3
-			FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
-             JOIN MENTAL_SUBJECT c 
-            ON b.MEMBER_NO=c.DOC_NO
-         ) 
-         WHERE
+		SELECT COUNT(*) FROM
+		(
+		SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
+		ROWNUM RN,
+		a.MEMBER_NO,
+		a.NAME,
+		a.GENDER,
+		a.ADDR1,
+		b.PROFILE_PHOTO,
+		b.PROFILE_CONTENTS,
+		b.PROFILE_EDUCATION,
+		b.COMMENTSCNT,
+		C.CATEGORY_1,
+		C.CATEGORY_2,
+		C.CATEGORY_3
+		FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
+		JOIN MENTAL_SUBJECT c
+		ON b.MEMBER_NO=c.DOC_NO
+		)
+		WHERE
 		<include refid="criteria"></include>
 		MEMBER_NO > 0
 	</select>
@@ -111,26 +112,26 @@
 
 	<!-- s:1008 전체 의사 리스트 불러오기 -->
 	<select id="getTotalDocList" resultType="DocInfoVO">
-	
-	SELECT *
+
+		SELECT *
 		FROM( SELECT /*+INDEX_DESC(MEDITATION MEDITATION_PK) */
-				ROWNUM RN,
-				a.MEMBER_NO,
-				a.NAME,
-				a.GENDER,
-				a.ADDR1,
-				b.PROFILE_PHOTO,
-				b.PROFILE_CONTENTS,
-				b.PROFILE_EDUCATION,
-				b.COMMENTSCNT,
-				C.CATEGORY_1,
-				C.CATEGORY_2,
-				C.CATEGORY_3
-			FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
-             JOIN MENTAL_SUBJECT c 
-            ON b.MEMBER_NO=c.DOC_NO
+		ROWNUM RN,
+		a.MEMBER_NO,
+		a.NAME,
+		a.GENDER,
+		a.ADDR1,
+		b.PROFILE_PHOTO,
+		b.PROFILE_CONTENTS,
+		b.PROFILE_EDUCATION,
+		b.COMMENTSCNT,
+		C.CATEGORY_1,
+		C.CATEGORY_2,
+		C.CATEGORY_3
+		FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
+		JOIN MENTAL_SUBJECT c
+		ON b.MEMBER_NO=c.DOC_NO
 		WHERE
-				
+
 		<include refid="criteria"></include>
 				<![CDATA[
 				ROWNUM <= #{pageNum} * #{amount}				
@@ -141,7 +142,7 @@
 
 	<!-- s:1008 의사프로필 디테일 불러오기 -->
 	<select id="getDocDetail" resultType="DocInfoVO">
-	SELECT 
+		SELECT
 		a.MEMBER_NO,
 		a.NAME,
 		a.GENDER,
@@ -155,42 +156,55 @@
 		b.CLINIC_INFO,
 		b.CLINIC_PHONE,
 		b.CLINIC_EMAIL
-			FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
-            where b.MEMBER_NO=#{memberNo}
+		FROM MEMBER a join PARTNER_DOCTOR b on a.MEMBER_NO=b.MEMBER_NO
+		where b.MEMBER_NO=#{memberNo}
 	</select>
 
 
 	<!-- s:1010 의사프로필 디테일 유무 확인 -->
-		<select id="checkDocDetail" resultType="DocInfoVO"> 
-			SELECT 
-   				 MEMBER_NO
-   			FROM PARTNER_DOCTOR 
-   			WHERE MEMBER_NO=#{memberNo}
-		</select>
+	<select id="checkDocDetail" resultType="DocInfoVO">
+		SELECT
+		MEMBER_NO
+		FROM PARTNER_DOCTOR
+		WHERE MEMBER_NO=#{memberNo}
+	</select>
 
 	<!-- 닥터 대쉬보드 병원 이름_J13 -->
 	<select id="clinicName" resultType="string">
 		SELECT CLINIC_INFO
-		FROM PARTNER_DOCTOR
+		FROM
+		PARTNER_DOCTOR
 		WHERE MEMBER_NO = #{memberNo}
 	</select>
-	
+
 	<!-- 닥터 진료과목에 따라 리스트 출력 P.10/14 -->
 	<select id="subjectDoclist" resultType="DocInfoVO">
 		SELECT M.MEMBER_NO,
-			   M.NAME,
-			   M.GENDER,
-			   M.ADDR1,
-			   D.PROFILE_PHOTO,
-			   D.PROFILE_CONTENTS,
-			   D.PROFILE_EDUCATION,
-			   D.COMMENTSCNT
+		M.NAME,
+		M.GENDER,
+		M.ADDR1,
+		D.PROFILE_PHOTO,
+		D.PROFILE_CONTENTS,
+		D.PROFILE_EDUCATION,
+		D.COMMENTSCNT
 		FROM MEMBER M JOIN PARTNER_DOCTOR D
 		ON (M.MEMBER_NO = D.MEMBER_NO)
-		JOIN MENTAL_SUBJECT S
+		JOIN
+		MENTAL_SUBJECT S
 		ON (D.MEMBER_NO = S.DOC_NO)
-		WHERE S.CATEGORY_1 = #{category1}
+		WHERE S.CATEGORY_1 =
+		#{category1}
 		OR S.CATEGORY_2 = #{category2}
-		OR S.CATEGORY_3 = #{category3}
+		OR S.CATEGORY_3 =
+		#{category3}
 	</select>
+
+<!-- e.17 환자대쉬보드 닥터 like 삭제 -->
+	<delete id="deleteDocLike">
+		DELETE LIKES
+		WHERE MEMBER_NO = #{memberNo} 
+		AND CATEGORY='DOC' 
+		AND LIKE_MAIN_NO = #{likeMainNo}
+	</delete>
+
 </mapper>

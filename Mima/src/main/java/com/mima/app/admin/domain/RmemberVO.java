@@ -18,4 +18,8 @@ public class RmemberVO {
 	private Date checkDate; //신고 확인 날짜
 	private String reportResult; //신고 조치 여부
 	
+	//e.17 신고당한사람, 신고한 사람
+	private String reported;//신고당한 사람
+	private String reporter;//신고한 사람
+	
 }
