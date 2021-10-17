@@ -23,12 +23,10 @@ public class LikesController {
 	// like 기록 등록
 	@PostMapping("/likesInsert")
 	@ResponseBody
-	public String likeInsert(LikesVO vo, Model model, RedirectAttributes rttr) {
+	public int likeInsert(@RequestBody LikesVO vo, Model model, RedirectAttributes rttr) {
 		System.out.println("LikesVO test=== like insert" + vo);
-		likeService.likeInsert(vo);
-		rttr.addFlashAttribute("result", vo.getMemberNo());
-		//return likeService.likeInsert(vo);
-		return "redirect:getTotalDocList";
+
+		return likeService.likeInsert(vo);
 	}
 
 	// like 기록 등록 취소

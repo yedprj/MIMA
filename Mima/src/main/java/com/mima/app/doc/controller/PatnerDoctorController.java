@@ -322,6 +322,7 @@ public class PatnerDoctorController {
 		model.addAttribute("list", doctorService.getTotalDocList(cri) );
 		model.addAttribute("pageMaker", new PageVO(cri, total));
 		
+		
 		return "/docList/getTotalDocList";
 	}
 
