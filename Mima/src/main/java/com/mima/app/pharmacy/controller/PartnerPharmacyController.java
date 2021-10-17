@@ -31,6 +31,10 @@ import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
+import com.mima.app.push.domain.PushVO;
+import com.mima.app.push.service.PushService;
+import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.service.BookingService;
 
 import lombok.extern.java.Log;
 
@@ -44,6 +48,8 @@ public class PartnerPharmacyController {
 	@Autowired MemberService memberSerivce;
 	@Autowired BCryptPasswordEncoder cryptEncoder;
 	@Autowired CommentsService commentsService;
+	@Autowired PushService pushService;
+	@Autowired BookingService bookingService;
 
 	
 	
@@ -98,8 +104,29 @@ public class PartnerPharmacyController {
 	// 약배달 취소
 	@PostMapping("/delCancel")
 	@ResponseBody
-	public int delCancel(MedDeliveryVO vo) {
-		return deliverSerive.delCancel(vo);
+	public int delCancel(MedDeliveryVO vo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO mvo = (MemberVO) session.getAttribute("session");
+		int memberNo = mvo.getMemberNo();
+		
+		// 약배달에서 넘기는 예약번호 환자번호 받아오기
+		BookingVO bvo = bookingService.getRoomId(vo.getBookingNo());
+
+		// 약배달 취소 신청시 push 알람에 내용이 저장
+		PushVO push = new PushVO();
+		push.setToMemberNo(bvo.getPtNo());
+		push.setUserMemberNo(memberNo);
+		push.setType("phaCancel");
+		push.setContentId(vo.getBookingNo());
+		push.setMessage(vo.getDeliveryDecline());
+		int result = pushService.delCancelAlarm(push);
+		// push에 입력 후 med_delivery에 저장
+		if (result > 0) {
+			result = deliverSerive.delCancel(vo);
+		} else {
+			result = 0;
+		}
+		return result; 
 	}
 	
 	@GetMapping("/deliveryRegCancel")

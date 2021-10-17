@@ -12,6 +12,7 @@ import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
+import com.mima.app.member.domain.PtDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.session.domain.BookingVO;
 
@@ -96,4 +97,7 @@ public interface PatientsMapper {
 	
 	// 약배달 정보 수정 K.10/10
 	public int ptDeliveryUpdate(PatientsVO vo);
+	
+	// 환자 약배달현황 목록 K. 10/17
+	public List<PtDeliveryVO>ptDeliveryStatusList(int memberNo);
 }
