@@ -84,7 +84,7 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-3"></i>
 									</div>
-									<h3>3</h3>
+									<h3>${ptMyListCount}</h3>
 									<p>나의 예약 수</p>
 								</div>
 							</div>
@@ -101,8 +101,8 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-1"></i>
 									</div>
-									<h3>11</h3>
-									<p>진료 내역 수</p>
+									<h3>${ptMyHistoryCount}</h3>
+									<p>진료내역 수</p>
 								</div>
 							</div>
 						</div>
@@ -118,7 +118,7 @@ th, td {
 									<div class="icon-box">
 										<i class="icon-Dashboard-2"></i>
 									</div>
-									<h3>12</h3>
+									<h3>${ptMyReviewCount}</h3>
 									<p>나의 후기 수</p>
 								</div>
 							</div>
@@ -221,6 +221,59 @@ th, td {
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${ptMainhisList.price}" /></td>
 											<td>${ptMainhisList.payStatus}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+				<!-- K. 10/ 17 배송현황 -->
+				<br>
+				<div class="doctors-appointment">
+					<div class="title-box">
+						<h3>배송현황</h3>
+						<div class="btn-box">
+							<a href="ptHistory" class="theme-btn-one">자세히 보기<i
+								class="icon-Arrow-Right"></i></a>
+						</div>
+					</div>
+					<div class="doctors-list">
+						<div class="table-outer">
+							<table class="doctors-table">
+								<thead class="table-header">
+									<tr>
+										<th>진료일</th>
+										<th>진료과목</th>
+										<th>진료의사</th>
+										<th>신청약국</th>
+										<th>약배달 배송현황</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="del" items="${ptDeliveryStatusList}">
+										<tr style="height:80px;">
+											<td><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
+											<td><p>${del.subject}</p></td>
+											<td><p><b>Dr.</b> ${del.docName}<p></td>
+											<td><p>${del.pharmacyName}</p></td>
+											<td>
+												<c:if test="${del.deliveryStatus eq 'p'}">
+													<span class="status">배달완료</span>
+												</c:if>
+												<c:if test="${del.deliveryStatus eq 'y'}">
+													<span class="status pending">수령완료</span>
+												</c:if>
+												<c:if test="${del.deliveryStatus eq 'c'}">
+													<span class="status cancel">신청취소</span>
+												</c:if>
+												<c:if test="${del.deliveryStatus eq 'n'}">
+													<span class="status pending">배송시작</span>
+												</c:if>
+											</td>
+											<td></td>
 										</tr>
 									</c:forEach>
 								</tbody>

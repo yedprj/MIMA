@@ -13,6 +13,7 @@ import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
+import com.mima.app.member.domain.PtDeliveryVO;
 import com.mima.app.member.mapper.PatientsMapper;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.session.domain.BookingVO;
@@ -186,8 +187,29 @@ public class PatientsServiceImpl implements PatientsService {
 		// TODO Auto-generated method stub
 		return patientsMapper.ptDeliveryUpdate(vo);
 	}
-
 	
-
+	// 환자 약배달현황 목록 K. 10/17
+	@Override
+	public List<PtDeliveryVO> ptDeliveryStatusList(int memberNo) {
+		return patientsMapper.ptDeliveryStatusList(memberNo);
+	}
+	
+	// 환자 대쉬보드 메인 나의 예약수 카운트_J17
+	@Override
+	public int ptMyListCount(int memberNo) {
+		return patientsMapper.ptMyListCount(memberNo);
+	}
+	
+	// 환자 대쉬보드 메인 진료내역 수 카운트_J17
+	@Override
+	public int ptMyHistoryCount(int memberNo) {
+		return patientsMapper.ptMyHistoryCount(memberNo);
+	}
+	
+	// 환자 대쉬보드 메인 나의 후기수 카운트_J17
+	@Override
+	public int ptMyReviewCount(int memberNo) {
+		return patientsMapper.ptMyReviewCount(memberNo);
+	}
 	
 }

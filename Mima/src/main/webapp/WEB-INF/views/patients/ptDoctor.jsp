@@ -105,14 +105,6 @@ th, td {
                                     </tbody>
                                 </div>
                             </div>
-                            <div class="pagination-wrapper">
-                                <ul class="pagination">
-                                    <li><a href="favourite-doctors.html" class="current">1</a></li>
-                                    <li><a href="favourite-doctors.html">2</a></li>
-                                    <li><a href="favourite-doctors.html">3</a></li>
-                                    <li><a href="favourite-doctors.html"><i class="icon-Arrow-Right"></i></a></li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>

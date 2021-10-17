@@ -77,7 +77,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		String msg = message.getPayload();
 		System.out.println("url 받아온 것 "+msg);
 		
-		// K. 10/15 소켓 테스트
+		// K. 10/15 약배달 알람
 		log.info(msg);
 		if(msg.substring(0,3).equals("med")) {
 			log.info("*****수민테스트*****"+msg);
@@ -103,7 +103,7 @@ public class EchoHandler extends TextWebSocketHandler{
 				
 				if(users.get(ptId) != null) {
 					users.get(ptId).sendMessage(tmpMsg);  				
-				}
+				} 
 				users.get(senderId).sendMessage(confirmMsg);
 			}
  		} // 약국 알람 end

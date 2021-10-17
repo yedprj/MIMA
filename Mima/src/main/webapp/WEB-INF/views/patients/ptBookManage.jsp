@@ -8,6 +8,10 @@ th, td {
 	text-align: center;
 	span: center;
 }
+.doctors-appointment .doctors-table tr td .status {
+	margin-right: 30px;
+}
+
 </style>
 
 <!--page-title-two-->
@@ -91,12 +95,15 @@ th, td {
 								<table class="doctors-table">
 									<thead class="table-header">
 										<tr>
-											<th>환자명</th>
+											<th>의사명</th>
+											<th>예약번호</th>
 											<th>진료일</th>
 											<th>예약일</th>
 											<th>결제금액</th>
 											<th>결제상태</th>
 											<th>예약상태</th>
+
+											<th></th>
 										</tr>
 									</thead>
 									<tbody id="contentAll">
@@ -104,7 +111,11 @@ th, td {
 											<tr>
 												<td>
 													<div class="name-box">
+													<figure class="image">
+															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+														</figure>
 														<h5>${ptbmList.name}</h5>
+														<span class="docno"># ${ptbmList.docNo}</span>
 													</div>
 												</td>
 												<td>${ptbmList.bookingNo}</td>
@@ -115,11 +126,13 @@ th, td {
 														pattern="yy-MM-dd" /></td>
 												<td><fmt:setLocale value="ko_KR" />
 													<fmt:formatNumber type="currency" value="${ptbmList.price}" /></td>
-												<td>${ptbmList.payStatus}</td>
-												<td><c:if test="${ptbmList.bookingStatus eq 'y'}">
-														<span class="status">접수완료</span>
+												<td><c:if test="${ptbmList.bookingStatus eq 'p'}">
+														<span class="status">결제완료</span>
+													</c:if>
+													<c:if test="${ptbmList.bookingStatus eq 'y'}">
+														<span class="status pending">예약완료</span>
 													</c:if> <c:if test="${ptbmList.bookingStatus eq 'c'}">
-														<span class="status pending">취소완료</span>
+														<span class="status cancel">취소완료</span>
 													</c:if></td>
 												<td>
 													<c:if test="${ptbmList.bookingStatus eq 'y' || ptbmList.bookingStatus == 'p'}">
@@ -130,11 +143,6 @@ th, td {
                                                     	<input type="hidden" id="bookingNo" name="bookingNo" value="${ptbmList.bookingNo}"/>
 													</c:if>
 												</td>
-												<td>
-													<c:if test="${ptbmList.bookingStatus eq 'p'}">
-	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
-	                                                </c:if>
-	                                            </td>
 											</tr>
 										</c:forEach>
 									</tbody>
