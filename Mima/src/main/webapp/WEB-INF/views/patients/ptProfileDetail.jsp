@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- e:1012 환자 프로파일 인서트 폼 -->
 <div class="boxed_wrapper">
 
@@ -172,6 +172,24 @@
 		var csrfTokenValue = "${_csrf.token}";
 		
 		
+		//file insert start
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var maxSize = 5242880; //5MB
+
+		function checkExtension(fileName, fileSize) {
+
+			if (fileSize >= maxSize) {
+				alert("파일 사이즈 초과");
+				return false;
+			}
+
+			if (regex.test(fileName)) {
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
 		//사진 미리보기
     	const input = document.getElementById('fileInput');
     	const profileImg =document.getElementById('profileImg');
@@ -210,7 +228,75 @@
 				$(".modal-body").html("result");
 			}
 			$("#myModal").modal("show");
-		} */
+		} */ 
+		
+		//imgUpBtn 눌렀을 때 이벤트 설정 교재502페이지 --> 의사프로필사진 넣는거
+		$('#imgUpBtn').on("click", function(e){
+			e.preventDefault();
+			
+			var formData = new FormData(document.docProInsertFrm);
+			console.log("formData writer+content: "+ FormData)
+			var inputFile = $("[name='docProImgFile']");
+			var files = inputFile[0].files;
+			console.log(files);
+			
+			for(var i=0; i<files.length; i++){
+				if(!checkExtension( files[i].name, files[i].size) ){
+					return;
+				}
+				formData.append("uploadFile", files[i]);
+			}
+				
+			
+			console.log("formData file: "+ formData)
+			$.ajax({
+				url:'phaAjaxInsert',
+				processData:false,
+				contentType:false,
+				data: formData,
+				method:'POST',
+				beforeSend : function(xhr) {
+					console.log(csrfHeaderName + " and " + csrfTokenValue);
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						//xhr.setRequestHeader("aa", "bb");
+				},
+				success:function(datas){
+					console.log(datas);
+					var str="";
+					
+						var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.pimgName);			      
+					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+						str += "<li ";
+						str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-pimgName='"+datas.pimgName+"' data-type='"+datas.image+"' ><div>";
+						str += "<span> "+ datas.pimgName+"</span>";
+						str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
+						str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+						str += "</div>";
+						str +="</li>";
+									
+					$("#uploaded").html(str);
+					alert("file uploaded");
+				
+				},
+				error: function(reject){
+					console.error(reject);
+				}
+			})
+		}); //end of meditUpBtn event
+		
+		
+		//attachment btn delete event
+		$("#uploaded").on("click", "button", function(e){
+			if(confirm("파일을 삭제하시겠습니까?")){
+				var targetLi = $(this).closest("li");
+				var preview = $('#profileImg');
+				targetLi.remove();
+				//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
+				$(preview).removeAttr('src');
+				
+			}
+		});//end of attachment btn delete event
+    	
 	})
 </script>
 
