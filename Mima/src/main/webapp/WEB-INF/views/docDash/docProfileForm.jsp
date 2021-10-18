@@ -298,11 +298,41 @@ $(function(){
 	}
 	
 	var subjectvo = "<c:out value='${sub}'/>";
-	console.log(subjectvo)
+	console.log(subjectvo);
 	if(subjectvo != ""){
-		if("${sub.category1}" !=""){
-			 $('#category1').children().val("${sub.category1}").attr("selected", true);
-			 console.log("${sub.category1}")
+		if("${sub.category1}" != ""){
+			//$('#category1').val('${sub.category1}').attr('selected', 'selected');
+			var category1 = "${sub.category1}";
+			let num = 0;
+			
+			if (category1 == "정신분석"){
+				num = 0;
+			}
+			else if (category1 == "스트레스"){
+				num = 1;
+			}
+			else if (category1 == "기분"){
+				num = 2;
+			}
+			else if (category1 == "신경증"){
+				num = 3;
+			}
+			else if (category1 == "직장인"){
+				num = 4;
+			}
+			else if (category1 == "중독"){
+				num = 5;
+			}
+			else if (category1 == "노인"){
+				num = 6;
+			}
+			else if (category1 == "해리"){
+				num = 7;
+			}
+			
+			console.log(num);
+			$('#category1 option:eq('+num+')').prop("selected", true);
+			console.log("${sub.category1}")
 		}
 		if("${sub.price1}" !=""){
 			 $('#price1').val("${sub.price1}");
