@@ -629,6 +629,14 @@
 			</div>
 		</div>
 	</div>
+	<!-- 의사 진료 목록별로 보기위한 폼 p.10/18 -->
+	<form id="frm" style="display: none;" action="subjectDoclist" method="post">
+		<input id="category1" name="category1">
+		<input id="category2" name="category2">
+		<input id="category3" name="category3">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		<button type="submit"></button>
+	</form>
 </section>
 <!-- testimonial-style-two end -->
 
@@ -637,12 +645,11 @@
 	function docSubjectProfile(ths){
 		
 		var subject = $(ths).children("#subject").val();
-		
+		console.log("subject");
 		var category1 = $('#category1').val(subject);
 		var category2 = $('#category2').val(subject);
 		var category3 = $('#category3').val(subject);
 		
 		$('#frm').find('button').click();
-		
 	}
 </script>
