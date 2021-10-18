@@ -280,8 +280,8 @@ th, td {
 								</table>
 							</div>
 						</div>
-						</div>
-						</div>
+					</div>
+				</div>
 						
 						<!-- pagination  -->
 						<div class="pagination-wrapper" id="allPage" style="display: block;">

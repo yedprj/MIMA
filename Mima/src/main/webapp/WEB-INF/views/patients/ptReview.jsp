@@ -34,54 +34,32 @@ th, td {
 <section class="doctors-dashboard bg-color-3">
 
 <div class="left-panel">
-            <div class="profile-box">
-                <div class="upper-box">
-                    <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
-            <div class="title-box centred">
-                <div class="inner">
-                    <h3>Dr. Rex Allen</h3>
-                    <p>MDS - Periodontology</p>
-                </div>
-            </div>
-        </div>
-        <div class="profile-info">
-            <ul class="list clearfix">
-					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
-					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
-					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
-					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
-					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
-					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div class="left-panel">
     <div class="profile-box">
         <div class="upper-box">
             <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
-            <div class="title-box centred">
+            <div class="title-box centred">	
                 <div class="inner">
-                    <h3>Dr. Rex Allen</h3>
+                    <h3>${session.name}</h3>
                     <p>MDS - Periodontology</p>
                 </div>
             </div>
         </div>
         <div class="profile-info">
             <ul class="list clearfix">
-					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
 					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
-					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
+					<li><a href="ptReview" class="current"><i class="fas fa-star"></i>나의 후기</a></li>
 					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
             </ul>
         </div>
     </div>
@@ -91,56 +69,123 @@ th, td {
         <div class="outer-container">
             <div class="review-list">
                 <div class="title-box clearfix">
-                    <div class="text pull-left"><h3>나의 후기</h3></div>
+                    <div class="text pull-left">
+                    	<h3>나의 후기</h3>
+	                    <span>내가 등록한 후기를 조회할 수 있습니다.</span>
+                    </div>
                     
                     <div class="select-box pull-right">
-                        <select class="wide">
-                           <option data-display="최신순">최신순</option>
-                           <option value="1">오래된순</option>
+                        <select class="wide" id="selectBox" name="selectBox" onchange="searchCheck()">
+                           <option value="latest">최신순</option>
+                           <option value="oldest">오래된순</option>
                         </select>
+                       <script type="text/javascript">
+                        	$("#selectBox").val("${cri.keyword}"== ""?"latest" : "${cri.keyword}")
+                        </script>
                     </div>
                     
                 </div>
-                <div class="comment-inner">
+                
+                <div class="comment-inner" id="latest" style="display:block;">
                    	<c:forEach items="${ptReviewList}" var="ptReviewList">
-     <div class="single-comment-box">
-         <div class="comment">
-             <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt=""></figure>
-             <h4>${ptReviewList.nickname}</h4>
-             <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${ptReviewList.regDate}" pattern="yy-MM-dd"/></span>
-             <ul class="rating clearfix">
-              <c:forEach var="i" begin="1" end="${ptReviewList.reviewPoint}">
-             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
-             	</c:forEach>
-             	<c:forEach var="i" begin="1" end="${5-ptReviewList.reviewPoint}">
-             		<i class="icon-Star"></i>
-             	</c:forEach>
-             </ul>
-             <p>${ptReviewList.contents}</p>
-         </div>
-     </div>
-    </c:forEach>
-                    </div>
+				     <div class="single-comment-box">
+				         <div class="comment">
+				             <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt=""></figure>
+				             
+					             <c:if test="${ptReviewList.cmainCategory eq 'doc'}">
+					             	<h4>${ptReviewList.name} 의사</h4>
+					             </c:if>
+					             <c:if test="${ptReviewList.cmainCategory eq 'pha'}">
+					             	<h4>${ptReviewList.name} 약사</h4>
+					             </c:if>
+				             <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${ptReviewList.regDate}" pattern="yy-MM-dd"/></span>
+				             <ul class="rating clearfix">
+				              <c:forEach var="i" begin="1" end="${ptReviewList.reviewPoint}">
+				             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
+				             	</c:forEach>
+				             	<c:forEach var="i" begin="1" end="${5-ptReviewList.reviewPoint}">
+				             		<i class="icon-Star"></i>
+				             	</c:forEach>
+				             </ul>
+				             <p>${ptReviewList.contents}</p>
+				         </div>
+				     </div>
+    				</c:forEach>
+                </div>
+                
+                <%-- <div class="comment-inner" id="oldest" style="display:none;">
+                   	<c:forEach items="${ptReviewOldestList}" var="ptReviewOldestList">
+				     <div class="single-comment-box">
+				         <div class="comment">
+				             <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt=""></figure>
+				             
+					             <c:if test="${ptReviewOldestList.cmainCategory eq 'doc'}">
+					             	<h4>${ptReviewList.name} 의사</h4>
+					             </c:if>
+					             <c:if test="${ptReviewOldestList.cmainCategory eq 'pha'}">
+					             	<h4>${ptReviewList.name} 약사</h4>
+					             </c:if>
+				             <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${ptReviewList.regDate}" pattern="yy-MM-dd"/></span>
+				             <ul class="rating clearfix">
+				              <c:forEach var="i" begin="1" end="${ptReviewOldestList.reviewPoint}">
+				             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
+				             	</c:forEach>
+				             	<c:forEach var="i" begin="1" end="${5-ptReviewOldestList.reviewPoint}">
+				             		<i class="icon-Star"></i>
+				             	</c:forEach>
+				             </ul>
+				             <p>${ptReviewOldestList.contents}</p>
+				         </div>
+				     </div>
+    				</c:forEach>
+                </div> --%>
+                
                 </div>
                 <!-- pagination  -->
-					<div class="pagination-wrapper">
-						<ul class="pagination">
-							<c:if test="${pageMaker.prev }">
-								<li class="paginate_button previous"><a href="ptReview?pageNum=${pageMaker.startPage-1 }">이전</a></li>
-							</c:if>
-								
-							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-								<li class="paginate_button"><a href="ptReview?pageNum=${num }">${num }</a></li>
-							</c:forEach>
-								
-							<c:if test="${pageMaker.next }">
-								<li class="paginate_button next"><a href="ptReview?pageNum=${pageMaker.endPage+1 }">다음</a></li>
-							</c:if>
-						</ul>
-					</div>
-					<!-- pagination end -->
+				<div class="pagination-wrapper">
+					<ul class="pagination">
+						<c:if test="${pageMaker.prev}">
+							<li class="paginate_button previous"><a href="ptReview?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
+						</c:if>
+							
+						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+							<li class="paginate_button"><a href="ptReview?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
+						</c:forEach>
+							
+						<c:if test="${pageMaker.next}">
+							<li class="paginate_button next"><a href="ptReview?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
+						</c:if>
+					</ul>
+				</div>
+				<!-- pagination end -->
             </div>
         </div>
     </div>
 </section>
 <!-- doctors-dashboard -->
+
+<script>
+		function searchCheck() {
+			var choose = $("#selectBox option:selected").val();
+			
+		/* 	if (choose == 'latest') {
+				$("#latest").css('display', 'block');   
+				$("#oldest").css('display', 'none');
+			} else if (choose == 'oldest') {
+				$("#latest").css('display', 'none');   
+				$("#oldest").css('display', 'block');
+			} */
+			
+			location.href="ptReview?pageNum=1&keyword="+choose
+		}
+		
+		$(document).ready(function() {
+			$('#selectBox').val('${cri.category}').prop("selected", true);
+			//searchCheck();
+			
+			$("#logoutBtn1").on("click", function(){
+				$('#logOutfrm1').submit();
+			});
+		});
+	
+</script>
