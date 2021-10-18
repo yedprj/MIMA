@@ -382,6 +382,11 @@ th, td {
 		}
 		
 		$(document).ready(function() {
+			/* s:1014 진료시작 버튼 이벤트 붙이기 */
+			
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue = "${_csrf.token}";
+			
 			$('#selectBox').val('${cri.category}').prop("selected", true);
 			searchCheck();
 			
