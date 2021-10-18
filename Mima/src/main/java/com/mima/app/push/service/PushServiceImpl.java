@@ -26,4 +26,10 @@ public class PushServiceImpl implements PushService {
 		return pushMapper.selectMemberPush(toMemberNo);
 	}
 
+	// K. 10/19 알림확인시 삭제
+	@Override
+	public int pushDelete(int pushNo) {
+		return pushMapper.pushDelete(pushNo);
+	}
+
 }

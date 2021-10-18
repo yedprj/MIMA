@@ -43,4 +43,10 @@ public interface MedDeliveryService {
 	// K.10/18 환자 약배달 취소 내역 조회
 	public MedDeliveryVO delCancelReason(int bookingNo);
 	
+	// K.10/19 환자 약배달 수령 후 상태 변경
+	public int delcompleteUpdate(MedDeliveryVO vo);
+	
+	// K. 10/19 환자 약배달 재신청
+	public int delReapply(MedDeliveryVO vo);
+	
 }

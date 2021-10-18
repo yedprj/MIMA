@@ -128,7 +128,15 @@
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
 
-<!-- 배달 상태변경 -->
+<!-- 약배달 수령 후 상태변경 -->
+<update id="delcompleteUpdate">
+	UPDATE MED_DELIVERY
+		SET DELIVERY_STATUS = #{deliveryStatus},
+			PT_EDUCATION = 'n'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
+
+<!-- 복약지도 완료 상태 변경 -->
 <update id="ptEduStatusUpdate">
 	UPDATE MED_DELIVERY
 		SET PT_EDUCATION = 'y'
@@ -140,6 +148,15 @@
 	UPDATE MED_DELIVERY
 	SET DELIVERY_DECLINE = #{deliveryDecline},
 	DELIVERY_STATUS = 'c'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
+
+<!-- K.10/19 약배달 재신청 -->
+<update id="delReapply">
+	UPDATE MED_DELIVERY
+	SET PHARMACY_NO = #{pharmacyNo}, 
+		DELIVERY_DECLINE = NULL , 
+		DELIVERY_STATUS = 'n'
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
 
