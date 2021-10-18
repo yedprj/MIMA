@@ -126,7 +126,7 @@ th, td {
 											<th></th>
 										</tr>
 									</thead>
-									<tbody id="contentAll">
+									<tbody id="contentAll bookingList">
 										<c:forEach items="${apptListPage}" var="apptList">
 											<tr>
 												<td>
@@ -159,7 +159,8 @@ th, td {
 												</td>
 												<td>
 													<c:if test="${apptList.bookingStatus eq 'p'}">
-	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
+	                                                   	<button type="button" id="${apptList.bookingNo}" class="accept move"><i class="fas fa-check"></i>진료
+														시작하기</button>
 	                                                </c:if>
 	                                            </td>
 											</tr>
@@ -183,7 +184,7 @@ th, td {
 											<th></th>
 										</tr>
 									</thead>
-									<tbody id="contentAll">
+									<tbody id="contentAll bookingList_soon">
 										<c:forEach items="${apptListSoonPage}" var="apptListSoon">
 											<tr>
 												<td>
@@ -216,10 +217,13 @@ th, td {
 												</td>
 												<td>
 													<c:if test="${apptListSoon.bookingStatus eq 'p'}">
-	                                                   	<span class="accept"><i class="fas fa-check"></i>진료 시작하기</span>
+	                                                   <button type="button" id="${apptList.bookingNo}" class="accept move"><i class="fas fa-check"></i>진료
+														시작하기</button>
 	                                                </c:if>
 	                                            </td>
 											</tr>
+											
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 										</c:forEach>
 									</tbody>
 								</table>
@@ -378,8 +382,56 @@ th, td {
 		}
 		
 		$(document).ready(function() {
+			/* s:1014 진료시작 버튼 이벤트 붙이기 */
+			
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue = "${_csrf.token}";
+			
 			$('#selectBox').val('${cri.category}').prop("selected", true);
 			searchCheck();
+			
+			//진료시작 이벤트 s:1018 (없어진거 수정)
+			$(document).on('click','.move', function(e){
+				
+				e.preventDefault();
+				let bookingNo =$(this).attr("id");
+				console.log("예약번호 ", bookingNo);
+				
+				alert('진료를 시작합니다.');
+				
+				window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
+				
+				let url="";
+				//uuid 구해서 링크 받아오기 s:1011
+				$.ajax({ 
+		            url: '${pageContext.request.contextPath}/socket/getRmId',
+		            type: 'GET',
+		            cache: false, 
+		            data: {
+		               bookingNo: bookingNo
+		            },
+		            beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+							//xhr.setRequestHeader("aa", "bb");
+					},
+					async: false,
+		            success: function(data) {
+		                        console.log("진료방 시작후 방번호",data.roomId);
+		                        console.log("진료방 시작후 환자번호",data.ptNo);
+		                        url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
+		                        console.log(url);
+		                      },
+		            error: function(jqXHR, textStatus, err){
+		                 alert('text status '+textStatus+', err '+err);
+		             }
+		          });
+		          //ajax 끝
+				//소켓메세지 보내기
+		          socket.send(url);
+				
+			})//진료시작 이벤트 끝
+			
+			
 			
 			// 로그아웃_J17
 			$("#logoutBtn1").on("click", function(){

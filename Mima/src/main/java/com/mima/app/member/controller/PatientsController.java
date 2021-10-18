@@ -2,12 +2,15 @@ package com.mima.app.member.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,9 +22,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.comments.domain.CommentsVO;
@@ -29,10 +32,12 @@ import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
 import com.mima.app.likes.domain.LikesVO;
+import com.mima.app.meditation.domain.MeditAttachVO;
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.member.service.PatientsService;
+import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
@@ -64,17 +69,41 @@ public class PatientsController {
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		
 		int memberNo = vo.getMemberNo();
-		
 		model.addAttribute("list", patientsService.ptgetList(memberNo));
 		model.addAttribute("ptMainhisList", patientsService.ptMainhisList(memberNo));
 		model.addAttribute("ptMainreList", patientsService.ptMainreList(memberNo));
 		model.addAttribute("ptMyListCount", patientsService.ptMyListCount(memberNo));
 		model.addAttribute("ptMyHistoryCount", patientsService.ptMyHistoryCount(memberNo));
 		model.addAttribute("ptMyReviewCount", patientsService.ptMyReviewCount(memberNo));
+		// 환자 약배달 현황
 		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusList(memberNo));
 
 		return "patients/ptMain";
 	}
+	
+	
+	//환자대쉬보드 메인 페이지
+	@GetMapping("patients/ptDeliveryList")
+	public String ptDeliveryList(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = vo.getMemberNo();
+		// 환자 약배달 현황
+		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusAllList(memberNo));
+
+		return "patients/ptDeliveryList";
+	}
+	
+	// K. 10/18 환자 약배달 취소 내역 조회
+	@PostMapping("patients/ptDelCancelSelect")
+	@ResponseBody
+	public MedDeliveryVO ptDelCancelSelect(MedDeliveryVO vo) {
+		log.info("******************취소내역");
+		return deliveryService.delCancelReason(vo.getBookingNo());
+	}
+	
 	
 	//환자대쉬보드 예약관리 페이지 e.5
 	@GetMapping("patients/ptBookManage")
@@ -342,6 +371,36 @@ public class PatientsController {
 		} 
 		
 		return result;
+	}
+	
+	//e.18 환자대쉬보드 프로필 관리
+	@PostMapping("patients/phaAjaxInsert")
+	@ResponseBody
+	// 업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
+	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
+			throws IllegalStateException, IOException {
+		MeditAttachVO attachVo = null;
+		String path = "C:/upload";
+
+		MultipartFile uFile = uploadFile;
+		if (!uFile.isEmpty() && uFile.getSize() > 0) {
+			String filename = uFile.getOriginalFilename(); // 사용자가 업로드한 파일명
+
+			// 파일 자체도 보안을 걸기 위해 파일이름 바꾸기도 한다. 원래 파일명과 서버에 저장된 파일이름을 따로 관리
+			// String saveName = System.currentTimeMillis()+""; //이거를 팀별로 상의해서 지정해 주면 된다.
+			// File file =new File("c:/upload", saveName);
+			UUID uuid = UUID.randomUUID();
+			File file = new File(path, uuid + filename);
+			uFile.transferTo(file);
+
+			attachVo = new MeditAttachVO(); // attachVO list안에 파일정보 저장하기 위해 만듦
+			attachVo.setPImgName(filename);
+			attachVo.setUuid(uuid.toString());
+			attachVo.setUploadPath(path);
+
+			System.out.println(attachVo);
+		}
+		return attachVo;
 	}
 
 }

@@ -192,7 +192,7 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptDeliveryUpdate(vo);
 	}
 	
-	// 환자 약배달현황 목록 K. 10/17
+	// 환자 5건 약배달현황 조회 K. 10/17
 	@Override
 	public List<PtDeliveryVO> ptDeliveryStatusList(int memberNo) {
 		return patientsMapper.ptDeliveryStatusList(memberNo);
@@ -214,6 +214,11 @@ public class PatientsServiceImpl implements PatientsService {
 	@Override
 	public int ptMyReviewCount(int memberNo) {
 		return patientsMapper.ptMyReviewCount(memberNo);
+	}
+	// 환자 약배달현황 전체조회
+	@Override
+	public List<PtDeliveryVO> ptDeliveryStatusAllList(int memberNo) {
+		return patientsMapper.ptDeliveryStatusAllList(memberNo);
 	}
 	
 	// 환자 대쉬보드 예약관리 페이징 카운트_J18

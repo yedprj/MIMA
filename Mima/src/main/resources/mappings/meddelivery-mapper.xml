@@ -78,9 +78,18 @@
 	
 </select>
 
+<!-- 한건 조회 -->
 <select id="selectOne" resultType="medDeliveryVO">
 	SELECT * FROM MED_DELIVERY
 	WHERE BOOKING_NO = #{bookingNo}
+</select>
+
+<!-- 예약번호로 취소건 조회 -->
+<select id="delCancelReason" resultType="MedDeliveryVO">
+	SELECT MD.*, PH.PHARMACY_INFO "PHARMACY_NAME"
+	FROM MED_DELIVERY MD, PARTNER_PHARMACY PH
+	WHERE MD.PHARMACY_NO = PH.MEMBER_NO
+	AND MD.BOOKING_NO = #{bookingNo}
 </select>
 
 <select id="phaSelectOne" resultType="medDeliveryVO">

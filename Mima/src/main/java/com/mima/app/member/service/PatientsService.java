@@ -130,7 +130,10 @@ public interface PatientsService {
 	// 환자 대쉬보드 메인 나의 후기수 카운트_J17
 	public int ptMyReviewCount (int memberNo);
 	
-	// 환자 약배달현황 목록 K. 10/17
+	// 환자 5건 약배달현황 조회 K. 10/17
 	public List<PtDeliveryVO>ptDeliveryStatusList(int memberNo);
+	
+	// 환자 약배달현황 전체 조회 K. 10/18
+	public List<PtDeliveryVO>ptDeliveryStatusAllList(int memberNo);
 
 }
