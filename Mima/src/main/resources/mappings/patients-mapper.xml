@@ -247,10 +247,10 @@
 
 <!-- 예약관리 페이징 e.5-->
 <!-- trim 한 것 따로 빼 낸것... -->
-	<sql id="criterias">
+	<!-- <sql id="criterias">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach collection="typeArr" item="type">
-				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임
 				<trim prefix="or">
 					<choose>
 						<when test="type == 'T'.toString()">
@@ -268,10 +268,33 @@
 				</trim>
 			</foreach>
 		</trim>
+	</sql> -->
+	
+	<sql id="criteriaPtBook">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="#{cri.typeArr}" item="type">
+				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
+				<trim prefix="or">
+					<choose>
+						<when test="cri.type == 'T'.toString()">
+							TITLE LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+
+						<when test="cri.type =='C'.toString()">
+							CONTENT LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+
+						<when test="cri.type =='W'.toString()">
+							WRITER LIKE '%'|| #{cri.keyword} || '%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
 	</sql>
 	
 	<!-- total count -->
-	<select id="getTotalPtbmCount" resultType="int">
+<!-- 	<select id="getTotalPtbmCount" resultType="int">
 		SELECT COUNT(*) FROM BOOKING
 		WHERE
 		<include refid="criterias"></include>
@@ -279,6 +302,96 @@
 		<![CDATA[
 		AND CONSULT_DATE>=TO_DATE(SYSDATE)
 		]]>
+	</select> -->
+	
+	<!-- 환자 대쉬보드 예약관리 페이지 페이징 카운트_J18 -->
+	<select id="ptbmListCount" resultType="int">
+		SELECT COUNT(*)
+		FROM BOOKING B JOIN MEMBER M
+		ON B.DOC_NO = M.MEMBER_NO
+		WHERE <include refid="criteriaPtBook"></include>
+			  <![CDATA[
+			  B.BOOKING_NO > 0
+		AND CONSULT_DATE >= TO_DATE(SYSDATE) ]]>
+		AND B.PT_NO = #{memberNo}
+	</select>
+	
+	<!-- 환자 대쉬보드 예약관리 페이지 모두보기 페이징_J18 -->
+	<select id="ptbmListPage" resultType="BookingVO">
+		SELECT *
+		FROM ( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
+					  ROWNUM RN,
+					  B.BOOKING_NO,
+	                  B.PT_NO,
+	                  B.DOC_NO,
+	                  B.BOOKING_DATE,
+	                  B.PRICE,
+	                  B.CONSULT_DATE,
+	                  B.CONSULT_TIME,
+	                  B.BOOKING_STATUS,
+	                  M.NAME
+	           FROM BOOKING B JOIN MEMBER M
+			   ON B.DOC_NO = M.MEMBER_NO
+			   WHERE <include refid="criteriaPtBook"></include>
+					 <![CDATA[
+					 ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			   AND B.CONSULT_DATE >= TO_DATE(SYSDATE)
+			   AND B.PT_NO = #{memberNo}
+			   ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC )
+		 WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	
+<!-- 환자 대쉬보드 예약관리 페이지 예정된 목록 보기 페이징_J18 -->
+	<select id="ptbmListSoonPage" resultType="BookingVO">
+		SELECT *
+		FROM ( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
+					  ROWNUM RN,
+					  B.BOOKING_NO,
+	                  B.PT_NO,
+	                  B.DOC_NO,
+	                  B.BOOKING_DATE,
+	                  B.PRICE,
+	                  B.CONSULT_DATE,
+	                  B.CONSULT_TIME,
+	                  B.BOOKING_STATUS,
+	                  M.NAME
+	           FROM BOOKING B JOIN MEMBER M
+			   ON B.DOC_NO = M.MEMBER_NO
+			   WHERE <include refid="criteriaPtBook"></include>
+					 <![CDATA[
+					 ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			   AND B.CONSULT_DATE >= TO_DATE(SYSDATE)
+			   AND B.PT_NO = #{memberNo}
+			   AND (B.BOOKING_STATUS = 'p'
+          		    OR B.BOOKING_STATUS = 'y')
+			   ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC )
+		 WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	
+<!-- 환자 대쉬보드 예약관리 페이지 취소된 목록 보기 페이징_J18 -->
+	<select id="ptbmListCanceledPage" resultType="BookingVO">
+		SELECT *
+		FROM ( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
+					  ROWNUM RN,
+					  B.BOOKING_NO,
+	                  B.PT_NO,
+	                  B.DOC_NO,
+	                  B.BOOKING_DATE,
+	                  B.PRICE,
+	                  B.CONSULT_DATE,
+	                  B.CONSULT_TIME,
+	                  B.BOOKING_STATUS,
+	                  M.NAME
+	           FROM BOOKING B JOIN MEMBER M
+			   ON B.DOC_NO = M.MEMBER_NO
+			   WHERE <include refid="criteriaPtBook"></include>
+					 <![CDATA[
+					 ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			   AND B.CONSULT_DATE >= TO_DATE(SYSDATE)
+			   AND B.PT_NO = #{memberNo}
+			   AND B.BOOKING_STATUS = 'c'
+			   ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC )
+		 WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 
 	<!-- 환자 대쉬보드 예약관리 페이지_J17 -->
@@ -297,10 +410,10 @@
 					 M.NAME
 			  FROM BOOKING B JOIN MEMBER M
 			  ON B.DOC_NO = M.MEMBER_NO
-			  WHERE B.CONSULT_DATE >= TO_DATE(SYSDATE)
+			  WHERE <![CDATA[
+			  		B.CONSULT_DATE >= TO_DATE(SYSDATE)
 			  AND B.PT_NO = #{memberNo}
-			  AND  <![CDATA[
-				  ROWNUM <= #{cri.pageNum} * #{cri.amount} )
+			  AND ROWNUM <= #{cri.pageNum} * #{cri.amount} )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 <!-- 페이징 end -->
@@ -322,13 +435,12 @@
 	FROM BOOKING
 	WHERE <![CDATA[
 		  CONSULT_DATE < TO_DATE(SYSDATE) ]]>
-	AND (BOOKING_STATUS = 'p')
+	AND BOOKING_STATUS = 'p'
 	AND PT_NO = #{memberNo}
 </select>
 
-<!-- 환자대쉬보드 Main 진료내역 e.5-->
+<!-- 환자대쉬보드 Main 진료내역 e.5_J18-->
 <select id="ptMainhisList" resultType="BookingVO">
-<![CDATA[
 	SELECT B.BOOKING_NO,
 		   B.PT_NO,
 		   B.DOC_NO,
@@ -340,29 +452,30 @@
 		   M.NAME
     FROM BOOKING B JOIN MEMBER M
     ON B.DOC_NO=M.MEMBER_NO
-    WHERE ROWNUM < 6 AND CONSULT_DATE < TO_DATE(SYSDATE) AND MEMBER_NO=#{memberNo}
+    WHERE <![CDATA[ ROWNUM < 6
+    AND CONSULT_DATE < TO_DATE(SYSDATE) ]]>
+    AND PT_NO = #{memberNo}
     ORDER BY CONSULT_DATE DESC
- ]]>
 </select>
 
 <!-- 진료내역 페이지, 페이징 e.6-->
 <!-- trim 한 것 따로 빼 낸것... -->
 	<sql id="criteriasa">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach collection="typeArr" item="type">
+			<foreach collection="#{cri.typeArr}" item="type">
 				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
 				<trim prefix="or">
 					<choose>
 						<when test="type == 'T'.toString()">
-							TITLE LIKE '%'|| #{keyword} || '%'
+							TITLE LIKE '%'|| #{cri.keyword} || '%'
 						</when>
 
 						<when test="type =='C'.toString()">
-							CONTENT LIKE '%'|| #{keyword} || '%'
+							CONTENT LIKE '%'|| #{cri.keyword} || '%'
 						</when>
 
 						<when test="type =='W'.toString()">
-							WRITER LIKE '%'|| #{keyword} || '%'
+							WRITER LIKE '%'|| #{cri.keyword} || '%'
 						</when>
 					</choose>
 				</trim>
@@ -373,23 +486,59 @@
 	<!-- total count -->
 	<select id="getTotalPthCount" resultType="int">
 		SELECT COUNT(*) FROM BOOKING
-		WHERE
-		<include refid="criteriasa"></include>
-		BOOKING_NO > 0
+		WHERE <include refid="criteriasa"></include>
+			  BOOKING_STATUS = 'p'
+		AND PT_NO = #{memberNo}
+		AND BOOKING_NO > 0
+		AND <![CDATA[
+		  	CONSULT_DATE < TO_DATE(SYSDATE) ]]>
 	</select>
 
-	<select id="ptHistoryList" 
-		resultType="BookingVO">
+	<select id="ptHistoryList" resultType="BookingVO">		
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
-		ROWNUM RN, B.BOOKING_NO, B.PT_NO, B.DOC_NO, B.BOOKING_DATE, B.PRICE,
-		B.BOOKING_STATUS, B.CONSULT_DATE, B.CONSULT_TIME, M.NAME
-		FROM BOOKING B JOIN MEMBER M
-		ON B.DOC_NO = M.MEMBER_NO
-		WHERE B.BOOKING_STATUS = 'y' AND M.MEMBER_NO=#{memberNo} AND
-				<![CDATA[
-				ROWNUM <= #{cri.pageNum} * #{cri.amount}				
-				)
+					 ROWNUM RN,
+					 B.BOOKING_NO,
+					 B.PT_NO,
+					 B.DOC_NO,
+					 B.BOOKING_DATE,
+					 B.PRICE,
+					 B.BOOKING_STATUS,
+					 B.CONSULT_DATE,
+					 B.CONSULT_TIME,
+					 M.NAME
+			  FROM BOOKING B JOIN MEMBER M
+			  ON B.DOC_NO = M.MEMBER_NO
+			  WHERE B.BOOKING_STATUS = 'p'
+			  AND B.PT_NO = #{memberNo}
+			  AND <![CDATA[
+				  ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			  AND CONSULT_DATE < TO_DATE(SYSDATE)
+			  ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC )
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	
+	<select id="ptHistoryOldestList" resultType="BookingVO">		
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
+					 ROWNUM RN,
+					 B.BOOKING_NO,
+					 B.PT_NO,
+					 B.DOC_NO,
+					 B.BOOKING_DATE,
+					 B.PRICE,
+					 B.BOOKING_STATUS,
+					 B.CONSULT_DATE,
+					 B.CONSULT_TIME,
+					 M.NAME
+			  FROM BOOKING B JOIN MEMBER M
+			  ON B.DOC_NO = M.MEMBER_NO
+			  WHERE B.BOOKING_STATUS = 'p'
+			  AND B.PT_NO = #{memberNo}
+			  AND <![CDATA[
+				  ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			  AND CONSULT_DATE < TO_DATE(SYSDATE)
+			  ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 <!-- 페이징 end -->
@@ -412,6 +561,7 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
            C.CONTENTS,
            C.REVIEW_POINT,
            C.REG_DATE,
+           C.CMAIN_CATEGORY,
            M.NAME
     FROM COMMENTS C JOIN MEMBER M
     ON C.CMAIN_NO = M.MEMBER_NO
@@ -430,22 +580,22 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 
 <!-- 나의후기 페이징 e.6-->
 <!-- trim 한 것 따로 빼 낸것... -->
-	<sql id="criteriasb">
+	<sql id="criteriaPtReview">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach collection="typeArr" item="type">
+			<foreach collection="#{cri.typeArr}" item="type">
 				<!-- 콜렉션에 소문자시작 typeArr 써주면 자동으로 getMathod를 불러주는거임 -->
 				<trim prefix="or">
 					<choose>
 						<when test="type == 'T'.toString()">
-							TITLE LIKE '%'|| #{keyword} || '%'
+							TITLE LIKE '%'|| #{cri.keyword} || '%'
 						</when>
 
 						<when test="type =='C'.toString()">
-							CONTENT LIKE '%'|| #{keyword} || '%'
+							CONTENT LIKE '%'|| #{cri.keyword} || '%'
 						</when>
 
 						<when test="type =='W'.toString()">
-							WRITER LIKE '%'|| #{keyword} || '%'
+							WRITER LIKE '%'|| #{cri.keyword} || '%'
 						</when>
 					</choose>
 				</trim>
@@ -454,25 +604,58 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 	</sql>
 	
 	<!-- total count -->
+	<!-- 환자 대쉬보드 나의 후기 페이징 카운트_J18 -->
 	<select id="getTotalPtrvCount" resultType="int">
 		SELECT COUNT(*) FROM COMMENTS
 		WHERE
-		<include refid="criteriasb"></include>
-		CMAIN_NO > 0
+		<include refid="criteriaPtReview"></include>
+		COMMENT_WRITER_NO = #{memberNo}
 	</select>
 
-	<select id="ptReviewList" 
-		resultType="CommentsVO">
+	<!-- 환자 대쉬보드 나의 후기 페이지 최신순 페이징_J18 -->
+	<select id="ptReviewList" resultType="CommentsVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
-		ROWNUM RN, C.CMAIN_CATEGORY, C.CMAIN_NO, C.COMMENT_WRITER_NO, 
-		C.CONTENTS, C.REVIEW_POINT, C.REG_DATE, M.NICKNAME
-		FROM COMMENTS C JOIN MEMBER M
-		ON (C.COMMENT_WRITER_NO = M.MEMBER_NO)
-        WHERE M.MEMBER_NO=#{memberNo} AND
-				<![CDATA[
-				ROWNUM <= #{cri.pageNum} * #{cri.amount}				
-				)
+					 ROWNUM RN,
+					 C.CMAIN_CATEGORY,
+					 C.CMAIN_NO,
+					 C.COMMENT_WRITER_NO,
+					 C.CONTENTS,
+					 C.REVIEW_POINT,
+					 C.REG_DATE,
+					 C.CNO,
+					 M.NAME
+			  FROM COMMENTS C JOIN MEMBER M
+		 	  ON (C.CMAIN_NO = M.MEMBER_NO)
+         	  WHERE <include refid="criteriaPtReview"></include>
+         	  		<![CDATA[
+         	  		ROWNUM <= #{cri.pageNum} * #{cri.amount}
+         	  AND C.COMMENT_WRITER_NO = #{memberNo} 
+         	  ORDER BY C.REG_DATE DESC )
+		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
+	</select>
+	<!-- 페이징 end -->
+	
+	<!-- 환자 대쉬보드 나의 후기 페이지 오래된순 페이징_J18 -->
+	<select id="ptReviewOldestList" resultType="CommentsVO">
+		SELECT *
+		FROM( SELECT /*+INDEX_DESC(COMMENTS COMMENTS_PK) */
+					 ROWNUM RN,
+					 C.CMAIN_CATEGORY,
+					 C.CMAIN_NO,
+					 C.COMMENT_WRITER_NO,
+					 C.CONTENTS,
+					 C.REVIEW_POINT,
+					 C.REG_DATE,
+					 C.CNO,
+					 M.NAME
+			  FROM COMMENTS C JOIN MEMBER M
+		 	  ON (C.CMAIN_NO = M.MEMBER_NO)
+         	  WHERE <include refid="criteriaPtReview"></include>
+         	  		<![CDATA[
+         	  		ROWNUM <= #{cri.pageNum} * #{cri.amount}
+         	  AND C.COMMENT_WRITER_NO = #{memberNo} 
+         	  ORDER BY C.REG_DATE ASC )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	<!-- 페이징 end -->
@@ -545,7 +728,7 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 			WHERE MEMBER_NO = #{memberNo}
 		</update>
  	
- 	<!-- K. 10/17 환자 약배달 현황 목록 -->
+ 	<!-- K. 10/17 환자 메인 약배달 현황 목록 -->
  	<select id="ptDeliveryStatusList" resultType="PtDeliveryVO">
  		SELECT B.BOOKING_NO , B.CONSULT_DATE, B.SUBJECT,
                                         (SELECT DISTINCT MM.NAME 
@@ -556,9 +739,28 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
                                         FROM PARTNER_PHARMACY PH , MED_DELIVERY MDD 
                                         WHERE PH.MEMBER_NO = MDD.PHARMACY_NO
                                         AND PH.MEMBER_NO = MD.PHARMACY_NO) "PHARMACY_NAME",
-		MD.DELIVERY_STATUS
+		MD.DELIVERY_STATUS, MD.DELIVERY_DECLINE
 		FROM BOOKING B, MED_DELIVERY MD
 		WHERE B.BOOKING_NO = MD.BOOKING_NO
 		AND B.PT_NO = #{memberNo}
+		<![CDATA[ and ROWNUM < 6
+        ORDER BY B.CONSULT_DATE DESC ]]>
+ 	</select>
+ 	
+ 	<select id="ptDeliveryStatusAllList" resultType="PtDeliveryVO">
+ 		SELECT B.BOOKING_NO , B.CONSULT_DATE, B.SUBJECT,
+                                        (SELECT DISTINCT MM.NAME 
+                                         FROM MEMBER MM , BOOKING BB 
+                                         WHERE MM.MEMBER_NO = BB.DOC_NO
+                                         AND MM.MEMBER_NO = B.DOC_NO) "DOC_NAME", 
+                                        (SELECT DISTINCT PH.PHARMACY_INFO 
+                                        FROM PARTNER_PHARMACY PH , MED_DELIVERY MDD 
+                                        WHERE PH.MEMBER_NO = MDD.PHARMACY_NO
+                                        AND PH.MEMBER_NO = MD.PHARMACY_NO) "PHARMACY_NAME",
+		MD.DELIVERY_STATUS, MD.DELIVERY_DECLINE
+		FROM BOOKING B, MED_DELIVERY MD
+		WHERE B.BOOKING_NO = MD.BOOKING_NO
+		AND B.PT_NO = #{memberNo}
+		ORDER BY B.CONSULT_DATE DESC
  	</select>
 </mapper>

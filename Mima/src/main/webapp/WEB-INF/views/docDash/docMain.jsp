@@ -166,7 +166,7 @@ th, td {
 				<div class="doctors-appointment">
 					<div class="title-box">
 						<h3>오늘의 예약</h3>
-						<span>오늘 진행되는 접수를 보여줍니다.</span>
+						<span>오늘 예정된 접수를 보여줍니다.</span>
 						<div class="btn-box">
 							<a href="apptManage" class="theme-btn-one">예약관리<i
 								class="icon-Arrow-Right"></i></a>

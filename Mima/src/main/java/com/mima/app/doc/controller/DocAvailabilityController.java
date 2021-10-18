@@ -20,7 +20,7 @@ public class DocAvailabilityController {
 	@Autowired DocAvailabilityService docAvailabilityService;
 	
 	//ajax 진료가능 요일시간 인서트
-	@PostMapping("/insertAvail")
+	@PostMapping("/insertAvailable")
 	@ResponseBody
 	public int docProfileInsert(Model model, DocAvailabilityVO vo) {
 		System.out.println("doc doc doc"+vo.toString());

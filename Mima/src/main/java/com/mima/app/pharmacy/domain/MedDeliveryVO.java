@@ -17,5 +17,6 @@ public class MedDeliveryVO {
 	private String name;			// 환자이름
 	@JsonFormat(pattern = "YY/MM/dd")
 	private Date consultDate;		// 약배달 날짜
+	private String pharmacyName;	// 약국 이름
 	
 }

@@ -9,55 +9,50 @@
         <!-- preloader -->
 
 
-        <!-- banner-section -->
-        <section class="banner-section bg-color-1">
-            <div class="pattern-layer" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-2.png);"></div>
+       
+
+        <!-- about-section -->
+        <section class="about-section">
             <div class="auto-container">
                 <div class="row align-items-center clearfix">
-                    <div class="col-lg-6 col-md-12 col-sm-12 content-column">
-                        <div class="content-box">
-                            <h1>Find Nearest Doctor.</h1>
-                            <p>Amet consectetur adipisicing elit sed do eiusmod.</p>
-                            <div class="form-inner">
-                                <form action="index.html" method="post">
-                                    <div class="form-group">
-                                        <input type="text" name="name" placeholder="Ex. Name, Specialization..." required="">
-                                        <button type="submit"><i class="icon-Arrow-Right"></i></button>
-                                    </div>
-                                </form>
-                                <ul class="select-box clearfix">
-                                    <li>
-                                        <div class="single-checkbox">
-                                            <input type="radio" name="check-box" id="check1" checked="">
-                                            <label for="check1"><span></span>All</label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="single-checkbox">
-                                            <input type="radio" name="check-box" id="check2">
-                                            <label for="check2"><span></span>Doctor</label>    
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="single-checkbox">
-                                            <input type="radio" name="check-box" id="check3">
-                                            <label for="check3"><span></span>Clinic</label>
-                                        </div>
-                                    </li>
-                                </ul>
+                    <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                        <div class="image_block_1">
+                            <div class="image-box">
+                                <div class="pattern">
+                                    <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-15.png);"></div>
+                                    <div class="pattern-2"></div>
+                                    <div class="pattern-3" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-16.png);"></div>
+                                </div>
+                                <figure class="image clearfix"><img src="${pageContext.request.contextPath}/resources/imgs/subjects/mental_health_reaching_out_help.jpg" style="width: 600px; height: 650px;" alt=""></figure>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 image-column">
-                        <div class="image-box js-tilt">
-                            <figure class="image clearfix wow fadeInRight animated animated" data-wow-delay="00ms" data-wow-duration="1500ms"><img src="${pageContext.request.contextPath}/resources/assets/images/banner/banner-image-1.png" alt=""></figure>
+                    <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                        <div class="content_block_1">
+                            <div class="content-box">
+                                <div class="sec-title">
+                                    <p>기분장애 / 공황, 불안장애</p>
+                                    <h2>기분장애란 무엇일까요</h2>
+                                </div>
+                                <div class="text">
+                                    <p>기분장애란 기분이 심하게 변동되는 병입니다.
+                                     즉 평상시와는 다르게 기분이 좋고, 과잉되어 있으며, 과도하게 활동적인 '조증상태'를 보이거나 아니면 심하게 어둡고 침울해지는 '우울증상태'에 빠지는 병으로,
+                                      대게 이 두가지 상태가 번갈아 나타나곤 하여 '양극성 장애'라고도 불립니다.
+                                      이는 마음의 병이 아닌 뇌의 병일 가능성이 높으며 적절한 약물치료로 회복이 가능합니다.
+                                     그러나 많은 수의 환자들이 재발을 경험함으로 재발을 방지하기 위해 규칙적인 약물복용이 이루어져야 합니다. </p>
+                                </div>
+                                <ul class="list-style-one clearfix">
+                                    <li>기분장애의 증상</li>
+                                    <li>기분장애 치료</li>
+                                </ul>
+                                <div class="btn-box"><a href="about.html" class="theme-btn-one">더 알아보기<i class="icon-Arrow-Right"></i></a></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- banner-section end -->
-
+        <!-- about-section end -->	
 
         <!-- clients-section -->
         <section class="clients-section bg-color-2">
@@ -79,14 +74,32 @@
         </section>
         <!-- clients-section end -->
 
-
-
-
-        <!-- about-section -->
+  <!-- about-section -->
         <section class="about-section">
             <div class="auto-container">
                 <div class="row align-items-center clearfix">
-                    <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                <div class="col-lg-7 col-md-12 col-sm-12 content-column">
+                        <div class="content_block_1">
+                            <div class="content-box">
+                                <div class="sec-title">
+                                    <p>불안장애</p>
+                                    <h2>나도 모르게 <br>너무너무 불안해!!</h2>
+                                </div>
+                                <div class="text">
+                                    <p>불안장애는 다양한 형태로 발현할 수 있습니다. 공황장애, 광장공포증, 사회공포증, 강박장애 등 한번 씩 들어보셨을 거예요.
+                                    최근 연예인들이 이런 불안장애를 겪고 있다고 고백하기도 했죠. 증상으로는 안절부절 하며 마음이 긴장되고 쉽게 편안하게 되지 않거나,
+   									극심한 불안(공황)을 보이며, 짜증을 잘 내고 예민하게 행동하기도 하죠.
+                                    </p>
+                                </div>
+                                <ul class="list-style-one clearfix">
+                                    <li>불안장애의 증상</li>
+                                    <li>불안장애 치료</li>
+                                </ul>
+                                <div class="btn-box"><a href="about.html" class="theme-btn-one">더 알아보기<i class="icon-Arrow-Right"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-12 col-sm-12 image-column" style="z-index:-1;">
                         <div class="image_block_1">
                             <div class="image-box">
                                 <div class="pattern">
@@ -94,101 +107,23 @@
                                     <div class="pattern-2"></div>
                                     <div class="pattern-3" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-16.png);"></div>
                                 </div>
-                                <figure class="image clearfix"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/about-1.png" alt=""></figure>
+                                <figure class="image clearfix"><img src="${pageContext.request.contextPath}/resources/imgs/subjects/emotion_agrophobia.jpg" style="width: 650px; height: 530px;" alt=""></figure>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 content-column">
-                        <div class="content_block_1">
-                            <div class="content-box">
-                                <div class="sec-title">
-                                    <p>About Docpro</p>
-                                    <h2>Bring care to your home with one click</h2>
-                                </div>
-                                <div class="text">
-                                    <p>Lorem ipsum dolor sit amet consectur adipiscing elit sed eiusmod ex tempor incididunt labore dolore magna aliquaenim ad minim veniam quis nostrud exercitation ullamco laboris.</p>
-                                </div>
-                                <ul class="list-style-one clearfix">
-                                    <li>Associates Insurance</li>
-                                    <li>Pina & Insurance</li>
-                                </ul>
-                                <div class="btn-box"><a href="about.html" class="theme-btn-one">About Us<i class="icon-Arrow-Right"></i></a></div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </section>
-        <!-- about-section end -->
-
-        <!-- testimonial-section -->
-        <section class="testimonial-section bg-color-3">
-            <div class="bg-layer" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/background/testimonial-1.jpg);"></div>
-            <div class="pattern-layer">
-                <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-22.png);"></div>
-                <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-23.png);"></div>
-            </div>
-            <div class="auto-container">
-                <div class="row clearfix">
-                    <div class="col-xl-7 col-lg-12 col-md-12 inner-column">
-                        <div class="testimonial-inner">
-                            <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-21.png);"></div>
-                            <div class="sec-title">
-                                <p>Testimonials</p>
-                                <h2>What client’s say?</h2>
-                            </div>
-                            <div class="single-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                                <div class="testimonial-block-one">
-                                    <div class="inner-box">
-                                        <div class="text">
-                                            <p>“ Lorem ipsum dolor sit amet consectetur adipic  eksed do eiusmod tempor incid unt labore dolore magna Aliqua.enim minim veniam, quis nostrud. “</p>
-                                        </div>
-                                        <div class="author-info">
-                                            <figure class="author-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/testimonial-1.png" alt=""></figure>
-                                            <h3>Amelia Anna</h3>
-                                            <span class="designation">Amelia Anna</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="testimonial-block-one">
-                                    <div class="inner-box">
-                                        <div class="text">
-                                            <p>“ Lorem ipsum dolor sit amet consectetur adipic  eksed do eiusmod tempor incid unt labore dolore magna Aliqua.enim minim veniam, quis nostrud. “</p>
-                                        </div>
-                                        <div class="author-info">
-                                            <figure class="author-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/testimonial-1.png" alt=""></figure>
-                                            <h3>Amelia Anna</h3>
-                                            <span class="designation">Amelia Anna</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="testimonial-block-one">
-                                    <div class="inner-box">
-                                        <div class="text">
-                                            <p>“ Lorem ipsum dolor sit amet consectetur adipic  eksed do eiusmod tempor incid unt labore dolore magna Aliqua.enim minim veniam, quis nostrud. “</p>
-                                        </div>
-                                        <div class="author-info">
-                                            <figure class="author-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/testimonial-1.png" alt=""></figure>
-                                            <h3>Amelia Anna</h3>
-                                            <span class="designation">Amelia Anna</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- testimonial-section end -->
+        <!-- about-section end -->	
 
 
         <!-- team-section -->
-        <section class="team-section">
+        <section class="team-section" style="padding-top: 30px">
             <div class="auto-container">
                 <div class="sec-title centred">
-                    <p>Meet Our Professionals</p>
-                    <h2>Top Rated Specialists</h2>
+                    <p>한 눈에 알아볼까요?</p>
+                    <h2>기분.불안장애의 치료법</h2>
                 </div>
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-6 col-sm-12 team-block">
@@ -198,31 +133,16 @@
                                     <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-24.png);"></div>
                                     <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-25.png);"></div>
                                 </div>
-                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt=""></figure>
+                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/imgs/meds.JPG" alt=""></figure>
                                 <div class="content-box">
-                                    <div class="like-box"><a href="index.html"><i class="far fa-heart"></i></a></div>
                                     <ul class="name-box clearfix">
-                                        <li class="name"><h3><a href="doctors-details.html">Dr. Julia Jhones</a></h3></li>
+                                        <li class="name"><h3><a href="doctors-details.html">약물치료</a></h3></li>
                                         <li><i class="icon-Trust-1"></i></li>
                                         <li><i class="icon-Trust-2"></i></li>
-                                    </ul>
-                                    <span class="designation">MBBS, MS - General Surgery, MCh</span>
+                                    </ul><br>
                                     <div class="text">
-                                        <p>Lorem ipsum dolor sit amet consectur adipisc elit sed eiusmod tempor.</p>
-                                    </div>
-                                    <div class="rating-box clearfix">
-                                        <ul class="rating clearfix">
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><a href="index.html">(32)</a></li>
-                                        </ul>
-                                        <div class="link"><a href="index.html">Available Today</a></div>
-                                    </div>
-                                    <div class="location-box">
-                                        <p><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</p>
+                                        <p>약물치료는 주로 항불안제, 항우울제 약물을 사용하여 불안과 걱정을 
+                                        느끼는 정도를 낮추어주며 불안에 의한 여러 신체적 반응을 줄여서 증상을 호전시킬 수 있습니다.</p>
                                     </div>
                                 </div>
                             </div>
@@ -235,31 +155,16 @@
                                     <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-24.png);"></div>
                                     <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-25.png);"></div>
                                 </div>
-                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-2.jpg" alt=""></figure>
+                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/imgs/cognitive.JPG" alt=""></figure>
                                 <div class="content-box">
-                                    <div class="like-box"><a href="index.html"><i class="far fa-heart"></i></a></div>
                                     <ul class="name-box clearfix">
-                                        <li class="name"><h3><a href="doctors-details.html">Dr. Mary Astor</a></h3></li>
+                                        <li class="name"><h3><a href="doctors-details.html">인지치료</a></h3></li>
                                         <li><i class="icon-Trust-1"></i></li>
                                         <li><i class="icon-Trust-2"></i></li>
-                                    </ul>
-                                    <span class="designation">MDS - Periodontology and BDS</span>
+                                    </ul><br>
                                     <div class="text">
-                                        <p>Lorem ipsum dolor sit amet consectur adipisc elit sed eiusmod tempor.</p>
-                                    </div>
-                                    <div class="rating-box clearfix">
-                                        <ul class="rating clearfix">
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><a href="index.html">(32)</a></li>
-                                        </ul>
-                                        <div class="link not-available"><a href="index.html">Available Today</a></div>
-                                    </div>
-                                    <div class="location-box">
-                                        <p><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</p>
+                                        <p>잘못된 고정관념을 교정하는 것을 목표로 여러가지 생각을 검토해보고 객관적으로 
+                                        그것에 대해서 생각해 봄으로써 논리적이고 타당한 생각으로 교정해나가는 것입니다.</p>
                                     </div>
                                 </div>
                             </div>
@@ -272,31 +177,16 @@
                                     <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-24.png);"></div>
                                     <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-25.png);"></div>
                                 </div>
-                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-3.jpg" alt=""></figure>
+                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/imgs/act.JPG" alt=""></figure>
                                 <div class="content-box">
-                                    <div class="like-box"><a href="index.html"><i class="far fa-heart"></i></a></div>
                                     <ul class="name-box clearfix">
-                                        <li class="name"><h3><a href="doctors-details.html">Dr. Rex Allen</a></h3></li>
+                                        <li class="name"><h3><a href="doctors-details.html">행동치료</a></h3></li>
                                         <li><i class="icon-Trust-1"></i></li>
                                         <li><i class="icon-Trust-2"></i></li>
-                                    </ul>
-                                    <span class="designation">BDS, MDS - Maxillofacial Surgery</span>
+                                    </ul><br>
                                     <div class="text">
-                                        <p>Lorem ipsum dolor sit amet consectur adipisc elit sed eiusmod tempor.</p>
-                                    </div>
-                                    <div class="rating-box clearfix">
-                                        <ul class="rating clearfix">
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><a href="index.html">(32)</a></li>
-                                        </ul>
-                                        <div class="link"><a href="index.html">Available Today</a></div>
-                                    </div>
-                                    <div class="location-box">
-                                        <p><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</p>
+                                        <p>주로 공포증(고소공포증, 동물공포증, 폐쇄공포증 등)의 치료에 사용됩니다. 
+                                        이완훈련을 동반한 탈감작법, 실제상황에 노출시키면서 치료하는 노출훈련법, 혐오자극법 등의 치료방법이 있습니다.</p>
                                     </div>
                                 </div>
                             </div>
@@ -309,67 +199,51 @@
                                     <div class="pattern-1" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-24.png);"></div>
                                     <div class="pattern-2" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-25.png);"></div>
                                 </div>
-                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-4.jpg" alt=""></figure>
+                                <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/imgs/person.JPG" alt=""></figure>
                                 <div class="content-box">
-                                    <div class="like-box"><a href="index.html"><i class="far fa-heart"></i></a></div>
                                     <ul class="name-box clearfix">
-                                        <li class="name"><h3><a href="doctors-details.html">Dr. Stella Adler</a></h3></li>
+                                        <li class="name"><h3><a href="doctors-details.html">개인정신치료</a></h3></li>
                                         <li><i class="icon-Trust-1"></i></li>
                                         <li><i class="icon-Trust-2"></i></li>
-                                    </ul>
-                                    <span class="designation">MDS - Periodontology and BDS</span>
+                                    </ul><br>
                                     <div class="text">
-                                        <p>Lorem ipsum dolor sit amet consectur adipisc elit sed eiusmod tempor.</p>
-                                    </div>
-                                    <div class="rating-box clearfix">
-                                        <ul class="rating clearfix">
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><i class="icon-Star"></i></li>
-                                            <li><a href="index.html">(32)</a></li>
-                                        </ul>
-                                        <div class="link"><a href="index.html">Available Today</a></div>
-                                    </div>
-                                    <div class="location-box">
-                                        <p><i class="fas fa-map-marker-alt"></i>G87P, Birmingham, UK</p>
+                                        <p>전문의와의 상담에 따라 심층 정신치료가 효과적일 경우, 이를 통해 불안의 무의식적인 근원을 찾아볼 수 있습니다.
+                                        또한, 현실의 문제를 위주로 지지정신치료를 할 수도 있습니다.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="more-btn centred"><a href="doctors-1.html" class="theme-btn-one">All Specialist<i class="icon-Arrow-Right"></i></a></div>
             </div>
         </section>
         <!-- team-section end -->
 
-        <!-- news-section -->
-        <section class="news-section">
+     <!-- news-section -->
+        <section class="news-section" style="padding-top: 10px">
             <div class="auto-container">
                 <div class="sec-title centred">
-                    <p>News & Article</p>
-                    <h2>Stay Update With Docpro</h2>
+                    <p>정신건강의학이 너무 생소하시다고요?</p>
+                    <h2>짧은 읽기로 좀 더 알아보세요!</h2>
                 </div>
                 <div class="row clearfix">
                     <div class="col-lg-4 col-md-6 col-sm-12 news-block">
                         <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                             <div class="inner-box">
                                 <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/news/news-1.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/resources/imgs/subjects/emotion_eggs_notHappy.jpg" alt="">
                                     <a href="blog-details" class="link"><i class="fas fa-link"></i></a>
-                                    <span class="category">Featured</span>
+                                    <span class="category">감정</span>
                                 </figure>
                                 <div class="lower-content">
-                                    <h3><a href="blog-details.html">Including animation in your design system</a></h3>
+                                    <h3><a href="blog-details.html">감정 조절이 어려울땐, 어떻게 하시나요?</a></h3>
                                     <ul class="post-info">
-                                        <li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-1.png" alt=""><a href="index.html">Eva Green</a></li>
+                                        <li><a href="index.html">김유정</a></li>
                                         <li>April 10, 2020</li>
                                     </ul>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed.</p>
+                                    <p>감정조절이 어려울 때, 이렇게 해 보세요. 몇 가지 간단한 팁을 드려요. 더 읽기를 눌러 확인해 보세요!</p>
                                     <div class="link"><a href="blog-details.html"><i class="icon-Arrow-Right"></i></a></div>
-                                    <div class="btn-box"><a href="blog-details.html" class="theme-btn-one">Read more<i class="icon-Arrow-Right"></i></a></div>
+                                    <div class="btn-box"><a href="blog-details.html" class="theme-btn-one">더 읽기<i class="icon-Arrow-Right"></i></a></div>
                                 </div>
                             </div>
                         </div>
@@ -378,19 +252,19 @@
                         <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="300ms" data-wow-duration="1500ms">
                             <div class="inner-box">
                                 <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/news/news-2.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/resources/imgs/subjects/stress_human.jpg" alt="">
                                     <a href="blog-details" class="link"><i class="fas fa-link"></i></a>
-                                    <span class="category">Featured</span>
+                                    <span class="category">스트레스</span>
                                 </figure>
                                 <div class="lower-content">
-                                    <h3><a href="blog-details.html">Baking can be done with a few things.</a></h3>
+                                    <h3><a href="blog-details.html">스트레스는 만병의 근원? 우리에게 도움이 되는 스트레스</a></h3>
                                     <ul class="post-info">
-                                        <li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-2.png" alt=""><a href="index.html">George Clooney</a></li>
+                                        <li><a href="index.html">정인영</a></li>
                                         <li>April 09, 2020</li>
                                     </ul>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed.</p>
+                                    <p>스트레스를 잘만 활용하면 우리에게 긍정적인 영향을 미칠 수 있다는 것을 아시나요? 더 읽기를 눌러 확인해 보세요!</p>
                                     <div class="link"><a href="blog-details.html"><i class="icon-Arrow-Right"></i></a></div>
-                                    <div class="btn-box"><a href="blog-details.html" class="theme-btn-one">Read more<i class="icon-Arrow-Right"></i></a></div>
+                                    <div class="btn-box"><a href="blog-details.html" class="theme-btn-one">더 읽기<i class="icon-Arrow-Right"></i></a></div>
                                 </div>
                             </div>
                         </div>
@@ -399,19 +273,19 @@
                         <div class="news-block-one wow fadeInUp animated animated" data-wow-delay="600ms" data-wow-duration="1500ms">
                             <div class="inner-box">
                                 <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/news/news-3.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/resources/imgs/subjects/emotion_depression_words.jpg" alt="">
                                     <a href="blog-details" class="link"><i class="fas fa-link"></i></a>
-                                    <span class="category">Featured</span>
+                                    <span class="category">우울증</span>
                                 </figure>
                                 <div class="lower-content">
-                                    <h3><a href="blog-details.html">Great food is not just eating energy.</a></h3>
+                                    <h3><a href="blog-details.html">우울증은 매일매일 우울한가요? 답은 아니요!</a></h3>
                                     <ul class="post-info">
-                                        <li><img src="${pageContext.request.contextPath}/resources/assets/images/news/admin-3.png" alt=""><a href="index.html">George Clooney</a></li>
+                                        <li><a href="index.html">권수민</a></li>
                                         <li>April 08, 2020</li>
                                     </ul>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed.</p>
+                                    <p>우울증에 대해 알아보도록 할까요? 우울증은 매일 매일 우울한 것이라는 생각, 아니에요! 더 읽기를 눌러 확인해 보세요!</p>
                                     <div class="link"><a href="blog-details.html"><i class="icon-Arrow-Right"></i></a></div>
-                                    <div class="btn-box"><a href="blog-details.html" class="theme-btn-one">Read more<i class="icon-Arrow-Right"></i></a></div>
+                                    <div class="btn-box"><a href="blog-details.html" class="theme-btn-one">더 읽기<i class="icon-Arrow-Right"></i></a></div>
                                 </div>
                             </div>
                         </div>
@@ -420,6 +294,5 @@
             </div>
         </section>
         <!-- news-section end -->
-
 
     </div>
