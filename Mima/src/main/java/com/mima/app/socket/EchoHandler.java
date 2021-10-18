@@ -109,6 +109,7 @@ public class EchoHandler extends TextWebSocketHandler{
  		} // 약국 알람 end
 		
 		//진료시작 알람
+			
 			String bknum = msg.substring(msg.lastIndexOf("=")+1);
 			int num = Integer.parseInt(bknum);
 			String ptId = consultationService.checkPtId(num);
