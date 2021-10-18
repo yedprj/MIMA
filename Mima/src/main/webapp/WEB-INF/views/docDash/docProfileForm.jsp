@@ -2,6 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style>
+
+.good-select {
+    border: 1px solid #e5eded !important;
+    border-radius: 10px;
+    padding: 3px 20px;
+    height : 100%;
+    color: #061a3a;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+</style>
 <!--page-title-two-->
         <section class="page-title-two">
             <div class="title-box centred bg-color-2">
@@ -179,7 +192,7 @@
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
 												<label>진료명1</label>
 												   <div class="select-box">
-			                                        <select class="wide" name="category1" id="category1">
+			                                        <select class="wide good-select" name="category1" id="category1">
 			                                           <option data-display="진료 과목을 선택하세요">과목</option>
 			                                           <option value="정신분석">정신분석 / 정신치료</option>
 			                                           <option value="스트레스">스트레스 / 트라우마</option>
@@ -199,7 +212,7 @@
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료명2</label>
                                                 <div class="select-box">
-			                                        <select class="wide" name="category2" id="category2">
+			                                        <select class="wide good-select" name="category2" id="category2">
 			                                           <option data-display="진료 과목을 선택하세요">과목</option>
 			                                           <option value="정신분석">정신분석 / 정신치료</option>
 			                                           <option value="스트레스">스트레스 / 트라우마</option>
@@ -219,7 +232,7 @@
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료명3</label>
                                                 <div class="select-box">
-			                                        <select class="wide" name="category3" id="category3">
+			                                        <select class="wide good-select" name="category3" id="category3">
 			                                           <option data-display="진료 과목을 선택하세요">과목</option>
 			                                           <option value="정신분석">정신분석 / 정신치료</option>
 			                                           <option value="스트레스">스트레스 / 트라우마</option>
@@ -303,35 +316,12 @@ $(function(){
 		if("${sub.category1}" != ""){
 			//$('#category1').val('${sub.category1}').attr('selected', 'selected');
 			var category1 = "${sub.category1}";
-			let num = 0;
-			
-			if (category1 == "정신분석"){
-				num = 0;
-			}
-			else if (category1 == "스트레스"){
-				num = 1;
-			}
-			else if (category1 == "기분"){
-				num = 2;
-			}
-			else if (category1 == "신경증"){
-				num = 3;
-			}
-			else if (category1 == "직장인"){
-				num = 4;
-			}
-			else if (category1 == "중독"){
-				num = 5;
-			}
-			else if (category1 == "노인"){
-				num = 6;
-			}
-			else if (category1 == "해리"){
-				num = 7;
-			}
-			
-			console.log(num);
-			$('#category1 option:eq('+num+')').prop("selected", true);
+
+			//$('#category1').text("${sub.category1}").attr("selected", "selected");
+			//$('#category1').text("${sub.category1}").attr("selected", "selected");	
+			//$('#category1 option:eq(3)').prop('selected', true);
+			//$('#category1').val(category1).prop('selected', true);
+			$('#category1').find('option[value="${sub.category1}"]').prop('selected', 'selected');
 			console.log("${sub.category1}")
 		}
 		if("${sub.price1}" !=""){
@@ -353,8 +343,6 @@ $(function(){
 		$("#insertSubFrm").attr('action', 'updateSub');
 		$("#subjectPriceInsertBtn").text("수정하기");
 	}
-	
-	
 	
 	//진료가능시간 등록 버튼 이벤트
 	$("#saveAvailBtn").on('click', function(){
