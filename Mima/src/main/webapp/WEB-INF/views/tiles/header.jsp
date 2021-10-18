@@ -183,7 +183,6 @@
 						</form>
 					</sec:authorize>
 				</div>
-				
 			<div id="msgStack"></div>
 			</div>
 		</div>

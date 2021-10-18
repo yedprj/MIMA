@@ -107,7 +107,9 @@ public class EchoHandler extends TextWebSocketHandler{
 				users.get(senderId).sendMessage(confirmMsg);
 			}
  		} // 약국 알람 end
-		else {
+		
+		//진료시작 알람
+			
 			String bknum = msg.substring(msg.lastIndexOf("=")+1);
 			int num = Integer.parseInt(bknum);
 			String ptId = consultationService.checkPtId(num);
@@ -115,14 +117,14 @@ public class EchoHandler extends TextWebSocketHandler{
 			if(msg != null) {
 				TextMessage tmpMsg = new TextMessage("<a target=\"_blank\" href="+msg+">진료실이 준비되었습니다. 이동하기</a>");
 				TextMessage confirmMsg = new TextMessage("<p>환자께 알림을 보냈습니다.</p>");
-				System.out.println(tmpMsg.toString());
+				System.out.println("보내진 메세지 확인"+ tmpMsg.toString());
 				if(users.get(ptId) != null) {
 					users.get(ptId).sendMessage(tmpMsg);				
 				}
 				users.get(senderId).sendMessage(confirmMsg);
 				System.out.println("msg sent");
 			}
-		}
+		
 	}
 	// 연결 해제될 때
 	@Override
