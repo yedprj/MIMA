@@ -147,16 +147,20 @@
 				<!-- K. 10/17 알림 -->
 				<div class="right-column pull-right">
                      <div class="author-box">
-                         <div class="icon-box  nice-select"  tabindex="0" >
-                              <a id="noticeBtn" href="#"><i class="icon-Bell"></i></a>
-                              <ul class="list">
-                         		<li data-value="" data-display="알림내역" class="option selected focus">알림내역</li>
-                         		<c:if test="${not empty notice }">
-                         			<c:forEach var="notice" items="${notice}">
-                         				<li data-value="${notice.type }" class="option">${notice.userMemberNo }</li>	
-                         			</c:forEach>
-                         		</c:if>
-                         	</ul>
+                         <div class="icon-box nice-select d-flex justify-content-center"  tabindex="0" >
+                    		<div style="position: relative;">
+                    			<div style="position: absolute;  top: -20px;">
+		                            <a id="noticeBtn" href="#"><i class="icon-Bell"></i></a>
+		                            <ul class="list">
+		                         		<li data-value="" data-display="알림내역" class="option selected focus">알림내역</li>
+		                         		<c:if test="${not empty notice }">
+		                         			<c:forEach var="notice" items="${notice}">
+		                         				<li data-value="${notice.type }" class="option">${notice.userMemberNo }</li>	
+		                         			</c:forEach>
+		                         		</c:if>
+		                         	</ul>
+                    			</div>
+                    		</div>
                          </div>
                          <div id="noticeSelect">
                          	
@@ -179,7 +183,6 @@
 						</form>
 					</sec:authorize>
 				</div>
-				
 			<div id="msgStack"></div>
 			</div>
 		</div>
