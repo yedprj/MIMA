@@ -7,6 +7,29 @@
 th, td {
 	text-align: center;
 }
+
+#deliveryCancelBtn {
+	cursor: pointer;
+}
+.modal{ 
+  position:absolute; 
+  width:100%; 
+  height:100%; 
+  background: rgba(0,0,0,0.8); 
+  top:0; 
+  left:0; 
+  display:none;
+}
+.modal_content{
+  width:500px;
+  background:#fff; border-radius:10px;
+  position:relative; top:35%; left:50%;
+  margin-top:-300px; 
+  margin-left:-200px;
+  text-align:center;
+  box-sizing:border-box; padding:74px 0;
+  line-height:23px; cursor:pointer;
+}
 </style>
 
 <!-- doctors-dashboard -->
@@ -259,7 +282,7 @@ th, td {
 											<td><p>${del.subject}</p></td>
 											<td><p><b>Dr.</b> ${del.docName}<p></td>
 											<td><p>${del.pharmacyName}</p></td>
-											<td>
+											<td id="delstatus">
 												<c:if test="${del.deliveryStatus eq 'p'}">
 													<span class="status">배달완료</span>
 												</c:if>
@@ -267,7 +290,7 @@ th, td {
 													<span class="status pending">수령완료</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'c'}">
-													<span class="status cancel">신청취소</span>
+													<span id="deliveryCancelBtn" data-no="${del.bookingNo }" class="status cancel">신청취소</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'n'}">
 													<span class="status pending">배송시작</span>
@@ -344,3 +367,83 @@ th, td {
 <button class="scroll-top scroll-to-target" data-target="html">
 	<span class="fa fa-arrow-up"></span>
 </button>
+
+ <!-- appointment-section -->
+ 		<div class="modal">
+        <section class="modal_content appointment-section bg-color-3">
+            <div class="auto-container">
+                <div class="row clearfix">
+                    <div id="modalContentCss" class="col-lg-12 col-md-12 col-sm-12 left-column">
+                        <div class="appointment-information">
+                            <div class="title-box">
+                                <h3>약배달 취소건</h3>
+                            </div>
+                            <div class="inner-box">
+                                <div class="information-form">
+                                    <h3>약배달 신청 취소 내역</h3>
+                                    <form action="book-appointment.html" method="post">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                                                <label>취소 약국명</label>
+                                                <input type="text" name=pharmacyName >
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                                <label>(취소사유)</label>
+                                                <textarea id="message" name="deliveryDecline" ></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+		                        <div class="btn-box">
+		                            <a id="delReturnBtn" class="theme-btn-one">재신청하러 가기<i class="icon-Arrow-Right"></i></a>
+		                            <button id="cancelBtn" class="cancel-btn">취소</button>
+		                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- appointment-section end -->
+        </div>
+
+<script>
+$(function(){
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	// K.10/18 약배달 취소 버튼 클릭시 사유 가져오기
+	$(document).on("click","#deliveryCancelBtn", function(){
+		var bookingNo = $(this).data("no");
+		
+		// 취소건 내역 ajax로 호출
+		$.ajax({
+			url : 'ptDelCancelSelect',
+			type : 'post',
+			data : { 
+				bookingNo : bookingNo
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},		 
+			success : function(data) {
+				console.log(data);
+				$(".modal").fadeIn();
+				$("input[name='pharmacyName']").val(data.pharmacyName);
+				$("#message").val(data.deliveryDecline);
+				
+			}
+		});// ajax end
+		
+		
+					
+		  
+		$("#cancelBtn").click(function(){
+		    $(".modal").fadeOut();
+		});
+		
+		
+	}); // 약배달 취소버튼 클릭 end
+	
+});
+</script>
