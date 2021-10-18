@@ -76,6 +76,21 @@ public class PatientsController {
 		return "patients/ptMain";
 	}
 	
+	
+	//환자대쉬보드 메인 페이지
+	@GetMapping("patients/ptDeliveryList")
+	public String ptDeliveryList(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = vo.getMemberNo();
+		// 환자 약배달 현황
+		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusList(memberNo));
+
+		return "patients/ptDeliveryList";
+	}
+	
 	// K. 10/18 환자 약배달 취소 내역 조회
 	@PostMapping("patients/ptDelCancelSelect")
 	@ResponseBody

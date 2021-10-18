@@ -16,5 +16,6 @@ public class PtDeliveryVO {
 	private String docName;			// 진료의사
 	private String pharmacyName;	// 신청약국이름
 	private String deliveryStatus;	// 약배달신청상태
+	private String deliveryDecline; // 약배달 취소이유
 
 }

@@ -51,7 +51,9 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		MemberVO mvo = (MemberVO) auth.getPrincipal();
 		log.info(mvo.toString());
 		
+		// K. 10/18 push 알림내역 조회
 		session.setAttribute("notice", pushService.selectMemberPush(mvo.getMemberNo()));
+		
 		//s:1004 노드에서 사용할 쿠키굽기
 		Cookie cookie = new Cookie("userRole", mvo.getRole());	   
 		cookie.setMaxAge(60*60*24*30);
