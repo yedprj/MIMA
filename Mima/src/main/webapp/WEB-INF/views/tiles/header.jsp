@@ -19,6 +19,9 @@
 	    color: #061a3a;
 	    box-shadow: 0 10px 30px #d5edea;
 	}
+	#noticeBtn:hover{
+		background: #39cabb;;
+	}
 	
 </style>
 <!-- preloader -->
@@ -147,27 +150,24 @@
 				<!-- K. 10/17 알림 -->
 				<div class="right-column pull-right">
                      <div class="author-box">
-                         <div class="icon-box nice-select d-flex justify-content-center"  tabindex="0" >
-                    		<div style="position: relative;">
-                    			<div style="position: absolute;  top: -20px;">
-		                            <a id="noticeBtn" href="#"><i class="icon-Bell"></i></a>
-		                            <ul class="list">
-		                         		<li data-value="" data-display="알림내역" class="option selected focus">알림내역</li>
-		                         		<c:if test="${not empty notice }">
-		                         			<c:forEach var="notice" items="${notice}">
-		                         				<li data-value="${notice.type }" class="option">${notice.userMemberNo }</li>	
-		                         			</c:forEach>
-		                         		</c:if>
-		                         	</ul>
-                    			</div>
-                    		</div>
-                         </div>
-                         <div id="noticeSelect">
-                         	
+                         <div class="icon-box  nice-select"  tabindex="0" >
+                              <a id="noticeBtn" href="#"><i class="icon-Bell"></i></a>
+                              <ul class="list">
+                         		<li data-value="" data-display="알림내역" class="option selected focus">알림내역</li>
+                         		<c:if test="${empty notice }"><li>내역이 없습니다.</li></c:if>
+                         		<c:if test="${not empty notice }">
+                         			<c:forEach var="notice" items="${notice}">
+                         				<li data-value="${notice.type }" class="option">
+                         					<c:if test="${notice.type eq 'phaCancel' }">약국 알림이 있습니다.</c:if>
+                         				</li>	
+                         			</c:forEach>
+                         		</c:if>
+                         	</ul>
                          </div>
        	             </div>
                 </div>
-                <!-- 알림 end -->
+                <!-- 알림 end -->	
+				
 				<div class="btn-box">
 					<sec:authorize access="isAnonymous()">
 						<a href="${pageContext.request.contextPath}/login" class="theme-btn-one"><i
@@ -203,6 +203,8 @@
 						<!--Keep This Empty / Menu will come through Javascript-->
 					</nav>
 				</div>
+				
+						
 				<div class="btn-box">
 					<sec:authorize access="isAnonymous()">
 						<a href="${pageContext.request.contextPath}/login" class="theme-btn-one"><i

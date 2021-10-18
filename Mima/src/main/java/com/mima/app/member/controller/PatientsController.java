@@ -37,6 +37,7 @@ import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.domain.PatientsVO;
 import com.mima.app.member.service.MemberService;
 import com.mima.app.member.service.PatientsService;
+import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
@@ -68,17 +69,41 @@ public class PatientsController {
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		
 		int memberNo = vo.getMemberNo();
-		
 		model.addAttribute("list", patientsService.ptgetList(memberNo));
 		model.addAttribute("ptMainhisList", patientsService.ptMainhisList(memberNo));
 		model.addAttribute("ptMainreList", patientsService.ptMainreList(memberNo));
 		model.addAttribute("ptMyListCount", patientsService.ptMyListCount(memberNo));
 		model.addAttribute("ptMyHistoryCount", patientsService.ptMyHistoryCount(memberNo));
 		model.addAttribute("ptMyReviewCount", patientsService.ptMyReviewCount(memberNo));
+		// 환자 약배달 현황
 		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusList(memberNo));
 
 		return "patients/ptMain";
 	}
+	
+	
+	//환자대쉬보드 메인 페이지
+	@GetMapping("patients/ptDeliveryList")
+	public String ptDeliveryList(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		
+		int memberNo = vo.getMemberNo();
+		// 환자 약배달 현황
+		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusAllList(memberNo));
+
+		return "patients/ptDeliveryList";
+	}
+	
+	// K. 10/18 환자 약배달 취소 내역 조회
+	@PostMapping("patients/ptDelCancelSelect")
+	@ResponseBody
+	public MedDeliveryVO ptDelCancelSelect(MedDeliveryVO vo) {
+		log.info("******************취소내역");
+		return deliveryService.delCancelReason(vo.getBookingNo());
+	}
+	
 	
 	//환자대쉬보드 예약관리 페이지 e.5
 	@GetMapping("patients/ptBookManage")

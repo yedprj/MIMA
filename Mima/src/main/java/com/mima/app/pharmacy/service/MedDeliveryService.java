@@ -39,4 +39,8 @@ public interface MedDeliveryService {
 		
 	// K.10/14 복약지도 완료처리
 	public int ptEduStatusUpdate(int bookingNo);
+	
+	// K.10/18 환자 약배달 취소 내역 조회
+	public MedDeliveryVO delCancelReason(int bookingNo);
+	
 }

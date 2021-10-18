@@ -93,175 +93,13 @@ th, td {
 	<div class="right-panel">
 		<div class="content-container">
 			<div class="outer-container">
-				<div class="feature-content">
-					<div class="row clearfix">
-						<div class="col-xl-4 col-lg-12 col-md-12 feature-block">
-							<div class="feature-block-two">
-								<div class="inner-box">
-									<div class="pattern">
-										<div class="pattern-1"
-											style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-79.png);"></div>
-										<div class="pattern-2"
-											style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-80.png);"></div>
-									</div>
-									<div class="icon-box">
-										<i class="icon-Dashboard-3"></i>
-									</div>
-									<h3>${ptMyListCount}</h3>
-									<p>나의 예약 수</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-4 col-lg-12 col-md-12 feature-block">
-							<div class="feature-block-two">
-								<div class="inner-box">
-									<div class="pattern">
-										<div class="pattern-1"
-											style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-81.png);"></div>
-										<div class="pattern-2"
-											style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-82.png);"></div>
-									</div>
-									<div class="icon-box">
-										<i class="icon-Dashboard-1"></i>
-									</div>
-									<h3>${ptMyHistoryCount}</h3>
-									<p>진료내역 수</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-4 col-lg-12 col-md-12 feature-block">
-							<div class="feature-block-two">
-								<div class="inner-box">
-									<div class="pattern">
-										<div class="pattern-1"
-											style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-83.png);"></div>
-										<div class="pattern-2"
-											style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-84.png);"></div>
-									</div>
-									<div class="icon-box">
-										<i class="icon-Dashboard-2"></i>
-									</div>
-									<h3>${ptMyReviewCount}</h3>
-									<p>나의 후기 수</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="doctors-appointment">
-					<div class="title-box">
-						<h3>오늘의 예약</h3>
-						<div class="btn-box">
-							<a href="ptBookManage" class="theme-btn-one">예약관리<i
-								class="icon-Arrow-Right"></i></a>
-						</div>
-					</div>
-					<div class="doctors-list">
-						<div class="table-outer">
-							<table class="doctors-table">
-								<thead class="table-header">
-									<tr>
-										<th>환자명</th>
-										<th>진료일</th>
-										<th>예약일</th>
-										<th>결제금액</th>
-										<th>결제상태</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${list}" var="list">
-										<tr>
-											<td>
-												<div class="name-box">
-													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
-													</figure>
-													<h5>${list.name}</h5>
-												</div>
-											</td>
-											<td>${list.bookingNo}</td>
-											<td><fmt:formatDate value="${list.consultDate}"
-													pattern="yy-MM-dd" /> <span class="time">${list.consultTime}</span>
-											</td>
-											<td><fmt:formatDate value="${list.bookingDate}"
-													pattern="yy-MM-dd" /></td>
-											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
-													type="currency" value="${list.price}" /></td>
-											<td>${list.payStatus}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-
-				<br>
-
-				<div class="doctors-appointment">
-					<div class="title-box">
-						<h3>진료내역</h3>
-						<div class="btn-box">
-							<a href="ptHistory" class="theme-btn-one">전체보기<i
-								class="icon-Arrow-Right"></i></a>
-						</div>
-					</div>
-					<div class="doctors-list">
-						<div class="table-outer">
-							<table class="doctors-table">
-								<thead class="table-header">
-									<tr>
-										<th>환자명</th>
-										<th>예약번호</th>
-										<th>진료일</th>
-										<th>예약일</th>
-										<th>결제금액</th>
-										<th>결제상태</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${ptMainhisList}" var="ptMainhisList">
-										<tr>
-											<td>
-												<div class="name-box">
-													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
-													</figure>
-													<h5>${ptMainhisList.name}</h5>
-													<span class="ptno">#${ptMainhisList.ptNo}</span>
-												</div>
-											</td>
-											<td>${ptMainhisList.bookingNo}</td>
-											<td><fmt:formatDate
-													value="${ptMainhisList.consultDate}" pattern="yy-MM-dd" />
-												<span class="time">${ptMainhisList.consultTime}</span></td>
-											<td><fmt:formatDate
-													value="${ptMainhisList.bookingDate}" pattern="yy-MM-dd" /></td>
-											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
-													type="currency" value="${ptMainhisList.price}" /></td>
-											<td>${ptMainhisList.payStatus}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				
-				<!-- K. 10/ 17 배송현황 -->
+				<!-- K. 10/ 18 배송현황 -->
 				<br>
 				<div class="doctors-appointment">
 					<div class="title-box">
 						<h3>배송현황</h3>
-						<span>최근 배송현황 5건을 조회합니다.</span>
-						<div class="btn-box">
-							<a href="ptDeliveryList" class="theme-btn-one">자세히 보기<i
-								class="icon-Arrow-Right"></i></a>
-						</div>
+						<span>신청한 약배달의 현황 목록을 조회합니다.</span>
+						<br><span><b>TIP.</b> 약배달을 수령하신 다음 수령완료 버튼을 클릭해주세요, 취소버튼을 클릭시 취소사유를 확인하실 수 있습니다.</span>
 					</div>
 					<div class="doctors-list">
 						<div class="table-outer">
@@ -273,7 +111,7 @@ th, td {
 										<th>진료의사</th>
 										<th>신청약국</th>
 										<th>약배달 배송현황</th>
-										<th></th>
+										<th>현황확인</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -291,13 +129,17 @@ th, td {
 													<span class="status pending">수령완료</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'c'}">
-													<span id="deliveryCancelBtn" data-no="${del.bookingNo }" class="status cancel">신청취소</span>
+													<span id="deliveryCancelBtn" data-no="${del.bookingNo}" class="status cancel">신청취소</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'n'}">
 													<span class="status pending">배송시작</span>
 												</c:if>
 											</td>
-											<td></td>
+											<td>
+												<c:if test="${del.deliveryStatus eq 'n'}">
+													<span id="delCheckBtn" data-no="${del.bookingNo}" class="status">수령완료</span>
+												</c:if>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -308,56 +150,7 @@ th, td {
 
 				<br>
 
-				<div class="doctors-appointment">
-					<div class="title-box">
-						<h3>나의 후기</h3>
-						<div class="btn-box">
-							<a href="ptReview" class="theme-btn-one">전체보기<i
-								class="icon-Arrow-Right"></i></a>
-						</div>
-					</div>
-					<div class="doctors-list">
-						<div class="table-outer">
-							<table class="doctors-table">
-								<thead class="table-header">
-									<tr>
-										<th>닉네임</th>
-										<th>별점</th>
-										<th>날짜</th>
-										<th>내용</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${ptMainreList}"
-										var="ptMainreList">
-										<tr>
-											<td>
-												<div class="name-box">
-													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
-													</figure>
-													<h5>${ptMainreList.nickname}</h5>
-												</div>
-											</td>
-											<td><c:forEach var="i" begin="1"
-													end="${ptMainreList.reviewPoint}">
-													<span style="color: #ffab01;"><i class="icon-Star"></i></span>
-												</c:forEach> <c:forEach var="i" begin="1"
-													end="${5-ptMainreList.reviewPoint}">
-													<i class="icon-Star"></i>
-												</c:forEach></td>
-											<td><fmt:formatDate
-													value="${ptMainreList.regDate}" pattern="yy-MM-dd" /></td>
-											<td>${ptMainreList.contents}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -436,15 +229,35 @@ $(function(){
 			}
 		});// ajax end
 		
-		
-					
-		  
+		// 취소 모달창 닫기
 		$("#cancelBtn").click(function(){
 		    $(".modal").fadeOut();
 		});
 		
-		
 	}); // 약배달 취소버튼 클릭 end
+	
+	// 수령확인 완료 버튼 클릭
+	$(document).on("click","#delCheckBtn",function(){
+		var bookingNo = $(this).data("no");
+		
+		$.ajax({
+			url : 'ptDeliveryUpdate',
+			type : 'post',
+			data : { 
+				bookingNo : bookingNo
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},		 
+			success : function(data) {
+				console.log(data);
+				$(".modal").fadeIn();
+				$("input[name='pharmacyName']").val(data.pharmacyName);
+				$("#message").val(data.deliveryDecline);
+				
+			}
+		});// ajax end
+	});
 	
 });
 </script>

@@ -14,7 +14,8 @@ public class PtDeliveryVO {
 	private Date consultDate;		// 진료일자
 	private String subject;			// 진료과목
 	private String docName;			// 진료의사
-	private String pharmacyName;		// 신청약국이름
+	private String pharmacyName;	// 신청약국이름
 	private String deliveryStatus;	// 약배달신청상태
+	private String deliveryDecline; // 약배달 취소이유
 
 }
