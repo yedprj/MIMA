@@ -7,6 +7,24 @@
 th, td {
 	text-align: center;
 }
+
+.doctors-appointment .title-box h3 {
+	margin-bottom: 5px;
+}
+
+.doctors-appointment .title-box .btn-box .theme-btn-one {
+	margin-top: 20px;
+}
+
+.doctors-dashboard .review-list .comment-inner .single-comment-box .comment h4 {
+	margin-bottom: 5px;
+}
+
+.cusBtn {
+	padding: 9px 28px;
+	margin-top: 20px;
+}
+
 </style>
 
 <!-- doctors-dashboard -->
@@ -46,7 +64,7 @@ th, td {
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
-						<h3>Dr. Rex Allen</h3>
+						<h3>${session.name}</h3>
 						<p>MDS - Periodontology</p>
 					</div>
 				</div>
@@ -61,7 +79,12 @@ th, td {
 					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -128,6 +151,7 @@ th, td {
 				<div class="doctors-appointment">
 					<div class="title-box">
 						<h3>오늘의 예약</h3>
+						<span>오늘 예정된 접수를 보여줍니다.</span>
 						<div class="btn-box">
 							<a href="ptBookManage" class="theme-btn-one">예약관리<i
 								class="icon-Arrow-Right"></i></a>
@@ -138,11 +162,11 @@ th, td {
 							<table class="doctors-table">
 								<thead class="table-header">
 									<tr>
-										<th>환자명</th>
+										<th>의사명</th>
+										<th>예약번호</th>
 										<th>진료일</th>
 										<th>예약일</th>
 										<th>결제금액</th>
-										<th>결제상태</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -155,7 +179,8 @@ th, td {
 															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
 															alt="">
 													</figure>
-													<h5>${list.name}</h5>
+													<h5>${list.name} 의사</h5>
+													<span class="docno"># ${list.docNo}</span>
 												</div>
 											</td>
 											<td>${list.bookingNo}</td>
@@ -180,6 +205,7 @@ th, td {
 				<div class="doctors-appointment">
 					<div class="title-box">
 						<h3>진료내역</h3>
+						<span>최근 진행된 진료 5건을 조회합니다.</span>
 						<div class="btn-box">
 							<a href="ptHistory" class="theme-btn-one">전체보기<i
 								class="icon-Arrow-Right"></i></a>
@@ -195,7 +221,6 @@ th, td {
 										<th>진료일</th>
 										<th>예약일</th>
 										<th>결제금액</th>
-										<th>결제상태</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -208,7 +233,7 @@ th, td {
 															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
 															alt="">
 													</figure>
-													<h5>${ptMainhisList.name}</h5>
+													<h5>${ptMainhisList.name} 의사</h5>
 													<span class="ptno">#${ptMainhisList.ptNo}</span>
 												</div>
 											</td>
@@ -220,7 +245,6 @@ th, td {
 													value="${ptMainhisList.bookingDate}" pattern="yy-MM-dd" /></td>
 											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
 													type="currency" value="${ptMainhisList.price}" /></td>
-											<td>${ptMainhisList.payStatus}</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -284,56 +308,49 @@ th, td {
 
 				<br>
 
-				<div class="doctors-appointment">
+				<div class="review-list">
 					<div class="title-box">
 						<h3>나의 후기</h3>
+						<span>최근에 작성한 후기 5건을 조회합니다.</span>
 						<div class="btn-box">
-							<a href="ptReview" class="theme-btn-one">전체보기<i
+							<a href="ptReview" class="theme-btn-one cusBtn">전체보기<i
 								class="icon-Arrow-Right"></i></a>
 						</div>
 					</div>
-					<div class="doctors-list">
-						<div class="table-outer">
-							<table class="doctors-table">
-								<thead class="table-header">
-									<tr>
-										<th>닉네임</th>
-										<th>별점</th>
-										<th>날짜</th>
-										<th>내용</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${ptMainreList}"
-										var="ptMainreList">
-										<tr>
-											<td>
-												<div class="name-box">
-													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
-													</figure>
-													<h5>${ptMainreList.nickname}</h5>
-												</div>
-											</td>
-											<td><c:forEach var="i" begin="1"
-													end="${ptMainreList.reviewPoint}">
-													<span style="color: #ffab01;"><i class="icon-Star"></i></span>
-												</c:forEach> <c:forEach var="i" begin="1"
-													end="${5-ptMainreList.reviewPoint}">
-													<i class="icon-Star"></i>
-												</c:forEach></td>
-											<td><fmt:formatDate
-													value="${ptMainreList.regDate}" pattern="yy-MM-dd" /></td>
-											<td>${ptMainreList.contents}</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
+					<div class="comment-inner">
+						<c:forEach items="${ptMainreList}"
+							var="ptMainreList">
+							<div class="single-comment-box">
+								<div class="comment">
+									<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+									<c:if test="${ptMainreList.cmainCategory eq 'doc'}">
+						             	<h4>${ptMainreList.name} 의사</h4>
+						             </c:if>
+						             <c:if test="${ptMainreList.cmainCategory eq 'pha'}">
+						             	<h4>${ptMainreList.name} 약사</h4>
+						             </c:if>
+									
+									<span class="comment-time"><i
+										class="fas fa-calendar-alt"></i>
+									<fmt:formatDate value="${ptMainreList.regDate}"
+											pattern="yy-MM-dd" /></span>
+									<ul class="rating clearfix">
+										<c:forEach var="i" begin="1"
+											end="${ptMainreList.reviewPoint}">
+											<span style="color: #ffab01;"><i class="icon-Star"></i></span>
+										</c:forEach>
+										<c:forEach var="i" begin="1"
+											end="${5-ptMainreList.reviewPoint}">
+											<i class="icon-Star"></i>
+										</c:forEach>
+									</ul>
+									<p>${ptMainreList.contents}</p>
+								</div>
+							</div>
+						</c:forEach>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -344,3 +361,12 @@ th, td {
 <button class="scroll-top scroll-to-target" data-target="html">
 	<span class="fa fa-arrow-up"></span>
 </button>
+
+<script>
+	$(function(){
+		// 로그아웃_J18
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
+		});	
+	}
+</script>

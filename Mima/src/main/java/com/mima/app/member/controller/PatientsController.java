@@ -84,9 +84,14 @@ public class PatientsController {
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
 		
-		int total = patientsService.getTotalPtbmCount(cri);
+		int total = patientsService.ptbmListCount(cri, memberNo);
 		
 		model.addAttribute("ptbmList", patientsService.ptbmList(memberNo, cri));
+		model.addAttribute("ptbmListPage", patientsService.ptbmListPage(cri, memberNo));
+		model.addAttribute("ptbmListSoonPage", patientsService.ptbmListSoonPage(cri, memberNo));
+		model.addAttribute("ptbmListCanceledPage", patientsService.ptbmListCanceledPage(cri, memberNo));
+		System.out.println(patientsService.ptbmListCanceledPage(cri, memberNo));
+		System.out.println("*******"+patientsService.ptbmListSoonPage(cri, memberNo));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptBookManage";
 	}
@@ -99,9 +104,10 @@ public class PatientsController {
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
 		
-		int total = patientsService.getTotalPthCount(cri);
+		int total = patientsService.getTotalPthCount(memberNo, cri);
 		
 		model.addAttribute("ptHistoryList", patientsService.ptHistoryList(memberNo, cri));
+		model.addAttribute("ptHistoryOldestList", patientsService.ptHistoryOldestList(memberNo, cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptHistory";
 	}
@@ -125,15 +131,19 @@ public class PatientsController {
 	
 	//환자대쉬보드 나의후기 페이지 e.5
 	@GetMapping("patients/ptReview")
-	public String ptReview(Model model, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
+	public String ptReview(Model model, CommentsVO commentsvo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
-		
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
 		
-		int total = patientsService.getTotalPtrvCount(cri);
+		int total = patientsService.getTotalPtrvCount(memberNo, cri);
 		
-		model.addAttribute("ptReviewList", patientsService.ptReviewList(memberNo, cri));
+//		model.addAttribute("ptReviewList", patientsService.ptReviewList(memberNo, cri));
+		if (cri.getKeyword() == null || cri.getKeyword().equals("latest")) {
+			model.addAttribute("ptReviewList", patientsService.ptReviewList(memberNo, cri));
+		} else {
+			model.addAttribute("ptReviewList", patientsService.ptReviewOldestList(memberNo, cri));
+		}
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptReview";
 	}

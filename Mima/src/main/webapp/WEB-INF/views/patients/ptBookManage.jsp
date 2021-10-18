@@ -12,6 +12,14 @@ th, td {
 	margin-right: 30px;
 }
 
+.doctors-appointment .doctors-table tr td .cancel {
+	margin-right: 0px;
+}
+
+.doctors-appointment .doctors-table tr td .status.cancel {
+	margin-right: 30px;
+}
+
 </style>
 
 <!--page-title-two-->
@@ -50,22 +58,27 @@ th, td {
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
-						<h3>Dr. Rex Allen</h3>
+						<h3>${session.name}</h3>
 						<p>MDS - Periodontology</p>
 					</div>
 				</div>
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
+					<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="ptBookManage" class="current"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
 					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
 					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
 					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 	            </ul>
 			</div>
 		</div>
@@ -82,17 +95,27 @@ th, td {
 						</div>
 
 						<div class="select-box pull-right">
-							<select class="wide">
-								<option data-display="모두보기">모두보기</option>
-								<option value="1">예약된 접수</option>
-								<option value="2">취소된 접수</option>
+							<select class="wide" id="selectBox" onchange="searchCheck()">
+								<option value="all">모두보기</option>
+								<option value="soon">예약된 접수</option>
+								<option value="canceled">취소된 접수</option>
 							</select>
 						</div>
+						
+						<form>
+							<div class="form-group">
+								<input type="hidden" name="type" value="">
+		                    	<input type="hidden" id="pageNum" name="pageNum" value="${pageMaker.cri.pageNum}">
+              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
+              					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+			                </div>
+						</form>
+						
 					</div>
 					<div class="doctors-appointment">
-						<div class="doctors-list">
+						<div class="doctors-list" id="all" style="display: block;">
 							<div class="table-outer">
-								<table class="doctors-table">
+								<table class="doctors-table table-hover">
 									<thead class="table-header">
 										<tr>
 											<th>의사명</th>
@@ -100,14 +123,12 @@ th, td {
 											<th>진료일</th>
 											<th>예약일</th>
 											<th>결제금액</th>
-											<th>결제상태</th>
 											<th>예약상태</th>
-
 											<th></th>
 										</tr>
 									</thead>
 									<tbody id="contentAll">
-										<c:forEach items="${ptbmList}" var="ptbmList">
+										<c:forEach items="${ptbmListPage}" var="ptbmList">
 											<tr>
 												<td>
 													<div class="name-box">
@@ -129,9 +150,7 @@ th, td {
 												<td><c:if test="${ptbmList.bookingStatus eq 'p'}">
 														<span class="status">결제완료</span>
 													</c:if>
-													<c:if test="${ptbmList.bookingStatus eq 'y'}">
-														<span class="status pending">예약완료</span>
-													</c:if> <c:if test="${ptbmList.bookingStatus eq 'c'}">
+													<c:if test="${ptbmList.bookingStatus eq 'c'}">
 														<span class="status cancel">취소완료</span>
 													</c:if></td>
 												<td>
@@ -150,26 +169,177 @@ th, td {
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 							</div>
 						</div>
+						
+						<div class="doctors-list"  id="soon" style="display: none;">
+							<div class="table-outer">
+								<table class="doctors-table table-hover">
+									<thead class="table-header">
+										<tr>
+											<th>의사명</th>
+											<th>예약번호</th>
+											<th>진료일</th>
+											<th>예약일</th>
+											<th>결제금액</th>
+											<th>예약상태</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="contentAll">
+										<c:forEach items="${ptbmListSoonPage}" var="ptbmListSoon">
+											<tr>
+												<td>
+													<div class="name-box">
+													<figure class="image">
+															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+														</figure>
+														<h5>${ptbmListSoon.name}</h5>
+														<span class="docno"># ${ptbmListSoon.docNo}</span>
+													</div>
+												</td>
+												<td>${ptbmListSoon.bookingNo}</td>
+												<td><fmt:formatDate value="${ptbmListSoon.consultDate}"
+														pattern="yy-MM-dd" /> <span class="time">${ptbmListSoon.consultTime}</span>
+												</td>
+												<td><fmt:formatDate value="${ptbmListSoon.bookingDate}"
+														pattern="yy-MM-dd" /></td>
+												<td><fmt:setLocale value="ko_KR" />
+													<fmt:formatNumber type="currency" value="${ptbmListSoon.price}" /></td>
+												<td><c:if test="${ptbmListSoon.bookingStatus eq 'p'}">
+														<span class="status">결제완료</span>
+													</c:if>
+													<c:if test="${ptbmListSoon.bookingStatus eq 'c'}">
+														<span class="status cancel">취소완료</span>
+													</c:if></td>
+												<td>
+													<c:if test="${ptbmListSoon.bookingStatus eq 'y' || ptbmListSoon.bookingStatus == 'p'}">
+														<!-- 버튼 기능 구현을 위해 수정 p.10/10  -->
+                                                    	<button class="cancel" id="paymentCancel" name="paymentCancel">
+                                                    		<i class="fas fa-times"></i>Cancel
+                                                    	</button>
+                                                    	<input type="hidden" id="bookingNo" name="bookingNo" value="${ptbmListSoon.bookingNo}"/>
+													</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+							</div>
+						</div>
+						
+						<div class="doctors-list"  id="canceled" style="display: none;">
+							<div class="table-outer">
+								<table class="doctors-table table-hover">
+									<thead class="table-header">
+										<tr>
+											<th>의사명</th>
+											<th>예약번호</th>
+											<th>진료일</th>
+											<th>예약일</th>
+											<th>결제금액</th>
+											<th>예약상태</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="contentAll">
+										<c:forEach items="${ptbmListCanceledPage}" var="ptbmListCanceled">
+											<tr>
+												<td>
+													<div class="name-box">
+													<figure class="image">
+															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+														</figure>
+														<h5>${ptbmListCanceled.name}</h5>
+														<span class="docno"># ${ptbmListCanceled.docNo}</span>
+													</div>
+												</td>
+												<td>${ptbmListCanceled.bookingNo}</td>
+												<td><fmt:formatDate value="${ptbmListCanceled.consultDate}"
+														pattern="yy-MM-dd" /> <span class="time">${ptbmptbmListCanceledList.consultTime}</span>
+												</td>
+												<td><fmt:formatDate value="${ptbmListCanceled.bookingDate}"
+														pattern="yy-MM-dd" /></td>
+												<td><fmt:setLocale value="ko_KR" />
+													<fmt:formatNumber type="currency" value="${ptbmListCanceled.price}" /></td>
+												<td><c:if test="${ptbmListCanceled.bookingStatus eq 'p'}">
+														<span class="status">결제완료</span>
+													</c:if>
+													<c:if test="${ptbmListCanceled.bookingStatus eq 'c'}">
+														<span class="status cancel">취소완료</span>
+													</c:if></td>
+												<td>
+													<c:if test="${ptbmListCanceled.bookingStatus eq 'y' || ptbmListCanceled.bookingStatus == 'p'}">
+														<!-- 버튼 기능 구현을 위해 수정 p.10/10  -->
+                                                    	<button class="cancel" id="paymentCancel" name="paymentCancel">
+                                                    		<i class="fas fa-times"></i>Cancel
+                                                    	</button>
+                                                    	<input type="hidden" id="bookingNo" name="bookingNo" value="${ptbmListCanceled.bookingNo}"/>
+													</c:if>
+												</td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+							</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>
 					<!-- pagination  -->
-					<div class="pagination-wrapper">
-						<ul class="pagination">
-							<c:if test="${pageMaker.prev }">
-								<li class="paginate_button previous"><a href="ptBookManage?pageNum=${pageMaker.startPage-1 }">이전</a></li>
-							</c:if>
-								
-							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-								<li class="paginate_button"><a href="ptBookManage?pageNum=${num }">${num }</a></li>
-							</c:forEach>
-								
-							<c:if test="${pageMaker.next }">
-								<li class="paginate_button next"><a href="ptBookManage?pageNum=${pageMaker.endPage+1 }">다음</a></li>
-							</c:if>
-						</ul>
-					</div>
-					<!-- pagination end -->
+						<div class="pagination-wrapper" id="allPage" style="display: block;">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="ptBookManage?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="ptBookManage?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="ptBookManage?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
+						
+						<!-- pagination  -->
+						<div class="pagination-wrapper" id="soonPage" style="display: none;">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="ptBookManage?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="ptBookManage?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="ptBookManage?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
+						
+						<!-- pagination  -->
+						<div class="pagination-wrapper" id="canceledPage" style="display: none;">
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a href="ptBookManage?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+									<li class="paginate_button"><a href="ptBookManage?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
+								</c:forEach>
+									
+								<c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a href="ptBookManage?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
+						<!-- pagination end -->
 		</div>
 	</div>
 
@@ -183,6 +353,9 @@ th, td {
 
 <!-- End of .page_wrapper -->
 <script>
+
+
+
 	$(function() {
 		$('#paymentCancel').on('click', function(){
 			
@@ -206,6 +379,43 @@ th, td {
 					console.log(reject);
 				}
 			});
+		});
+	});
+	
+	function searchCheck() {
+		var choose = $("#selectBox option:selected").val();
+		
+		if (choose == 'all') {
+			$("#all").css('display','block');
+			$("#soon").css('display', 'none');   
+			$("#canceled").css('display', 'none');
+			$("#allPage").css('display','block');
+			$("#soonPage").css('display', 'none');   
+			$("#canceledPage").css('display', 'none');
+		} else if (choose == 'soon') {
+			$("#all").css('display','none');
+			$("#soon").css('display', 'block');   
+			$("#canceled").css('display', 'none');
+			$("#allPage").css('display','none');
+			$("#soonPage").css('display', 'block');   
+			$("#canceledPage").css('display', 'none');
+		} else if (choose == 'canceled') {
+			$("#all").css('display','none');
+			$("#soon").css('display', 'none');   
+			$("#canceled").css('display', 'block');
+			$("#allPage").css('display','none');
+			$("#soonPage").css('display', 'none');   
+			$("#canceledPage").css('display', 'block');
+		}
+	}
+
+	$(document).ready(function() {
+		$('#selectBox').val('${cri.category}').prop("selected", true);
+		searchCheck();
+		
+		// 로그아웃_J18
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
 		});
 	});
 </script>
