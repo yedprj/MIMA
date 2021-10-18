@@ -177,7 +177,7 @@
                                     <form id="insertSubFrm" action="insertSub" method="post">
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-												<label for="category1">진료명1</label>
+												<label>진료명1</label>
 												   <div class="select-box">
 			                                        <select class="wide" name="category1" id="category1">
 			                                           <option data-display="진료 과목을 선택하세요">과목</option>
@@ -219,12 +219,12 @@
                                             <div class="col-lg-6 col-md-6 col-sm-12 form-group">
                                                 <label>진료명3</label>
                                                 <div class="select-box">
-			                                        <select class="wide"  name="category3" id="category3">
+			                                        <select class="wide" name="category3" id="category3">
 			                                           <option data-display="진료 과목을 선택하세요">과목</option>
 			                                           <option value="정신분석">정신분석 / 정신치료</option>
 			                                           <option value="스트레스">스트레스 / 트라우마</option>
 			                                           <option value="기분">기분장애 / 공황 • 불안장애</option>
-			                                           <option value="신경증 / 성격장애">신경증 / 성격장애</option>
+			                                           <option value="신경증">신경증 / 성격장애</option>
 			                                           <option value="직장인">직장인 정신건강</option>
 			                                           <option value="중독">중독장애</option>
 			                                           <option value="노인">노인장애</option>
@@ -297,16 +297,48 @@ $(function(){
 		$("#saveAvailBtn").text("수정하기");
 	}
 	
-	if("${sub}" != ""){
-		if("${sub.category1}" !=""){
-			 $('#category1').val("${sub.category1}").prop("selected", true);
-			 console.log("${sub.category1}")
+	var subjectvo = "<c:out value='${sub}'/>";
+	console.log(subjectvo);
+	if(subjectvo != ""){
+		if("${sub.category1}" != ""){
+			//$('#category1').val('${sub.category1}').attr('selected', 'selected');
+			var category1 = "${sub.category1}";
+			let num = 0;
+			
+			if (category1 == "정신분석"){
+				num = 0;
+			}
+			else if (category1 == "스트레스"){
+				num = 1;
+			}
+			else if (category1 == "기분"){
+				num = 2;
+			}
+			else if (category1 == "신경증"){
+				num = 3;
+			}
+			else if (category1 == "직장인"){
+				num = 4;
+			}
+			else if (category1 == "중독"){
+				num = 5;
+			}
+			else if (category1 == "노인"){
+				num = 6;
+			}
+			else if (category1 == "해리"){
+				num = 7;
+			}
+			
+			console.log(num);
+			$('#category1 option:eq('+num+')').prop("selected", true);
+			console.log("${sub.category1}")
 		}
 		if("${sub.price1}" !=""){
 			 $('#price1').val("${sub.price1}");
 		}
 		if("${sub.category2}" !=""){
-			$("#category2").val("${sub.category2}").prop("selected", true);
+			$("#category2").val("${sub.category2}").prop("selected");
 			 console.log($("#category2").val("${sub.category2}"))
 		}
 		if("${sub.price2}" !=""){

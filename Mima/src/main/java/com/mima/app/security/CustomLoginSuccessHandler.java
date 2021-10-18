@@ -26,7 +26,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	// 로그인 후에 Session유지를 위해 변경 p.30
 	
 	@Autowired PushService pushService;
-	
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication auth) throws IOException, ServletException {
@@ -61,7 +61,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	    response.addCookie(cookie);
 	    System.out.println(cookie.getValue());
 	    System.out.println("++++++++++++++++++++");
-		
 		
 		response.sendRedirect("/app");
 	}
