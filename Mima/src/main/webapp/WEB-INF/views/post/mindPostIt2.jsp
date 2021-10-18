@@ -655,8 +655,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				$(".postContents").empty();
 				$.each(datas,function(i, data) {
 					var myObj = { 
-							postNo : data.postNo,memberNo : data.memberNo,postDate : data.postDate,	contents : data.contents,
-							postLike : data.postLike,postColor :data.postColor,	reportMno : data.reportMno,likesNo : data.likesNo
+							postNo : data.postNo,
+							memberNo : data.memberNo,
+							postDate : data.postDate,	
+							contents : data.contents,
+							postLike : data.postLike,
+							postColor :data.postColor,	
+							reportMno : data.reportMno,
+							likesNo : data.likesNo
 						}
 					arry.push(myObj);	
 				}); // each end

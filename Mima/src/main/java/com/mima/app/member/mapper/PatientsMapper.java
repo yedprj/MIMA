@@ -56,8 +56,20 @@ public interface PatientsMapper {
 	//환자대쉬보드 Main 오늘의예약 e.4
 	public List<BookingVO> ptgetList(int memberNo);
 
-	//환자대쉬보드 예약관리 페이지,페이징 e.5
+	// 환자 대쉬보드 예약관리 페이지,페이징 e.5
 	public List<BookingVO> ptbmList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
+	
+	// 환자 대쉬보드 예약관리 페이징 카운트_J18
+	public int ptbmListCount(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
+	
+	// 환자 대쉬보드 예약관리 페이지 모두보기 페이징_J18
+	public List<BookingVO> ptbmListPage(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
+	
+	// 닥터 대쉬보드 나의 후기 페이지 예정된 목록 페이징_J15
+	public List<BookingVO> ptbmListSoonPage(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
+	
+	// 닥터 대쉬보드 나의 후기 페이지 취소된 목록 페이징_J15
+	public List<BookingVO> ptbmListCanceledPage(@Param("cri") Criteria cri, @Param("memberNo") int memberNo);
 	
 	//전체 데이터 수 조회 예약관리 페이징 e.5
 	public int getTotalPtbmCount(Criteria cri);
@@ -68,8 +80,11 @@ public interface PatientsMapper {
 	//환자대쉬보드 진료내역 페이지,페이징 e.5
 	public List<BookingVO> ptHistoryList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
+	// 환자 대쉬보드 진료내역 페이지 오래된순_J18
+	public List<BookingVO> ptHistoryOldestList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
+	
 	//전체 데이터 수 조회 진료내역 페이징 e.6
-	public int getTotalPthCount(Criteria cri);
+	public int getTotalPthCount(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
 	//환자대쉬보드 내가 찜한 의사 e.14
 	public List<LikesVO> ptDoctor(int memberNo);
@@ -78,10 +93,16 @@ public interface PatientsMapper {
 	public List<CommentsVO> ptMainreList(int memberNo);
 
 	//환자대쉬보드 나의후기 페이지,페이징 e.5
-	public List<CommentsVO> ptReviewList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
+//	public List<CommentsVO> ptReviewList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
 	//전체 데이터 수 조회 나의후기 페이징 e.6
-	public int getTotalPtrvCount(Criteria cri);
+	public int getTotalPtrvCount(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
+	
+	// 환자 대쉬보드 나의 후기 페이지 최신순 페이징_J18
+	public List<CommentsVO> ptReviewList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
+	
+	// 환자 대쉬보드 나의 후기 페이지 오래된순 페이징_J18
+	public List<CommentsVO> ptReviewOldestList(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
 	//환자 대쉬보드 프로필 관리 한건조회 e.12
 	public MemberVO ptSelectOne(int memberNo);
@@ -107,7 +128,12 @@ public interface PatientsMapper {
 	// 환자 대쉬보드 메인 나의 후기수 카운트_J17
 	public int ptMyReviewCount (int memberNo);
 	
-	// 환자 약배달현황 목록 K. 10/17
+	// 환자 5건 약배달현황 조회 K. 10/17
 	public List<PtDeliveryVO>ptDeliveryStatusList(int memberNo);
+	
+	// 환자 약배달현황 전체 조회 K. 10/18
+	public List<PtDeliveryVO>ptDeliveryStatusAllList(int memberNo);
+	
+	
 
 }

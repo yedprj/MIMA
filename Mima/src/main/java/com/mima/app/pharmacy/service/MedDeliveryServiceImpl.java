@@ -76,4 +76,10 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 		return deliveryMapper.ptEduStatusUpdate(bookingNo);
 	}
 
+	// K. 10/18 환자 약배달취소 내역 조회
+	@Override
+	public MedDeliveryVO delCancelReason(int bookingNo) {
+		return deliveryMapper.delCancelReason(bookingNo);
+	}
+
 }

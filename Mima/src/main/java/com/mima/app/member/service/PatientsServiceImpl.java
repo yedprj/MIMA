@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
 import com.mima.app.criteria.domain.Criteria;
-import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.likes.domain.LikesVO;
 import com.mima.app.member.domain.MemberVO;
@@ -129,8 +127,8 @@ public class PatientsServiceImpl implements PatientsService {
 
 	//전체 데이터 수 조회 진료내역 페이징 e.6
 	@Override
-	public int getTotalPthCount(Criteria cri) {
-		return patientsMapper.getTotalPthCount(cri);
+	public int getTotalPthCount(int memberNo, Criteria cri) {
+		return patientsMapper.getTotalPthCount(memberNo, cri);
 	}
 	
 	//환자대쉬보드 내가 찜한 의사 e.14
@@ -145,16 +143,22 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptMainreList(memberNo);
 	}
 
-	//환자대쉬보드 나의후기 페이지 e.5
+	// 환자 대쉬보드 나의 후기 페이지 최신순 페이징_J18
 	@Override
 	public List<CommentsVO> ptReviewList(int memberNo, Criteria cri) {
 		return patientsMapper.ptReviewList(memberNo, cri);
 	}
+	
+	// 환자 대쉬보드 나의 후기 페이지 오래된순 페이징_J18
+	@Override
+	public List<CommentsVO> ptReviewOldestList(int memberNo, Criteria cri) {
+		return patientsMapper.ptReviewOldestList(memberNo, cri);
+	}
 
 	//전체 데이터 수 조회 나의후기 페이징 e.6
 	@Override
-	public int getTotalPtrvCount(Criteria cri) {
-		return patientsMapper.getTotalPtrvCount(cri);
+	public int getTotalPtrvCount(int memberNo, Criteria cri) {
+		return patientsMapper.getTotalPtrvCount(memberNo, cri);
 	}
 	
 	//환자 대쉬보드 프로필 관리 한건조회 e.12
@@ -188,7 +192,7 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptDeliveryUpdate(vo);
 	}
 	
-	// 환자 약배달현황 목록 K. 10/17
+	// 환자 5건 약배달현황 조회 K. 10/17
 	@Override
 	public List<PtDeliveryVO> ptDeliveryStatusList(int memberNo) {
 		return patientsMapper.ptDeliveryStatusList(memberNo);
@@ -211,5 +215,42 @@ public class PatientsServiceImpl implements PatientsService {
 	public int ptMyReviewCount(int memberNo) {
 		return patientsMapper.ptMyReviewCount(memberNo);
 	}
+	// 환자 약배달현황 전체조회
+	@Override
+	public List<PtDeliveryVO> ptDeliveryStatusAllList(int memberNo) {
+		return patientsMapper.ptDeliveryStatusAllList(memberNo);
+	}
+	
+	// 환자 대쉬보드 예약관리 페이징 카운트_J18
+	@Override
+	public int ptbmListCount(Criteria cri, int memberNo) {
+		return patientsMapper.ptbmListCount(cri, memberNo);
+	}
+	
+	// 환자 대쉬보드 예약관리 페이지 모두보기 페이징_J18
+	@Override
+	public List<BookingVO> ptbmListPage(Criteria cri, int memberNo) {
+		return patientsMapper.ptbmListPage(cri, memberNo);
+	}
+	
+	// 닥터 대쉬보드 나의 후기 페이지 예정된 목록 페이징_J15
+	@Override
+	public List<BookingVO> ptbmListSoonPage(Criteria cri, int memberNo) {
+		return patientsMapper.ptbmListSoonPage(cri, memberNo);
+	}
+	
+	// 닥터 대쉬보드 나의 후기 페이지 취소된 목록 페이징_J15
+	@Override
+	public List<BookingVO> ptbmListCanceledPage(Criteria cri, int memberNo) {
+		return patientsMapper.ptbmListCanceledPage(cri, memberNo);
+	}
+	
+	// 환자 대쉬보드 진료내역 페이지 오래된순_J18
+	@Override
+	public List<BookingVO> ptHistoryOldestList(int memberNo, Criteria cri) {
+		return patientsMapper.ptHistoryOldestList(memberNo, cri);
+	}
+	
+
 	
 }

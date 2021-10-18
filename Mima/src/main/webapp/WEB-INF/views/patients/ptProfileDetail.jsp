@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- e:1012 환자 프로파일 인서트 폼 -->
 <div class="boxed_wrapper">
 
@@ -54,15 +54,20 @@
 				</div>
 				<div class="profile-info">
 					<ul class="list clearfix">
-					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
 					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
 					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
 					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
-					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
+					<li><a href="ptProfileDetail" class="current"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+					<li>
+						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						</form>
+					</li>
 					</ul>
 				</div>
 			</div>
@@ -172,6 +177,24 @@
 		var csrfTokenValue = "${_csrf.token}";
 		
 		
+		//file insert start
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var maxSize = 5242880; //5MB
+
+		function checkExtension(fileName, fileSize) {
+
+			if (fileSize >= maxSize) {
+				alert("파일 사이즈 초과");
+				return false;
+			}
+
+			if (regex.test(fileName)) {
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
 		//사진 미리보기
     	const input = document.getElementById('fileInput');
     	const profileImg =document.getElementById('profileImg');
@@ -210,7 +233,81 @@
 				$(".modal-body").html("result");
 			}
 			$("#myModal").modal("show");
+      
 		} */
+		
+    	// 로그아웃_J18
+		$("#logoutBtn1").on("click", function(){
+			$('#logOutfrm1').submit();
+		});
+
+		//imgUpBtn 눌렀을 때 이벤트 설정 교재502페이지 --> 의사프로필사진 넣는거
+		$('#imgUpBtn').on("click", function(e){
+			e.preventDefault();
+			
+			var formData = new FormData(document.docProInsertFrm);
+			console.log("formData writer+content: "+ FormData)
+			var inputFile = $("[name='docProImgFile']");
+			var files = inputFile[0].files;
+			console.log(files);
+			
+			for(var i=0; i<files.length; i++){
+				if(!checkExtension( files[i].name, files[i].size) ){
+					return;
+				}
+				formData.append("uploadFile", files[i]);
+			}
+				
+			
+			console.log("formData file: "+ formData)
+			$.ajax({
+				url:'phaAjaxInsert',
+				processData:false,
+				contentType:false,
+				data: formData,
+				method:'POST',
+				beforeSend : function(xhr) {
+					console.log(csrfHeaderName + " and " + csrfTokenValue);
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+						//xhr.setRequestHeader("aa", "bb");
+				},
+				success:function(datas){
+					console.log(datas);
+					var str="";
+					
+						var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.pimgName);			      
+					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+						str += "<li ";
+						str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-pimgName='"+datas.pimgName+"' data-type='"+datas.image+"' ><div>";
+						str += "<span> "+ datas.pimgName+"</span>";
+						str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
+						str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+						str += "</div>";
+						str +="</li>";
+									
+					$("#uploaded").html(str);
+					alert("file uploaded");
+				
+				},
+				error: function(reject){
+					console.error(reject);
+				}
+			})
+		}); //end of meditUpBtn event
+		
+		
+		//attachment btn delete event
+		$("#uploaded").on("click", "button", function(e){
+			if(confirm("파일을 삭제하시겠습니까?")){
+				var targetLi = $(this).closest("li");
+				var preview = $('#profileImg');
+				targetLi.remove();
+				//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
+				$(preview).removeAttr('src');
+				
+			}
+		});//end of attachment btn delete event
+    	
 	})
 </script>
 
