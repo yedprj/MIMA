@@ -99,6 +99,7 @@ th, td {
 					<div class="title-box">
 						<h3>배송현황</h3>
 						<span>신청한 약배달의 현황 목록을 조회합니다.</span>
+						<br><span><b>TIP.</b> 약배달을 수령하신 다음 수령완료 버튼을 클릭해주세요, 취소버튼을 클릭시 취소사유를 확인하실 수 있습니다.</span>
 					</div>
 					<div class="doctors-list">
 						<div class="table-outer">
@@ -134,7 +135,11 @@ th, td {
 													<span class="status pending">배송시작</span>
 												</c:if>
 											</td>
-											<td></td>
+											<td>
+												<c:if test="${del.deliveryStatus eq 'n'}">
+													<span id="delCheckBtn" data-no="${del.bookingNo}" class="status">수령완료</span>
+												</c:if>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -224,15 +229,35 @@ $(function(){
 			}
 		});// ajax end
 		
-		
-					
-		  
+		// 취소 모달창 닫기
 		$("#cancelBtn").click(function(){
 		    $(".modal").fadeOut();
 		});
 		
-		
 	}); // 약배달 취소버튼 클릭 end
+	
+	// 수령확인 완료 버튼 클릭
+	$(document).on("click","#delCheckBtn",function(){
+		var bookingNo = $(this).data("no");
+		
+		$.ajax({
+			url : 'ptDeliveryUpdate',
+			type : 'post',
+			data : { 
+				bookingNo : bookingNo
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},		 
+			success : function(data) {
+				console.log(data);
+				$(".modal").fadeIn();
+				$("input[name='pharmacyName']").val(data.pharmacyName);
+				$("#message").val(data.deliveryDecline);
+				
+			}
+		});// ajax end
+	});
 	
 });
 </script>

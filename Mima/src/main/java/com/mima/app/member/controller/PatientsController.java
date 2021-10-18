@@ -86,7 +86,7 @@ public class PatientsController {
 		
 		int memberNo = vo.getMemberNo();
 		// 환자 약배달 현황
-		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusList(memberNo));
+		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusAllList(memberNo));
 
 		return "patients/ptDeliveryList";
 	}
