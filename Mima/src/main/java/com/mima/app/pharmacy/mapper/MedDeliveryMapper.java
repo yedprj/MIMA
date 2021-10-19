@@ -48,4 +48,7 @@ public interface MedDeliveryMapper {
 	
 	// K. 10/19 환자 약배달 재신청
 	public int delReapply(MedDeliveryVO vo);
+	
+	// K. 10/19 약국 배달완료 건수 조회
+	public List<MemDeliveryVO> phaCompleteDel(int pharmacyNo);
 }

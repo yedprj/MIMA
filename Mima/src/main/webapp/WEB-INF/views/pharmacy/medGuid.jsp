@@ -148,6 +148,7 @@
                             <div class="title-box clearfix">
                                 <div class="text pull-left">
                                     <h3>복약지도</h3>
+                                    <span>복약지도할 목록입니다.</span>
                                 </div>
                                 <div class="btn-box pull-right">
                                     <form id="medGuid"  action="medGuid" method="get" class="search-form">
