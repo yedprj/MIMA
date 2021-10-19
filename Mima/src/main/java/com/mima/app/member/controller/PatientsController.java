@@ -115,13 +115,18 @@ public class PatientsController {
 		
 		int total = patientsService.ptbmListCount(cri, memberNo);
 		
-		model.addAttribute("ptbmList", patientsService.ptbmList(memberNo, cri));
-		model.addAttribute("ptbmListPage", patientsService.ptbmListPage(cri, memberNo));
-		model.addAttribute("ptbmListSoonPage", patientsService.ptbmListSoonPage(cri, memberNo));
-		model.addAttribute("ptbmListCanceledPage", patientsService.ptbmListCanceledPage(cri, memberNo));
-		System.out.println(patientsService.ptbmListCanceledPage(cri, memberNo));
-		System.out.println("*******"+patientsService.ptbmListSoonPage(cri, memberNo));
+//		model.addAttribute("ptbmList", patientsService.ptbmList(memberNo, cri));
+		
+		if (cri.getKeyword() == null || cri.getKeyword().equals("all")) {
+			model.addAttribute("ptbmListPage", patientsService.ptbmListPage(cri, memberNo));
+		} else if (cri.getKeyword() == null || cri.getKeyword().equals("soon")) {
+			model.addAttribute("ptbmListPage", patientsService.ptbmListSoonPage(cri, memberNo));
+		} else {
+			model.addAttribute("ptbmListPage", patientsService.ptbmListCanceledPage(cri, memberNo));
+		}
+		
 		model.addAttribute("pageMaker", new PageVO(cri,total));
+		
 		return "patients/ptBookManage";
 	}
 	
@@ -135,8 +140,15 @@ public class PatientsController {
 		
 		int total = patientsService.getTotalPthCount(memberNo, cri);
 		
-		model.addAttribute("ptHistoryList", patientsService.ptHistoryList(memberNo, cri));
-		model.addAttribute("ptHistoryOldestList", patientsService.ptHistoryOldestList(memberNo, cri));
+		if (cri.getKeyword() == null || cri.getKeyword().equals("latest")) {
+			model.addAttribute("ptHistoryList", patientsService.ptHistoryList(memberNo, cri));
+		} else {
+			model.addAttribute("ptHistoryList", patientsService.ptHistoryOldestList(memberNo, cri));
+		}
+		
+		System.out.println(patientsService.ptHistoryList(memberNo, cri) + "*******");
+		System.out.println(patientsService.ptHistoryOldestList(memberNo, cri) + "^^^^^^^^");
+		
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptHistory";
 	}
