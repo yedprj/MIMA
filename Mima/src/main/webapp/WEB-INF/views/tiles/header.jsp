@@ -149,21 +149,23 @@
 				<!-- 로그인 로그아웃 p.30 -->
 				<!-- K. 10/17 알림 -->
 				<div class="right-column pull-right">
-                     <div class="author-box">
-                         <div class="icon-box  nice-select"  tabindex="0" >
-                              <a id="noticeBtn" href="#"><i class="icon-Bell"></i></a>
-                              <ul class="list">
-                         		<li data-value="" data-display="알림내역" class="option selected focus">알림내역</li>
-                         		<c:if test="${empty notice }"><li>내역이 없습니다.</li></c:if>
-                         		<c:if test="${not empty notice }">
-                         			<c:forEach var="notice" items="${notice}">
-                         				<li data-value="${notice.type }" class="option">
-                         					<c:if test="${notice.type eq 'phaCancel' }">약국 알림이 있습니다.</c:if>
-                         				</li>	
-                         			</c:forEach>
-                         		</c:if>
-                         	</ul>
-                         </div>
+                     <div class="author-box ">
+                     	<div style="position: relative">
+	                         <div class="icon-box  nice-select" tabindex="0" style="position: absolute; top:-41px; box-shadow:none; left:-28px">
+	                              <a id="noticeBtn" href="#"><i class="icon-Bell"></i></a>
+	                              <ul class="list">
+	                         		<li data-value="" data-display="알림내역" class="option selected focus">알림내역</li>
+	                         		<c:if test="${empty notice }"><li>내역이 없습니다.</li></c:if>
+	                         		<c:if test="${not empty notice }">
+	                         			<c:forEach var="notice" items="${notice}">
+	                         				<li data-value="${notice.type }" class="option">
+	                         					<c:if test="${notice.type eq 'phaCancel' }">약국 알림이 있습니다.</c:if>
+	                         				</li>	
+	                         			</c:forEach>
+	                         		</c:if>
+	                         	</ul>
+	                         </div>
+                     	</div>
        	             </div>
                 </div>
                 <!-- 알림 end -->	
