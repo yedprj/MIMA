@@ -33,14 +33,16 @@
 
 <!-- 관리자 회원정보조회(환자) e.29-->
 	<select id="getptList" resultType="PatientsVO"> 
-		SELECT   MEMBER_NO
-				,PAST_HX
-				,PRE_SELF_AX
-				,TOPIC
-				,MED_DELIVERY
-				,REG_DATE
-				,EDIT_DATE
-		FROM PATIENTS
+		SELECT   P.MEMBER_NO
+				,P.PAST_HX
+				,P.PRE_SELF_AX
+				,P.TOPIC
+				,P.MED_DELIVERY
+				,P.REG_DATE
+				,P.EDIT_DATE
+				,M.NAME
+		FROM PATIENTS P JOIN MEMBER M
+		ON P.MEMBER_NO = M.MEMBER_NO
 	</select> 
 
 <!--회원정보조회(환자) 페이징 e.4-->
@@ -80,18 +82,22 @@
 		MEMBER_NO > 0
 	</select>
 
-	<select id="getPatientsList" 
-		resultType="PatientsVO">
+	<select id="getPatientsList" resultType="PatientsVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
-		ROWNUM RN, MEMBER_NO, PAST_HX, PRE_SELF_AX, TOPIC, MED_DELIVERY, REG_DATE
-		FROM PATIENTS
-		where
-				
-		<include refid="criteria"></include>
-				<![CDATA[
-				ROWNUM <= #{pageNum} * #{amount}				
-				)
+					 ROWNUM RN,P.MEMBER_NO
+					 ,P.PAST_HX
+					 ,P.PRE_SELF_AX
+					 ,P.TOPIC
+					 ,P.MED_DELIVERY
+					 ,P.REG_DATE
+					 ,P.EDIT_DATE
+					 ,M.NAME
+			  FROM PATIENTS P JOIN MEMBER M
+			  ON P.MEMBER_NO = M.MEMBER_NO
+        	  <include refid="criteria"></include>
+					<![CDATA[
+			  AND	ROWNUM <= #{pageNum} * #{amount} )
 		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
 	</select>
 <!-- 페이징 end -->
@@ -677,7 +683,8 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 		<update id="ptprofileUpdate">
 			UPDATE MEMBER SET
 					EMAIL = #{email},
-					PHONE = #{phone}
+					PHONE = #{phone},
+					PT_PROFILE_PHOTO = #{ptProfilePhoto}
 			WHERE MEMBER_NO = #{memberNo}
 		</update>
 		
