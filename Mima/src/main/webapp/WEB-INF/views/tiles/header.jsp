@@ -20,7 +20,14 @@
 	    box-shadow: 0 10px 30px #d5edea;
 	}
 	#noticeBtn:hover{
-		background: #39cabb;;
+		background: #39cabb;
+	}
+	#xbtn {
+		width:20px;
+		height:20px;
+	}
+	#xbtn:hover {
+		color : #39cabb;
 	}
 	
 </style>
@@ -154,11 +161,11 @@
                               <a id="noticeBtn" href="#"><i class="icon-Bell"></i></a>
                               <ul class="list">
                          		<li data-value="" data-display="알림내역" class="option selected focus">알림내역</li>
-                         		<c:if test="${empty notice }"><li>내역이 없습니다.</li></c:if>
+                         		<c:if test="${empty notice }"><li> 내역이 없습니다. </li></c:if>
                          		<c:if test="${not empty notice }">
                          			<c:forEach var="notice" items="${notice}">
                          				<li data-value="${notice.type }" class="option">
-                         					<c:if test="${notice.type eq 'phaCancel' }">약국 알림이 있습니다.</c:if>
+                         					<c:if test="${notice.type eq 'phaCancel' }"><span id="cancelAlarm">약국 알림이 있습니다.</span>&nbsp;&nbsp; <a id="xbtn" data-no="${notice.pushNo }"><i class="fas fa-times"></i></a></c:if>
                          				</li>	
                          			</c:forEach>
                          		</c:if>
@@ -266,25 +273,45 @@
 <!-- End Mobile Menu -->
 <script>
 	$(function() {
+		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
 		$("#logoutBtn").on("click", function(){
 			$('#logOutfrm').submit();
 		});
 		
 		$("#noticeBtn").on("click", function(){
 			$("#noticeSelect").css("display","block");
-			console.log(csrfHeaderName);
-			console.log(csrfTokenValue);
 		});
 		
-		// K. 10/17 알림 테스트
-		var csrfHeaderName = "${_csrf.headerName}";
-		var csrfTokenValue = "${_csrf.token}";
-		// 세션을 어떻게 비교해야할지...
+		// K. 10/19 알림 클릭시 이동
+		$(document).on("click","#cancelAlarm", function(){
+			location.href= "${pageContext.request.contextPath}/patients/ptDeliveryList";
+		}); // 약국알림 리스트 클릭시 이동	
 		
-		if (csrfHeaderName != ""){
-			console.log(csrfHeaderName);
-			console.log(csrfTokenValue);
-		}
+		// K. 10/19 알림 x 버튼 클릭시 push 삭제  ---> 수정해야함 삭제가 안됨 ㅠㅠ
+		$(document).on("click","#xbtn", function(){
+			var pushNo = $(this).data("no");
+			
+			console.log(pushNo);
+			var li = $(this).parent();
+			$.ajax({
+				url : 'pushDelete',
+				type : 'post',
+				data : { 
+					pushNo : pushNo
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},		 
+				success : function(data) {
+					console.log(data);
+					li.remove();
+				}
+			});// ajax end
+			
+		});
 		
 	});
 </script>

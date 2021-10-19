@@ -37,5 +37,10 @@
 			)
 		
 	</insert>
+	
+	<delete id="pushDelete">
+		DELETE FROM PUSH 
+		WHERE PUSH_NO = #{pushNo}
+	</delete>
 
 </mapper>

@@ -135,5 +135,8 @@ public interface PatientsService {
 	
 	// 환자 약배달현황 전체 조회 K. 10/18
 	public List<PtDeliveryVO>ptDeliveryStatusAllList(int memberNo);
+	
+	// 환자 약배달 신청 약국 변경 K. 10/19
+	public int delPhaUpdate(PatientsVO vo);
 
 }

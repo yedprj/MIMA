@@ -765,6 +765,7 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
         ORDER BY B.CONSULT_DATE DESC ]]>
  	</select>
  	
+ 	<!-- K. 10/18 환자 약배달 현황 전체조회 -->
  	<select id="ptDeliveryStatusAllList" resultType="PtDeliveryVO">
  		SELECT B.BOOKING_NO , B.CONSULT_DATE, B.SUBJECT,
                                         (SELECT DISTINCT MM.NAME 
@@ -781,4 +782,11 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 		AND B.PT_NO = #{memberNo}
 		ORDER BY B.CONSULT_DATE DESC
  	</select>
+ 	
+ 	<!-- K.10/19 약배달 신청 약국 변경 -->
+ 	<update id="delPhaUpdate">
+ 		update patients
+		set del_pharmacy_no = #{delPharmacyNo} 
+		where member_no = #{memberNo}
+ 	</update>
 </mapper>

@@ -82,7 +82,7 @@ public class PatientsController {
 	}
 	
 	
-	//환자대쉬보드 메인 페이지
+	// K. 10/18 약 배달 현황 전체 조회
 	@GetMapping("patients/ptDeliveryList")
 	public String ptDeliveryList(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -92,15 +92,39 @@ public class PatientsController {
 		int memberNo = vo.getMemberNo();
 		// 환자 약배달 현황
 		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusAllList(memberNo));
+		model.addAttribute("memberNo", memberNo);
 
 		return "patients/ptDeliveryList";
+	}
+	
+	// K. 10/18 환자 약배달 수령완료시 상태 업데이트
+	@PostMapping("patients/delcompleteUpdate")
+	@ResponseBody
+	public int delcompleteUpdate(MedDeliveryVO vo) {
+		int result = deliveryService.delcompleteUpdate(vo);
+		return result;
+	}
+	
+	// K. 10/19 환자 약배달 재신청하기
+	@PostMapping("patients/delReapply")
+	@ResponseBody
+	public int delReapply(MedDeliveryVO vo) {
+		int result = deliveryService.delReapply(vo);
+		return result;
+	}
+	
+	// K. 10/19 환자 약배달 신청 약국 변경하기
+	@PostMapping("patients/delPhaUpdate")
+	@ResponseBody
+	public int delPhaUpdate(PatientsVO vo) {
+		int result = patientsService.delPhaUpdate(vo);
+		return result;
 	}
 	
 	// K. 10/18 환자 약배달 취소 내역 조회
 	@PostMapping("patients/ptDelCancelSelect")
 	@ResponseBody
 	public MedDeliveryVO ptDelCancelSelect(MedDeliveryVO vo) {
-		log.info("******************취소내역");
 		return deliveryService.delCancelReason(vo.getBookingNo());
 	}
 	
@@ -192,7 +216,6 @@ public class PatientsController {
 	// 환자 대쉬보드 비밀번호 변경 페이지 수정 폼 e.11
 	@GetMapping("patients/ptPwChangeForm")
 	public String ptPwUpdateForm() {
-		
 		return "patients/ptPwChange";
 	}
 	
