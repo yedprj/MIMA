@@ -79,7 +79,7 @@ th, td {
                            <option value="latest">최신순</option>
                            <option value="oldest">오래된순</option>
                         </select>
-                       <script type="text/javascript">
+                        <script type="text/javascript">
                         	$("#selectBox").val("${cri.keyword}"== ""?"latest" : "${cri.keyword}")
                         </script>
                     </div>

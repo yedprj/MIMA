@@ -25,8 +25,9 @@ public class CommentsVO {
 // 	K. 10/14 리뷰 회원 성별
 	private String gender;
 	
-	// 댓글 다는 의사와 약사의 이름_J18
+	// 댓글 다는 의사와 약사의 이름_J18.19
 	private String name;
+	private String pharmacyInfo;
 	
 	
 }

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mima.app.member.domain.MemberVO;
 import com.mima.app.push.service.PushService;
@@ -64,5 +66,14 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		response.sendRedirect("/app");
 	}
+	
+	/*
+	 * // K. 10/19 알림내역 확인시 삭제
+	 * 
+	 * @DeleteMapping("pushDelete")
+	 * 
+	 * @ResponseBody public int pushDelete(int pushNo) { return
+	 * pushService.pushDelete(pushNo); }
+	 */
 
 }
