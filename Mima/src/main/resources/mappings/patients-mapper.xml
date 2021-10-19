@@ -451,9 +451,10 @@
 		   B.CONSULT_TIME,
 		   M.NAME
     FROM BOOKING B JOIN MEMBER M
-    ON B.DOC_NO=M.MEMBER_NO
+    ON B.DOC_NO = M.MEMBER_NO
     WHERE <![CDATA[ ROWNUM < 6
     AND CONSULT_DATE < TO_DATE(SYSDATE) ]]>
+    AND BOOKING_STATUS = 'p'
     AND PT_NO = #{memberNo}
     ORDER BY CONSULT_DATE DESC
 </select>
@@ -494,6 +495,7 @@
 		  	CONSULT_DATE < TO_DATE(SYSDATE) ]]>
 	</select>
 
+	<!-- 환자 대쉬보드 진료내역 최신순 페이징_J19 -->
 	<select id="ptHistoryList" resultType="BookingVO">		
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
@@ -506,18 +508,23 @@
 					 B.BOOKING_STATUS,
 					 B.CONSULT_DATE,
 					 B.CONSULT_TIME,
-					 M.NAME
+					 M.NAME,
+					 (SELECT COUNT (*)
+                      FROM COMMENTS
+                      WHERE BOOKING_NO = B.BOOKING_NO) AS COMMENTS
 			  FROM BOOKING B JOIN MEMBER M
 			  ON B.DOC_NO = M.MEMBER_NO
-			  WHERE B.BOOKING_STATUS = 'p'
+			  WHERE <include refid="criteriasa"></include>
+			  		<![CDATA[
+				  	ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			  AND B.BOOKING_STATUS = 'p'
 			  AND B.PT_NO = #{memberNo}
-			  AND <![CDATA[
-				  ROWNUM <= #{cri.pageNum} * #{cri.amount}
 			  AND CONSULT_DATE < TO_DATE(SYSDATE)
 			  ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	
+	<!-- 환자 대쉬보드 진료내역 오래된순 페이징_J19 -->
 	<select id="ptHistoryOldestList" resultType="BookingVO">		
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
@@ -530,13 +537,17 @@
 					 B.BOOKING_STATUS,
 					 B.CONSULT_DATE,
 					 B.CONSULT_TIME,
-					 M.NAME
+					 M.NAME,
+					 (SELECT COUNT (*)
+                      FROM COMMENTS
+                      WHERE BOOKING_NO = B.BOOKING_NO) AS COMMENTS
 			  FROM BOOKING B JOIN MEMBER M
 			  ON B.DOC_NO = M.MEMBER_NO
-			  WHERE B.BOOKING_STATUS = 'p'
+			  WHERE <include refid="criteriasa"></include>
+			  		<![CDATA[
+				  	ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			  AND	B.BOOKING_STATUS = 'p'
 			  AND B.PT_NO = #{memberNo}
-			  AND <![CDATA[
-				  ROWNUM <= #{cri.pageNum} * #{cri.amount}
 			  AND CONSULT_DATE < TO_DATE(SYSDATE)
 			  ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
@@ -564,7 +575,7 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
            C.CMAIN_CATEGORY,
            M.NAME
     FROM COMMENTS C JOIN MEMBER M
-    ON C.CMAIN_NO = M.MEMBER_NO
+    ON (C.CMAIN_NO = M.MEMBER_NO)
     WHERE <![CDATA[
     	  ROWNUM < 6 ]]>
     AND COMMENT_WRITER_NO = #{memberNo}
