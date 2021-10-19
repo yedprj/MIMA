@@ -164,7 +164,12 @@
 	<!-- s:1010 의사프로필 디테일 유무 확인 -->
 	<select id="checkDocDetail" resultType="DocInfoVO">
 		SELECT
-		MEMBER_NO
+		MEMBER_NO,
+		PROFILE_CONTENTS,
+		PROFILE_EDUCATION,
+		CLINIC_INFO,
+		CLINIC_PHONE,
+		CLINIC_EMAIL
 		FROM PARTNER_DOCTOR
 		WHERE MEMBER_NO=#{memberNo}
 	</select>

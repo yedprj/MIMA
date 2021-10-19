@@ -144,7 +144,7 @@
 			},
 			success : function(data) {
 				console.log(data);
-				if(data ==1){
+				if(data == 1){
 					alert("리뷰가 저장되었습니다!");
 					window.close();
 				}

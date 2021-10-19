@@ -348,7 +348,15 @@
       //경력 날짜 입력... s:1017 아니 이래도 근데 forEach라서 못넣겠어 ㅠㅠ
       	
       	
-      	
+      	var empListVo = "<c:out value='${sub}'/>";
+	
+      
+      
+      
+      
+      
+      
+      
     	var csrfHeaderName = "${_csrf.headerName}";
     	var csrfTokenValue = "${_csrf.token}";
   

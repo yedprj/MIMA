@@ -1,7 +1,10 @@
 package com.mima.app.doc.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,9 +44,14 @@ import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.domain.PtInfoVO;
 import com.mima.app.session.service.BookingService;
 
+import lombok.extern.java.Log;
+
+
+
 // 타일스 때문에 RequestMapping제거 p.10/06
 // 타일스로 인해 아래 맵핑 해주는 클래스 String으로 수정 return으로 페이지 이동 p.10/06
 // 시큐리티 권한 부여 때문에 전체적인 Mapping 수정 p.10/11
+@Log
 @Controller
 public class PatnerDoctorController {
 	
@@ -244,26 +252,28 @@ public class PatnerDoctorController {
 		HttpSession session = request.getSession();
 		mVo = (MemberVO) session.getAttribute("session");
 		System.out.println(mVo);
+		
 		docVo = doctorService.checkDocDetail(mVo);
 		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
-		String path="docDash/docProfileInsertForm";
+		String path="";
 		
 		// 닥터 프로필 병원 이름 호출_J17
 		model.addAttribute("clinicName", clinicName(request));
 		
 		//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 있으면 값을 가져와서 넘겨주고 수정할 수 있도록
-		if( docVo != null) {
+		if( docVo != null ) {
 			System.out.print("테이블에 값 잇음!!");
 			expVo.setMemberNo(docVo.getMemberNo());
 			model.addAttribute("doc", doctorService.getDocDetail(docVo));
 			model.addAttribute("expList", experienceService.getExpList(expVo));
 			 path="docDash/docProfileEditForm";
-			return path;
+			
 		}else {
 			//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 없으면 바로 인서트 할 수 있도록
 			System.out.print("테이블에 값 없음");
-			return path;
+			path="docDash/docProfileInsertForm";
 		}
+		return path;
 		
 	}
 
@@ -357,16 +367,30 @@ public class PatnerDoctorController {
 
 	//s:1007 의사 프로필 디테일 페이지로 이동하는거 s:1012
 	@GetMapping("/docProfileDetail")
-	public String docProfileDetail(DocInfoVO docVo, Model model, MemberVO mVo, HttpServletRequest request) {
+	public String docProfileDetail(DocInfoVO docVo, Model model, MemberVO mVo, CommentsVO comVo, ExperienceVO expVo, @ModelAttribute("cri")Criteria cri, HttpServletRequest request) {
 		
 		System.out.println("넘겨받은 멤버보"+mVo);
 		docVo = doctorService.checkDocDetail(mVo);
+		expVo.setMemberNo(mVo.getMemberNo());
 		
-		System.out.println(docVo+"보 값 널 확인");
+		//s:1019 의사 리뷰 가져오기
+		int mNo = mVo.getMemberNo();
+		//토탈리뷰수
+		int reviewTotal = commentsService.docReviewCount(cri, mNo);
+		System.out.println("총 리뷰 숫자"+ reviewTotal);
+		
 		if(docVo !=null) {
 			docVo = doctorService.getDocDetail(docVo);
+			System.out.println(docVo+"보 값 확인");
 			System.out.print("테이블에 값 잇음");
+			List<ExperienceVO> expList = experienceService.getExpList(expVo);
 			model.addAttribute("item", docVo);
+			model.addAttribute("expList", expList);
+			//의사리뷰리스트
+			model.addAttribute("docReviewPage",  commentsService.docReviewPage(cri, mNo));
+			model.addAttribute("reviewTotalNum", reviewTotal);
+			model.addAttribute("pageMaker", new PageVO(cri,reviewTotal));
+						
 			return "/docList/docProfileDetail";
 		}else {
 			System.out.print("테이블에 값 없음 노노 ");

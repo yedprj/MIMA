@@ -403,7 +403,7 @@
     	  };
     	  
     	  reader.readAsDataURL(files[0]);
-    	});//End of 비디오 미리보기
+    	});//End of 사진 미리보기
     	
     	
     	

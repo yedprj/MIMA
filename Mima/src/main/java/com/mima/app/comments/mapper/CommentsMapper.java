@@ -16,7 +16,6 @@ public interface CommentsMapper {
 	//게시글번호에 해당하는 댓글 조회
 	public  List<CommentsVO> getList(@Param("cri") Criteria cri,@Param("cmainCategory") String cmainCategory, @Param("cmainNo") int cmainNo);
 
-
 	//해당 게시글의 댓글 수
 	public int getCountByMeditNo(CommentsVO vo);
 	
