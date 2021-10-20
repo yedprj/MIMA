@@ -55,7 +55,6 @@
                                 <p>${clinicName}</p>
                             </div>
                         </div>
-                        ${doc }<br>  ${expList }
                     </div>
                     <div class="profile-info">
                         <ul class="list clearfix">
@@ -625,7 +624,6 @@
     					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
     			},
     			success:function(datas){
-    				console.log(datas);
     				
     					var str ="";
     					str += "<li id="+ datas.expNo;
@@ -656,8 +654,6 @@
 			if(confirm("경력을 지우겠습니까?")){
 				var targetLi = $(this).closest("li");
 				var expNo = targetLi.attr('id');
-				alert(expNo)
-				targetLi.remove();
 				
 				$.ajax({
 	    			url:'delExpAjax',
@@ -671,9 +667,11 @@
 					},
 					contentType : 'application/json',
 	    			success:function(datas){
-	    				console.log(datas);
+	    				console.log("result", datas);
 	    				
 	    				alert("선택한 경력이 삭제되었습니다.");
+	    				targetLi.remove();
+	    				
 	    			
 	    			},
 	    			error: function(reject){

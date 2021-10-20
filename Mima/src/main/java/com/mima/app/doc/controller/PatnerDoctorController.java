@@ -366,7 +366,7 @@ public class PatnerDoctorController {
 		//s:1020  의사 프로필 페이지 경력 입력 ajax 
 		@PostMapping("doctor/delExpAjax")
 		@ResponseBody
-		public int delExpAjax(ExperienceVO expVo, HttpServletRequest request  ) {
+		public int delExpAjax(@RequestBody ExperienceVO expVo, HttpServletRequest request  ) {
 			
 			System.out.println("경력삭제" +expVo);
 					
