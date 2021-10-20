@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <!-- main-footer -->
 <footer class="main-footer">
-	<div class="footer-top">
+	<div class="footer-top" style="padding-top:100px">
 		<div class="pattern-layer">
 			<div class="pattern-1"
 				style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-30.png);"></div>

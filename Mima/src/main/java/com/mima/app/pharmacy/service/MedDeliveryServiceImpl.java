@@ -94,4 +94,10 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 		return deliveryMapper.delReapply(vo);
 	}
 
+	// K. 10/19 약국 배달완료 목록 조회
+	@Override
+	public List<MemDeliveryVO> phaCompleteDel(int pharmacyNo) {
+		return deliveryMapper.phaCompleteDel(pharmacyNo);
+	}
+
 }

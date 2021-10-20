@@ -34,7 +34,7 @@
 			CATEGORY_2=#{category2},
 			PRICE_2=#{price2},
 			CATEGORY_3=#{category3},
-			PRICE_3=#{price3},
+			PRICE_3=#{price3}
 		WHERE DOC_NO=#{docNo}
 	</update>
 	

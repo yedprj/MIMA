@@ -1,5 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
+
+<style>
+.starR{
+  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+  background-size: auto 100%;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  text-indent: -9999px;
+  cursor: pointer;
+}
+.starR.on{background-position:0 0;}
+</style>  
+
 
     <div class="boxed_wrapper">
 
@@ -47,32 +63,22 @@
                                         <div class="share-box">
                                             <a href="doctors-details.html" class="share-btn"><i class="fas fa-share-alt"></i></a>
                                         </div>
-                                        ${item }<br>
-                                        ${item.subjects.category1 }
+                                        <br>
+                                        <span class="designation">${item.subjects.category1 } / ${item.clinicInfo }</span>
                                         <ul class="name-box clearfix">
                                             <li class="name"><h2>Dr.${item.name }</h2></li>
                                         </ul>
-                                        <span class="designation">${item.clinicInfo }</span>
-                                        <div class="rating-box clearfix">
-                                            <ul class="rating clearfix">
-                                                <li><i class="icon-Star"></i></li>
-                                                <li><i class="icon-Star"></i></li>
-                                                <li><i class="icon-Star"></i></li>
-                                                <li><i class="icon-Star"></i></li>
-                                                <li><i class="icon-Star"></i></li>
-                                                <li><a href="doctors-details.html">(${item.commentsCnt })</a></li>
-                                            </ul>
-                                        </div>
+                                        
                                         <div class="text">
                                             <p></p>
                                         </div>
                                         <div class="lower-box clearfix">
                                             <ul class="info clearfix">
+                                              	<li><i class="fas fa-comment-dots"></i>전체 리뷰 수(${reviewTotalNum })</li>
                                                 <li><i class="fas fa-map-marker-alt"></i>${item.addr1 }</li>
                                                 <li><i class="fas fa-phone"></i>${item.clinicPhone }</li>
-                                                <li><i class="fas fa-phone"></i>${item.clinicEmail }</li>
+                                                <li><i class="fas fa-envelope-open-text"></i>${item.clinicEmail }</li>
                                             </ul>
-                                            <div class="view-map"><a href="doctors-details.html">View Map</a></div>
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +88,7 @@
                                     <ul class="tab-btns tab-buttons clearfix">
                                         <li class="tab-btn active-btn" data-tab="#tab-1">Overview</li>
                                         <li class="tab-btn" data-tab="#tab-2">Experience</li>
-                                        <li class="tab-btn" data-tab="#tab-3">Location</li>
+                                        <li class="tab-btn location" data-tab="#tab-3">Location</li>
                                         <li class="tab-btn" data-tab="#tab-4">Reviews</li>
                                     </ul>
                                 </div>
@@ -90,14 +96,14 @@
                                     <div class="tab active-tab" id="tab-1">
                                         <div class="inner-box">
                                             <div class="text">
-                                                <h3>전문의 Dr. ${item.name }님은요... :</h3>
+                                                <h3>전문의 Dr. ${item.name }님은요...</h3>
                                                 <p>${item.profileContents }</p>
                                                 <h3>진료과목</h3>
-                                                <ul class="treatments-list clearfix">
-                                                    <li><a href="doctors-details.html">${item.subjects.category1 }</a></li>
-                                                    <li><a href="doctors-details.html">${item.subjects.category2 }</a></li>
-                                                    <li><a href="doctors-details.html">${item.subjects.category3 }</a></li>
-                                                </ul>
+                                                <p class="treatments-list clearfix">
+                                                   <span><i class="fas fa-stethoscope"></i> ${item.subjects.category1 }</span><br>
+                                                   <span><i class="fas fa-stethoscope"></i> ${item.subjects.category2 }</span><br>
+                                                   <span><i class="fas fa-stethoscope"></i> ${item.subjects.category3 }</span>
+                                                </p>
                                                 <h3>학력</h3>
                                                 <p>${item.profileEducation } 을 밑에 잘라 넣으면 됩니다.</p>
                                                 <ul class="list clearfix">
@@ -117,21 +123,11 @@
                                                             <div class="icon-outer"></div>
                                                             <h6>${item.subjects.category1 }<span>${item.subjects.price1 }</span></h6>
                                                         </div>
-                                                        <div class="acc-content">
-                                                            <div class="text">
-                                                                <p>진료과목 설명이 있음 좋겠지만....없네유?</p>
-                                                            </div>
-                                                        </div>
                                                     </li>
                                                     <li class="accordion block active-block">
-                                                        <div class="acc-btn active">
+                                                        <div class="acc-btn">
                                                             <div class="icon-outer"></div>
                                                             <h6>${item.subjects.category2 }<span>${item.subjects.price2 }</span></h6>
-                                                        </div>
-                                                        <div class="acc-content current">
-                                                            <div class="text">
-                                                                <p>진료과목 설명이 있음 좋겠지만....없네유?</p>
-                                                            </div>
                                                         </div>
                                                     </li>
                                                     <li class="accordion block">
@@ -139,20 +135,7 @@
                                                             <div class="icon-outer"></div>
                                                             <h6>${item.subjects.category3 }<span>${item.subjects.price3 }</span></h6>
                                                         </div>
-                                                        <div class="acc-content">
-                                                            <div class="text">
-                                                                <p>진료과목 설명이 있음 좋겠지만....없네유?</p>
-                                                            </div>
-                                                        </div>
                                                     </li>
-                                                </ul>
-                                            </div>
-                                            <div class="award-box">
-                                                <h3>Awards</h3>
-                                                <ul class="list clearfix">
-                                                    <li>Award win by American Dental Council of America<span>(2006)</span></li>
-                                                    <li>Award win by Karnataka State Dental Council<span>(2009)</span></li>
-                                                    <li>Award win by Manchester Academy of Oral Medicine<span>(2015)</span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -161,28 +144,14 @@
                                         <div class="experience-box">
                                             <div class="text">
                                                 <h3>경력사항</h3>
-                                                <p>Dr. Agnes Ayres is a Maxillofacial Surgeon in New York, NY.  Dr. Ayres has more experience with Congenital Cardiac Disorders and Cardiac Care than other specialists in his area.  He is affiliated with medical facilities.</p>
                                                 <ul class="experience-list clearfix">
+                                                	<c:forEach var="exp" items="${expList }">
                                                     <li>
-                                                        Aurora Medical & Dental College:
-                                                        <p>Medical & General Dentistry <span>(Aug 2008-Sep 2013)</span></p>
+														${exp.detail }
+                                                        <p>${exp.title }<span>(<fmt:formatDate value="${exp.fromDate }" dateStyle="medium"/>
+                                                        -<fmt:formatDate value="${exp.toDate }" dateStyle="medium"/>)</span></p>
                                                     </li>
-                                                    <li>
-                                                        Horizon Dermatology & Cosmetic Center:
-                                                        <p>Assistant Darmatologist <span>(Oct 2013-Nov 2017)</span></p>
-                                                    </li>
-                                                    <li>
-                                                        New Apollo Hospital:
-                                                        <p>Darmatologist<span>(Dec 2017-Till Now)</span></p>
-                                                    </li>
-                                                </ul>
-                                                <h3>Key Skills</h3>
-                                                <ul class="skills-list clearfix">
-                                                    <li>Proficient in assisting all Gynecology & Obstetrics Surgeries.</li>
-                                                    <li>Expert in conducting all high risk labor.</li>
-                                                    <li>Proficient in performing all minor surgeries.</li>
-                                                    <li>Expert in handling all outpatients & inpatients department</li>
-                                                    <li>Able to perform ultrasound of Gynecology & Obstetrics</li>
+                                                    </c:forEach>
                                                 </ul>
                                             </div>
                                         </div>
@@ -190,21 +159,9 @@
                                     <div class="tab" id="tab-3">
                                         <div class="location-box">
                                             <h3>Locations</h3>
-                                            <div class="map-inner">
-                                                <div 
-                                                    class="google-map" 
-                                                    id="contact-google-map" 
-                                                    data-map-lat="40.712776" 
-                                                    data-map-lng="-74.005974" 
-                                                    data-icon-path="${pageContext.request.contextPath}/resources/assets/images/icons/map-marker.png"  
-                                                    data-map-title="Brooklyn, New York, United Kingdom" 
-                                                    data-map-zoom="12" 
-                                                    data-markers='{
-                                                        "marker-1": [40.712776, -74.005974, "<h4>Branch Office</h4><p>77/99 New York</p>","${pageContext.request.contextPath}/resources/assets/images/icons/map-marker.png"]
-                                                    }'>
-
-                                                </div>
-                                            </div>
+                                            <!-- <div class="map-inner"> -->
+                                              <div id="map" style="width:100%;height:350px;"></div>
+                                            <!-- </div> -->
                                             <h4>${item.clinicInfo }:</h4>
                                             <ul class="location-info clearfix">
                                                 <li><i class="fas fa-map-marker-alt"></i>${item.addr1 } ${item.addr2 } ${item.addr3 }<br />${item.postcode }</li>
@@ -215,105 +172,65 @@
                                     <div class="tab" id="tab-4">
                                         <div class="review-box">
                                             <h3>Dr. ${item.name } Reviews</h3>
-                                            <!-- <div class="rating-inner">
-                                                <div class="rating-box">
-                                                    <h2>4.5</h2>
-                                                    <ul class="clearfix">
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                    </ul>
-                                                    <span>Based on 5 review</span>
-                                                </div>
-                                                <div class="rating-pregress">
-                                                    <div class="single-progress">
-                                                        <span class="porgress-bar"></span>
-                                                        <div class="text"><p><i class="icon-Star"></i>5 Stars</p></div>
-                                                    </div>
-                                                    <div class="single-progress">
-                                                        <span class="porgress-bar"></span>
-                                                        <div class="text"><p><i class="icon-Star"></i>4 Stars</p></div>
-                                                    </div>
-                                                    <div class="single-progress">
-                                                        <span class="porgress-bar"></span>
-                                                        <div class="text"><p><i class="icon-Star"></i>3 Stars</p></div>
-                                                    </div>
-                                                    <div class="single-progress">
-                                                        <span class="porgress-bar"></span>
-                                                        <div class="text"><p><i class="icon-Star"></i>2 Stars</p></div>
-                                                    </div>
-                                                    <div class="single-progress">
-                                                        <span class="porgress-bar"></span>
-                                                        <div class="text"><p><i class="icon-Star"></i>1 Stars</p></div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                             <div class="review-inner">
-                                                <div class="single-review-box">
-                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-1.jpg" alt=""></figure>
-                                                    <ul class="rating clearfix">
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li class="light"><i class="icon-Star"></i></li>
-                                                    </ul>
-                                                    <h6>Agnes Ayres <span>- April 10, 2020</span></h6>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed eiusmod tempor incididunt labore dolore magna aliqua enim.</p>
-                                                </div>
-                                                <div class="single-review-box">
-                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-2.jpg" alt=""></figure>
-                                                    <ul class="rating clearfix">
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                    </ul>
-                                                    <h6>Mary Astor <span>- April 09, 2020</span></h6>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed eiusmod tempor incididunt labore dolore magna aliqua enim.</p>
-                                                </div>
-                                                <div class="single-review-box">
-                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-3.jpg" alt=""></figure>
-                                                    <ul class="rating clearfix">
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li class="light"><i class="icon-Star"></i></li>
-                                                    </ul>
-                                                    <h6>Anderson <span>- April 08, 2020</span></h6>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed eiusmod tempor incididunt labore dolore magna aliqua enim.</p>
-                                                </div>
-                                                <div class="single-review-box">
-                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-4.jpg" alt=""></figure>
-                                                    <ul class="rating clearfix">
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li class="light"><i class="icon-Star"></i></li>
-                                                    </ul>
-                                                    <h6>Bradshaw <span>- April 07, 2020</span></h6>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed eiusmod tempor incididunt labore dolore magna aliqua enim.</p>
-                                                </div>
-                                                <div class="single-review-box">
-                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-5.jpg" alt=""></figure>
-                                                    <ul class="rating clearfix">
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li><i class="icon-Star"></i></li>
-                                                        <li class="light"><i class="icon-Star"></i></li>
-                                                    </ul>
-                                                    <h6>Bradshaw <span>- April 26, 2020</span></h6>
-                                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing sed eiusmod tempor incididunt labore dolore magna aliqua enim.</p>
-                                                </div>
-                                            </div>
-                                            <div class="btn-box">
-                                                <a href="doctors-details.html" class="theme-btn-one">Submit Review<i class="icon-Arrow-Right"></i></a>
+                                            	<c:if test="${empty docReviewPage }">
+                                            		<p>아직 등록된 리뷰가 없습니다.</p>
+                                            	</c:if>
+                                            	<c:if test="${not empty docReviewPage }">
+                                            		<c:forEach var="review" items="${docReviewPage }">
+	                                            		<div class="single-review-box">
+		                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-1.jpg" alt=""></figure>
+		                                                    <c:if test="${review.reviewPoint == 1}">
+			                                                    <div class="starRev">
+								                                	<span class="starR on">별1</span>
+																	<span class="starR">별2</span>
+																	<span class="starR">별3</span>
+																	<span class="starR">별4</span>
+																	<span class="starR">별5</span>
+								                                </div>
+		                                                    </c:if>
+		                                                     <c:if test="${review.reviewPoint == 2}">
+			                                                    <div class="starRev">
+								                                	<span class="starR on">별1</span>
+																	<span class="starR on">별2</span>
+																	<span class="starR">별3</span>
+																	<span class="starR">별4</span>
+																	<span class="starR">별5</span>
+								                                </div>
+		                                                    </c:if>
+		                                                     <c:if test="${review.reviewPoint == 3}">
+			                                                    <div class="starRev">
+								                                	<span class="starR on">별1</span>
+																	<span class="starR on">별2</span>
+																	<span class="starR on">별3</span>
+																	<span class="starR">별4</span>
+																	<span class="starR">별5</span>
+								                                </div>
+		                                                    </c:if>
+		                                                     <c:if test="${review.reviewPoint == 4}">
+			                                                    <div class="starRev">
+								                                	<span class="starR on">별1</span>
+																	<span class="starR on">별2</span>
+																	<span class="starR on">별3</span>
+																	<span class="starR on">별4</span>
+																	<span class="starR">별5</span>
+								                                </div>
+		                                                    </c:if>
+		                                                     <c:if test="${review.reviewPoint == 5}">
+			                                                    <div class="starRev">
+								                                	<span class="starR on">별1</span>
+																	<span class="starR on">별2</span>
+																	<span class="starR on">별3</span>
+																	<span class="starR on">별4</span>
+																	<span class="starR on">별5</span>
+								                                </div>
+		                                                    </c:if>
+		                                                    
+		                                                    <h6>${review.nickname } <span>- <fmt:formatDate value="${review.regDate }" dateStyle="medium"/></span></h6>
+		                                                    <p>${review.contents }</p>
+                                                		</div>
+                                                	</c:forEach>
+                                            	</c:if>
                                             </div>
                                         </div>
                                     </div>
@@ -372,4 +289,68 @@
         <!-- doctor-details end -->
 
     </div>
+    
+    
+    
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1996b7204476ce04c73afedac09391c9&libraries=services"></script>
+    <script>
+
+    
+	//카카오 맵 펑션 시작   
+    function getMap(){
+    	var addr1 = "<c:out value='${item.addr1}'/>";
+    	var addr2 = "<c:out value='${item.addr2}'/>";
+    	var addr3 = "<c:out value='${item.addr3}'/>";
+    	var postcode = "<c:out value='${item.postcode}'/>";
+    	
+    	var address = addr1 +" " +addr2 +" "+postcode;
+    	
+    	//kakao map start
+    	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = {
+    		center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level:2 // 지도의 확대 레벨
+        };  
+
+	    // 지도를 생성합니다    
+	    var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	    // 주소-좌표 변환 객체를 생성합니다
+	    var geocoder = new kakao.maps.services.Geocoder();
+	
+	    // 주소로 좌표를 검색합니다
+	    //geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+	   	geocoder.addressSearch(address, function(result, status) {
+	
+	        // 정상적으로 검색이 완료됐으면 
+	         if (status === kakao.maps.services.Status.OK) {
+	
+	            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	            // 결과값으로 받은 위치를 마커로 표시합니다
+	            var marker = new kakao.maps.Marker({
+	                map: map,
+	                position: coords
+	            });
+	
+	            // 인포윈도우로 장소에 대한 설명을 표시합니다
+	            var infowindow = new kakao.maps.InfoWindow({
+	                content: '<div style="width:150px;text-align:center;padding:6px 0;">클리닉</div>'
+	            });
+	            infowindow.open(map, marker);
+	
+	            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	            map.setCenter(coords);
+	        } 
+	    });    //end of kakao map
+    }//카카오 맵 펑션 끝
+    	
+    //s:1019 tab 온클릭이벤트 시작
+    $('.location').on('click', function(){
+    	getMap();
+ 
+    	});//tab 온클릭이벤트 끝
+
+	
+    </script>
     

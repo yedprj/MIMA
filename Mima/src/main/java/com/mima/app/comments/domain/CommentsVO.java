@@ -19,13 +19,15 @@ public class CommentsVO {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date editDate;			// 수정일
 	private int cno;				//시퀀스 사용 고유번호 pk
-//	s:1013 댓글 회원 닉네임
-	private String nickname;
+	private String nickname;		//	s:1013 댓글 회원 닉네임
+	private int bookingNo;//s:1019 진료리뷰 의사리뷰달기 예약번호
+	
 // 	K. 10/14 리뷰 회원 성별
 	private String gender;
 	
-	// 댓글 다는 의사와 약사의 이름_J18
+	// 댓글 다는 의사와 약사의 이름_J18.19
 	private String name;
+	private String pharmacyInfo;
 	
 	
 }

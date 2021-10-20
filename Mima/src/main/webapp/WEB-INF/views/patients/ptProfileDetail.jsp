@@ -76,7 +76,7 @@
 			<div class="content-container">
 				<div class="outer-container">
 					<div class="add-listing my-profile">
-						<form id="ptUpdateForm" method="post" action="ptprofileUpdate">
+						<form id="ptUpdateForm" method="post" action="ptprofileUpdate" >
 							<input type="hidden" id="memberNo" name="memberNo"
 								value="${session.memberNo }">
 							<div class="single-box">
@@ -96,7 +96,7 @@
 											<ul id="uploaded"></ul>
 										</div>
 										<div class="upload-photo">
-											<input id="fileInput" type="file" name="docProImgFile"
+											<input id="fileInput" type="file" name="ptProfilePhoto"
 												required><br> <span>형식은 JPG, GIF, PNG 만
 												가능합니다.<br> 파일사이즈 최대 2MB
 											</span><br>
@@ -116,11 +116,11 @@
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>이메일</label> <input type="text"
-												value="${ptMyProfile.email }" required="">
+												value="${ptMyProfile.email }" name="email" required="">
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>전화번호</label> <input type="text"
-												value="${ptMyProfile.phone }" required="">
+												value="${ptMyProfile.phone }" name="phone" required="">
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>성별</label> <input type="text"
@@ -247,7 +247,7 @@
 			
 			var formData = new FormData(document.docProInsertFrm);
 			console.log("formData writer+content: "+ FormData)
-			var inputFile = $("[name='docProImgFile']");
+			var inputFile = $("[name='ptProfilePhoto']");
 			var files = inputFile[0].files;
 			console.log(files);
 			
@@ -304,6 +304,7 @@
 				targetLi.remove();
 				//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
 				$(preview).removeAttr('src');
+				$(preview).attr('src', "${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png");
 				
 			}
 		});//end of attachment btn delete event

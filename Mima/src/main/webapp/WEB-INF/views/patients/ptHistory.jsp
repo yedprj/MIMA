@@ -8,7 +8,6 @@ th, td {
 		}
 		
 .doctors-appointment .doctors-table tr td .accept {
-	align: center;
 	margin-right: 80px;
 }
 </style>
@@ -80,20 +79,14 @@ th, td {
                         <span>지난 진료내역을 조회합니다.</span>
                     </div>
                     <div class="select-box pull-right">
-							<select class="wide" id="selectBox" onchange="searchCheck()">
+							<select class="wide" id="selectBox" name="selectBox" onchange="searchCheck()">
 								<option value="latest">최신순</option>
 								<option value="oldest">오래된순</option>
 							</select>
+							<script type="text/javascript">
+	                       		$("#selectBox").val("${cri.keyword}"== ""?"latest" : "${cri.keyword}")
+	                        </script>
 						</div>
-						
-						<form>
-							<div class="form-group">
-								<input type="hidden" name="type" value="">
-		                    	<input type="hidden" id="pageNum" name="pageNum" value="${pageMaker.cri.pageNum}">
-              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
-              					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-			                </div>
-						</form>
    				</div>
    
 				<div class="doctors-appointment">
@@ -112,7 +105,7 @@ th, td {
 				               </thead>
 				               <tbody id="ptHxList">
 				               	<c:forEach items="${ptHistoryList}" var="ptHistoryList">
-									<tr>
+									<tr class="text-center">
 										<td>
 											<div class="name-box">
 												<figure class="image">
@@ -130,7 +123,14 @@ th, td {
 										<td><fmt:formatDate value="${ptHistoryList.bookingDate}" pattern="yy-MM-dd"/></td>
 										<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber type="currency" value="${ptHistoryList.price}" /></td>
 										<!-- s:1015 후기 작성 버튼 -->
-										<td id="${ptHistoryList.bookingNo}"><button class="accept" id="reviewBtn"><i class="fas fa-check"></i>후기쓰기</button></td>
+										<td id="${ptHistoryList.bookingNo}">
+											<c:if test="${ptHistoryList.comments eq '0'}">
+												<button class="cancel" id="reviewBtn"><i class="fas fa-pencil-alt"></i>작성하기</button>
+											</c:if>
+											<c:if test="${ptHistoryList.comments eq '1'}">
+												<span class="view"><i class="fas fa-check"></i>작성완료</span>
+											</c:if>
+										</td>
 									</tr>
 								</c:forEach>
                                </tbody>    
@@ -139,7 +139,7 @@ th, td {
                       </div>
                   </div>
                   
-				<div class="doctors-appointment">
+				<%-- <div class="doctors-appointment">
 				     <div class="doctors-list" id="oldest" style="display: none;">
 				         <div class="table-outer">
 				             <table class="doctors-table">
@@ -180,28 +180,28 @@ th, td {
                             </table>
                           </div>
                       </div>
-                  </div>
+                  </div> --%>
                 </div>
             </div>
             <!-- pagination  -->
-					<div class="pagination-wrapper" id="latestPage" style="display: block;">
+					<div class="pagination-wrapper">
 						<ul class="pagination">
-							<c:if test="${pageMaker.prev }">
-								<li class="paginate_button previous"><a href="ptHistory?pageNum=${pageMaker.startPage-1 }">이전</a></li>
+							<c:if test="${pageMaker.prev}">
+								<li class="paginate_button previous"><a href="ptHistory?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
 							</c:if>
 								
-							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-								<li class="paginate_button"><a href="ptHistory?pageNum=${num }">${num }</a></li>
+							<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+								<li class="paginate_button"><a href="ptHistory?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
 							</c:forEach>
 								
-							<c:if test="${pageMaker.next }">
-								<li class="paginate_button next"><a href="ptHistory?pageNum=${pageMaker.endPage+1 }">다음</a></li>
+							<c:if test="${pageMaker.next}">
+								<li class="paginate_button next"><a href="ptHistory?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
 							</c:if>
 						</ul>
 					</div>
 			<!-- pagination end -->
             <!-- pagination  -->
-					<div class="pagination-wrapper" id="oldestPage" style="display: none;">
+					<%-- <div class="pagination-wrapper" id="oldestPage" style="display: none;">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev }">
 								<li class="paginate_button previous"><a href="ptHistory?pageNum=${pageMaker.startPage-1 }">이전</a></li>
@@ -215,7 +215,7 @@ th, td {
 								<li class="paginate_button next"><a href="ptHistory?pageNum=${pageMaker.endPage+1 }">다음</a></li>
 							</c:if>
 						</ul>
-					</div>
+					</div> --%>
 			<!-- pagination end -->
         </div>
     </div>
@@ -240,7 +240,7 @@ $(function(){
 function searchCheck() {
 	var choose = $("#selectBox option:selected").val();
 	
-	if (choose == 'latest') {
+	/* if (choose == 'latest') {
 		$("#latest").css('display','block');
 		$("#oldest").css('display', 'none');   
 		$("#latestPage").css('display','block');
@@ -250,12 +250,15 @@ function searchCheck() {
 		$("#oldest").css('display', 'block');   
 		$("#latestPage").css('display','none');
 		$("#oldestPage").css('display', 'block');   
-	}
+	} */
+	
+	location.href="ptHistory?pageNum=1&keyword="+choose
+	
 }
 
 $(document).ready(function() {
 	$('#selectBox').val('${cri.category}').prop("selected", true);
-	searchCheck();
+	//searchCheck();
 	
 	// 로그아웃_J18
 	$("#logoutBtn1").on("click", function(){

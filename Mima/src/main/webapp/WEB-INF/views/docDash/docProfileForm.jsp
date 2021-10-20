@@ -297,10 +297,12 @@ $(function(){
 		$("#saveAvailBtn").text("수정하기");
 	}
 	
+	
+	
 	var subjectvo = "<c:out value='${sub}'/>";
 	console.log(subjectvo);
 	if(subjectvo != ""){
-		if("${sub.category1}" != ""){
+		/* if("${sub.category1}" != ""){
 			//$('#category1').val('${sub.category1}').attr('selected', 'selected');
 			var category1 = "${sub.category1}";
 			let num = 0;
@@ -349,7 +351,23 @@ $(function(){
 		}
 		if("${sub.price3}" !=""){
 			 $('#price3').val("${sub.price3}");
+		} */
+		
+		//ㄴ:1019 진료과목 데이터 있으면 값 넣어주기
+		$('#category1').val("${sub.category1}");
+		$('#category1').niceSelect('update');
+		$('#category2').val("${sub.category2}");
+		$('#category2').niceSelect('update');
+		$('#category3').val("${sub.category3}");
+		$('#category3').niceSelect('update');
+		$('#price1').val("${sub.price1}");
+		$('#price2').val("${sub.price2}");
+		$('#price3').val("${sub.price3}");
+		if(subjectvo != ""){
+			$("#insertSubFrm").attr('action', 'updateSub');
+			$("#subjectPriceInsertBtn").text("수정하기");
 		}
+		
 		$("#insertSubFrm").attr('action', 'updateSub');
 		$("#subjectPriceInsertBtn").text("수정하기");
 	}

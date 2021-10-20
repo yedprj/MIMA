@@ -38,6 +38,7 @@
 										<thead class="table-header">
 											<tr align="center">
 												<th>NO</th>
+												<th>이름</th>
 												<th>과거진료기록</th>
 												<th>자가진단표</th>
 												<th>진료분야</th>
@@ -49,6 +50,7 @@
 											<c:forEach items="${getPatientsList}" var="getPatientsList">
 												<tr align="center">
 													<td>${getPatientsList.memberNo }</td>
+													<td>${getPatientsList.name }</td>
 													<td>${getPatientsList.pastHx }</td>
 													<td>${getPatientsList.preSelfAx }</td>
 													<td>${getPatientsList.topic }</td>
@@ -69,7 +71,6 @@
 											<tr align="center">
 												<th>NO</th>
 												<th>이름</th>
-												<th>주소</th>
 												<th>전화번호</th>
 												<th>이메일</th>
 												<th>등록일</th>
@@ -79,7 +80,6 @@
 											<c:forEach items="${getdoctorList}" var="getdoctorList">
 												<tr align="center">
 													<td>${getdoctorList.memberNo }</td>
-													<td>${getdoctorList.profileEducation }</td>
 													<td>${getdoctorList.clinicInfo }</td>
 													<td>${getdoctorList.clinicPhone }</td>
 													<td>${getdoctorList.clinicEmail }</td>
@@ -124,6 +124,7 @@
 						</div>
 					<!-- e.4 -->
 					<!-- pagination  -->
+					<!-- 환자 페이징 -->
 					<div id="ptPaging" class="pagination-wrapper" align="center" style="display: block;">
 						<ul class="pagination">
 							<c:if test="${pageMaker.prev }">
@@ -139,35 +140,35 @@
 							</c:if>
 						</ul>
 					</div>
-					
+					<!-- 의사 페이징 -->
 					<div id="doctorPaging" class="pagination-wrapper" align="center" style="display: none;">
 						<ul class="pagination">
-							<c:if test="${pageMaker.prev }">
-								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/adlist?category=doctor&pageNum=${pageMaker.startPage-1 }">이전</a></li>
+							<c:if test="${pageMakerDoc.prev }">
+								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/adlist?category=doctor&pageNum=${pageMakerDoc.startPage-1 }">이전</a></li>
 							</c:if>
 								
-							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+							<c:forEach begin="${pageMakerDoc.startPage }" end="${pageMakerDoc.endPage }" var="num">
 								<li class="paginate_button"><a href="${pageContext.request.contextPath }/admin/adlist?category=doctor&pageNum=${num }">${num }</a></li>
 							</c:forEach>
 								
-							<c:if test="${pageMaker.next }">
-								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/adlist?category=doctor&pageNum=${pageMaker.endPage+1 }">다음</a></li>
+							<c:if test="${pageMakerDoc.next }">
+								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/adlist?category=doctor&pageNum=${pageMakerDoc.endPage+1 }">다음</a></li>
 							</c:if>
 						</ul>
 					</div>
-					
+					<!-- 약국 페이징 -->
 					<div id="pharmacyPaging" class="pagination-wrapper" align="center" style="display: none;">
 						<ul class="pagination">
-							<c:if test="${pageMaker.prev }">
-								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/adlist?category=pharmacy&pageNum=${pageMaker.startPage-1 }">이전</a></li>
+							<c:if test="${pageMakerPhar.prev }">
+								<li class="paginate_button previous"><a href="${pageContext.request.contextPath }/admin/adlist?category=pharmacy&pageNum=${pageMakerPhar.startPage-1 }">이전</a></li>
 							</c:if>
 								
-							<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+							<c:forEach begin="${pageMakerPhar.startPage }" end="${pageMakerPhar.endPage }" var="num">
 								<li class="paginate_button"><a href="${pageContext.request.contextPath }/admin/adlist?category=pharmacy&pageNum=${num }">${num }</a></li>
 							</c:forEach>
 								
-							<c:if test="${pageMaker.next }">
-								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/adlist?category=pharmacy&pageNum=${pageMaker.endPage+1 }">다음</a></li>
+							<c:if test="${pageMakerPhar.next }">
+								<li class="paginate_button next"><a href="${pageContext.request.contextPath }/admin/adlist?category=pharmacy&pageNum=${pageMakerPhar.endPage+1 }">다음</a></li>
 							</c:if>
 						</ul>
 					</div>
