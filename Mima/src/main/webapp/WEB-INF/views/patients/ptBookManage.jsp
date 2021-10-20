@@ -110,7 +110,7 @@ th, td {
 						<div class="select-box pull-right">
 							<select class="wide" id="selectBox" onchange="searchCheck()">
 								<option value="all">모두보기</option>
-								<option value="soon">예약된 접수</option>
+								<option value="soon">예정된 접수</option>
 								<option value="canceled">취소된 접수</option>
 							</select>
 							<script type="text/javascript">

@@ -7,6 +7,28 @@ th, td {
 		text-align: center;
 		span: center;
 		}
+
+.doctors-dashboard .review-list .comment-inner .single-comment-box .comment.replay-comment {
+	margin-left: 0px;
+}
+
+.theme-btn-one {
+	padding: 5px 25px;
+}
+
+.theme-btn-two {
+	padding: 3px 25px;
+}
+
+.add-listing .single-box {
+	margin-bottom: 10px;
+}
+
+textarea {
+	width: 100%;
+	margin-top: 10px;
+}
+
 </style>
 
 <!--page-title-two-->
@@ -88,24 +110,39 @@ th, td {
                 </div>
                
                <div class="comment-inner" id="latest" style="display:block;">
-                   	<c:forEach items="${docReviewPage}" var="docReviewPage">
+		       		<c:forEach items="${docReviewPage}" var="docReviewPage">
      					<div class="single-comment-box">
          					<div class="comment">
          						<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
-	             					<h4>${docReviewPage.nickname}</h4>
-	             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
-					             	<ul class="rating clearfix">
-						            	<c:forEach var="i" begin="1" end="${docReviewPage.reviewPoint}">
-						             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
-						             	</c:forEach>
-						             	<c:forEach var="i" begin="1" end="${5-docReviewPage.reviewPoint}">
-						             		<i class="icon-Star"></i>
-						             	</c:forEach>
-					                </ul>
-             						<p>${docReviewPage.contents}</p>
-				         	</div>
+             					<h4>${docReviewPage.name}</h4>
+             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
+				             	<ul class="rating clearfix">
+					            	<c:forEach var="i" begin="1" end="${docReviewPage.reviewPoint}">
+					             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
+					             	</c:forEach>
+					             	<c:forEach var="i" begin="1" end="${5-docReviewPage.reviewPoint}">
+					             		<i class="icon-Star"></i>
+					             	</c:forEach>
+				                </ul>
+            						<p>${docReviewPage.contents}</p>
+            						<c:if test="${null eq docReviewPage.rcontents}">
+	            						<button class="replay-btn" data-cno="${docReviewPage.cno}" data-no="${docReviewPage.commentWriterNo}"><i class="fas fa-share"></i>Reply Now</button>
+	            						<div id="reply">
+	            						</div>
+            						</c:if>
+            						<c:if test="${null ne docReviewPage.rcontents}">
+			      						<div class="comment replay-comment">
+			                                 <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>
+			                                 <h4><i class="fas fa-comments"></i>&nbsp;${session.name} 의사</h4>
+			                                 <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.rregDate}" pattern="yy-MM-dd"/></span>
+			                                 <p id="rcontents">${docReviewPage.rcontents}</p>
+			                            </div>
+                            		</c:if>
+             				</div>
+             				
+                            
 				    	</div>
-				    </c:forEach>
+					</c:forEach>
                </div>
                
                <%-- <div class="comment-inner" id="oldest" style="display:none;">
@@ -174,13 +211,115 @@ th, td {
 			location.href="docReview?pageNum=1&keyword="+choose
 		}
 		
+	/* 	function addReply() {
+			console.log($(this).next().val());
+			$(".comment #reply").empty();
+			$(this).next('#reply').append('<div class="add-listing">'
+                    +'<br><label><font size=3><b>댓글 쓰기</b></font></label>'
+					+'<br><div class="single-box col-lg-12 col-md-12 col-sm-12">'
+                    +'<textarea id="replyContents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
+                	+'</div>'
+                	+'<a class="theme-btn-one">등록</a>'
+                	+'</div>')
+		} */
+		
+		// 삭제 펑션	예
+		$(document).on('click', '#replyDelete', function(){
+			var csrfHeaderName = "${_csrf.headerName}";
+			
+			var csrfTokenValue = "${_csrf.token}";
+			
+			var rno = $(this).data("no");
+			var pa = $(this).closest(".comment");
+			var delReply = pa.find(".replay-comment");
+			
+			$.ajax({
+				url : "replyDelete",
+				method : "post",
+				data : {
+					rno : rno
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				success : function(datas) {
+						if( datas > 0 ){
+							alert("삭제성공!");
+							pa.html('');
+							pa.append($(".add-listing").html());
+						}
+				} // success end
+			}) //ajax end
+			
+		});
+		
+		
+		
+		$(document).on('click', '#cancel', function(){
+			$(".comment #reply").empty();
+		});
+		
+		
+		
+		$(document).on('click', '#insert', function(){
+			
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue = "${_csrf.token}";
+			var pa = $(this).closest(".comment");
+			console.log(pa);
+			$.ajax({
+				url : "docReplyInsert",
+				method : "post",
+				data : $("#replyForm").serialize(),
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				success : function(datas) {
+						$(".add-listing").remove();
+						pa.find(".replay-btn").remove();
+						pa.append('<div class="comment replay-comment">'
+                               + '<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
+                               + '<h4><i class="fas fa-comments"></i> 의사</h4>'
+                               + '<span class="comment-time"><i class="fas fa-calendar-alt"></i></span>'
+                               + '<p id="rcontents">'+datas.rcontents + '</p>'
+                               + '<span><a id="replyDelete" data-no="'+datas.rno +'" class="cancel">삭제</a></span>'
+                               + '</div>');					
+						alert("댓글 등록!");
+				} // success end
+			}) //ajax end
+			
+		});
+		
+
+		
+		
+		
 		$(document).ready(function() {
 			$('#selectBox').val('${cri.category}').prop("selected", true);
-			//searchCheck();
-			
+
 			$("#logoutBtn1").on("click", function(){
 				$('#logOutfrm1').submit();
 			});
+			
+			$(".comment .replay-btn").on("click", function(){
+			var cno = $(this).data("cno")
+			var no = $(this).data("no")
+			$(".comment #reply").empty();
+			$(this).next()
+			.append('<div class="add-listing">'
+                	+'<form id="replyForm">'
+                    +'<br><label><font size=3><b>댓글 쓰기</b></font></label><br>'
+					+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
+                    +'    <textarea id="replyContents" name="rcontents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
+                	+'  </div>'
+                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
+                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
+                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
+                	+'<p><button type="button" class="theme-btn-one" id="insert">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
+                	+'</form>'
+                	+'<div>')
+			});
+	 
 		});
-	
+
 </script>

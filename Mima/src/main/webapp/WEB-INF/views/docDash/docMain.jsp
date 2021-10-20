@@ -154,7 +154,7 @@ th, td {
 											style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-84.png);"></div>
 									</div>
 									<div class="icon-box">
-										<i class="icon-Dashboard-2"></i>
+										<i class="icon-Dashboard-5"></i>
 									</div>
 									<h3>${countDocReview}</h3>
 									<p>나의 후기 수</p>

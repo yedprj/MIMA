@@ -640,10 +640,20 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 					 C.CONTENTS,
 					 C.REVIEW_POINT,
 					 C.REG_DATE,
+					 C.EDIT_DATE,
 					 C.CNO,
-					 M.NAME
+                     M.NAME,
+                     R.RNO,
+                     R.RMAIN_NO,
+                     R.RWRITER_NO,
+                     R.RREG_DATE,
+                     R.REDIT_DATE,
+                     R.RCONTENTS,
+                     R.RCNO
 			  FROM COMMENTS C JOIN MEMBER M
 		 	  ON (C.CMAIN_NO = M.MEMBER_NO)
+		 	  FULL OUTER JOIN REPLY R
+              ON C.CNO = R.RCNO
          	  WHERE <include refid="criteriaPtReview"></include>
          	  		<![CDATA[
          	  		ROWNUM <= #{cri.pageNum} * #{cri.amount}
@@ -664,10 +674,20 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 					 C.CONTENTS,
 					 C.REVIEW_POINT,
 					 C.REG_DATE,
+					 C.EDIT_DATE,
 					 C.CNO,
-					 M.NAME
+                     M.NAME,
+                     R.RNO,
+                     R.RMAIN_NO,
+                     R.RWRITER_NO,
+                     R.RREG_DATE,
+                     R.REDIT_DATE,
+                     R.RCONTENTS,
+                     R.RCNO
 			  FROM COMMENTS C JOIN MEMBER M
 		 	  ON (C.CMAIN_NO = M.MEMBER_NO)
+		 	  FULL OUTER JOIN REPLY R
+              ON C.CNO = R.RCNO
          	  WHERE <include refid="criteriaPtReview"></include>
          	  		<![CDATA[
          	  		ROWNUM <= #{cri.pageNum} * #{cri.amount}
