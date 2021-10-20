@@ -685,7 +685,8 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 					EMAIL,
 					PHONE,
 					GENDER,
-					IDENTIFY_NO
+					IDENTIFY_NO,
+					PT_PROFILE_PHOTO
 			FROM MEMBER
 			WHERE MEMBER_NO = #{memberNo}
 		</select>

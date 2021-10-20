@@ -39,9 +39,17 @@
 			<div class="profile-box">
 				<div class="upper-box">
 					<figure class="profile-image">
-						<img
-							src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-							alt="">
+						<c:choose>
+							<c:when test="${not empty ptMyProfile.ptProfilePhotoImg }">
+								<img src="${ptMyProfile.ptProfilePhotoImg }" alt="">
+							</c:when>
+							<c:otherwise>
+								<img width="300" height="300" id="profileImg"
+									src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png"
+									alt="프로필 미리보기">
+							</c:otherwise>
+						</c:choose>
+
 					</figure>
 					<div class="title-box centred">
 						<div class="inner">
@@ -54,20 +62,28 @@
 				</div>
 				<div class="profile-info">
 					<ul class="list clearfix">
-					<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
-					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
-					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
-					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
-					<li><a href="ptProfileDetail" class="current"><i class="fas fa-user"></i>프로필 관리</a></li>
-					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
-					<li>
-						<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
-							<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-						</form>
-					</li>
+						<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
+						<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의
+								예약관리</a></li>
+						<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의
+								진료내역</a></li>
+						<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가
+								찜한 의사</a></li>
+						<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
+						<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약
+								배달관리</a></li>
+						<li><a href="ptProfileDetail" class="current"><i
+								class="fas fa-user"></i>프로필 관리</a></li>
+						<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호
+								변경</a></li>
+						<li>
+							<form id="logOutfrm1" name="logOutfrm1" action="../logout"
+								method="post">
+								<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}">
+							</form>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -76,7 +92,7 @@
 			<div class="content-container">
 				<div class="outer-container">
 					<div class="add-listing my-profile">
-						<form id="ptUpdateForm" method="post" action="ptprofileUpdate" >
+						<form id="ptUpdateForm" method="post" action="ptprofileUpdate">
 							<input type="hidden" id="memberNo" name="memberNo"
 								value="${session.memberNo }">
 							<div class="single-box">
@@ -89,22 +105,30 @@
 										<!-- 여기 프로필 사진 보여주기 하면 됨 -->
 										<div>
 											<figure class="image-box">
-												<img width="300" height="300" id="profileImg"
-													src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png"
-													alt="프로필 미리보기">
+
+												<c:choose>
+													<c:when test="${not empty ptMyProfile.ptProfilePhotoImg }">
+														<img src="${ptMyProfile.ptProfilePhotoImg }" alt="">
+													</c:when>
+													<c:otherwise>
+														<img width="300" height="300" id="profileImg"
+															src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png"
+															alt="프로필 미리보기">
+													</c:otherwise>
+												</c:choose>
 											</figure>
 											<ul id="uploaded"></ul>
 										</div>
 										<div class="upload-photo">
-											<input id="fileInput" type="file" name="ptProfilePhoto"
-												required><br> <span>형식은 JPG, GIF, PNG 만
-												가능합니다.<br> 파일사이즈 최대 2MB
+											<input name="ptProfilePhoto" id="ptProfilePhoto"
+												value="${ptMyProfile.ptProfilePhoto }"> <input
+												id="fileInput" type="file"><br> <span>형식은
+												JPG, GIF, PNG 만 가능합니다.<br> 파일사이즈 최대 2MB
 											</span><br>
 											<button type="button" id="imgUpBtn" class="theme-btn-one"
 												style="box-shadow: none;">등록</button>
 										</div>
 									</div>
-
 									<div class="row clearfix">
 										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 											<label>이름</label> <input type="text"
@@ -126,16 +150,16 @@
 											<label>성별</label> <input type="text"
 												value="${ptMyProfile.gender }" required="" disabled>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-12 form-group">
-										</div>
+										<div class="col-lg-6 col-md-6 col-sm-12 form-group"></div>
 									</div>
 								</div>
 							</div>
 							<div class="btn-box d-flex flex-row-reverse">
 								<button class="theme-btn-one" type="submit">수정하기!!!!</button>
 							</div>
-							
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+
+							<input type="hidden" name="${_csrf.parameterName}"
+								value="${_csrf.token}">
 						</form>
 					</div>
 				</div>
@@ -170,13 +194,11 @@
 
 
 <script type="text/javascript">
-	
-	$(function(){
-		
+	$(function() {
+
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
-		
-		
+
 		//file insert start
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 		var maxSize = 5242880; //5MB
@@ -194,31 +216,33 @@
 			}
 			return true;
 		}
-		
+
 		//사진 미리보기
-    	const input = document.getElementById('fileInput');
-    	const profileImg =document.getElementById('profileImg');
-    	//var videoSource=document.createElement('source');
-    	//videoSource.setAttribute('src', "c:upload/"+datas.uuid+datas.vfileName);
-    	
-    	input.addEventListener('change', function() {
-    	  const files = this.files || [];
+		const input = document.getElementById('fileInput');
+		const profileImg = document.getElementById('profileImg');
+		//var videoSource=document.createElement('source');
+		//videoSource.setAttribute('src', "c:upload/"+datas.uuid+datas.vfileName);
 
-    	  if (!files.length) return;
-    	  
-    	  const reader = new FileReader();
+		input.addEventListener('change', function() {
+			const files = this.files || [];
 
-    	  reader.onload = function (e) {
-    		profileImg.setAttribute('src', e.target.result);
-    	  };
-    	  
-    	  reader.onprogress = function (e) {
-    	    console.log('progress: ', Math.round((e.loaded * 100) / e.total));
-    	  };
-    	  
-    	  reader.readAsDataURL(files[0]);
-    	});//End of 비디오 미리보기
-		
+			if (!files.length)
+				return;
+
+			const reader = new FileReader();
+
+			reader.onload = function(e) {
+				profileImg.setAttribute('src', e.target.result);
+			};
+
+			reader.onprogress = function(e) {
+				console.log('progress: ', Math
+						.round((e.loaded * 100) / e.total));
+			};
+
+			reader.readAsDataURL(files[0]);
+		});//End of 비디오 미리보기
+
 		/* var result = '<c:out value="${result}"/>';
 
 		checkModal(result);
@@ -233,82 +257,107 @@
 				$(".modal-body").html("result");
 			}
 			$("#myModal").modal("show");
-      
-		} */
 		
-    	// 로그아웃_J18
-		$("#logoutBtn1").on("click", function(){
+		} */
+
+		// 로그아웃_J18
+		$("#logoutBtn1").on("click", function() {
 			$('#logOutfrm1').submit();
 		});
 
 		//imgUpBtn 눌렀을 때 이벤트 설정 교재502페이지 --> 의사프로필사진 넣는거
-		$('#imgUpBtn').on("click", function(e){
-			e.preventDefault();
-			
-			var formData = new FormData(document.docProInsertFrm);
-			console.log("formData writer+content: "+ FormData)
-			var inputFile = $("[name='ptProfilePhoto']");
-			var files = inputFile[0].files;
-			console.log(files);
-			
-			for(var i=0; i<files.length; i++){
-				if(!checkExtension( files[i].name, files[i].size) ){
-					return;
-				}
-				formData.append("uploadFile", files[i]);
-			}
-				
-			
-			console.log("formData file: "+ formData)
-			$.ajax({
-				url:'phaAjaxInsert',
-				processData:false,
-				contentType:false,
-				data: formData,
-				method:'POST',
-				beforeSend : function(xhr) {
-					console.log(csrfHeaderName + " and " + csrfTokenValue);
-						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						//xhr.setRequestHeader("aa", "bb");
-				},
-				success:function(datas){
-					console.log(datas);
-					var str="";
-					
-						var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.pimgName);			      
-					    var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
-						str += "<li ";
+		$('#imgUpBtn')
+				.on(
+						"click",
+						function(e) {
+							e.preventDefault();
+
+							var formData = new FormData(
+									document.docProInsertFrm);
+							console.log("formData writer+content: " + FormData)
+							var inputFile = $("#fileInput");
+							var files = inputFile[0].files;
+							console.log(files);
+
+							for (var i = 0; i < files.length; i++) {
+								if (!checkExtension(files[i].name,
+										files[i].size)) {
+									return;
+								}
+								formData.append("uploadFile", files[i]);
+							}
+
+							console.log("formData file: " + formData)
+							$
+									.ajax({
+										url : 'phaAjaxInsert',
+										processData : false,
+										contentType : false,
+										data : formData,
+										method : 'POST',
+										beforeSend : function(xhr) {
+											console.log(csrfHeaderName
+													+ " and " + csrfTokenValue);
+											xhr.setRequestHeader(
+													csrfHeaderName,
+													csrfTokenValue);
+											//xhr.setRequestHeader("aa", "bb");
+										},
+										success : function(datas) {
+											console.log(datas);
+											var str = "";
+
+											var fileCallPath = encodeURIComponent(datas.uploadPath
+													+ "/"
+													+ datas.uuid
+													+ "_"
+													+ datas.pimgName);
+											var fileLink = fileCallPath
+													.replace(new RegExp(/\\/g),
+															"/");
+											str += "<li ";
 						str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-pimgName='"+datas.pimgName+"' data-type='"+datas.image+"' ><div>";
-						str += "<span> "+ datas.pimgName+"</span>";
-						str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
+											str += "<span> " + datas.pimgName
+													+ "</span>";
+											str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
 						str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
-						str += "</div>";
-						str +="</li>";
-									
-					$("#uploaded").html(str);
-					alert("file uploaded");
-				
-				},
-				error: function(reject){
-					console.error(reject);
-				}
-			})
-		}); //end of meditUpBtn event
-		
-		
+											str += "</div>";
+											str += "</li>";
+
+											$("#uploaded").html(str);
+											$("#ptProfilePhoto")
+													.val(
+															datas.uuid
+																	+ datas.pimgName);
+											alert("file uploaded");
+
+										},
+										error : function(reject) {
+											console.error(reject);
+										}
+									})
+						}); //end of meditUpBtn event
+
 		//attachment btn delete event
-		$("#uploaded").on("click", "button", function(e){
-			if(confirm("파일을 삭제하시겠습니까?")){
-				var targetLi = $(this).closest("li");
-				var preview = $('#profileImg');
-				targetLi.remove();
-				//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
-				$(preview).removeAttr('src');
-				$(preview).attr('src', "${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png");
-				
-			}
-		});//end of attachment btn delete event
-    	
+		$("#uploaded")
+				.on(
+						"click",
+						"button",
+						function(e) {
+							if (confirm("파일을 삭제하시겠습니까?")) {
+								var targetLi = $(this).closest("li");
+								var preview = $('#profileImg');
+								targetLi.remove();
+								//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
+								$(preview).removeAttr('src');
+								$(preview)
+										.attr(
+												'src',
+												"${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png");
+
+							}
+						});//end of attachment btn delete event
+
 	})
 </script>
 
