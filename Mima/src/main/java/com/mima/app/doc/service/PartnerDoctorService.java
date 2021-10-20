@@ -2,11 +2,11 @@ package com.mima.app.doc.service;
 
 import java.util.List;
 
-
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.likes.domain.LikesVO;
+import com.mima.app.member.domain.ExperienceVO;
 import com.mima.app.member.domain.MemberVO;
 
 public interface PartnerDoctorService {
@@ -31,6 +31,13 @@ public interface PartnerDoctorService {
 	//s:1010 의사프로필 유무 확인
 	public DocInfoVO checkDocDetail(MemberVO vo);
 	
+	//s:1020 의사 프로필 학력 조회
+	public DocInfoVO checkEduDetail(MemberVO vo);
+	//s:1020  의사 프로필 페이지 학력입력 ajax 
+	public int insertEduAjax(PartnerDoctorVO vo);
+	//s:1020  의사 프로필 페이지 학력수정 ajax 
+	public int updateEduAjax(PartnerDoctorVO vo);
+
 	// 닥터 대쉬보드 병원 이름_J13
 	public String clinicName(int memberNo);
 	

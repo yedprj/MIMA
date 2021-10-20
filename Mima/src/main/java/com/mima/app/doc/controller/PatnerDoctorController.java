@@ -1,20 +1,32 @@
 package com.mima.app.doc.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -260,47 +272,119 @@ public class PatnerDoctorController {
 	}
 	
 	
-	/*
-	 * @ModelAttribute("option") public Map<String, Object> jobs(){ Map<String,
-	 * Object> map = new HashMap<String, Object>(); map.put("contentAll",
-	 * jobService.getJobList()); map.put("booked", deptService.getDeptList());
-	 * map.put("canceled", deptService.getDeptList()); return map; }
-	 */
-	
-	
 	//s:1005 docProfileInsertFrm
-
 	@GetMapping("doctor/docProfileInsertForm")
 	public String docProfileInsertForm(Model model, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
-		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
 		
+		// 닥터 프로필 병원 이름 호출_J17
+		model.addAttribute("clinicName", clinicName(request));
+
+		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
 		HttpSession session = request.getSession();
 		mVo = (MemberVO) session.getAttribute("session");
 		System.out.println(mVo);
 		
 		docVo = doctorService.checkDocDetail(mVo);
 		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
-		String path="";
 		
-		// 닥터 프로필 병원 이름 호출_J17
-		model.addAttribute("clinicName", clinicName(request));
-		
-		//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 있으면 값을 가져와서 넘겨주고 수정할 수 있도록
-		if( docVo != null ) {
-			System.out.print("테이블에 값 잇음!!");
+		if(docVo != null) {
 			expVo.setMemberNo(docVo.getMemberNo());
 			model.addAttribute("doc", doctorService.getDocDetail(docVo));
 			model.addAttribute("expList", experienceService.getExpList(expVo));
-			 path="docDash/docProfileEditForm";
-			
-		}else {
-			//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 없으면 바로 인서트 할 수 있도록
-			System.out.print("테이블에 값 없음");
-			path="docDash/docProfileInsertForm";
 		}
-		return path;
+		
+		return "docDash/docProfileInsertForm";
 		
 	}
+	
+	//s:1020 의사 프로필 페이지 학력조회 ajax 
+	@GetMapping("doctor/getEduAjax")
+	@ResponseBody
+	public DocInfoVO getEduAjax(MemberVO mVo, DocInfoVO docVo, HttpServletRequest request  ) {
+		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
+		System.out.println("세션확인..."+mVo);
+		docVo = doctorService.checkEduDetail(mVo);
+		System.out.println("확인중..."+docVo);
+		
+		return docVo;
+	}
+	
+	//s:1020  의사 프로필 페이지 학력입력 ajax 
+		@PostMapping("doctor/insertEduAjax")
+		@ResponseBody
+		public int insertEduAjax(MemberVO mVo, PartnerDoctorVO docVo, HttpServletRequest request  ) {
+			//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+			HttpSession session = request.getSession();
+			mVo = (MemberVO) session.getAttribute("session");
+			docVo.setMemberNo(mVo.getMemberNo());
+			System.out.println("입력할 학력 조회" +docVo);
+					
+			int result = doctorService.insertEduAjax(docVo);
+			return result;
+		}
+		
+		//s:1020  의사 프로필 페이지 학력수정 ajax 
+		@PostMapping("doctor/updateEduAjax")
+		@ResponseBody
+		public int updateEduAjax(MemberVO mVo, PartnerDoctorVO docVo, HttpServletRequest request  ) {
+			//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+			HttpSession session = request.getSession();
+			mVo = (MemberVO) session.getAttribute("session");
+			docVo.setMemberNo(mVo.getMemberNo());
+			System.out.println("입력할 학력 조회" +docVo);
+					
+			int result = doctorService.updateEduAjax(docVo);
+			return result;
+		}
+		
+		//s:1020 의사 프로필 페이지 경력조회 ajax 
+		@GetMapping("doctor/getExpAjax")
+		@ResponseBody
+		public List<ExperienceVO> getExpAjax(MemberVO mVo, ExperienceVO expVo, HttpServletRequest request) {
+			//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+			HttpSession session = request.getSession();
+			mVo = (MemberVO) session.getAttribute("session");
+			expVo.setMemberNo(mVo.getMemberNo());
+			System.out.println("경력확인중.."+expVo);
+			return experienceService.getExpList(expVo);
+		}
+	
+		//s:1020  의사 프로필 페이지 경력 입력 ajax 
+		@PostMapping("doctor/insertExpAjax")
+		@ResponseBody
+		public List<ExperienceVO> insertExpAjax(@RequestBody ExperienceVO expVo, HttpServletRequest request  ) {
+			
+			System.out.println("입력할 경력 조회" +expVo);
+					
+			int result = experienceService.insertExpAjax(expVo);
+			
+			return experienceService.getExpList(expVo);
+		}
+		
+		//s:1020  의사 프로필 페이지 경력 입력 ajax 
+		@PostMapping("doctor/delExpAjax")
+		@ResponseBody
+		public int delExpAjax(ExperienceVO expVo, HttpServletRequest request  ) {
+			
+			System.out.println("경력삭제" +expVo);
+					
+			int result = experienceService.deleteExp(expVo);
+			
+			return result;
+		}
+	
+		//s:1020  의사 프로필 페이지 경력수정 ajax 
+		@PostMapping("doctor/updateExpAjax")
+		@ResponseBody
+		public int updateExpAjax(ExperienceVO expVo, HttpServletRequest request  ) {
+			
+			System.out.println("수정할 경력 조회" +expVo);
+					
+			int result = experienceService.updateExpAjax(expVo);
+			return result;
+		}
 
 	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
 	@GetMapping("doctor/docProfileForm")
@@ -442,5 +526,7 @@ public class PatnerDoctorController {
 		
 		return "/docList/getSubjectDocList";
 	}
+	
+	
 	
 }

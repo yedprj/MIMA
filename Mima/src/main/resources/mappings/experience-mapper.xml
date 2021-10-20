@@ -28,5 +28,42 @@
 		SELECT * FROM EXPERIENCE
 		WHERE MEMBER_NO = #{memberNo}
 	</select>
+	
+	<!-- s:1020 의사 프로필 경력 입력 -->
+	<insert id="insertExpAjax">
+	INSERT INTO EXPERIENCE (
+			EXP_NO,
+			TITLE,
+			DETAIL,
+			FROM_DATE,
+			TO_DATE,
+			MEMBER_NO
+			)
+	VALUES(
+	SEQ_EXPERIENCE.NEXTVAL,
+		#{title},
+		#{detail},
+		#{fromDate},
+		#{toDate},
+		#{memberNo}
+		)
+	</insert>
+	
+	<!-- s:1020 의사 프로필경력 수정 -->
+	<update id="updateExpAjax">
+		UPDATE EXPERIENCE
+		 	SET 
+				TITLE=#{title},
+				DETAIL=#{detail},
+				FROM_DATE=#{fromDate},
+				TO_DATE=#{toDate},
+				MEMBER_NO=#{memberNo}
+			where			
+				EXP_NO=#{title}
+	</update>
+	
+	<delete id="deleteExp">
+	DELETE FROM EXPERIENCE WHERE EXP_NO=#{expNo} 
+	</delete>
 
 </mapper>
