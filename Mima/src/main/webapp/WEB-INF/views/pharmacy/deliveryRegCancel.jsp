@@ -81,6 +81,9 @@
 #checkIcon {
 	color : #39cabb;
 }
+#prescription {
+	cursor: pointer;
+}
 </style>
 
 <!--page-title-two-->
@@ -148,10 +151,14 @@
                                     <h3>약배달 등록/취소</h3>
                                 </div>
                                 <div class="btn-box pull-right">
-                                    <form action="my-patients.html" method="post" class="search-form">
+                                    <form id="delRegCancel"  action="deliveryRegCancel" method="get" class="search-form">
                                         <div class="form-group">
                                             <input type="search" name="search-field" placeholder="Search" required="">
                                             <button type="submit"><i class="far fa-search"></i></button>
+                                            <input type="hidden" name="type" value="N">
+	                                        <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+											<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                         </div>
                                     </form>
                                 </div>
@@ -183,7 +190,7 @@
                                               <td class="text-center"><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
                                               <td><p>${del.delAddr},</p><p>${del.delAddr2}  ${del.delAddr3 }</p></td>
                                               <td class="text-center"><p>${del.delPostCode }</p></td>
-                                              <td class="text-center">처방전 파일</td>
+                                              <td class="text-center"><a href="${pageContext.request.contextPath}/prePdf3?bookingNo=${del.bookingNo}" id="prescription"  >처방전 파일</a></td>
                                               <td><p id="delMemo"><c:if test="${not empty del.delNote}">메모 O</c:if></p>
                                               	<c:if test="${not empty del.delNote}"><div id="delMemoHidden">${del.delNote}</div></c:if>
                                               </td>
@@ -202,14 +209,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pagination-wrapper">
-                            <ul class="pagination">
-                                <li><a href="clinic-1.html" class="current">1</a></li>
-                                <li><a href="clinic-1.html">2</a></li>
-                                <li><a href="clinic-1.html">3</a></li>
-                                <li><a href="clinic-1.html"><i class="icon-Arrow-Right"></i></a></li>
-                            </ul>
-                        </div>
+                        <!-- pagination  -->
+						<div class="pagination-wrapper" >
+							<ul class="pagination">
+								<c:if test="${pageMaker.prev }">
+									<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">이전</a></li>
+								</c:if>
+									
+								<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+									<li class="paginate_button"><a href="${num}" >${num}</a></li>
+								</c:forEach>
+								<c:if test="${pageMaker.next }">
+									<li class="paginate_button next"><a href="${pageMaker.endPage+1 }">다음</a></li>
+								</c:if>
+							</ul>
+						</div>
                     </div>
                 </div>
             </div>
@@ -266,6 +280,15 @@
 
 
 <script>
+
+$(".pagination a").on("click", function(e) {
+	e.preventDefault(); // a, submit 기능을 막음
+	var p = $(this).attr("href")
+	$("[name='pageNum']").val(p)
+	$("#delRegCancel").submit();
+});
+
+
 $(function(){
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";
@@ -362,12 +385,20 @@ $(function(){
 				});// ajax end
 			}
 		}); // cancelBtn end
-		
-		
-		
-		
-		
 	}); // 반환 btn end
+	
+	
+	
+	// K. 10/20 처방전 파일 클릭시 pdf 파일 호출
+	/* $(document).on("click","#prescription",function(){
+		var bookingNo = $(this).data("no");
+		alert("처방전!" + bookingNo);
+		
+		// 아작스로 값 넘겨주고, 창 띄우기?
+				
+				
+		
+	}); // 처방전 end */
 
 }); // function end
 </script>
