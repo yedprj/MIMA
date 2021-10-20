@@ -418,7 +418,7 @@ th, td {
 		            success: function(data) {
 		                        console.log("진료방 시작후 방번호",data.roomId);
 		                        console.log("진료방 시작후 환자번호",data.ptNo);
-		                        url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
+		                        url="http://3.37.209.146:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
 		                        console.log(url);
 		                      },
 		            error: function(jqXHR, textStatus, err){
