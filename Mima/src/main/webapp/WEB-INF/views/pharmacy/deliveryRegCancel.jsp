@@ -81,6 +81,9 @@
 #checkIcon {
 	color : #39cabb;
 }
+#prescription {
+	cursor: pointer;
+}
 </style>
 
 <!--page-title-two-->
@@ -183,7 +186,7 @@
                                               <td class="text-center"><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
                                               <td><p>${del.delAddr},</p><p>${del.delAddr2}  ${del.delAddr3 }</p></td>
                                               <td class="text-center"><p>${del.delPostCode }</p></td>
-                                              <td class="text-center">처방전 파일</td>
+                                              <td class="text-center"><a href="${pageContext.request.contextPath}/prePdf3?bookingNo=${del.bookingNo}" id="prescription"  >처방전 파일</a></td>
                                               <td><p id="delMemo"><c:if test="${not empty del.delNote}">메모 O</c:if></p>
                                               	<c:if test="${not empty del.delNote}"><div id="delMemoHidden">${del.delNote}</div></c:if>
                                               </td>
@@ -362,12 +365,20 @@ $(function(){
 				});// ajax end
 			}
 		}); // cancelBtn end
-		
-		
-		
-		
-		
 	}); // 반환 btn end
+	
+	
+	
+	// K. 10/20 처방전 파일 클릭시 pdf 파일 호출
+	/* $(document).on("click","#prescription",function(){
+		var bookingNo = $(this).data("no");
+		alert("처방전!" + bookingNo);
+		
+		// 아작스로 값 넘겨주고, 창 띄우기?
+				
+				
+		
+	}); // 처방전 end */
 
 }); // function end
 </script>

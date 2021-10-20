@@ -16,7 +16,7 @@
 		<org.apache.tiles-version>3.0.3</org.apache.tiles-version>
 		<org.springframework.security-version>5.2.5.RELEASE</org.springframework.security-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -280,11 +280,32 @@
 			<version>20210307</version>
 		</dependency>
 
-		<!--s:1009 web socket  -->		
+		<!--s:1009 web socket -->
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-websocket</artifactId>
-		    <version>${org.springframework-version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.4.5</version>
+		</dependency>
+
+
+		<!-- K.10/20 처방전 pdf -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.17.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.14</version>
 		</dependency>
 
 
