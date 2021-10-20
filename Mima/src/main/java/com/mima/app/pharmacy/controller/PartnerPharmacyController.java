@@ -63,8 +63,6 @@ public class PartnerPharmacyController {
 		model.addAttribute("profile", partPhaService.selectOne(memberNo));
 		// 오늘의 배달예약수
 		model.addAttribute("cnt", deliverSerive.deliveryCnt(memberNo));
-		// 오늘의 배달관리
-		model.addAttribute("todayDel", deliverSerive.phaSelectOne(memberNo));
 		// 복약지도수
 		model.addAttribute("ptEduCnt", deliverSerive.ptEducationCnt(memberNo));
 		// 오늘의 약배달 등록 및 취소
@@ -75,16 +73,30 @@ public class PartnerPharmacyController {
 	
 	// 약배달 전체관리페이지 [K]210929
 	@GetMapping("/mediDelivery")
-	public void mediDelivery(Model model, HttpServletRequest request) {
+	public void mediDelivery(Model model, HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
+		int total = deliverSerive.phaSelectOneCount(memberNo);
 		// 약국 한건 조회
 		model.addAttribute("profile", partPhaService.selectOne(memberNo));
-		// 약배달 등록 및 취소
-		model.addAttribute("phaComDelivery", deliverSerive.phaCompleteDel(vo.getMemberNo()));
 		// 약배달 현황
-		model.addAttribute("phaDelivery", deliverSerive.phaSelectOne(memberNo));
+		model.addAttribute("phaDelivery", deliverSerive.phaSelectOne(memberNo,cri));
+		model.addAttribute("pageMaker", new PageVO(cri,total));
+	}
+	
+	// 약배달 완료목록 페이지 
+	@GetMapping("/comDelivery")
+	public void comDelivery(Model model, HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		int total = deliverSerive.phaCompleteDelCount(memberNo);
+		// 약국 한건 조회
+		model.addAttribute("profile", partPhaService.selectOne(memberNo));
+		// 약배달 완료목록
+		model.addAttribute("phaComDelivery", deliverSerive.phaCompleteDel(memberNo,cri));
+		model.addAttribute("pageMaker", new PageVO(cri,total));
 	}
 	
 	// 약배달 상태 업데이트
@@ -129,6 +141,7 @@ public class PartnerPharmacyController {
 		return result; 
 	}
 	
+	// 약배달 등록/취소 페이지
 	@GetMapping("/deliveryRegCancel")
 	public void deliveryRegCancel(Model model, HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		HttpSession session = request.getSession();

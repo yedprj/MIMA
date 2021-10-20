@@ -139,8 +139,8 @@ th, td {
 												<c:if test="${del.deliveryStatus eq 'y'}">
 													<span id="delCheckBtn" data-no="${del.bookingNo}" class="status">수령완료</span>
 												</c:if>
-												<c:if test="${del.deliveryStatus eq 'p'}">
-													<span id="delReview" data-no="${del.bookingNo}" class="status">후기쓰기</span>
+												<c:if test="${del.check < 1 }">
+													<span id="delReview" data-no="${del.bookingNo}" class="status cancel">후기쓰기</span>
 												</c:if>
 											</td>
 										</tr>
@@ -322,6 +322,13 @@ $(function(){
 		
 	}); // 약배달 수령확인 버튼 end
 	
+	// K. 10/21 약배달 리뷰쓰기 Btn
+	$("#delReview").on("click",function(){
+		var bkNo = $(this).data("no");
+		window.open("${pageContext.request.contextPath}/patients/ptPhaReviewFrm?bookingNo="+bkNo, "review", "width=680,height=950");
+		console.log($(this));
+		$(this).attr('disabled', true);
+	});// 리뷰쓰기 end
 	
 	
 });

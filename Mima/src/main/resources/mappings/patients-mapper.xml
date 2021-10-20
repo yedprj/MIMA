@@ -778,7 +778,10 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
                                         FROM PARTNER_PHARMACY PH , MED_DELIVERY MDD 
                                         WHERE PH.MEMBER_NO = MDD.PHARMACY_NO
                                         AND PH.MEMBER_NO = MD.PHARMACY_NO) "PHARMACY_NAME",
-		MD.DELIVERY_STATUS, MD.DELIVERY_DECLINE
+		MD.DELIVERY_STATUS, MD.DELIVERY_DECLINE,
+										(SELECT 1 FROM COMMENTS
+                                        WHERE CMAIN_CATEGORY = 'pha'
+                                        AND COMMENT_WRITER_NO = B.PT_NO) "CHECK"
 		FROM BOOKING B, MED_DELIVERY MD
 		WHERE B.BOOKING_NO = MD.BOOKING_NO
 		AND B.PT_NO = #{memberNo}
@@ -797,7 +800,10 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
                                         FROM PARTNER_PHARMACY PH , MED_DELIVERY MDD 
                                         WHERE PH.MEMBER_NO = MDD.PHARMACY_NO
                                         AND PH.MEMBER_NO = MD.PHARMACY_NO) "PHARMACY_NAME",
-		MD.DELIVERY_STATUS, MD.DELIVERY_DECLINE
+		MD.DELIVERY_STATUS, MD.DELIVERY_DECLINE,
+										(SELECT 1 FROM COMMENTS
+                                        WHERE CMAIN_CATEGORY = 'pha'
+                                        AND COMMENT_WRITER_NO = B.PT_NO) "CHECK"
 		FROM BOOKING B, MED_DELIVERY MD
 		WHERE B.BOOKING_NO = MD.BOOKING_NO
 		AND B.PT_NO = #{memberNo}
@@ -810,4 +816,6 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 		set del_pharmacy_no = #{delPharmacyNo} 
 		where member_no = #{memberNo}
  	</update>
+ 	
+ 	
 </mapper>

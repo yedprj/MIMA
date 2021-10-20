@@ -152,11 +152,11 @@
                         <div class="appointment-list doctors-appointment my-patients">
                             <div class="title-box upper-box clearfix">
                                 <div class="text pull-left">
-                                    <h3>배달 현황 목록</h3>
-                                    <span>약배달 최신순으로 전체목록을 보여줍니다.</span>
+                                    <h3>배달 완료 목록</h3>
+                                    <span>약배달 완료 목록들을 보여줍니다.</span>
                                 </div>
                                 <div class="btn-box pull-right">
-                                    <form id="medDel"  action="mediDelivery" method="get" class="search-form">
+                                    <form id="comDel"  action="comDelivery" method="get" class="search-form">
                                         <div class="form-group">
                                             <input type="search" name="keyword" value="" placeholder="Search" >
                                             <button type="submit"><i class="far fa-search"></i></button>
@@ -175,8 +175,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- 1번 -->
-	                            <div class="doctors-list">
+                          <div class="doctors-list">
                               <div class="table-outer">
                                   <table class="doctors-table">
                                       <thead class="table-header">
@@ -191,7 +190,7 @@
                                           </tr>    
                                       </thead>
                                       <tbody>
-                                      	<c:forEach var="phaDel" items="${phaDelivery}">
+                                      	<c:forEach var="phaDel" items="${phaComDelivery}">
                                           <tr class="text-center" id="trList">
                                               <td><p>${phaDel.medDeliveryNo}</p></td>
                                               <td>
@@ -218,7 +217,7 @@
 														<span class="status pending">신청접수</span>
 													</c:if>
                                               </td>
-                                              <td ><c:if test="${phaDel.deliveryStatus eq 'p'}">
+                                              <td ><c:if test="${phaDel.ptEducation eq 'n'}">
 														<p>지도</p><i id="checkIcon" class="fas fa-check-circle"></i>
 													</c:if></td>
                                               <td>
@@ -230,9 +229,10 @@
                                   </table>
                               </div>
                           </div>
-	                            
-                        	</div>
-                        </div>
+                      </div>
+                      </div>
+                      
+					
 					<!-- pagination  -->
 						<div class="pagination-wrapper" >
 							<ul class="pagination">
@@ -253,7 +253,15 @@
                     </div>
                 </div>
             </div>
-            
+            <!-- modal 
+            <div class="modal">
+				<div class="modal_content"  title="클릭하면 창이 닫힙니다.">
+				    여기에 모달창 내용을 적어줍니다.<br>
+				    이미지여도 좋고 글이어도 좋습니다.
+				</div>
+			</div>
+		 modal  end -->
+		 
 </section>
 <!-- doctors-dashboard -->
  
@@ -264,21 +272,23 @@
 </button>
 
 <script>
+
 	
 $(".pagination a").on("click", function(e) {
 	e.preventDefault(); // a, submit 기능을 막음
 	var p = $(this).attr("href")
 	$("[name='pageNum']").val(p)
-	$("#medDel").submit();
+	$("#comDel").submit();
 });
-
+	
 	function searchCheck() {
 		var choose = $("#selectbox option:selected").val();
 
-		if (choose == '2') {
-			location.href= "comDelivery";
+		if (choose == '1') {
+			location.href= "mediDelivery";
 		}
 	}
+	
 	
 	
  	

@@ -153,7 +153,7 @@
                                 <div class="btn-box pull-right">
                                     <form id="delRegCancel"  action="deliveryRegCancel" method="get" class="search-form">
                                         <div class="form-group">
-                                            <input type="search" name="search-field" placeholder="Search" required="">
+                                            <input type="search" name="keyword" value="" placeholder="Search" >
                                             <button type="submit"><i class="far fa-search"></i></button>
                                             <input type="hidden" name="type" value="N">
 	                                        <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
