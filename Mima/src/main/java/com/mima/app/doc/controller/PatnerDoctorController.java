@@ -1,7 +1,5 @@
 package com.mima.app.doc.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -24,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.service.CscService;
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
@@ -140,7 +139,7 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 나의 후기 페이지_J29
 	@GetMapping("doctor/docReview")
-	public String docReview(Model model, CommentsVO commentsvo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
+	public String docReview(Model model, CommentsVO commentsvo, ReplyVO vo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
 		int memberNo = mvo.getMemberNo();
@@ -157,6 +156,32 @@ public class PatnerDoctorController {
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		
 		return "docDash/docReview";
+	}
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 등록_J20
+	@PostMapping("doctor/docReplyInsert")
+	@ResponseBody
+	public ReplyVO docReplyInsert(ReplyVO replyvo) {
+			int result = commentsService.docReplyInsert(replyvo);
+			ReplyVO vo = new ReplyVO();
+			if ( result > 0 ) {
+				vo = commentsService.getReply(replyvo.getRcno());
+			} 
+		return vo;
+		
+	}
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
+	@PostMapping
+	public int docReplyUpdate(ReplyVO replyvo) {
+		return commentsService.docReplyUpdate(replyvo);
+	}
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20
+	@PostMapping("doctor/replyDelete")
+	@ResponseBody
+	public int replyDelete(ReplyVO replyvo) {
+		return commentsService.docReplyDelete(replyvo);
 	}
 	
 	@GetMapping("doctor/docQna")

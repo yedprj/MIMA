@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
@@ -138,5 +139,5 @@ public interface PatientsService {
 	
 	// 환자 약배달 신청 약국 변경 K. 10/19
 	public int delPhaUpdate(PatientsVO vo);
-
+	
 }

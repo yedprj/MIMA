@@ -29,5 +29,13 @@ public class CommentsVO {
 	private String name;
 	private String pharmacyInfo;
 	
+	// 닥터 대쉬보드 나의 후기 댓글달기_J20
+	private int rno;
+	private int rmainNo;
+	private int rwriterNo;
+	private Date rregDate;
+	private Date reditDate;
+	private String rcontents;
+	private int rcno;
 	
 }

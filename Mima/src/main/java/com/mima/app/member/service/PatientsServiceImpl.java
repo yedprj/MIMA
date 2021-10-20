@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.likes.domain.LikesVO;

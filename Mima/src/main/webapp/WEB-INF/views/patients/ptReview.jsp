@@ -91,12 +91,11 @@ th, td {
 				     <div class="single-comment-box">
 				         <div class="comment">
 				             <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt=""></figure>
-				             
 					             <c:if test="${ptReviewList.cmainCategory eq 'doc'}">
-					             	<h4>${ptReviewList.name} 의사</h4>
+					             	<h4>[의사후기]&nbsp;${ptReviewList.name} 의사</h4>
 					             </c:if>
 					             <c:if test="${ptReviewList.cmainCategory eq 'pha'}">
-					             	<h4>${ptReviewList.name} 약사</h4>
+					             	<h4>[약사후기]&nbsp;${ptReviewList.name} 약사</h4>
 					             </c:if>
 				             <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${ptReviewList.regDate}" pattern="yy-MM-dd"/></span>
 				             <ul class="rating clearfix">
@@ -109,6 +108,14 @@ th, td {
 				             </ul>
 				             <p>${ptReviewList.contents}</p>
 				         </div>
+        					<c:if test="${null ne ptReviewList.rcontents}">
+	      						<div class="comment replay-comment">
+	                                 <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>
+	                                 <h4><i class="fas fa-comments"></i>&nbsp;&nbsp;${ptReviewList.name} 의사</h4>
+	                                 <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${ptReviewList.rregDate}" pattern="yy-MM-dd"/></span>
+	                                 <p>${ptReviewList.rcontents}</p>
+	                            </div>
+                         	</c:if>
 				     </div>
     				</c:forEach>
                 </div>

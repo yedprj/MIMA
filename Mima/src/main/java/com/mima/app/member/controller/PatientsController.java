@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
@@ -194,7 +195,7 @@ public class PatientsController {
 		 
 	}
 	
-	//환자대쉬보드 나의후기 페이지 e.5
+	// 환자 대쉬보드 나의후기 페이지 e.5
 	@GetMapping("patients/ptReview")
 	public String ptReview(Model model, CommentsVO commentsvo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
@@ -212,6 +213,17 @@ public class PatientsController {
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptReview";
 	}
+	
+	// 환자 대쉬보드 나의 후기 댓글 조회_J20
+//	@GetMapping
+//	public String ptReplySelect(Model model, CommentsVO commentsvo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
+//		HttpSession session = request.getSession();
+//		MemberVO vo = (MemberVO) session.getAttribute("session");
+//		int memberNo = vo.getMemberNo();
+//		
+//		return null;
+//		
+//	}
 	
 	// 환자 대쉬보드 비밀번호 변경 페이지 수정 폼 e.11
 	@GetMapping("patients/ptPwChangeForm")

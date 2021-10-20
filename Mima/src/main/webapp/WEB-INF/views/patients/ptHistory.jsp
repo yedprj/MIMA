@@ -7,8 +7,16 @@ th, td {
 		text-align: center;
 		}
 		
-.doctors-appointment .doctors-table tr td .accept {
+/* .doctors-appointment .doctors-table tr td .accept {
 	margin-right: 80px;
+} */
+
+.doctors-appointment .doctors-table tr td .status {
+	margin-left: 0px;
+}
+
+.doctors-appointment .doctors-table tr td .status.pending {
+	margin-left: 0px;
 }
 </style>
 
@@ -95,12 +103,12 @@ th, td {
 				             <table class="doctors-table">
 				               <thead class="table-header">
 				                   <tr>
-				                       <th>환자명</th>
+				                       <th>의사명</th>
 				                       <th>예약번호</th>
 				                       <th>진료일</th>
 				                       <th>예약일</th>
 				                       <th>결제금액</th>
-				                       <th>후기쓰기</th>
+				                       <th></th>
 				                   </tr>    
 				               </thead>
 				               <tbody id="ptHxList">
@@ -125,10 +133,10 @@ th, td {
 										<!-- s:1015 후기 작성 버튼 -->
 										<td id="${ptHistoryList.bookingNo}">
 											<c:if test="${ptHistoryList.comments eq '0'}">
-												<button class="cancel" id="reviewBtn"><i class="fas fa-pencil-alt"></i>작성하기</button>
+												<button class="status pending" id="reviewBtn"><i class="fas fa-pencil-alt"></i> 후기 작성하기</button>
 											</c:if>
 											<c:if test="${ptHistoryList.comments eq '1'}">
-												<span class="view"><i class="fas fa-check"></i>작성완료</span>
+												<span class="status"><i class="fas fa-check"></i> 후기 작성완료</span>
 											</c:if>
 										</td>
 									</tr>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.mima.app.comments.domain.CommentsPageVO;
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.session.domain.BookingVO;
 
@@ -45,5 +46,17 @@ public interface CommentsService {
 		
 		// K. 10/14 약국 리뷰 갯수
 		public int phaReviewCnt(int cmainNo);
+		
+		// 닥터 대쉬보드 나의 후기 페이지 댓글 등록_J20
+		public int docReplyInsert(ReplyVO vo);
+		
+		// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
+		public int docReplyUpdate(ReplyVO vo);
+		
+		// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20
+		public int docReplyDelete(ReplyVO vo);
+		
+		public ReplyVO getReply(int rcno);
+
 
 }

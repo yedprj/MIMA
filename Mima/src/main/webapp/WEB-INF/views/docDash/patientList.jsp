@@ -90,7 +90,7 @@ th, td {
                     </div>
                     <div class="doctors-list">
                         <div class="table-outer">
-                            <table class="doctors-table">
+                            <table class="doctors-table table-hover">
                                 <thead class="table-header">
                                     <tr>
                                         <th>환자명</th>
