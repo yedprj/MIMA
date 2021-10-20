@@ -1,28 +1,44 @@
 package com.mima.app.member.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialException;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -229,31 +245,102 @@ public class PatientsController {
 	
 	//환자대쉬보드 프로필페이지 e.12
 	@GetMapping("patients/ptProfileDetail")
-	public void ptMyProfile(Model model, HttpServletRequest request) {
+	public void ptMyProfile(Model model, HttpServletRequest request) throws IOException {
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
-		model.addAttribute("ptMyProfile",patientsService.ptSelectOne(memberNo));
+		MemberVO membervo = patientsService.ptSelectOne(memberNo);
+		
+		model.addAttribute("ptMyProfile", membervo );
+		
+		if(membervo.getPtProfilePhoto() != null) {
+			File file = new File("c:/upload",membervo.getPtProfilePhoto());
+			if(! file.exists())
+				return;
+				
+			FileInputStream inputStream = new FileInputStream(file);
+			ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
+			
+			int len = 0;
+			byte[] buf = new byte[1024];
+			while((len = inputStream.read(buf))!= -1) {
+				byteOutStream.write(buf,0,len);
+			}
+			byte[] fileArray = byteOutStream.toByteArray();
+			String s = new String (Base64.getEncoder().encodeToString(fileArray));
+			
+			String changeString = "data:image/"+ "png" + ";base64," + s;
+			membervo.setPtProfilePhotoImg(changeString);
+		}
+	}
+	//e.20 환자대쉬보드 Main 프로필 이미지
+	@GetMapping("patients/ptProfileImg")
+	public ResponseEntity<byte[]> ptProfileImg(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException, SerialException, SQLException {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		MemberVO membervo = patientsService.ptSelectOne(memberNo);
+		String changeString = "";
+		String s = "";
+		byte[] fileArray = null;
+		if(membervo.getPtProfilePhoto() != null) {
+			File file = new File("c:/upload",membervo.getPtProfilePhoto());
+			if(! file.exists())
+				return new ResponseEntity<byte[]>(null, null, HttpStatus.NOT_FOUND);
+				
+			FileInputStream inputStream = new FileInputStream(file);
+			ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
+			
+			int len = 0;
+			byte[] buf = new byte[1024];
+			while((len = inputStream.read(buf))!= -1) {
+				byteOutStream.write(buf,0,len);
+			}
+			fileArray = byteOutStream.toByteArray();
+			//s = new String (Base64.getEncoder().encodeToString(fileArray));
+			
+			//changeString = "data:image/"+ "png" + ";base64," + s;
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_PNG);
+			return new ResponseEntity<byte[]>(fileArray, headers, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<byte[]>(null, null, HttpStatus.NOT_FOUND);
+		}
+		
+		
+	}	
+	
+	//e.20 환자대쉬보드 Main 프로필 이미지
+	@RequestMapping(value = "/patients/FileDown.do")
+	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+		long fSize = uFile.length();
+		if (fSize > 0) {
+			String mimetype = "application/x-msdownload";
+			response.setContentType(mimetype);
+
+			BufferedInputStream in = null;
+			BufferedOutputStream out = null;
+			try {
+				in = new BufferedInputStream(new FileInputStream(uFile));
+				out = new BufferedOutputStream(response.getOutputStream());
+				FileCopyUtils.copy(in, out);
+				out.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			} finally {
+				in.close();
+				response.getOutputStream().flush();
+				response.getOutputStream().close();
+			}
+		} 
 	}
 	
 	//환자대쉬보드 프로필 수정- e.12
 	@PostMapping("patients/ptprofileUpdate")
 	public String ptprofileUpdate(MemberVO vo,  Model model, HttpServletRequest request) throws IllegalStateException, IOException {
-		
-		/*
-		 * String path = "C:/upload";
-		 * 
-		 * MultipartFile uFile = uploadFile; if (!uFile.isEmpty() && uFile.getSize() >
-		 * 0) { String filename = uFile.getOriginalFilename(); // 사용자가 업로드한 파일명
-		 * 
-		 * // 파일 자체도 보안을 걸기 위해 파일이름 바꾸기도 한다. 원래 파일명과 서버에 저장된 파일이름을 따로 관리 // String
-		 * saveName = System.currentTimeMillis()+""; //이거를 팀별로 상의해서 지정해 주면 된다. // File
-		 * file =new File("c:/upload", saveName); UUID uuid = UUID.randomUUID(); File
-		 * file = new File(path, uuid + filename); uFile.transferTo(file);
-		 * 
-		 * vo.setPtProfilePhoto(filename); }
-		 */
-		
+
 		HttpSession session = request.getSession();
 		MemberVO membervo  = (MemberVO) session.getAttribute("session");
 		int memberNo = membervo.getMemberNo();
