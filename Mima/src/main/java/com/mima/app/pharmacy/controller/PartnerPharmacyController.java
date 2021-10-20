@@ -130,11 +130,13 @@ public class PartnerPharmacyController {
 	}
 	
 	@GetMapping("/deliveryRegCancel")
-	public void deliveryRegCancel(Model model, HttpServletRequest request) {
+	public void deliveryRegCancel(Model model, HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int total = deliverSerive.memDeliveryCount(vo.getMemberNo());
 		model.addAttribute("profile", partPhaService.selectOne(vo.getMemberNo()));
-		model.addAttribute("delivery", deliverSerive.memDelivery(vo.getMemberNo()));
+		model.addAttribute("delivery", deliverSerive.memDelivery(vo.getMemberNo(),cri));
+		model.addAttribute("pageMaker", new PageVO(cri,total));
 		
 	}
 	

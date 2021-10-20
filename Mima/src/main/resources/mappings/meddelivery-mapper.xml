@@ -101,6 +101,7 @@
 	AND PHARMACY_NO = #{pharmacyNo}
 </select>
 
+<!-- 배달 완료 -->
 <select id="phaCompleteDel" resultType="medDeliveryVO">
 	SELECT M.*, MM.NAME, B.CONSULT_DATE
 	FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
@@ -113,23 +114,43 @@
 
 <!-- 약배달 등록 / 취소 -->
 <select id="memDelivery" resultType="memDeliveryVO">
-	SELECT  M.PHARMACY_NO, 
-			MM.NAME, 
-			M.BOOKING_NO, 
-			B.CONSULT_DATE , 
-			M.PRESCRIPTION, 
-			P.DEL_ADDR, 
-			P.DEL_ADDR2, 
-			P.DEL_ADDR3,
-			P.DEL_POST_CODE, 
-			P.DEL_NOTE  
-	FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
-	WHERE B.BOOKING_NO = M.BOOKING_NO
-	AND B.PT_NO = P.MEMBER_NO
-	AND P.MEMBER_NO = MM.MEMBER_NO
-	AND M.PHARMACY_NO = #{pharmacyNo} 
-	AND M.DELIVERY_STATUS = 'n'
-	<![CDATA[ AND B.CONSULT_DATE <= TO_DATE(SYSDATE, 'YY/MM/DD') ]]>	
+	SELECT *
+	FROM (
+	            SELECT ROWNUM RN,  
+	                    M.PHARMACY_NO, 
+	                    MM.NAME, 
+	                    M.BOOKING_NO, 
+	                    B.CONSULT_DATE , 
+	                    M.PRESCRIPTION, 
+	                    P.DEL_ADDR, 
+	                    P.DEL_ADDR2, 
+	                    P.DEL_ADDR3,
+	                    P.DEL_POST_CODE, 
+	                    P.DEL_NOTE  
+	            FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
+	            WHERE B.BOOKING_NO = M.BOOKING_NO
+	            AND B.PT_NO = P.MEMBER_NO
+	            AND P.MEMBER_NO = MM.MEMBER_NO
+	            AND M.PHARMACY_NO = #{pharmacyNo}
+	            AND M.DELIVERY_STATUS = 'n'
+	            <include refid="criteria"></include>
+	            <![CDATA[
+	            AND B.CONSULT_DATE <= TO_DATE(SYSDATE, 'YY/MM/DD') 
+	            and ROWNUM #{cri.pageNum} * #{cri.amount}
+		     )
+	where RN > (#{cri.pageNum}-1)* #{cri.amount}	 ]]>
+</select>
+
+<!-- 약배달등록/취소 총 갯수 -->
+<select id="memDeliveryCount" resultType="int">
+	SELECT count(*)
+            FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
+            WHERE B.BOOKING_NO = M.BOOKING_NO
+            AND B.PT_NO = P.MEMBER_NO
+            AND P.MEMBER_NO = MM.MEMBER_NO
+            AND M.PHARMACY_NO = #{pharmacyNo}
+            AND M.DELIVERY_STATUS = 'n'
+            <![CDATA[ AND B.CONSULT_DATE <= TO_DATE(SYSDATE, 'YY/MM/DD')  ]]>
 </select>
 
 <!-- 배달 상태변경 -->

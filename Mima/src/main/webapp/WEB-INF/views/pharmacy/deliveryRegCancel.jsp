@@ -151,10 +151,14 @@
                                     <h3>약배달 등록/취소</h3>
                                 </div>
                                 <div class="btn-box pull-right">
-                                    <form action="my-patients.html" method="post" class="search-form">
+                                    <form id="delRegCancel"  action="deliveryRegCancel" method="get" class="search-form">
                                         <div class="form-group">
                                             <input type="search" name="search-field" placeholder="Search" required="">
                                             <button type="submit"><i class="far fa-search"></i></button>
+                                            <input type="hidden" name="type" value="N">
+	                                        <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+											<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                         </div>
                                     </form>
                                 </div>
@@ -276,6 +280,15 @@
 
 
 <script>
+
+$(".pagination a").on("click", function(e) {
+	e.preventDefault(); // a, submit 기능을 막음
+	var p = $(this).attr("href")
+	$("[name='pageNum']").val(p)
+	$("#delRegCancel").submit();
+});
+
+
 $(function(){
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";

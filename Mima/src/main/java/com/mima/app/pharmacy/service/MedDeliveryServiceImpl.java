@@ -24,8 +24,8 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 
 	// K.10/13 약배달 조회
 	@Override
-	public List<MemDeliveryVO> memDelivery(int pharmacyNo) {
-		return deliveryMapper.memDelivery(pharmacyNo);
+	public List<MemDeliveryVO> memDelivery(int pharmacyNo, Criteria cri) {
+		return deliveryMapper.memDelivery(pharmacyNo, cri);
 	}
 
 	// K.10/13 약배달 상태 변경
@@ -98,6 +98,12 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 	@Override
 	public List<MemDeliveryVO> phaCompleteDel(int pharmacyNo) {
 		return deliveryMapper.phaCompleteDel(pharmacyNo);
+	}
+
+	// 약배달 등록/ 취소 총 갯수
+	@Override
+	public int memDeliveryCount(int pharmacyNo) {
+		return deliveryMapper.memDeliveryCount(pharmacyNo);
 	}
 
 }
