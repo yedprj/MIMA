@@ -27,7 +27,7 @@ import lombok.extern.java.Log;
 
 
 @Log
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://3.37.209.146:3000")
 @Controller
 @RequestMapping("/consultation/*")
 public class ConsultationController {
