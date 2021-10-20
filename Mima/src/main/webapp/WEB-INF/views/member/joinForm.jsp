@@ -340,6 +340,7 @@
 			url : "mailCheck?email=" + email,
 			success : function(data){
 				//console.log("data : " + data);
+				alert("입력하신 메일로 인증번호 전송이 완료되었습니다.");
 				$("#emailnum").attr("disabled", false);
 				code = data;
 				//console.log(code);
@@ -479,8 +480,7 @@
 			});
 		} else {
 			alert("닉네임을 입력해 주세요");
-		}
-		
+		}	
 	}
 	
 	// 이메일 형식 체크
