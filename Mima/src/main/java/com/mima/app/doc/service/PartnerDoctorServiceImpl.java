@@ -88,6 +88,24 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 		return partnerDoctorMapper.checkDocDetail(vo);
 	}
 
+	//s:1020 의사 프로필 학력 조회
+	@Override
+	public DocInfoVO checkEduDetail(MemberVO vo) {
+		return partnerDoctorMapper.checkEduDetail(vo);
+	}
+
+	//s:1020 의사 프로필 학력 입력
+	@Override
+	public int insertEduAjax(PartnerDoctorVO vo) {
+		return partnerDoctorMapper.insertEduAjax(vo);
+	}
+
+	//s:1020  의사 프로필 페이지 학력수정 ajax 
+	@Override
+	public int updateEduAjax(PartnerDoctorVO vo) {
+		return partnerDoctorMapper.updateEduAjax(vo);
+	}
+
 	// 닥터 대쉬보드 병원 이름_J13
 	@Override
 	public String clinicName(int memberNo) {
@@ -105,5 +123,6 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 	public int deleteDocLike(LikesVO vo) {
 		return partnerDoctorMapper.deleteDocLike(vo);
 	}
+
 
 }

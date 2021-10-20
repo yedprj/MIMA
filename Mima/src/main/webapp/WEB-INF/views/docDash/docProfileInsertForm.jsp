@@ -55,6 +55,7 @@
                                 <p>${clinicName}</p>
                             </div>
                         </div>
+                        ${doc }<br>  ${expList }
                     </div>
                     <div class="profile-info">
                         <ul class="list clearfix">
@@ -105,17 +106,17 @@
 	                                        <div class="row clearfix">
 	                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
 	                                                <label>병원 이름</label>
-	                                                <input type="text" id="clinicInfo" name="clinicInfo" placeholder="Enter your name" required="">
+	                                                <input type="text" id="clinicInfo" name="clinicInfo" value="${doc.clinicInfo }" required="">
 	                                            </div>
 	                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
 	                                            </div>
 	                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
 	                                                <label>병원 이메일</label>
-	                                                <input type="email" id="clinicEmail" name="clinicEmail" placeholder="Email" required="">
+	                                                <input type="email" id="clinicEmail" name="clinicEmail" value="${doc.clinicEmail }" required="">
 	                                            </div>
 	                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
 	                                                <label>병원 전화번호</label>
-	                                                <input type="text" id="clinicPhone" name="clinicPhone" placeholder="Mobile number" required="">
+	                                                <input type="text" id="clinicPhone" name="clinicPhone" value="${doc.clinicPhone }" required="">
 	                                            </div>
 	                                        </div>
 	                                </div>
@@ -139,16 +140,16 @@
 												
 												<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 													<input type="text" class="form-control" id="addr1"
-														name="addr1" placeholder="주소">
+														name="addr1" value="${doc.addr1 }">
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 													<input type="text" class="form-control" id="addr2"
-													name="addr2" placeholder="상세주소">
+													name="addr2" value="${doc.addr2 }">
 												</div>
 												
 												<div class="col-lg-6 col-md-6 col-sm-12 form-group">
 													<input type="text" class="form-control" id="addr3"
-														name="addr3" placeholder="참고항목">
+														name="addr3" value="${doc.addr3 }">
 												</div>
 	                                        </div>
 	                                </div>
@@ -157,17 +158,17 @@
 	                                <div class="title-box">
 	                                    <h3>Education</h3>
 	                                </div>
-	                                <!--s:1006 여기는 보의 리스트?를 보내서 그걸 입력하는 매퍼를 따로 만들어서 돌려야 할거 같은디요? -->
+	                                <!--  학위 입력 하는 폼 -->
 	                                <div class="inner-box">
 	                                        <div class="row clearfix" id="education">
 	                                        <!-- 학위1 -->
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Degree</label>
-	                                                <input type="text" id="degree" name="degree" required="">
+	                                                <input type="text" id="degree1" name="degree1" required="">
 	                                            </div>
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Institute</label>
-	                                                <input type="text" id="institute" name="institute" required="">
+	                                                <input type="text" id="institute1" name="institute1" required="">
 	                                            </div>
 	                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
 	                                                <label>Passing year</label>
@@ -199,6 +200,10 @@
 	                                                <label>Passing year</label>
 	                                                <input type="date" id="degree3Year" name="degree3Year" required="">
 	                                            </div>
+	                                            <div class="btn-box d-flex flex-row-reverse" id="eduAjax" style="padding:10px">
+					                                <button type="reset" class="cancel-btn">취소</button>
+					                                <button id="eduAjaxInsertBtn" name="eduAjaxInsertBtn" class="theme-btn-one" style="margin-left:10px">저장하기<i class="icon-Arrow-Right"></i></button>
+					                            </div>
 	                                        </div>
 	                                </div>
 	                            </div>
@@ -227,46 +232,14 @@
                                                 <input type="date" class="good-date" id="toDate" name="toDate" required="required" style="cursor:pointer">
                                             </div>
                                             <div class="col-lg-2 col-md-6 col-sm-12 form-group mt-4">
-                                            	<button id="insert" name="insert" class="theme-btn-one mt-3" style="padding:9px 30px; box-shadow: none;">등록</button>
-                                            	<button id="delete" name="delete" class="theme-btn-one mt-3" style="padding:9px 30px; box-shadow: none;">삭제</button>
+                                            	<button id="insertExp" name="insertExp" class="theme-btn-one mt-3" style="padding:9px 30px; box-shadow: none;">등록</button>
+                                            	<!-- <button id="deleteExp" name="delete" class="theme-btn-one mt-3" style="padding:9px 30px; box-shadow: none;">삭제</button> -->
                                             </div>
-                                            
+                                            <hr>
+                                            <div>
+                                            <ul id="uploadedExp"></ul>
+                                            </div>
 
-											<!-- 경력2 -->
-                                            <!-- <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <label>병원이름</label>
-                                                <input type="text" id="title2" name="title2" required="">
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <label>직위</label>
-                                                <input type="text" id="detail2" name="detali2" required="">
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <label>언제부터</label>
-                                                <input type="date" id="fromDate2" name="fromDate2" required=""style="cursor:pointer">
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <label>언제까지</label>
-                                                <input type="date" id="toDate2" name="toDate2" required=""style="cursor:pointer">
-                                            </div> -->
-	                                            
-											<!-- 경력3 -->
-                                            <!-- <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <label>병원이름</label>
-                                                <input type="text" id="title3" name="title3" required="">
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <label>직위</label>
-                                                <input type="text" id="detail3" name="detali3" required="">
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <label>언제부터</label>
-                                                <input type="date" id="fromDate3" name="fromDate3" required="" style="cursor:pointer">
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 col-sm-12 form-group">
-                                                <label>언제까지</label>
-                                                <input type="date" id="toDate3" name="toDate3" required="" style="cursor:pointer">
-                                            </div> -->
 										</div>
 	                                </div>
 	                            </div>
@@ -438,7 +411,7 @@
     					//xhr.setRequestHeader("aa", "bb");
     			},
     			success:function(datas){
-    				console.log(datas);
+    				
     				var str="";
     				
     					var fileCallPath =  encodeURIComponent( datas.uploadPath+"/"+ datas.uuid +"_"+datas.pimgName);			      
@@ -498,29 +471,222 @@
     		}
     	});//end of attachment btn delete event
     	
-    	$('#insert').on('click', function() {
+    	
+    	//s:1020 education info get ajax event
+    	var eduUrl="insertEduAjax";
+    	$.ajax({
+    		url:'getEduAjax',
+			processData:false,
+			contentType:false,
+			method:'GET',
+			beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			async:false,
+			success:function(data){
+				if(data !=""){
+										
+					var str =data.profileEducation.replace(/(\s*)/g, "");
+					
+					if(str !=""){
+						
+						str = str.split('!',3);
+						var edu=[];
+						
+						for ( var i = 0; i < str.length; i++ ) {
+						     	edu.push(str[i].split(','));
+						}
+						     	console.log("edu check" ,edu);
+						     	
+						     	$("#degree1").val(edu[0][0]);
+					    		$("#institute1").val(edu[0][1]);
+					    		$("#degree1Year").val(edu[0][2]);
+					    		$("#degree2").val(edu[1][0]);
+					    		$("#institute2").val(edu[1][1]);
+					    		$("#degree2Year").val(edu[1][2]);
+					    		$("#degree3").val(edu[2][0]);
+					    		$("#institute3").val(edu[2][1]);
+					    		$("#degree3Year").val(edu[2][2]);
+						
+						$("#eduAjax button:last-child").text("수정하기");
+						eduUrl="updateEduAjax";
+					} //end of if
+				} else{
+					console.log("no data");
+				}
+			},
+			error: function(err){
+				console.error(err);
+			}
+    	}) //end of ajax getting Edu
+    	
+    	console.log(eduUrl);
+    	//s:1020  Education insert ajax event start s:1020
+    	$('#eduAjaxInsertBtn').on('click', function() {
+    		
+    		var deg1 = $("#degree1").val();
+    		var school1 =$("#institute1").val();
+    		var date1 =$("#degree1Year").val();
+    		var deg2 =$("#degree2").val();
+    		var school2 =$("#institute2").val();
+    		var date2 =$("#degree2Year").val();
+    		var deg3 =$("#degree3").val();
+    		var school3 =$("#institute3").val();
+    		var date3 =$("#degree3Year").val();
+    		
+    		var eduStr = deg1+","+school1+","+date1+"!"+deg2+","+school2+","+date2+"!"+deg3+","+school3+","+date3+"!";
+    		
+    		$.ajax({
+    			url : eduUrl,
+    			type : 'post',
+    			data : {
+    				profileEducation : eduStr		
+    			},
+    			beforeSend : function(xhr) {
+    					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+    			},
+    			success : function(data){
+    				console.log(data);
+    			},
+    			error : function(err) {
+    				console.error(err);
+    			}
+    		});
+    	});
+    	// End of education insert ajax event start s:1020
+    	
+    	
+    	//Exp get List ajax start s:1020
+    	$.ajax({
+    		url:'getExpAjax',
+			processData:false,
+			contentType:false,
+			method:'GET',
+			beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			async:false,
+			success:function(data){
+				var str;
+				
+				if(data !=""){
+					console.log(data);
+					
+					for(var i=0; i<data.length; i++){
+						var title=data[i].title;
+						var detail=data[i].detail;
+						var fromDate = new Date(data[i].fromDate).toLocaleDateString();
+						var toDate=new Date(data[i].toDate).toLocaleDateString();
+						
+						str += "<li id="+ data[i].expNo;
+    					str += "><div>";
+    					str += "<span><i class='fas fa-clinic-medical'></i> "+'병원이름 : '+title +"</span>";
+    					str += "<span><i class='fas fa-stethoscope'></i>  "+'직위 : '+ detail +"</span>";
+    					str += "<span> "+'시작일 : '+fromDate +"</span>";
+    					str += "<span> "+'끝난일 : '+toDate +"</span>";
+    					str += "<button type='button' " 
+    					str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+    					str += "</div>";
+    					str +="</li>";
+					}
+    					$("#uploadedExp").append(str);
+					
+				} else{
+					console.log("no data");
+				}
+			},
+			error: function(err){
+				console.error(err);
+			}
+    	}) //end of ajax getting List experience
+    	
+    	//Exp insert ajax event start s:1020
+    	$('#insertExp').on('click', function() {
     		var title = $('#title').val();
     		var detail = $('#detail').val();
     		var fromDate = $('#fromDate').val();
     		var toDate = $('#toDate').val();
     		var memberNo = ${session.memberNo};
     		
+    		//expinsert ajax
     		$.ajax({
-    			url : '',
-    			type : 'post',
-    			data : {title : title,
-    					detail : detail,
-    					fromDate : fromDate,
-    					toDate : toDate,
-    					memberNo : memberNo},
-    			success : function(data){
-    				console.log(data);
+    			url:'insertExpAjax',
+    			dataType : "json",
+    			method:'POST',
+				data : JSON.stringify({
+					title : title,
+					detail : detail,
+					fromDate : fromDate,
+					toDate : toDate,
+					memberNo : memberNo
+				}),
+				contentType : 'application/json',
+    			beforeSend : function(xhr) {
+    					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
     			},
-    			error : function(reject) {
-    				console.log(reject);
+    			success:function(datas){
+    				console.log(datas);
+    				
+    					var str ="";
+    					str += "<li id="+ datas.expNo;
+    					str += "><div>";
+    					str += "<span><i class='fas fa-clinic-medical'></i> "+'병원이름 :	'+title +"</span>";
+    					str += "<span><i class='fas fa-stethoscope'></i> "+'직위 : '+ detail +"</span>";
+    					str += "<span> "+'시작일 : '+fromDate +"</span>";
+    					str += "<span> "+'끝난일 : '+toDate +"</span>";
+    					str += "<button type='button' " 
+    					str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+    					str += "</div>";
+    					str +="</li>";
+    				$("#uploadedExp").html(str);
+    				alert("경력이 등록되었습니다.");
+    			
+    			},
+    			error: function(reject){
+    				console.error(reject);
     			}
-    		});
-    	});
+    		})//end of ajax exp insert
+    	});	// End of Exp insert ajax event start s:1020
+
+    	
+    	//attachment btn delete event
+		$("#uploadedExp").on("click", "button", function(e){
+			e.preventDefault();
+			//confirm if del
+			if(confirm("경력을 지우겠습니까?")){
+				var targetLi = $(this).closest("li");
+				var expNo = targetLi.attr('id');
+				alert(expNo)
+				targetLi.remove();
+				
+				$.ajax({
+	    			url:'delExpAjax',
+	    			dataType : "json",
+	    			method:'POST',
+					data : JSON.stringify({
+						expNo:expNo
+					}),
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					contentType : 'application/json',
+	    			success:function(datas){
+	    				console.log(datas);
+	    				
+	    				alert("선택한 경력이 삭제되었습니다.");
+	    			
+	    			},
+	    			error: function(reject){
+	    				console.error(reject);
+	    			}
+	    		})//end of ajax exp del
+	    		
+			}//End of confirm if 
+		});//end of attachment btn delete event
+		
+    	
+    	
+    	
     	
     	// 로그아웃_J17
 		$("#logoutBtn1").on("click", function(){
