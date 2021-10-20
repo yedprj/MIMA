@@ -399,7 +399,7 @@ th, td {
 				
 				alert('진료를 시작합니다.');
 				
-				window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
+				window.open('http://3.37.209.146:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
 				
 				let url="";
 				//uuid 구해서 링크 받아오기 s:1011
