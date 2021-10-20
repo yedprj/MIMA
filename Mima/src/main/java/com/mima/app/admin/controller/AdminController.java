@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
@@ -175,10 +177,10 @@ public class AdminController {
 	@PostMapping("/meditAjaxInsert")
 	@ResponseBody
 	// 업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
-	public MeditAttachVO meditAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
+	public MeditAttachVO meditAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo, HttpServletRequest request)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
+		String path =  request.getSession().getServletContext().getRealPath("/WEB-INF/resources/meditVideo");;
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
