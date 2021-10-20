@@ -28,4 +28,7 @@ public class PatientsVO {
 	private String delNote;		// 약배달 특이사항
 	private int delPharmacyNo;	// 약배달 신청 약국번호
 	
+	//e. 19 --어드민 환자정보조회
+	private String name; // 이름 
+	
 }

@@ -33,14 +33,16 @@
 
 <!-- 관리자 회원정보조회(환자) e.29-->
 	<select id="getptList" resultType="PatientsVO"> 
-		SELECT   MEMBER_NO
-				,PAST_HX
-				,PRE_SELF_AX
-				,TOPIC
-				,MED_DELIVERY
-				,REG_DATE
-				,EDIT_DATE
-		FROM PATIENTS
+		SELECT   P.MEMBER_NO
+				,P.PAST_HX
+				,P.PRE_SELF_AX
+				,P.TOPIC
+				,P.MED_DELIVERY
+				,P.REG_DATE
+				,P.EDIT_DATE
+				,M.NAME
+		FROM PATIENTS P JOIN MEMBER M
+		ON P.MEMBER_NO = M.MEMBER_NO
 	</select> 
 
 <!--회원정보조회(환자) 페이징 e.4-->
@@ -80,18 +82,22 @@
 		MEMBER_NO > 0
 	</select>
 
-	<select id="getPatientsList" 
-		resultType="PatientsVO">
+	<select id="getPatientsList" resultType="PatientsVO">
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(PATIENTS PATIENTS_PK) */
-		ROWNUM RN, MEMBER_NO, PAST_HX, PRE_SELF_AX, TOPIC, MED_DELIVERY, REG_DATE
-		FROM PATIENTS
-		where
-				
-		<include refid="criteria"></include>
-				<![CDATA[
-				ROWNUM <= #{pageNum} * #{amount}				
-				)
+					 ROWNUM RN,P.MEMBER_NO
+					 ,P.PAST_HX
+					 ,P.PRE_SELF_AX
+					 ,P.TOPIC
+					 ,P.MED_DELIVERY
+					 ,P.REG_DATE
+					 ,P.EDIT_DATE
+					 ,M.NAME
+			  FROM PATIENTS P JOIN MEMBER M
+			  ON P.MEMBER_NO = M.MEMBER_NO
+        	  <include refid="criteria"></include>
+					<![CDATA[
+			  AND	ROWNUM <= #{pageNum} * #{amount} )
 		WHERE RN > (#{pageNum}-1)* #{amount} ]]>
 	</select>
 <!-- 페이징 end -->
@@ -451,9 +457,10 @@
 		   B.CONSULT_TIME,
 		   M.NAME
     FROM BOOKING B JOIN MEMBER M
-    ON B.DOC_NO=M.MEMBER_NO
+    ON B.DOC_NO = M.MEMBER_NO
     WHERE <![CDATA[ ROWNUM < 6
     AND CONSULT_DATE < TO_DATE(SYSDATE) ]]>
+    AND BOOKING_STATUS = 'p'
     AND PT_NO = #{memberNo}
     ORDER BY CONSULT_DATE DESC
 </select>
@@ -494,6 +501,7 @@
 		  	CONSULT_DATE < TO_DATE(SYSDATE) ]]>
 	</select>
 
+	<!-- 환자 대쉬보드 진료내역 최신순 페이징_J19 -->
 	<select id="ptHistoryList" resultType="BookingVO">		
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
@@ -506,18 +514,23 @@
 					 B.BOOKING_STATUS,
 					 B.CONSULT_DATE,
 					 B.CONSULT_TIME,
-					 M.NAME
+					 M.NAME,
+					 (SELECT COUNT (*)
+                      FROM COMMENTS
+                      WHERE BOOKING_NO = B.BOOKING_NO) AS COMMENTS
 			  FROM BOOKING B JOIN MEMBER M
 			  ON B.DOC_NO = M.MEMBER_NO
-			  WHERE B.BOOKING_STATUS = 'p'
+			  WHERE <include refid="criteriasa"></include>
+			  		<![CDATA[
+				  	ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			  AND B.BOOKING_STATUS = 'p'
 			  AND B.PT_NO = #{memberNo}
-			  AND <![CDATA[
-				  ROWNUM <= #{cri.pageNum} * #{cri.amount}
 			  AND CONSULT_DATE < TO_DATE(SYSDATE)
 			  ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
 	</select>
 	
+	<!-- 환자 대쉬보드 진료내역 오래된순 페이징_J19 -->
 	<select id="ptHistoryOldestList" resultType="BookingVO">		
 		SELECT *
 		FROM( SELECT /*+INDEX_DESC(BOOKING BOOKING_PK) */
@@ -530,13 +543,17 @@
 					 B.BOOKING_STATUS,
 					 B.CONSULT_DATE,
 					 B.CONSULT_TIME,
-					 M.NAME
+					 M.NAME,
+					 (SELECT COUNT (*)
+                      FROM COMMENTS
+                      WHERE BOOKING_NO = B.BOOKING_NO) AS COMMENTS
 			  FROM BOOKING B JOIN MEMBER M
 			  ON B.DOC_NO = M.MEMBER_NO
-			  WHERE B.BOOKING_STATUS = 'p'
+			  WHERE <include refid="criteriasa"></include>
+			  		<![CDATA[
+				  	ROWNUM <= #{cri.pageNum} * #{cri.amount}
+			  AND	B.BOOKING_STATUS = 'p'
 			  AND B.PT_NO = #{memberNo}
-			  AND <![CDATA[
-				  ROWNUM <= #{cri.pageNum} * #{cri.amount}
 			  AND CONSULT_DATE < TO_DATE(SYSDATE)
 			  ORDER BY CONSULT_DATE ASC, CONSULT_TIME ASC )
 		WHERE RN > (#{cri.pageNum}-1)* #{cri.amount} ]]>
@@ -564,7 +581,7 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
            C.CMAIN_CATEGORY,
            M.NAME
     FROM COMMENTS C JOIN MEMBER M
-    ON C.CMAIN_NO = M.MEMBER_NO
+    ON (C.CMAIN_NO = M.MEMBER_NO)
     WHERE <![CDATA[
     	  ROWNUM < 6 ]]>
     AND COMMENT_WRITER_NO = #{memberNo}
@@ -677,7 +694,8 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 		<update id="ptprofileUpdate">
 			UPDATE MEMBER SET
 					EMAIL = #{email},
-					PHONE = #{phone}
+					PHONE = #{phone},
+					PT_PROFILE_PHOTO = #{ptProfilePhoto}
 			WHERE MEMBER_NO = #{memberNo}
 		</update>
 		
@@ -747,6 +765,7 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
         ORDER BY B.CONSULT_DATE DESC ]]>
  	</select>
  	
+ 	<!-- K. 10/18 환자 약배달 현황 전체조회 -->
  	<select id="ptDeliveryStatusAllList" resultType="PtDeliveryVO">
  		SELECT B.BOOKING_NO , B.CONSULT_DATE, B.SUBJECT,
                                         (SELECT DISTINCT MM.NAME 
@@ -763,4 +782,11 @@ WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
 		AND B.PT_NO = #{memberNo}
 		ORDER BY B.CONSULT_DATE DESC
  	</select>
+ 	
+ 	<!-- K.10/19 약배달 신청 약국 변경 -->
+ 	<update id="delPhaUpdate">
+ 		update patients
+		set del_pharmacy_no = #{delPharmacyNo} 
+		where member_no = #{memberNo}
+ 	</update>
 </mapper>

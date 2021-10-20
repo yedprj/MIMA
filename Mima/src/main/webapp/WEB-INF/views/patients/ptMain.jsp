@@ -310,13 +310,13 @@ th, td {
 												<c:if test="${del.deliveryStatus eq 'p'}">
 													<span class="status">배달완료</span>
 												</c:if>
-												<c:if test="${del.deliveryStatus eq 'y'}">
-													<span class="status pending">수령완료</span>
+												<c:if test="${del.deliveryStatus eq 'n'}">
+													<span class="status pending">배달신청</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'c'}">
 													<span id="deliveryCancelBtn" data-no="${del.bookingNo }" class="status cancel">신청취소</span>
 												</c:if>
-												<c:if test="${del.deliveryStatus eq 'n'}">
+												<c:if test="${del.deliveryStatus eq 'y'}">
 													<span class="status pending">배송시작</span>
 												</c:if>
 											</td>

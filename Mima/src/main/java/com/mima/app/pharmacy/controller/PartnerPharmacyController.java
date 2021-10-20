@@ -82,7 +82,7 @@ public class PartnerPharmacyController {
 		// 약국 한건 조회
 		model.addAttribute("profile", partPhaService.selectOne(memberNo));
 		// 약배달 등록 및 취소
-		model.addAttribute("delivery", deliverSerive.memDelivery(vo.getMemberNo()));
+		model.addAttribute("phaComDelivery", deliverSerive.phaCompleteDel(vo.getMemberNo()));
 		// 약배달 현황
 		model.addAttribute("phaDelivery", deliverSerive.phaSelectOne(memberNo));
 	}

@@ -60,8 +60,8 @@ public class AdminController {
 	@GetMapping("/adlist")
 	public String list(Model model, @ModelAttribute("cri") Criteria cri) {
 		int total = patientsService.getTotalPatientsCount(cri);
-		int total1 = patientsService.getTotaldoctorCount(cri);
-		int total2 = patientsService.getTotalpharCount(cri);
+		int totalDoc = patientsService.getTotaldoctorCount(cri);
+		int totalPhar = patientsService.getTotalpharCount(cri);
 		
 		model.addAttribute("getptList", patientsService.getptList());
 		model.addAttribute("getdocList", patientsService.getdocList());
@@ -71,6 +71,8 @@ public class AdminController {
 		model.addAttribute("getdoctorList", patientsService.getdoctorList(cri));
 		model.addAttribute("getpharList", patientsService.getpharList(cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
+		model.addAttribute("pageMakerDoc", new PageVO(cri,totalDoc));
+		model.addAttribute("pageMakerPhar", new PageVO(cri,totalPhar));
 		return "admin/adlist";
 	}
 	
@@ -134,6 +136,10 @@ public class AdminController {
 		ReportVO vo = new ReportVO();
 		vo.setReportNo(reportNo);
 		int result = reportService.adminDelete(vo);
+		
+		
+		 //알림전송 "신고글이 접수되었습니다."
+		 
 		
 		if(result == 1) {
 			rttr.addFlashAttribute("result","success");

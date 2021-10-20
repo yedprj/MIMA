@@ -92,12 +92,23 @@
 	AND MD.BOOKING_NO = #{bookingNo}
 </select>
 
+<!--K.10/16 약배달 현황목록 -->
 <select id="phaSelectOne" resultType="medDeliveryVO">
 	SELECT M.*, MM.NAME, B.CONSULT_DATE
 	FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
 	WHERE M.BOOKING_NO = B.BOOKING_NO
 	AND B.PT_NO = MM.MEMBER_NO
 	AND PHARMACY_NO = #{pharmacyNo}
+</select>
+
+<select id="phaCompleteDel" resultType="medDeliveryVO">
+	SELECT M.*, MM.NAME, B.CONSULT_DATE
+	FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
+	WHERE M.BOOKING_NO = B.BOOKING_NO
+	AND B.PT_NO = MM.MEMBER_NO
+	AND PHARMACY_NO = #{pharmacyNo}
+    and m.delivery_status = 'p'
+    and m.pt_education = 'y'
 </select>
 
 <!-- 약배달 등록 / 취소 -->
@@ -128,7 +139,15 @@
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
 
-<!-- 배달 상태변경 -->
+<!-- 약배달 수령 후 상태변경 -->
+<update id="delcompleteUpdate">
+	UPDATE MED_DELIVERY
+		SET DELIVERY_STATUS = #{deliveryStatus},
+			PT_EDUCATION = 'n'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
+
+<!-- 복약지도 완료 상태 변경 -->
 <update id="ptEduStatusUpdate">
 	UPDATE MED_DELIVERY
 		SET PT_EDUCATION = 'y'
@@ -140,6 +159,15 @@
 	UPDATE MED_DELIVERY
 	SET DELIVERY_DECLINE = #{deliveryDecline},
 	DELIVERY_STATUS = 'c'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
+
+<!-- K.10/19 약배달 재신청 -->
+<update id="delReapply">
+	UPDATE MED_DELIVERY
+	SET PHARMACY_NO = #{pharmacyNo}, 
+		DELIVERY_DECLINE = NULL , 
+		DELIVERY_STATUS = 'n'
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
 

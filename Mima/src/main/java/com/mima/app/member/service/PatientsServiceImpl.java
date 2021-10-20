@@ -251,6 +251,12 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.ptHistoryOldestList(memberNo, cri);
 	}
 	
+	// 환자 약배달 신청 약국 변경 K.10/19 
+	@Override
+	public int delPhaUpdate(PatientsVO vo) {
+		return patientsMapper.delPhaUpdate(vo);
+	}
+	
 
 	
 }

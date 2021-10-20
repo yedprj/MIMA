@@ -100,16 +100,10 @@ th, td {
 								<option value="soon">예약된 접수</option>
 								<option value="canceled">취소된 접수</option>
 							</select>
+							<script type="text/javascript">
+	                        	$("#selectBox").val("${cri.keyword}"== ""?"all" : "${cri.keyword}")
+	                        </script>
 						</div>
-						
-						<form>
-							<div class="form-group">
-								<input type="hidden" name="type" value="">
-		                    	<input type="hidden" id="pageNum" name="pageNum" value="${pageMaker.cri.pageNum}">
-              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
-              					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-			                </div>
-						</form>
 						
 					</div>
 					<div class="doctors-appointment">
@@ -169,7 +163,7 @@ th, td {
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 							</div>
 						</div>
-						
+						<%-- 
 						<div class="doctors-list"  id="soon" style="display: none;">
 							<div class="table-outer">
 								<table class="doctors-table table-hover">
@@ -282,13 +276,13 @@ th, td {
 								</table>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 							</div>
-						</div>
+						</div> --%>
 						
 					</div>
 				</div>
 			</div>
 					<!-- pagination  -->
-						<div class="pagination-wrapper" id="allPage" style="display: block;">
+						<div class="pagination-wrapper">
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev}">
 									<li class="paginate_button previous"><a href="ptBookManage?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
@@ -305,7 +299,7 @@ th, td {
 						</div>
 						<!-- pagination end -->
 						
-						<!-- pagination  -->
+						<%-- <!-- pagination  -->
 						<div class="pagination-wrapper" id="soonPage" style="display: none;">
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev}">
@@ -339,7 +333,7 @@ th, td {
 								</c:if>
 							</ul>
 						</div>
-						<!-- pagination end -->
+						<!-- pagination end --> --%>
 		</div>
 	</div>
 
@@ -385,7 +379,7 @@ th, td {
 	function searchCheck() {
 		var choose = $("#selectBox option:selected").val();
 		
-		if (choose == 'all') {
+		/* if (choose == 'all') {
 			$("#all").css('display','block');
 			$("#soon").css('display', 'none');   
 			$("#canceled").css('display', 'none');
@@ -406,12 +400,15 @@ th, td {
 			$("#allPage").css('display','none');
 			$("#soonPage").css('display', 'none');   
 			$("#canceledPage").css('display', 'block');
-		}
+		} */
+		
+		location.href="ptBookManage?pageNum=1&keyword="+choose
+		
 	}
 
 	$(document).ready(function() {
 		$('#selectBox').val('${cri.category}').prop("selected", true);
-		searchCheck();
+		//searchCheck();
 		
 		// 로그아웃_J18
 		$("#logoutBtn1").on("click", function(){
