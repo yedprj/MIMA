@@ -261,7 +261,6 @@ public class PartnerPharmacyController {
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {

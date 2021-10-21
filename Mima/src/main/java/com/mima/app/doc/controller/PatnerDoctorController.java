@@ -197,7 +197,7 @@ public class PatnerDoctorController {
 		int result = commentsService.docReplyUpdate(replyvo);
 		ReplyVO vo = new ReplyVO();
 		if ( result > 0 ) {
-			vo = commentsService.getReply(replyvo.getRcno());
+			vo = commentsService.getReply(replyvo.getRno());
 		}
 		return vo;
 	}

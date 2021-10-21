@@ -137,7 +137,7 @@ th, td {
 	                                        <button class="view" id="cnote" onclick="window.open('cnote?bookingNo=${apptHistoryPage.bookingNo}', '진료노트', 'width=1100, height=800, scrollbars=yes')">
 	                                        	<i class="fas fa-eye"></i>진료노트
 	                                        </button>
-	                                      	<button class="print" id="prescription" onclick="window.open('prescription?bookingNo=${apptHistoryPage.bookingNo}', '처방전', 'width=1100, height=800, scrollbars=yes')">
+	                                      	<button class="print" id="prescription" onclick="prescriptionPdf(${apptHistoryPage.bookingNo})" >
 	                                      		<i class="fas fa-print"></i>처방전
 	                                      	</button>
 	                                    </td>
@@ -179,6 +179,12 @@ th, td {
 </button>
 
 <script>
+
+function prescriptionPdf(no){
+	window.open('${pageContext.request.contextPath}/prePdf2?bookingNo='+ no, '처방전', 'width=1000px, height=1600px , scrollbars=yes');
+}
+
+
 $(document).ready(function() {
 	 var actionForm = $('#actionForm');
 
