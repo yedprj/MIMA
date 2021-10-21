@@ -624,26 +624,4 @@ public class PatnerDoctorController {
 }
 
 		
-			//프로필 사진 가져오기 시작
-			if(docVo.getProfilePhoto() != null) {
-				File file = new File("c:/upload",docVo.getProfilePhoto());
-				
-				if(! file.exists()) {
-					return "docDash/docProfileInsertForm";
-				}
-				 
-				FileInputStream inputStream = new FileInputStream(file);
-				ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
-				
-				int len = 0;
-				byte[] buf = new byte[1024];
-				while((len = inputStream.read(buf))!= -1) {
-					byteOutStream.write(buf,0,len);
-				}
-				byte[] fileArray = byteOutStream.toByteArray();
-				String s = new String (Base64.getEncoder().encodeToString(fileArray));
-				
-				String changeString = "data:image/"+ "png" + ";base64," + s;
-				docVo.setProfilePhoto(changeString);
-			}//프로필 사진 가져오기 끝
 		
