@@ -151,10 +151,10 @@
                                                 <li><i class="icon-Trust-1"></i></li>
                                                 <li><i class="icon-Trust-2"></i></li>
                                             </ul>
-                                            <span class="designation">${item.profileEducation }</span>
-                                            <div class="text">
+                                            <span class="designation">${item.clinicInfo }</span>
+                                            <%-- <div class="text">
                                                 <p>${item.profileContents }</p>
-                                            </div>
+                                            </div> --%>
                                             <div class="rating-box clearfix">
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-Star"></i></li>
