@@ -180,19 +180,26 @@ public class PatnerDoctorController {
 	@PostMapping("doctor/docReplyInsert")
 	@ResponseBody
 	public ReplyVO docReplyInsert(ReplyVO replyvo) {
-			int result = commentsService.docReplyInsert(replyvo);
-			ReplyVO vo = new ReplyVO();
-			if ( result > 0 ) {
-				vo = commentsService.getReply(replyvo.getRcno());
-			} 
+		int result = commentsService.docReplyInsert(replyvo);
+		ReplyVO vo = new ReplyVO();
+		if ( result > 0 ) {
+			vo = commentsService.getReply(replyvo.getRcno());
+		}
+		
 		return vo;
 		
 	}
 	
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
 	@PostMapping("doctor/docReplyUpdate")
-	public int docReplyUpdate(ReplyVO replyvo) {
-		return commentsService.docReplyUpdate(replyvo);
+	@ResponseBody
+	public ReplyVO docReplyUpdate(ReplyVO replyvo) {
+		int result = commentsService.docReplyUpdate(replyvo);
+		ReplyVO vo = new ReplyVO();
+		if ( result > 0 ) {
+			vo = commentsService.getReply(replyvo.getRcno());
+		}
+		return vo;
 	}
 	
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20

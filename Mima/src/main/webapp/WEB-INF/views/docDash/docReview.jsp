@@ -114,7 +114,7 @@ textarea {
                <div class="comment-inner" id="latest" style="display:block;">
 		       		<c:forEach items="${docReviewPage}" var="docReviewPage">
      					<div class="single-comment-box">
-         					<div class="comment">
+         					<div id="comment" class="comment">
          						<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
              					<h4>${docReviewPage.name}</h4>
              					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
@@ -206,148 +206,206 @@ textarea {
 <!-- End of .page_wrapper -->
 
 <script>
-		var replyBtnBackup;
+	var replyBtnBackup;
 		
-		function searchCheck() {
-			var choose = $("#selectBox option:selected").val();
-			
-		/* 	if (choose == 'latest') {
-				$("#latest").css('display', 'block');   
-				$("#oldest").css('display', 'none');
-			} else if (choose == 'oldest') {
-				$("#latest").css('display', 'none');   
-				$("#oldest").css('display', 'block');
-			} */
-			
-			location.href="docReview?pageNum=1&keyword="+choose
-		}
+	function searchCheck() {
+		var choose = $("#selectBox option:selected").val();
 		
-		// 댓글 등록 후 삭제
-		$(document).on('click', '#replyDelete', function(){
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue = "${_csrf.token}";
-			
-			var rno = $(this).data("no");
-			var pa = $(this).closest(".comment");
-			var replyDiv = pa.prev('#reply');
-			var delReply = pa.find(".replay-comment");
-			
-			$.ajax({
-				url : "replyDelete",
-				method : "post",
-				data : {
-					rno : rno
-				},
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success : function(datas) {
-						if( datas > 0 ){
-							alert("댓글이 삭제되었습니다.");
-							pa.remove();
-							replyDiv.before(replyBtnBackup);
-						}
-				} // success end
-			}) //ajax end
-		});
+	    /* if (choose == 'latest') {
+			$("#latest").css('display', 'block');   
+			$("#oldest").css('display', 'none');
+		} else if (choose == 'oldest') {
+			$("#latest").css('display', 'none');   
+			$("#oldest").css('display', 'block');
+		} */
 		
-		// 기존 댓글 삭제_J21
-		$(document).on('click', '#deleteBtn', function(){
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue = "${_csrf.token}";
-			
-			var rno = $(this).data("no");
-			var pa = $(this).closest(".comment");
-			var replyDiv = pa.prev('#reply');
-			var delReply = pa.find(".replay-comment");
-			
-			$.ajax({
-				url : "replyDelete",
-				method : "post",
-				data : {
-					rno : rno
-				},
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success : function(datas) {
-						if( datas > 0 ){
-							alert("댓글이 삭제되었습니다.");
-							pa.remove();
-							replyDiv.before(replyBtnBackup);
-							location.href="docReview";
-						}
-				} // success end
-			}) //ajax end
-		});
+		location.href="docReview?pageNum=1&keyword="+choose
+	}
 		
-		// 기존 댓글 수정_J21
-		$(document).on("click", '#updateBtn', function(){
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue = "${_csrf.token}";
-			
-			var rno = $(this).data("no");
-			var rcontents = $("input[name='rcontents']").val();
-			var pa = $(this).closest(".comment");
-			
-			$.ajax({
-				url : "docReplyUpdate",
-				method : "post",
-				data : {
-					rno : rno,
-					rcontents : rcontents
-				},
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success : function(datas) {
-						if( datas > 0 ){
-							alert("댓글이 수정되었습니다.");
-							pa.remove();
-						}
-				} // success end
-			}) //ajax end
-		});
+	// 댓글 등록 후 삭제
+	$(document).on('click', '#replyDelete', function(){
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
 		
-		// 댓글 등록 후 수정
+		var rno = $(this).data("no");
+		var pa = $(this).closest(".comment");
+		var replyDiv = pa.prev('#reply');
+		var delReply = pa.find(".replay-comment");
 		
-		// 등록폼 취소 버튼
-		$(document).on('click', '#cancel', function(){
-			$(".comment #reply").empty();
-		});
+		$.ajax({
+			url : "replyDelete",
+			method : "post",
+			data : {
+				rno : rno
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(datas) {
+					if( datas > 0 ){
+						alert("댓글이 삭제되었습니다.");
+						pa.remove();
+						replyDiv.before(replyBtnBackup);
+					}
+			} // success end
+		}) //ajax end
+	});
 		
-		// 등록폼 등록 버튼
-		$(document).on('click', '#insert', function(){
-			
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue = "${_csrf.token}";
-			var pa = $(this).closest(".comment");
-			console.log(pa);
-			$.ajax({
-				url : "docReplyInsert",
-				method : "post",
-				data : $("#replyForm").serialize(),
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success : function(datas) {
-						$(".add-listing").remove();
-						pa.find(".replay-btn").remove();
-						pa.append('<div class="comment replay-comment">'
-                               	  + '<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
-                                  + '<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
-                                  + '<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
-                                  + '<p id="rcontents">'+datas.rcontents+'</p>'
-                                  +'<span class="rating clearfix">'
-                                  +'<a type="button" id="updateBtn" class="theme-btn-one" data-no=""><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
-                                  +'&nbsp;'
-                                  +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
-                                  + '</span>'
-                                  + '</div>');
-						alert("댓글이 등록되었습니다.");
-				} // success end
-			}) //ajax end
-		});
+	// 기존 댓글 삭제_J21
+	$(document).on('click', '#deleteBtn', function(){
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
+		var rno = $(this).data("no");
+		var pa = $(this).closest(".comment");
+		var replyDiv = pa.prev('#reply');
+		var delReply = pa.find(".replay-comment");
+		
+		$.ajax({
+			url : "replyDelete",
+			method : "post",
+			data : {
+				rno : rno
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(datas) {
+					if( datas > 0 ){
+						alert("댓글이 삭제되었습니다.");
+						pa.remove();
+						replyDiv.before(replyBtnBackup);
+						location.href="docReview";
+					}
+			} // success end
+		}) //ajax end
+	});
+		
+	// 기존 댓글 수정_J21
+	/* $(document).on("click", '#updateBtn', function(){
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
+		var rno = $(this).data("no");
+		var pa = $(this).closest(".comment");
+		var rcontents = $("input[name='rcontents']").val();
+		
+		$.ajax({
+			url : "docReplyUpdate",
+			method : "post",
+			data : {
+				rno : rno,
+				rcontents : rcontents
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(datas) {
+					  if( datas > 0 ){
+						  alert("댓글이 수정되었습니다.");
+						  pa.remove();
+						  pa.append('<div class="comment replay-comment">'
+                               	    +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
+                                    +'<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
+                                    +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.reditDate+'</span>'
+                                    +'<p id="rcontents">'+datas.rcontents+'</p>'
+                                    +'<span class="rating clearfix">'
+                                    +'<a type="button" id="updateBtn" class="theme-btn-one" data-no=""><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
+                                    +'&nbsp;'
+                                    +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
+                                    +'</span>'
+                                    +'</div>');
+					  } 
+			} // success end
+		}) //ajax end
+	}); */
+	
+	// 댓글 등록 후 수정
+	$(document).on('click', '#replyUpdate', function(){
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+	});
+	
+	// 등록폼 취소 버튼
+	$(document).on('click', '#cancel', function(){
+		$(".comment #reply").empty();
+	});
+	
+	// 등록폼 등록 버튼
+	$(document).on('click', '#insert', function(){
+		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
+		var pa = $(this).closest(".comment");
+		
+		$.ajax({
+			url : "docReplyInsert",
+			method : "post",
+			data : $("#replyForm").serialize(),
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(datas) {
+					$(".add-listing").remove();
+					pa.find(".replay-btn").remove();
+					pa.append('<div class="comment replay-comment">'
+                              	  +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
+                                 +'<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
+                                 +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
+                                 +'<p id="rcontents">'+datas.rcontents+'</p>'
+                                 +'<span class="rating clearfix">'
+                                 +'<a type="button" id="replyUpdate" class="theme-btn-one" data-no=""><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
+                                 +'&nbsp;'
+                                 +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
+                                 +'</span>'
+                                 +'</div>');
+					alert("댓글이 등록되었습니다.");
+			} // success end
+		}) //ajax end
+	});
+
+	// 수정폼 등록 버튼
+	$(document).on('click', '#update', function(){
+		
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
+		
+		var rno = $(this).data("no");
+		var rcontents = $("input[name='rcontents']").val();
+		console.log(rno);
+		console.log(rcontents);
+		
+		var pa = $(this).closest(".comment");
+		
+		$.ajax({
+			url : "docReplyUpdate",
+			method : "post",
+			data : {
+				rno : rno,
+				rcontents : rcontents
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(datas) {
+					$(".add-listing").remove();
+					pa.find(".replay-btn").remove();
+					pa.append('<div class="comment replay-comment">'
+                              	  +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
+                                 +'<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
+                                 +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
+                                 +'<p id="rcontents">'+datas.rcontents+'</p>'
+                                 +'<span class="rating clearfix">'
+                                 +'<a type="button" id="replyUpdate" class="theme-btn-one" data-no=""><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
+                                 +'&nbsp;'
+                                 +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
+                                 +'</span>'
+                                 +'</div>');
+					alert("댓글이 수정되었습니다.");
+			} // success end
+		}) //ajax end
+	});
 		
 		$(document).ready(function() {
 			$('#selectBox').val('${cri.category}').prop("selected", true);
@@ -356,47 +414,48 @@ textarea {
 				$('#logOutfrm1').submit();
 			});
 			
+			// 등록폼
 			$(".comment").on("click",'.replay-btn', function(){
-			var cno = $(this).data("cno")
-			var no = $(this).data("no")
-			replyBtnBackup = $(this)[0];
-			$(".comment #reply").empty();
-			$(this).next()
-			.append('<div class="add-listing">'
-                	+'<form id="replyForm">'
-                    +'<br><label><b>댓글 쓰기</b></label><br>'
-					+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
-                    +'    <textarea id="replyContents" name="rcontents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
-                	+'  </div>'
-                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
-                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
-                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
-                	+'<p><button type="button" class="theme-btn-one" id="insert">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
-                	+'</form>'
-                	+'<div>')
-			});
-			
-			// 수정폼
-			/* $(".comment").on("click",'#updateBtn', function(){
-				var rno = $(this).data("rno")
-				$("input[name='rregDate']").val();
-				$("input[name='rcontents']").val();
-				$(this).next(.comment replay-comment)
-				.append('<div class="replyUpdate">'
-						+'<form id="replyUpdate">'
-	                    +'<br><label><b>댓글 수정하기</b></label><br>'
+				var cno = $(this).data("cno")
+				var no = $(this).data("no")
+				
+				replyBtnBackup = $(this)[0];
+				$(".comment #reply").empty();
+				$(this).next()
+				.append('<div class="add-listing">'
+	                	+'<form id="replyForm">'
+	                    +'<br><label><b>댓글 쓰기</b></label><br>'
 						+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
-	                    +'    <textarea id="replyContents" name="rcontents" placeholder="'+rcontents+'"></textarea>'
+	                    +'    <textarea id="replyContents" name="rcontents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
 	                	+'  </div>'
 	                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
 	                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
 	                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
-	                	+'  <input type="hidden" name="rcontents" value="'+rcontents+'">'
-	                	+'<p><button type="button" class="theme-btn-one" id="insert">수정</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
+	                	+'<p><button type="button" class="theme-btn-one" id="insert">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
 	                	+'</form>'
 	                	+'<div>')
+			});
+			
+			// 수정폼
+			$(".comment").on("click",'#updateBtn', function(){
+				var cno = $(this).data("cno")
+				var no = $(this).data("no")
 				
-			}); */
+				$("#comment .replay-comment").empty();
+				
+				$("#comment").append('<div class="add-listing">'
+	                	+'<form id="replyForm">'
+	                    +'<br><label><b>댓글 수정</b></label><br>'
+						+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
+	                    +'    <textarea id="replyContents" name="rcontents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
+	                	+'  </div>'
+	                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
+	                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
+	                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
+	                	+'<p><button type="button" class="theme-btn-one" id="update">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
+	                	+'</form>'
+	                	+'<div>')
+			});
 		});
 
 </script>
