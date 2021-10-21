@@ -306,31 +306,7 @@ public class PatnerDoctorController {
 			model.addAttribute("doc", doctorService.getDocDetail(docVo));
 			model.addAttribute("expList", experienceService.getExpList(expVo));
 		}
-		
-			//프로필 사진 가져오기 시작
-			if(docVo.getProfilePhoto() != null) {
-				File file = new File("c:/upload",docVo.getProfilePhoto());
-				
-				if(! file.exists()) {
-					return "docDash/docProfileInsertForm";
-				}
-				 
-					
-				FileInputStream inputStream = new FileInputStream(file);
-				ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
-				
-				int len = 0;
-				byte[] buf = new byte[1024];
-				while((len = inputStream.read(buf))!= -1) {
-					byteOutStream.write(buf,0,len);
-				}
-				byte[] fileArray = byteOutStream.toByteArray();
-				String s = new String (Base64.getEncoder().encodeToString(fileArray));
-				
-				String changeString = "data:image/"+ "png" + ";base64," + s;
-				docVo.setProfilePhoto(changeString);
-			}//프로필 사진 가져오기 끝
-		
+	
 		return "docDash/docProfileInsertForm";	
 	}
 	
@@ -452,7 +428,7 @@ public class PatnerDoctorController {
 	@PostMapping("doctor/register")
 	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
 		
-		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo.getProfileEducation());
+		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
 		//s:1006 파트너의사테이블에 저장
 		doctorService.docProfileInsert(vo);
 		
@@ -561,33 +537,33 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
-		//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
-		@RequestMapping(value = "/doctor/FileDown.do")
-		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
-				HttpServletResponse response) throws Exception {
-			log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
-			File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
-			
-			long fSize = uFile.length();
-			if (fSize > 0) {
-				String mimetype = "application/x-msdownload";
-				response.setContentType(mimetype);
+	//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
+	@RequestMapping(value = "/FileDown.do")
+	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
+		File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+		
+		long fSize = uFile.length();
+		if (fSize > 0) {
+			String mimetype = "application/x-msdownload";
+			response.setContentType(mimetype);
 
-				BufferedInputStream in = null;
-				BufferedOutputStream out = null;
-				try {
-					in = new BufferedInputStream(new FileInputStream(uFile));
-					out = new BufferedOutputStream(response.getOutputStream());
-					FileCopyUtils.copy(in, out);
-					out.flush();
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				} finally {
-					in.close();
-					response.getOutputStream().flush();
-					response.getOutputStream().close();
-				}
-			} 
-		}//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기 끝
+			BufferedInputStream in = null;
+			BufferedOutputStream out = null;
+			try {
+				in = new BufferedInputStream(new FileInputStream(uFile));
+				out = new BufferedOutputStream(response.getOutputStream());
+				FileCopyUtils.copy(in, out);
+				out.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			} finally {
+				in.close();
+				response.getOutputStream().flush();
+				response.getOutputStream().close();
+			}
+		} 
+	}//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기 끝
 	
 }

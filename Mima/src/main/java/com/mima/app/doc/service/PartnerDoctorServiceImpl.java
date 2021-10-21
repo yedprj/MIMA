@@ -28,7 +28,7 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 	// s:1006 의사프로필 인서트 + 첨부파일(프로필 사진 인서트)
 	@Override
 	public int docProfileInsert(PartnerDoctorVO vo) {
-		
+		System.out.println("니뭐고--------------------" + vo);
 		return partnerDoctorMapper.docProfileInsert(vo);
 		
 	}
