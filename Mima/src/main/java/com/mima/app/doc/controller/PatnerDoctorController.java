@@ -483,6 +483,7 @@ public class PatnerDoctorController {
 			// File file =new File("c:/upload", saveName);
 			UUID uuid = UUID.randomUUID();
 			File file = new File(imgPath, uuid + filename);
+			System.out.println("이미지패스랑 유유아디파일"+file);
 			uFile.transferTo(file);
 
 			attachVo = new MeditAttachVO(); // attachVO list안에 파일정보 저장하기 위해 만듦
@@ -490,7 +491,7 @@ public class PatnerDoctorController {
 			attachVo.setUuid(uuid.toString());
 			attachVo.setUploadPath(imgPath);
 
-			System.out.println(attachVo);
+			System.out.println("어태치보 확인"+attachVo);
 		}
 		return attachVo;
 	}
@@ -560,12 +561,13 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
-	//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
-		@RequestMapping(value = "/FileDown.do")
+		//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
+		@RequestMapping(value = "/doctor/FileDown.do")
 		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
 				HttpServletResponse response) throws Exception {
 			log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
 			File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+			
 			long fSize = uFile.length();
 			if (fSize > 0) {
 				String mimetype = "application/x-msdownload";
@@ -586,6 +588,6 @@ public class PatnerDoctorController {
 					response.getOutputStream().close();
 				}
 			} 
-		}
+		}//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기 끝
 	
 }
