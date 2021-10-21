@@ -138,7 +138,7 @@ textarea {
 			                                 <h4><i class="fas fa-comments"></i>&nbsp;${session.name} 의사</h4>
 			                                 <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.rregDate}" pattern="yy-MM-dd"/></span>
 			                                 <span class="rating clearfix">
-			                                 	<a type="button" id="updateBtn" class="theme-btn-one" data-no="${docReviewPage.rno}"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>
+			                                 	<a type="button" id="updateBtn" class="theme-btn-one" data-cno="${docReviewPage.cno}" data-no="${docReviewPage.rno}"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>
                                                     <input type="hidden" id="rregDate" name="rregDate" value="${docReviewPage.rregDate}"/>
                                                     <input type="hidden" id="rcontents" name="rcontents" value="${docReviewPage.rcontents}"/>
 			                                 	<a type="button" id="deleteBtn" class="theme-btn-two" data-no="${docReviewPage.rno}"><i class="fas fa-times"></i></a>
@@ -355,7 +355,7 @@ textarea {
                                  +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
                                  +'<p id="rcontents">'+datas.rcontents+'</p>'
                                  +'<span class="rating clearfix">'
-                                 +'<a type="button" id="replyUpdate" class="theme-btn-one" data-no=""><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
+                                 +'<a type="button" id="replyUpdate" class="theme-btn-one" data-no="'+datas.rno+'"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
                                  +'&nbsp;'
                                  +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
                                  +'</span>'
@@ -363,7 +363,7 @@ textarea {
 					alert("댓글이 등록되었습니다.");
 			} // success end
 		}) //ajax end
-	});
+	}); // 등록 폼 버튼 end
 
 	// 수정폼 등록 버튼
 	$(document).on('click', '#update', function(){
@@ -371,8 +371,9 @@ textarea {
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
 		
-		var rno = $(this).data("no");
-		var rcontents = $("input[name='rcontents']").val();
+		var pdiv = $(this).closest(".add-listing");
+		var num = pdiv.find("input[name='rmainNo']").val();
+		var con = pdiv.find("#replyContents").val();
 		console.log(rno);
 		console.log(rcontents);
 		
@@ -382,8 +383,8 @@ textarea {
 			url : "docReplyUpdate",
 			method : "post",
 			data : {
-				rno : rno,
-				rcontents : rcontents
+				rno : num,
+				rcontents : con
 			},
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
@@ -392,12 +393,12 @@ textarea {
 					$(".add-listing").remove();
 					pa.find(".replay-btn").remove();
 					pa.append('<div class="comment replay-comment">'
-                              	  +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
+                              	 +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
                                  +'<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
                                  +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
                                  +'<p id="rcontents">'+datas.rcontents+'</p>'
                                  +'<span class="rating clearfix">'
-                                 +'<a type="button" id="replyUpdate" class="theme-btn-one" data-no=""><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
+                                 +'<a type="button" id="update" class="theme-btn-one" data-no="'+datas.rno+'"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
                                  +'&nbsp;'
                                  +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
                                  +'</span>'
@@ -405,7 +406,7 @@ textarea {
 					alert("댓글이 수정되었습니다.");
 			} // success end
 		}) //ajax end
-	});
+	}); // 수정폼 버튼 end
 		
 		$(document).ready(function() {
 			$('#selectBox').val('${cri.category}').prop("selected", true);
@@ -441,7 +442,7 @@ textarea {
 				var cno = $(this).data("cno")
 				var no = $(this).data("no")
 				
-				$("#comment .replay-comment").empty();
+				$(this).closest(".replay-comment").empty();
 				
 				$("#comment").append('<div class="add-listing">'
 	                	+'<form id="replyForm">'
@@ -452,10 +453,14 @@ textarea {
 	                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
 	                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
 	                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
-	                	+'<p><button type="button" class="theme-btn-one" id="update">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
+	                	+'<p><button type="button" class="theme-btn-one" id="update">수정</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
 	                	+'</form>'
 	                	+'<div>')
 			});
-		});
+		
+		
+		
+		}); // document function End
+		
 
 </script>

@@ -139,8 +139,10 @@ th, td {
 												<c:if test="${del.deliveryStatus eq 'y'}">
 													<span id="delCheckBtn" data-no="${del.bookingNo}" class="status">수령완료</span>
 												</c:if>
-												<c:if test="${del.check < 1 }">
-													<span id="delReview" data-no="${del.bookingNo}" class="status cancel">후기쓰기</span>
+												<c:if test="${del.deliveryStatus eq 'p'}">
+													<c:if test="${del.check < 1 }">
+														<span id="delReview" data-no="${del.bookingNo}" class="status cancel">후기쓰기</span>
+													</c:if>
 												</c:if>
 											</td>
 										</tr>
