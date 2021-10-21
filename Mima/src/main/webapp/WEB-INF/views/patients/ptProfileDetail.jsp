@@ -103,10 +103,9 @@
 										<!-- 여기 프로필 사진 보여주기 하면 됨 -->
 										<div>
 											<figure class="image-box">
-
 												<c:choose>
 													<c:when test="${not empty ptMyProfile.ptProfilePhotoImg }">
-														<img src="${ptMyProfile.ptProfilePhotoImg }" alt="">
+														<img id="profileImg" src="${ptMyProfile.ptProfilePhotoImg }" alt="">
 													</c:when>
 													<c:otherwise>
 														<img width="300" height="300" id="profileImg"
@@ -118,8 +117,7 @@
 											<ul id="uploaded"></ul>
 										</div>
 										<div class="upload-photo">
-											<input name="ptProfilePhoto" id="ptProfilePhoto"
-												value="${ptMyProfile.ptProfilePhoto }"> <input
+											<input name="ptProfilePhoto" id="ptProfilePhoto" value="${ptMyProfile.ptProfilePhoto }"> <input
 												id="fileInput" type="file"><br> <span>형식은
 												JPG, GIF, PNG 만 가능합니다.<br> 파일사이즈 최대 2MB
 											</span><br>
@@ -314,19 +312,16 @@
 													.replace(new RegExp(/\\/g),
 															"/");
 											str += "<li ";
-						str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-pimgName='"+datas.pimgName+"' data-type='"+datas.image+"' ><div>";
+											str += "data-path='"+datas.uploadPath+"' data-uuid='"+datas.uuid+"' data-pimgName='"+datas.pimgName+"' data-type='"+datas.image+"' ><div>";
 											str += "<span> " + datas.pimgName
 													+ "</span>";
 											str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' " 
-						str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
+											str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
 											str += "</div>";
 											str += "</li>";
 
 											$("#uploaded").html(str);
-											$("#ptProfilePhoto")
-													.val(
-															datas.uuid
-																	+ datas.pimgName);
+											$("#ptProfilePhoto").val(datas.uuid + datas.pimgName);
 											alert("file uploaded");
 
 										},
