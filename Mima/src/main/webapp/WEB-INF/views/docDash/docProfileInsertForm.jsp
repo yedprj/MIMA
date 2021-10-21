@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
 .good-date {
 	height: 44px;
@@ -46,7 +46,18 @@
             <div class="left-panel">
                 <div class="profile-box">
                     <div class="upper-box">
-                        <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
+                        <figure class="profile-image">
+                        <c:choose>
+		                     <c:when test="${not empty session.ptProfilePhoto }">
+		                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+		                     </c:when>
+		                     <c:otherwise>
+		                        <img
+		                  src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+		                  alt="">
+		                     </c:otherwise>
+		                  </c:choose>
+                        </figure>
                         <div class="title-box centred">
                             <div class="inner">
                               
@@ -92,14 +103,34 @@
 		                                    <div class="profile-title">
 		                                    <!-- 여기 프로필 사진 보여주기 하면 됨 -->
 		                                    	<div>
-			                                        <figure class="image-box"><img width="300" height="300"  id="profileImg" src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png" alt="프로필 미리보기"></figure>
+			                                        <%-- <figure class="image-box">
+			                                        	<img width="300" height="300"  id="profileImg" src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png" alt="프로필 미리보기">
+			                                        </figure> --%>
+													
+													<figure class="image-box">
+														<c:choose>
+										                     <c:when test="${not empty session.ptProfilePhoto }">
+										                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+										                     </c:when>
+										                     <c:otherwise>
+										                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+										                  alt="">
+										                     </c:otherwise>
+										                  </c:choose>
+														
+													</figure>
+
+
 			                                        <ul id="uploaded"></ul>
 		                                        </div>
 		                                        <div class="upload-photo">
-		                                       		<input id="fileInput" type="file" name="docProImgFile" required><br>
-		                                            <span>형식은 JPG, GIF, PNG 만 가능합니다.<br> 파일사이즈 최대 2MB</span><br>
-		                                            <button type="button" id="imgUpBtn" class="theme-btn-one" style="box-shadow: none;">등록</button>
-		                                        </div>
+													<input name="ptProfilePhoto" id="ptProfilePhoto" value="${doc.profilePhoto }"> <input
+														id="fileInput" type="file"><br> <span>형식은
+														JPG, GIF, PNG 만 가능합니다.<br> 파일사이즈 최대 2MB
+													</span><br>
+													<button type="button" id="imgUpBtn" class="theme-btn-one"
+														style="box-shadow: none;">등록</button>
+												</div>
 		                                    </div>
 	                                    
 	                                        <div class="row clearfix">
@@ -356,9 +387,7 @@
     	//사진 미리보기
     	const input = document.getElementById('fileInput');
     	const profileImg =document.getElementById('profileImg');
-    	//var videoSource=document.createElement('source');
-    	//videoSource.setAttribute('src', "c:upload/"+datas.uuid+datas.vfileName);
-    	
+		console.log(profileImg)
     	input.addEventListener('change', function() {
     	  const files = this.files || [];
 
@@ -385,7 +414,7 @@
     		
     		var formData = new FormData(document.docProInsertFrm);
     		console.log("formData writer+content: "+ FormData)
-    		var inputFile = $("[name='docProImgFile']");
+    		var inputFile = $("#fileInput");
     		var files = inputFile[0].files;
     		console.log(files);
     		
@@ -405,9 +434,7 @@
     			data: formData,
     			method:'POST',
     			beforeSend : function(xhr) {
-    				console.log(csrfHeaderName + " and " + csrfTokenValue);
     					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-    					//xhr.setRequestHeader("aa", "bb");
     			},
     			success:function(datas){
     				
@@ -424,6 +451,7 @@
     					str +="</li>";
     								
     				$("#uploaded").html(str);
+    				$("#ptProfilePhoto").val(datas.uuid + datas.pimgName);
     				alert("file uploaded");
     			
     			},
@@ -450,11 +478,10 @@
     	
     	//attachment btn delete event
     	$("#uploaded").on("click", "button", function(e){
-    		if(confirm("Remove this file?")){
+    		if(confirm("파일을 삭제하시겠습니까?")){
     			var targetLi = $(this).closest("li");
     			var preview=$('#profileImg');
     			targetLi.remove();
-    			//이거 왜 안돼 ㅠㅠ 첨부파일 x 누르면 사진도 사라져야 하는데 그대로 있네유
     			$(preview).removeAttr('src');
     			$(preview).attr('src', "${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png");
     			
@@ -486,7 +513,6 @@
 						for ( var i = 0; i < str.length; i++ ) {
 						     	edu.push(str[i].split(','));
 						}
-						     	console.log("edu check" ,edu);
 						     	
 						     	$("#degree1").val(edu[0][0]);
 					    		$("#institute1").val(edu[0][1]);
@@ -510,7 +536,6 @@
 			}
     	}) //end of ajax getting Edu
     	
-    	console.log(eduUrl);
     	//s:1020  Education insert ajax event start s:1020
     	$('#eduAjaxInsertBtn').on('click', function() {
     		
@@ -560,7 +585,6 @@
 				
 				
 				if(data !=""){
-					console.log(data);
 					var str="";
 					for(var i=0; i<data.length; i++){
 						var title=data[i].title;
@@ -674,9 +698,6 @@
 			}//End of confirm if 
 		});//end of attachment btn delete event
 		
-    	
-    	
-    	
     	
     	// 로그아웃_J17
 		$("#logoutBtn1").on("click", function(){
