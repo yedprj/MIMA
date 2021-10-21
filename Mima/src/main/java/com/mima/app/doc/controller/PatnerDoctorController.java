@@ -472,6 +472,7 @@ public class PatnerDoctorController {
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
+
 		String imgPath = path;
 
 		MultipartFile uFile = uploadFile;

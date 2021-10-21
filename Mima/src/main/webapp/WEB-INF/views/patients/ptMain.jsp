@@ -88,6 +88,7 @@ th, td {
 								<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
 							</c:otherwise>
 						</c:choose>
+
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
@@ -250,7 +251,7 @@ th, td {
 							<table class="doctors-table">
 								<thead class="table-header">
 									<tr>
-										<th>환자명</th>
+										<th>의사명</th>
 										<th>예약번호</th>
 										<th>진료일</th>
 										<th>예약일</th>
