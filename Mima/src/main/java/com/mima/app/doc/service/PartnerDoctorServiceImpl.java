@@ -29,20 +29,8 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 	@Override
 	public int docProfileInsert(PartnerDoctorVO vo) {
 		
-		partnerDoctorMapper.docProfileInsert(vo); //doc table에 인서트
+		return partnerDoctorMapper.docProfileInsert(vo);
 		
-	//첨부파일 등록 (첨부파일 테이블에) 교재 567
-		if (vo.getAttachFile() == null) {
-			return 2;
-		}
-		// BoardServiceImpl 참고
-		//여기 그냥 메딧어태치 보 쓰고 같은 테이블 사용함
-		MeditAttachVO attach =vo.getAttachFile();
-						
-		System.out.println("첨부파일 인서트 제발 좀 들어가-"+attach+"meditationServiceImpl");
-		attachMapper.insertImg(attach);
-
-		return 1;
 	}
 
 

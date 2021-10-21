@@ -26,6 +26,7 @@ import javax.sql.rowset.serial.SerialException;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,7 +45,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mima.app.comments.domain.CommentsVO;
-import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
@@ -58,7 +58,9 @@ import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
+import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
+import com.mima.app.session.service.ConsultationService;
 
 import lombok.extern.java.Log;
 
@@ -69,14 +71,16 @@ public class PatientsController {
 	
 	// e.10/11 환자대쉬보드
 	@Autowired PatientsService patientsService;
-	
 	@Autowired CommentsService commentsService;
-
 	@Autowired BookingService bookingService; // K.10/09 booking 확인
 	@Autowired PatnerPharmacyService phaService; // K.10/07 약국 검색
 	@Autowired MedDeliveryService deliveryService; // K.10/09 약배달
 	@Autowired MemberService memberService; // K.10/11 약배달 신청 유무
+	@Autowired ConsultationService consultationService; // K. 10/21 약국 후기 등록
 
+	@Value("#{global['path']}")
+	String path;
+	
 	//e.4
 	//환자대쉬보드 메인 페이지
 	@GetMapping("patients/ptMain")
@@ -103,7 +107,6 @@ public class PatientsController {
 	@GetMapping("patients/ptDeliveryList")
 	public String ptDeliveryList(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		
 		int memberNo = vo.getMemberNo();
@@ -112,6 +115,25 @@ public class PatientsController {
 		model.addAttribute("memberNo", memberNo);
 
 		return "patients/ptDeliveryList";
+	}
+	
+	// K. 10/21 약국 후기 폼
+	@GetMapping("patients/ptPhaReviewFrm")
+	public String ptPhaReviewFrm(Model model, HttpServletRequest request, MedDeliveryVO mvo) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		mvo = deliveryService.phaNameSelectOne(mvo.getBookingNo());
+		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("pha", mvo);
+		return "patients/ptPhaReviewFrm";
+	}
+	
+	@PostMapping("patients/ptReviewInsert")
+	@ResponseBody
+	public int ptReviewInsert(CommentsVO vo) {
+		int result = consultationService.ptReviewInsert(vo);
+		return result;
 	}
 	
 	// K. 10/18 환자 약배달 수령완료시 상태 업데이트
@@ -268,6 +290,7 @@ public class PatientsController {
 			membervo.setPtProfilePhotoImg(changeString);
 		}
 	}
+	
 	//e.20 환자대쉬보드 Main 프로필 이미지
 	@GetMapping("patients/ptProfileImg")
 	public ResponseEntity<byte[]> ptProfileImg(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException, SerialException, SQLException {

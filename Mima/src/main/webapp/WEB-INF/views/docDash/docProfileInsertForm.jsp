@@ -251,7 +251,7 @@ ${session}
 	                                        <div class="row clearfix">
 	                                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
 	                                                <label>자기소개</label>
-	                                                <textarea id="profileContents" name="profileContents" placeholder="전문분야와 경력 등 상세히 알려주세요."></textarea>
+	                                                <textarea id="profileContents" name="profileContents" placeholder="전문분야와 경력 등 상세히 알려주세요.">${doc.profileContents }</textarea>
 	                                            </div>
 	                                        </div>
 	                                </div>
@@ -442,18 +442,9 @@ ${session}
     		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
     		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+"'>";
     		    
-    		let education =$('#degree').val()+' '+$('#institute').val()+' '+$('#degree1Year').val()+" ";
-    		education +=$('#degree2').val()+' '+$('#institute2').val()+' '+$('#degree2Year').val()+" ";
-    		education +=$('#degree3').val()+' '+$('#institute3').val()+' '+$('#degree3Year').val();
-    		
-    		let edu="";
-    		var eduList=$('#education');
-    			edu+="<input type='hidden' name='profileEducation' id='profileEducation' value='"+education+"'>";
-    		
-    		$(eduList).append(edu);
     		$("#docProInsertFrm").append(str);
     		alert("프로필 등록이 완료되었습니다.")
-    		//$("#docProInsertFrm").submit();
+    		$("#docProInsertFrm").submit();
     		
     	});//end of btnRegister event
     	
@@ -555,7 +546,7 @@ ${session}
     	// End of education insert ajax event start s:1020
     	
     	
-    	//Exp get List ajax start s:1020
+    	//Exp 페이지 들어갔을 때 get List ajax start s:1020
     	$.ajax({
     		url:'getExpAjax',
 			processData:false,
@@ -566,11 +557,11 @@ ${session}
 			},
 			async:false,
 			success:function(data){
-				var str;
+				
 				
 				if(data !=""){
 					console.log(data);
-					
+					var str="";
 					for(var i=0; i<data.length; i++){
 						var title=data[i].title;
 						var detail=data[i].detail;
@@ -587,7 +578,8 @@ ${session}
     					str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
     					str += "</div>";
     					str +="</li>";
-					}
+					}	
+					
     					$("#uploadedExp").append(str);
 					
 				} else{
@@ -636,7 +628,7 @@ ${session}
     					str += "class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>";
     					str += "</div>";
     					str +="</li>";
-    				$("#uploadedExp").html(str);
+    				$("#uploadedExp").prepend(str);
     				alert("경력이 등록되었습니다.");
     			
     			},

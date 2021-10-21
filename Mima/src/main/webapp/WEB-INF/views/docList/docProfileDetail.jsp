@@ -106,11 +106,8 @@
                                                 </p>
                                                 <h3>학력</h3>
                                                 <p>${item.profileEducation } 을 밑에 잘라 넣으면 됩니다.</p>
-                                                <ul class="list clearfix">
-                                                    <li>New York Medical College <span>- Doctor of Medicine</span></li>
-                                                    <li>Montefiore Medical Center <span>- Residency in Internal Medicine</span></li>
-                                                    <li>New York Medical College <span>- Master Internal Medicine</span></li>
-                                                </ul>
+                                                <ul id="uploadedExp clearfix"></ul>
+                                                
                                             </div>
                                             <div class="accordion-box">
                                                 <h3>진료과목과 가격안내</h3>
@@ -352,5 +349,18 @@
     	});//tab 온클릭이벤트 끝
 
 	
+    	var education = "<c:out value='${item.profileEducation }'/>";
+    	console.log(education);
+    	var arr = education.split("!");
+    	
+    	for(var i=0; i<arr.length-1; i++){
+    		var str="";
+    		
+    		str += "<li id='scholl_1'>"+arr[i]+"<span id="sub_1"></span></li>"
+            str += "<li id='scholl_2'>"++"<span id="sub_3"></span></li>"
+            str += "<li id='scholl_3'>"++"<span id="sub_3"></span></li>"
+    	}
+    	
+    	
     </script>
     

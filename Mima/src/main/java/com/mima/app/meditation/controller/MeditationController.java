@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpHeaders;
@@ -42,7 +43,8 @@ public class MeditationController {
 	@Autowired
 	MeditationService meditationService;
 
-	
+	@Value("#{global['path']}")
+	String path;
 	
 	//수정 처리 - 좋아요
 	@PutMapping("/updateLike")

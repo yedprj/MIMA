@@ -340,4 +340,14 @@
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
 
+<!-- 예약번호로 의사,환자 이름찾기 -->
+<select id="findNamePtDoc" resultType="bookingVO">
+	SELECT M.NAME , MM.NAME "DOC_NAME"
+	FROM BOOKING B, MEMBER M, MEMBER MM
+	WHERE B.PT_NO = M.MEMBER_NO
+	AND B.DOC_NO = MM.MEMBER_NO
+	AND BOOKING_NO = #{bookingNo}
+</select>
+
+
 </mapper>

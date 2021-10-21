@@ -42,8 +42,8 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 
 	// K.10/14 약국별 약배달 현황
 	@Override
-	public List<MedDeliveryVO> phaSelectOne(int pharmacyNo) {
-		return deliveryMapper.phaSelectOne(pharmacyNo);
+	public List<MedDeliveryVO> phaSelectOne(int pharmacyNo, Criteria cri) {
+		return deliveryMapper.phaSelectOne(pharmacyNo,cri);
 	}
 
 	// K.10/14 오늘의 약배달 수
@@ -96,14 +96,32 @@ public class MedDeliveryServiceImpl implements MedDeliveryService {
 
 	// K. 10/19 약국 배달완료 목록 조회
 	@Override
-	public List<MemDeliveryVO> phaCompleteDel(int pharmacyNo) {
-		return deliveryMapper.phaCompleteDel(pharmacyNo);
+	public List<MemDeliveryVO> phaCompleteDel(int pharmacyNo, Criteria cri) {
+		return deliveryMapper.phaCompleteDel(pharmacyNo,cri);
 	}
 
 	// 약배달 등록/ 취소 총 갯수
 	@Override
 	public int memDeliveryCount(int pharmacyNo) {
 		return deliveryMapper.memDeliveryCount(pharmacyNo);
+	}
+
+	// K. 약배달목록 총 갯수
+	@Override
+	public int phaSelectOneCount(int pharmacyNo) {
+		return deliveryMapper.phaSelectOneCount(pharmacyNo);
+	}
+
+	// K. 배달완료 총 갯수
+	@Override
+	public int phaCompleteDelCount(int pharmacyNo) {
+		return deliveryMapper.phaCompleteDelCount(pharmacyNo);
+	}
+
+	// K.10/21 약국이름, 약국 한건 조회
+	@Override
+	public MedDeliveryVO phaNameSelectOne(int bookingNo) {
+		return deliveryMapper.phaNameSelectOne(bookingNo);
 	}
 
 }

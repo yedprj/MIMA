@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -75,6 +76,11 @@ public class PatnerDoctorController {
 	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired DocAvailabilityService docAvailabilityService;
 	@Autowired MentalSubjectService mentalSubjectService;
+	
+	
+
+	@Value("#{global['path']}")
+	String path;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("doctor/docMain")
@@ -184,7 +190,7 @@ public class PatnerDoctorController {
 	}
 	
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
-	@PostMapping
+	@PostMapping("doctor/docReplyUpdate")
 	public int docReplyUpdate(ReplyVO replyvo) {
 		return commentsService.docReplyUpdate(replyvo);
 	}
@@ -412,20 +418,16 @@ public class PatnerDoctorController {
 	}
 		
 	//s:1006 의사프로필등록
-	@PostMapping("/register")
+	@PostMapping("doctor/register")
 	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
 		
-		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
+		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo.getProfileEducation());
 		//s:1006 파트너의사테이블에 저장
 		doctorService.docProfileInsert(vo);
 		
 		//s:1007 멤버 테이블 주소 업데이트
 		doctorService.docAddrUpdate(mVo);
 		System.out.println("파트너 의사 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
-		
-		//s:1007 경력 테이블 인서트
-		System.out.println("파트너 의사 컨트롤러-> 경력테이블 인서트 보 보는거임======" + expVo);
-		experienceService.insertExp(expVo);
 		
 		rttr.addFlashAttribute("result", vo.getMemberNo());
 		return "redirect:/docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용

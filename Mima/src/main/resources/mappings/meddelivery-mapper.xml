@@ -67,7 +67,9 @@
 <!-- 오늘의 배달건수 -->
 <select id="todayDelivery" resultType="memDeliveryVO">
 
-	SELECT M.PHARMACY_NO, MM.NAME, M.BOOKING_NO, B.CONSULT_DATE , M.PRESCRIPTION, P.DEL_ADDR, P.DEL_ADDR2, P.DEL_ADDR3,P.DEL_POST_CODE , P.DEL_NOTE  
+	SELECT 	M.PHARMACY_NO, MM.NAME, M.BOOKING_NO, B.CONSULT_DATE, 
+			M.PRESCRIPTION, P.DEL_ADDR, P.DEL_ADDR2, P.DEL_ADDR3,
+			P.DEL_POST_CODE , P.DEL_NOTE  
 	FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
 	WHERE B.BOOKING_NO = M.BOOKING_NO
 	AND B.PT_NO = P.MEMBER_NO
@@ -94,22 +96,56 @@
 
 <!--K.10/16 약배달 현황목록 -->
 <select id="phaSelectOne" resultType="medDeliveryVO">
-	SELECT M.*, MM.NAME, B.CONSULT_DATE
-	FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
-	WHERE M.BOOKING_NO = B.BOOKING_NO
-	AND B.PT_NO = MM.MEMBER_NO
-	AND PHARMACY_NO = #{pharmacyNo}
+	SELECT *
+	FROM (
+          SELECT ROWNUM RN, M.*, MM.NAME, B.CONSULT_DATE
+              FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
+              WHERE M.BOOKING_NO = B.BOOKING_NO
+              AND B.PT_NO = MM.MEMBER_NO
+              AND PHARMACY_NO = #{pharmacyNo}
+              <include refid="criteria"></include>
+               <![CDATA[ AND ROWNUM <= #{cri.pageNum} * #{cri.amount}
+		     )
+	WHERE RN > (#{cri.pageNum}-1)* #{cri.amount}	 ]]>
+    ORDER BY CONSULT_DATE DESC
 </select>
+
+<!-- 약배달 전체현황 카운트 -->
+<select id="phaSelectOneCount" resultType="int">
+		SELECT count(*)
+         FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
+         WHERE M.BOOKING_NO = B.BOOKING_NO
+         AND B.PT_NO = MM.MEMBER_NO
+         AND PHARMACY_NO = #{pharmacyNo}
+</select>
+
 
 <!-- 배달 완료 -->
 <select id="phaCompleteDel" resultType="medDeliveryVO">
-	SELECT M.*, MM.NAME, B.CONSULT_DATE
-	FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
-	WHERE M.BOOKING_NO = B.BOOKING_NO
-	AND B.PT_NO = MM.MEMBER_NO
-	AND PHARMACY_NO = #{pharmacyNo}
-    and m.delivery_status = 'p'
-    and m.pt_education = 'y'
+	SELECT *
+	FROM (
+            SELECT ROWNUM RN, M.*, MM.NAME, B.CONSULT_DATE
+                FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
+                WHERE M.BOOKING_NO = B.BOOKING_NO
+                AND B.PT_NO = MM.MEMBER_NO
+                AND PHARMACY_NO = #{pharmacyNo}
+                AND M.DELIVERY_STATUS = 'p'
+                AND M.PT_EDUCATION = 'y'
+                <include refid="criteria"></include>
+               <![CDATA[ AND ROWNUM <= #{cri.pageNum} * #{cri.amount}
+		     )
+	WHERE RN > (#{cri.pageNum}-1)* #{cri.amount}	 ]]>
+</select>
+
+<!-- 배달완료 갯수  -->
+<select id="phaCompleteDelCount" resultType="int">
+	SELECT count(*)
+       FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
+       WHERE M.BOOKING_NO = B.BOOKING_NO
+       AND B.PT_NO = MM.MEMBER_NO
+       AND PHARMACY_NO = #{pharmacyNo}
+       AND M.DELIVERY_STATUS = 'p'
+       AND M.PT_EDUCATION = 'y'
 </select>
 
 <!-- 약배달 등록 / 취소 -->
@@ -136,7 +172,7 @@
 	            <include refid="criteria"></include>
 	            <![CDATA[
 	            AND B.CONSULT_DATE <= TO_DATE(SYSDATE, 'YY/MM/DD') 
-	            and ROWNUM #{cri.pageNum} * #{cri.amount}
+	            and ROWNUM <= #{cri.pageNum} * #{cri.amount}
 		     )
 	where RN > (#{cri.pageNum}-1)* #{cri.amount}	 ]]>
 </select>
@@ -191,6 +227,14 @@
 		DELIVERY_STATUS = 'n'
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
+
+<!-- K. 10/21 약국이름, 약국 한건조회 -->
+<select id="phaNameSelectOne" resultType="MedDeliveryVO">
+	SELECT PH.PHARMACY_INFO "PHARMACY_NAME", MD.*
+    FROM MED_DELIVERY MD, PARTNER_PHARMACY PH
+    WHERE MD.PHARMACY_NO = PH.MEMBER_NO
+    AND MD.BOOKING_NO = #{bookingNo}
+</select>
 
 
 </mapper>
