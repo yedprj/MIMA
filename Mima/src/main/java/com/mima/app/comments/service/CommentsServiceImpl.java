@@ -137,5 +137,6 @@ public class CommentsServiceImpl implements CommentsService {
 		return commentsMapper.getReply(rcno);
 	}
 
+
 	
 }

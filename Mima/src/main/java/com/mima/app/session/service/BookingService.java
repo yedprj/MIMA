@@ -68,4 +68,8 @@ public interface BookingService {
 	
 	// Booking table 결제 status 업데이트 p.10/09
 	public int updateBookingStatus(BookingVO vo);
+	
+	// K. 10/21 예약번호로 환자랑 의사이름 찾기
+	public BookingVO findNamePtDoc(int bookingNo);
+	
 }

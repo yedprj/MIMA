@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.service.BookingService;
 
 import lombok.extern.java.Log;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -33,7 +34,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class PdfController {
 
 	@Autowired DataSource dataSource;
-	
+	@Autowired BookingService bookingService;
 	
 	
 	@RequestMapping("/prePdf2")
@@ -53,11 +54,16 @@ public class PdfController {
 		InputStream jasperStream = getClass().getResourceAsStream("/report/mima_all_prescription.jasper");
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream); //파라미터 맵
 		
+		// 환자이름 찾기
+		BookingVO bvo = new BookingVO();
+		bvo = bookingService.findNamePtDoc(bookingNo);
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("p_booking_no", bookingNo);
-		log.info("************jasperPrint***********");
+		log.info("************이름***********"+ bvo.getName() );
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, conn);
-		log.info("************출력***********");
+		response.setContentType( "application/pdf" );
+		response.setHeader("Content-disposition", "attachment; filename=" + bvo.getName() + "처방전.pdf" ); // 다운 
 		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 	
 	}

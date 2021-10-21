@@ -333,4 +333,5 @@
 			SELECT * FROM REPLY
 			WHERE RCNO = #{rcno}
 		</select>
+		
 </mapper>

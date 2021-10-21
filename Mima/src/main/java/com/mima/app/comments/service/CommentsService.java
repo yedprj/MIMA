@@ -57,6 +57,7 @@ public interface CommentsService {
 		public int docReplyDelete(ReplyVO vo);
 		
 		public ReplyVO getReply(int rcno);
+		
 
 
 }

@@ -26,7 +26,10 @@ public interface MedDeliveryMapper {
 	public int delCancel(MedDeliveryVO vo);
 	
 	// K.10/14 약배달 목록 조회
-	public List<MedDeliveryVO> phaSelectOne(int pharmacyNo);
+	public List<MedDeliveryVO> phaSelectOne(@Param("pharmacyNo") int pharmacyNo,@Param("cri") Criteria cri);
+	
+	// K.10/21 약배달 목록 조회 총 갯수
+	public int phaSelectOneCount(int pharmacyNo);
 	
 	// K.10/14 오늘의 약배달 수
 	public int deliveryCnt(int pharmacyNo);
@@ -53,5 +56,11 @@ public interface MedDeliveryMapper {
 	public int delReapply(MedDeliveryVO vo);
 	
 	// K. 10/19 약국 배달완료 건수 조회
-	public List<MemDeliveryVO> phaCompleteDel(int pharmacyNo);
+	public List<MemDeliveryVO> phaCompleteDel(@Param("pharmacyNo") int pharmacyNo,@Param("cri") Criteria cri);
+	
+	// K.10/21 약배달 배달완료 총 갯수
+	public int phaCompleteDelCount(int pharmacyNo);
+	
+	// K.10/21 약국이름, 약국 한건 조회
+	public MedDeliveryVO phaNameSelectOne(int bookingNo);
 }

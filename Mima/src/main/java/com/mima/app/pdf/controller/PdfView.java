@@ -33,6 +33,8 @@ public class PdfView extends AbstractView {
 		String jrxmlFile = getClass().getResource(reportFile).getFile();
 		String jasperFile = JasperCompileManager.compileReportToFile( jrxmlFile );
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperFile,param, conn);
+		response.setContentType( "application/pdf" );
+		//response.setHeader("Content-disposition", "attachment; filename=" + "Example.pdf" ); 다운
 		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 	}
 }
