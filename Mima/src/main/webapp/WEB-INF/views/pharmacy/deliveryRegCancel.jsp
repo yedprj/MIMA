@@ -116,7 +116,7 @@
 		<div class="profile-box">
 			<div class="upper-box">
 				<figure class="profile-image">
-					<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+					<img src="${pageContext.request.contextPath}/resources/assets/images/약국.jpg" alt="">
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">

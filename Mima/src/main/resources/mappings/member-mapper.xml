@@ -59,9 +59,33 @@
 	</select>
 	
 	<!-- 회원 세션 유지를 위한 한건 조회 p.30 -->
-	<select id="getUserById" parameterType="String" resultType="MemberVO">
-		SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} AND STATUS='y'
-	</select>
+   <select id="getUserById" parameterType="String" resultType="MemberVO">
+      SELECT MEMBER_NO
+            ,MEMBER_ID
+            ,PASSWORD
+            ,NICKNAME
+            ,ROLE
+            ,NAME
+            ,IDENTIFY_NO
+             ,GENDER
+            ,ADDR1
+            ,EMAIL
+            ,PHONE
+            ,LICENSE
+            ,STATUS
+            ,case when ROLE = 'pt' then PT_PROFILE_PHOTO
+                  when ROLE = 'doctor' then (SELECT PROFILE_PHOTO FROM PARTNER_DOCTOR WHERE MEMBER_NO = MEMBER.MEMBER_NO)
+                  when ROLE = 'pharmecy' then (SELECT PROFILE_PHOTO FROM PARTNER_PHARMACY WHERE MEMBER_NO = MEMBER.MEMBER_NO)
+                  END PT_PROFILE_PHOTO
+            ,REG_DATE
+            ,EDIT_DATE
+            ,ADDR2
+            ,ADDR3
+            ,POSTCODE
+            ,DELIVERY_STATUS 
+        FROM MEMBER 
+       WHERE MEMBER_ID = #{memberId} AND STATUS='y'
+   </select>
 	
 	<!-- 승인된 의사 조회 p.10/04 -->
 	<select id="selectDoctorY" resultType="MemberVO">

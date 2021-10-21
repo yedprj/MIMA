@@ -2,6 +2,7 @@ package com.mima.app.pdf.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +64,7 @@ public class PdfController {
 		log.info("************이름***********"+ bvo.getName() );
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, conn);
 		response.setContentType( "application/pdf" );
-		response.setHeader("Content-disposition", "attachment; filename=" + bvo.getName() + "처방전.pdf" ); // 다운 
+		response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(bvo.getName() +"_처방전", "UTF-8") + ".pdf" ); // 다운 
 		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 	
 	}
