@@ -305,6 +305,7 @@ public class PatientsController {
 			membervo.setPtProfilePhotoImg(changeString);
 		}
 	}
+	
 	//e.20 환자대쉬보드 Main 프로필 이미지
 	@GetMapping("patients/ptProfileImg")
 	public ResponseEntity<byte[]> ptProfileImg(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException, SerialException, SQLException {

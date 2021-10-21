@@ -190,7 +190,7 @@
                                               <td class="text-center"><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
                                               <td><p>${del.delAddr},</p><p>${del.delAddr2}  ${del.delAddr3 }</p></td>
                                               <td class="text-center"><p>${del.delPostCode }</p></td>
-                                              <td class="text-center"><a href="${pageContext.request.contextPath}/prePdf3?bookingNo=${del.bookingNo}" id="prescription"  >처방전 파일</a></td>
+                                              <td class="text-center"><a id="prescription" onclick="prescriptionPdf(${del.bookingNo})" >처방전 파일</a>&nbsp;&nbsp;<span data-no="${del.bookingNo}" id="pdfDown" ><i class="fas fa-file-download"></i></span></td>
                                               <td><p id="delMemo"><c:if test="${not empty del.delNote}">메모 O</c:if></p>
                                               	<c:if test="${not empty del.delNote}"><div id="delMemoHidden">${del.delNote}</div></c:if>
                                               </td>
@@ -280,6 +280,10 @@
 
 
 <script>
+
+function prescriptionPdf(no){
+	window.open('${pageContext.request.contextPath}/prePdf2?bookingNo='+ no, '처방전', 'width=1000px, height=1600px , scrollbars=yes');
+}
 
 $(".pagination a").on("click", function(e) {
 	e.preventDefault(); // a, submit 기능을 막음
@@ -389,16 +393,12 @@ $(function(){
 	
 	
 	
-	// K. 10/20 처방전 파일 클릭시 pdf 파일 호출
-	/* $(document).on("click","#prescription",function(){
+	
+	
+	$("#trList > td").on("click","#pdfDown",function(){
 		var bookingNo = $(this).data("no");
-		alert("처방전!" + bookingNo);
-		
-		// 아작스로 값 넘겨주고, 창 띄우기?
-				
-				
-		
-	}); // 처방전 end */
+		location.href= "${pageContext.request.contextPath}/prePdf3?bookingNo="+ bookingNo;
+	});
 
 }); // function end
 </script>

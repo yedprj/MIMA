@@ -372,7 +372,7 @@ from (
 				<text><![CDATA[(서명 또는 날인)]]></text>
 			</staticText>
 			<textField pattern="yyyy년 MM월 dd일">
-				<reportElement x="88" y="12" width="100" height="16" uuid="80b3468a-2963-425e-880e-a5b5d1a2cba9"/>
+				<reportElement style="Style1" x="88" y="12" width="100" height="16" uuid="80b3468a-2963-425e-880e-a5b5d1a2cba9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{CONSULT_DATE}]]></textFieldExpression>
 			</textField>
@@ -387,7 +387,7 @@ from (
 				<textFieldExpression><![CDATA[$F{BOOKING_NO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="157" y="46" width="67" height="17" uuid="d0822b3c-ee5d-4c99-9ddd-ac6778f6558a"/>
+				<reportElement style="Style1" x="157" y="46" width="67" height="17" uuid="d0822b3c-ee5d-4c99-9ddd-ac6778f6558a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
@@ -397,7 +397,7 @@ from (
 				<textFieldExpression><![CDATA[$F{IDENTIFY_NO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="426" y="6" width="100" height="18" uuid="6a32b8f2-5805-4c54-9651-e4db162c198a"/>
+				<reportElement style="Style1" x="426" y="6" width="100" height="18" uuid="6a32b8f2-5805-4c54-9651-e4db162c198a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{CLINIC_INFO}]]></textFieldExpression>
 			</textField>
@@ -712,7 +712,7 @@ from (
 				</graphicElement>
 			</rectangle>
 			<componentElement>
-				<reportElement x="0" y="202" width="398" height="19" uuid="643022b4-137e-4433-b8f3-b1e53a43f62d">
+				<reportElement style="Style1" x="0" y="202" width="398" height="19" uuid="643022b4-137e-4433-b8f3-b1e53a43f62d">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -737,7 +737,7 @@ from (
 								<rightPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement x="0" y="0" width="258" height="19" uuid="b28580e2-6d8f-407c-8d69-7a4dbb47de54"/>
+								<reportElement style="Style1" x="0" y="0" width="258" height="19" uuid="b28580e2-6d8f-407c-8d69-7a4dbb47de54"/>
 								<box>
 									<pen lineWidth="1.0"/>
 									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -764,7 +764,7 @@ from (
 								<rightPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement x="0" y="0" width="71" height="19" uuid="9020033c-d75b-4196-8e06-b38ed3da1df9"/>
+								<reportElement style="Style1" x="0" y="0" width="71" height="19" uuid="9020033c-d75b-4196-8e06-b38ed3da1df9"/>
 								<box>
 									<pen lineWidth="1.0"/>
 									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -791,7 +791,7 @@ from (
 								<rightPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement x="0" y="0" width="30" height="19" uuid="0e6276eb-e4c4-46c8-abdd-046367a967c5"/>
+								<reportElement style="Style1" x="0" y="0" width="30" height="19" uuid="0e6276eb-e4c4-46c8-abdd-046367a967c5"/>
 								<box>
 									<pen lineWidth="1.0"/>
 									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -818,7 +818,7 @@ from (
 								<rightPen lineWidth="1.0" lineStyle="Dotted" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement x="0" y="0" width="40" height="19" uuid="efb14535-1055-41ba-a65d-61a1f575417e"/>
+								<reportElement style="Style1" x="0" y="0" width="40" height="19" uuid="efb14535-1055-41ba-a65d-61a1f575417e"/>
 								<box>
 									<pen lineWidth="1.0"/>
 									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
