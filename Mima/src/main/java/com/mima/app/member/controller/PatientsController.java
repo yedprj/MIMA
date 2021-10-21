@@ -26,6 +26,7 @@ import javax.sql.rowset.serial.SerialException;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -69,14 +70,15 @@ public class PatientsController {
 	
 	// e.10/11 환자대쉬보드
 	@Autowired PatientsService patientsService;
-	
 	@Autowired CommentsService commentsService;
-
 	@Autowired BookingService bookingService; // K.10/09 booking 확인
 	@Autowired PatnerPharmacyService phaService; // K.10/07 약국 검색
 	@Autowired MedDeliveryService deliveryService; // K.10/09 약배달
 	@Autowired MemberService memberService; // K.10/11 약배달 신청 유무
 
+	@Value("#{global['path']}")
+	String path;
+	
 	//e.4
 	//환자대쉬보드 메인 페이지
 	@GetMapping("patients/ptMain")

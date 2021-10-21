@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +52,9 @@ public class PartnerPharmacyController {
 	@Autowired PushService pushService;
 	@Autowired BookingService bookingService;
 
-	
+
+	@Value("#{global['path']}")
+	String path;
 	
 	// 약국 대쉬보드 [K]210929 
 	@GetMapping("/pharmacyDash")

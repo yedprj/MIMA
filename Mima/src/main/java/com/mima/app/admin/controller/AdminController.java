@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpHeaders;
@@ -55,6 +56,10 @@ public class AdminController {
 	// 시큐리티 때문에 추가 p.10/11
 	@Autowired ReportService reportService;
 	@Autowired MeditationService meditationService;
+	
+
+	@Value("#{global['path']}")
+	String path = "c:/upload";
 	
 	//e.29
 	//K 10/06 수정
@@ -186,7 +191,7 @@ public class AdminController {
 	public MeditAttachVO meditAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo, HttpServletRequest request)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path =  request.getSession().getServletContext().getRealPath("/WEB-INF/resources/meditVideo");;
+		//String path =  request.getSession().getServletContext().getRealPath("/WEB-INF/resources/meditVideo");;
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
