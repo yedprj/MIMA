@@ -54,14 +54,16 @@ public class PdfController {
 		InputStream jasperStream = getClass().getResourceAsStream("/report/mima_all_prescription.jasper");
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream); //파라미터 맵
 		
+		// 환자이름 찾기
 		BookingVO bvo = new BookingVO();
 		bvo = bookingService.findNamePtDoc(bookingNo);
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("p_booking_no", bookingNo);
-		log.info("************jasperPrint***********");
+		log.info("************이름***********"+ bvo.getName() );
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, conn);
 		response.setContentType( "application/pdf" );
-		response.setHeader("Content-disposition", "attachment; filename=" + bvo.getName() + "_처방전.pdf" ); // 다운 
+		response.setHeader("Content-disposition", "attachment; filename=" + bvo.getName() + "처방전.pdf" ); // 다운 
 		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 	
 	}
