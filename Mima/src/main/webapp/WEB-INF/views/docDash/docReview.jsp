@@ -17,7 +17,8 @@ th, td {
 }
 
 .theme-btn-two {
-	padding: 3px 25px;
+	padding: 4px 25px;
+	border: 1px solid #ebeef1;
 }
 
 .add-listing .single-box {
@@ -29,6 +30,7 @@ textarea {
 	margin-top: 10px;
 }
 
+2px solid #ebeef1
 </style>
 
 <!--page-title-two-->
@@ -135,6 +137,13 @@ textarea {
 			                                 <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>
 			                                 <h4><i class="fas fa-comments"></i>&nbsp;${session.name} 의사</h4>
 			                                 <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.rregDate}" pattern="yy-MM-dd"/></span>
+			                                 <span class="rating clearfix">
+			                                 	<a type="button" id="updateBtn" class="theme-btn-one" data-no="${docReviewPage.rno}"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>
+                                                    <input type="hidden" id="rregDate" name="rregDate" value="${docReviewPage.rregDate}"/>
+                                                    <input type="hidden" id="rcontents" name="rcontents" value="${docReviewPage.rcontents}"/>
+			                                 	<a type="button" id="deleteBtn" class="theme-btn-two" data-no="${docReviewPage.rno}"><i class="fas fa-times"></i></a>
+                                                    <input type="hidden" id="rno" name="rno" value="${docReviewPage.rno}"/>
+			                                 </span>
 			                                 <p id="rcontents">${docReviewPage.rcontents}</p>
 			                            </div>
                             		</c:if>
@@ -197,6 +206,8 @@ textarea {
 <!-- End of .page_wrapper -->
 
 <script>
+		var replyBtnBackup;
+		
 		function searchCheck() {
 			var choose = $("#selectBox option:selected").val();
 			
@@ -211,26 +222,14 @@ textarea {
 			location.href="docReview?pageNum=1&keyword="+choose
 		}
 		
-	/* 	function addReply() {
-			console.log($(this).next().val());
-			$(".comment #reply").empty();
-			$(this).next('#reply').append('<div class="add-listing">'
-                    +'<br><label><font size=3><b>댓글 쓰기</b></font></label>'
-					+'<br><div class="single-box col-lg-12 col-md-12 col-sm-12">'
-                    +'<textarea id="replyContents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
-                	+'</div>'
-                	+'<a class="theme-btn-one">등록</a>'
-                	+'</div>')
-		} */
-		
-		// 삭제 펑션	예
+		// 댓글 등록 후 삭제
 		$(document).on('click', '#replyDelete', function(){
 			var csrfHeaderName = "${_csrf.headerName}";
-			
 			var csrfTokenValue = "${_csrf.token}";
 			
 			var rno = $(this).data("no");
 			var pa = $(this).closest(".comment");
+			var replyDiv = pa.prev('#reply');
 			var delReply = pa.find(".replay-comment");
 			
 			$.ajax({
@@ -244,23 +243,80 @@ textarea {
 				},
 				success : function(datas) {
 						if( datas > 0 ){
-							alert("삭제성공!");
-							pa.html('');
-							pa.append($(".add-listing").html());
+							alert("댓글이 삭제되었습니다.");
+							pa.remove();
+							replyDiv.before(replyBtnBackup);
 						}
 				} // success end
 			}) //ajax end
-			
 		});
 		
+		// 기존 댓글 삭제_J21
+		$(document).on('click', '#deleteBtn', function(){
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue = "${_csrf.token}";
+			
+			var rno = $(this).data("no");
+			var pa = $(this).closest(".comment");
+			var replyDiv = pa.prev('#reply');
+			var delReply = pa.find(".replay-comment");
+			
+			$.ajax({
+				url : "replyDelete",
+				method : "post",
+				data : {
+					rno : rno
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				success : function(datas) {
+						if( datas > 0 ){
+							alert("댓글이 삭제되었습니다.");
+							pa.remove();
+							replyDiv.before(replyBtnBackup);
+							location.href="docReview";
+						}
+				} // success end
+			}) //ajax end
+		});
 		
+		// 기존 댓글 수정_J21
+		$(document).on("click", '#updateBtn', function(){
+			var csrfHeaderName = "${_csrf.headerName}";
+			var csrfTokenValue = "${_csrf.token}";
+			
+			var rno = $(this).data("no");
+			var rcontents = $("input[name='rcontents']").val();
+			var pa = $(this).closest(".comment");
+			
+			$.ajax({
+				url : "docReplyUpdate",
+				method : "post",
+				data : {
+					rno : rno,
+					rcontents : rcontents
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},
+				success : function(datas) {
+						if( datas > 0 ){
+							alert("댓글이 수정되었습니다.");
+							pa.remove();
+						}
+				} // success end
+			}) //ajax end
+		});
 		
+		// 댓글 등록 후 수정
+		
+		// 등록폼 취소 버튼
 		$(document).on('click', '#cancel', function(){
 			$(".comment #reply").empty();
 		});
 		
-		
-		
+		// 등록폼 등록 버튼
 		$(document).on('click', '#insert', function(){
 			
 			var csrfHeaderName = "${_csrf.headerName}";
@@ -278,21 +334,20 @@ textarea {
 						$(".add-listing").remove();
 						pa.find(".replay-btn").remove();
 						pa.append('<div class="comment replay-comment">'
-                               + '<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
-                               + '<h4><i class="fas fa-comments"></i> 의사</h4>'
-                               + '<span class="comment-time"><i class="fas fa-calendar-alt"></i></span>'
-                               + '<p id="rcontents">'+datas.rcontents + '</p>'
-                               + '<span><a id="replyDelete" data-no="'+datas.rno +'" class="cancel">삭제</a></span>'
-                               + '</div>');					
-						alert("댓글 등록!");
+                               	  + '<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
+                                  + '<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
+                                  + '<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
+                                  + '<p id="rcontents">'+datas.rcontents+'</p>'
+                                  +'<span class="rating clearfix">'
+                                  +'<a type="button" id="updateBtn" class="theme-btn-one" data-no=""><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
+                                  +'&nbsp;'
+                                  +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
+                                  + '</span>'
+                                  + '</div>');
+						alert("댓글이 등록되었습니다.");
 				} // success end
 			}) //ajax end
-			
 		});
-		
-
-		
-		
 		
 		$(document).ready(function() {
 			$('#selectBox').val('${cri.category}').prop("selected", true);
@@ -301,14 +356,15 @@ textarea {
 				$('#logOutfrm1').submit();
 			});
 			
-			$(".comment .replay-btn").on("click", function(){
+			$(".comment").on("click",'.replay-btn', function(){
 			var cno = $(this).data("cno")
 			var no = $(this).data("no")
+			replyBtnBackup = $(this)[0];
 			$(".comment #reply").empty();
 			$(this).next()
 			.append('<div class="add-listing">'
                 	+'<form id="replyForm">'
-                    +'<br><label><font size=3><b>댓글 쓰기</b></font></label><br>'
+                    +'<br><label><b>댓글 쓰기</b></label><br>'
 					+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
                     +'    <textarea id="replyContents" name="rcontents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
                 	+'  </div>'
@@ -319,7 +375,28 @@ textarea {
                 	+'</form>'
                 	+'<div>')
 			});
-	 
+			
+			// 수정폼
+			/* $(".comment").on("click",'#updateBtn', function(){
+				var rno = $(this).data("rno")
+				$("input[name='rregDate']").val();
+				$("input[name='rcontents']").val();
+				$(this).next(.comment replay-comment)
+				.append('<div class="replyUpdate">'
+						+'<form id="replyUpdate">'
+	                    +'<br><label><b>댓글 수정하기</b></label><br>'
+						+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
+	                    +'    <textarea id="replyContents" name="rcontents" placeholder="'+rcontents+'"></textarea>'
+	                	+'  </div>'
+	                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
+	                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
+	                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
+	                	+'  <input type="hidden" name="rcontents" value="'+rcontents+'">'
+	                	+'<p><button type="button" class="theme-btn-one" id="insert">수정</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
+	                	+'</form>'
+	                	+'<div>')
+				
+			}); */
 		});
 
 </script>
