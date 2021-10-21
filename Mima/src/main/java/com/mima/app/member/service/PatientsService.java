@@ -89,9 +89,6 @@ public interface PatientsService {
 	//전체 데이터 수 조회 진료내역 페이징 e.6
 	public int getTotalPthCount(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
-	//환자대쉬보드 내가 찜한 의사 e.14
-	public List<LikesVO> ptDoctor(int memberNo);
-	
 	//환자대쉬보드 Main 나의후기 e.5
 	public List<CommentsVO> ptMainreList(int memberNo);
 	

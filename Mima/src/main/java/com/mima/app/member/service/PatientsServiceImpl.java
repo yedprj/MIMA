@@ -132,12 +132,6 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.getTotalPthCount(memberNo, cri);
 	}
 	
-	//환자대쉬보드 내가 찜한 의사 e.14
-	@Override
-	public List<LikesVO> ptDoctor(int memberNo) {
-		return patientsMapper.ptDoctor(memberNo);
-	}   
-	
 	//환자대쉬보드 Main 나의후기 e.5
 	@Override
 	public List<CommentsVO> ptMainreList(int memberNo) {

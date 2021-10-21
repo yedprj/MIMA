@@ -67,8 +67,6 @@
 								예약관리</a></li>
 						<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의
 								진료내역</a></li>
-						<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가
-								찜한 의사</a></li>
 						<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
 						<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약
 								배달관리</a></li>
