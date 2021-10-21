@@ -135,7 +135,7 @@
                                             <div class="pattern-2"
                                                 style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-25.png);"></div>
                                         </div>
-                                        <!-- 의사 프로필 사진 -->
+                                        <!--s:1022 의사 프로필 사진 -->
                   
                                         <figure class="image-box">
                                         <c:choose>

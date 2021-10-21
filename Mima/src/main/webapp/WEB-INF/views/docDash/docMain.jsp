@@ -197,10 +197,17 @@ th, td {
 									<c:forEach items="${bookingList}" var="bookingList">
 										<tr>
 											<td>
-												<div class="name-box">
+												<div class="name-box" style="padding-left:30px">
+												<!-- s:1022환자플필사진 -->
 													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png">
+													  <c:choose>
+									                     <c:when test="${not empty bookingList.ptProfilePhoto }">
+									                        <img src="FileDown.do?fname=${bookingList.ptProfilePhoto}" style="width:55px; height:55px">
+									                     </c:when>
+									                     <c:otherwise>
+									                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+									                     </c:otherwise>
+									                  </c:choose>
 													</figure>
 													<h5>${bookingList.name}</h5>
 													<span class="ptno">#${bookingList.ptNo}</span>
@@ -212,7 +219,7 @@ th, td {
 											</td>
 											<td><fmt:formatDate value="${bookingList.bookingDate}"
 													pattern="yy-MM-dd" /></td>
-											<td><fmt:setLocale value="ko_KR" /> <fmt:formatNumber
+											<td><fmt:setLocale value="ko_KR"/><fmt:formatNumber
 													type="currency" value="${bookingList.price}" /></td>
 											<td><c:if test="${bookingList.bookingStatus eq 'p'}">
 													<span class="status">결제완료</span>
@@ -257,11 +264,17 @@ th, td {
 									<c:forEach items="${getlatestapptList}" var="getlatestapptList">
 										<tr>
 											<td>
-												<div class="name-box">
+												<div class="name-box" style="padding-left: 50px;">
+												<!--s:1022 의사에게 달린 리뷰올린 환자 사진 -->
 													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
+														  <c:choose>
+										                     <c:when test="${not empty getlatestapptList.ptProfilePhoto }">
+										                        <img src="FileDown.do?fname=${getlatestapptList.ptProfilePhoto}" style="width:55px; height:55px">
+										                     </c:when>
+										                     <c:otherwise>
+										                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+										                     </c:otherwise>
+										                  </c:choose>
 													</figure>
 													<h5>${getlatestapptList.name}</h5>
 													<span class="ptno">#${getlatestapptList.ptNo}</span>
@@ -295,11 +308,20 @@ th, td {
 						</div>
 					</div>
 					<div class="comment-inner">
-						<c:forEach items="${getlatestreviewList}"
-							var="getlatestreviewList">
+						<c:forEach items="${getlatestreviewList}" var="getlatestreviewList">
 							<div class="single-comment-box">
 								<div class="comment">
-									<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+									<!--s:1022 의사에게 달린 리뷰올린 환자 사진 -->
+									<figure class="comment-thumb">
+										<c:choose>
+						                     <c:when test="${not empty getlatestreviewList.ptProfilePhoto }">
+						                        <img src="FileDown.do?fname=${getlatestreviewList.ptProfilePhoto}" style="width:80px; height:80px">
+						                     </c:when>
+						                     <c:otherwise>
+						                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt="">
+						                     </c:otherwise>
+						                  </c:choose>
+									</figure>
 	             					<h4>${getlatestreviewList.nickname}</h4>
 									<span class="comment-time"><i
 										class="fas fa-calendar-alt"></i>
