@@ -537,6 +537,7 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
+<<<<<<< Upstream, based on origin/ju_18
 	//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
 	@RequestMapping(value = "/FileDown.do")
 	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
@@ -548,6 +549,19 @@ public class PatnerDoctorController {
 		if (fSize > 0) {
 			String mimetype = "application/x-msdownload";
 			response.setContentType(mimetype);
+=======
+		//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
+		@RequestMapping(value = "/doctor/FileDown.do")
+		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
+			File uFile = new File(path, (String)commandMap.get("fname"));
+			
+			long fSize = uFile.length();
+			if (fSize > 0) {
+				String mimetype = "application/x-msdownload";
+				response.setContentType(mimetype);
+>>>>>>> 0a5c646 doc dash left side profile photo edit
 
 			BufferedInputStream in = null;
 			BufferedOutputStream out = null;

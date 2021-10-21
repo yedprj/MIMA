@@ -68,6 +68,7 @@ th, td {
 	<div class="left-panel">
 		<div class="profile-box">
 			<div class="upper-box">
+			<!-- s:1022 의사 왼쪽 프로필사진 세션에서 가져오는것-->
 			<figure class="image-box profile-image">
 				<c:choose>
                      <c:when test="${not empty session.ptProfilePhoto }">
