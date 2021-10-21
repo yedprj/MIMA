@@ -184,7 +184,7 @@ public class PatnerDoctorController {
 	}
 	
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
-	@PostMapping
+	@PostMapping("doctor/docReplyUpdate")
 	public int docReplyUpdate(ReplyVO replyvo) {
 		return commentsService.docReplyUpdate(replyvo);
 	}

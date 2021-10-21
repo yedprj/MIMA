@@ -317,7 +317,7 @@
 	<!-- 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20 -->
 		<delete id="docReplyDelete">
 			DELETE FROM REPLY
-			WHERE rNO = #{rno}
+			WHERE RNO = #{rno}
 		</delete>
 	
 	<!-- 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20 -->
