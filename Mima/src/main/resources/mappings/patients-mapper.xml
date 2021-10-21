@@ -560,17 +560,6 @@
 	</select>
 <!-- 페이징 end -->
 
-<!-- 환자대쉬보드 내가 찜한 의사 e.14 -->
-<select id = "ptDoctor" resultType="LikesVO">
-SELECT 
-    MEMBER_NO,
-    LIKE_DATE,
-    CATEGORY,
-    LIKE_MAIN_NO
-FROM LIKES 
-WHERE MEMBER_NO = #{memberNo} AND CATEGORY='doc'
-</select>
-
 <!-- 환자 대쉬보드 Main 나의후기 e.5 _J17 -->
 <select id="ptMainreList" resultType="CommentsVO">
 	SELECT C.CMAIN_NO,
