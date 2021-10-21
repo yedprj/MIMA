@@ -527,6 +527,7 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
+	//e.21 프로필 Main 이미지 등록
 	
 	
 }

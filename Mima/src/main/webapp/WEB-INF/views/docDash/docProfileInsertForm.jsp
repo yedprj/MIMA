@@ -40,7 +40,7 @@
         </section>
         <!--page-title-two end-->
 
-
+${session}
         <!-- doctors-dashboard -->
         <section class="doctors-dashboard bg-color-3">
             <div class="left-panel">
