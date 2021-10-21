@@ -140,7 +140,7 @@
                                         <figure class="image-box">
                                         <c:choose>
 						                     <c:when test="${not empty item.profilePhoto }">
-						                        <img src="/FileDown.do?fname=${item.profilePhoto}">
+						                        <img src="FileDown.do?fname=${item.profilePhoto}">
 						                     </c:when>
 						                     <c:otherwise>
 						                        <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt="">

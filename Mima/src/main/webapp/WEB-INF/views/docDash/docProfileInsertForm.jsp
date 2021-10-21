@@ -467,7 +467,7 @@
     			str += "<input type='hidden' name='attachFile.pImgName' value='"+li.data("pimgname")+"'>";
     		    str += "<input type='hidden' name='attachFile.uuid' value='"+li.data("uuid")+"'>";
     		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
-    		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+"'>";
+    		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+li.data("pimgname")+"'>";
     		    
     		$("#docProInsertFrm").append(str);
     		alert("프로필 등록이 완료되었습니다.")
