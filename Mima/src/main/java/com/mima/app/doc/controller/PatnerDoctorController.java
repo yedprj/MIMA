@@ -183,24 +183,23 @@ public class PatnerDoctorController {
 		int result = commentsService.docReplyInsert(replyvo);
 		ReplyVO vo = new ReplyVO();
 		if ( result > 0 ) {
-			vo = commentsService.getReply(replyvo.getRcno());
+			vo = commentsService.getReply(replyvo.getRno());
 		}
-		
 		return vo;
 		
 	}
 	
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
-	@PostMapping("doctor/docReplyUpdate")
-	@ResponseBody
-	public ReplyVO docReplyUpdate(ReplyVO replyvo) {
-		int result = commentsService.docReplyUpdate(replyvo);
-		ReplyVO vo = new ReplyVO();
-		if ( result > 0 ) {
-			vo = commentsService.getReply(replyvo.getRno());
-		}
-		return vo;
-	}
+	   @PostMapping("doctor/docReplyUpdate")
+	   @ResponseBody
+	   public ReplyVO docReplyUpdate(ReplyVO replyvo) {
+	      int result = commentsService.docReplyUpdate(replyvo);
+	      ReplyVO vo = new ReplyVO();
+	      if ( result > 0 ) {
+	         vo = commentsService.getReply(replyvo.getRno());
+	      }
+	      return vo;
+	   }
 	
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20
 	@PostMapping("doctor/replyDelete")
