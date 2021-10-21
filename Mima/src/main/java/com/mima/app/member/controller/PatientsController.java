@@ -271,7 +271,7 @@ public class PatientsController {
 		model.addAttribute("ptMyProfile", membervo );
 		
 		if(membervo.getPtProfilePhoto() != null) {
-			File file = new File("c:/upload",membervo.getPtProfilePhoto());
+			File file = new File("path",membervo.getPtProfilePhoto());
 			if(! file.exists())
 				return;
 				
@@ -302,7 +302,7 @@ public class PatientsController {
 		String s = "";
 		byte[] fileArray = null;
 		if(membervo.getPtProfilePhoto() != null) {
-			File file = new File("c:/upload",membervo.getPtProfilePhoto());
+			File file = new File(path,membervo.getPtProfilePhoto());
 			if(! file.exists())
 				return new ResponseEntity<byte[]>(null, null, HttpStatus.NOT_FOUND);
 				
@@ -332,7 +332,7 @@ public class PatientsController {
 	@RequestMapping(value = "/patients/FileDown.do")
 	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+		File uFile = new File(path, (String)commandMap.get("fname"));
 		long fSize = uFile.length();
 		if (fSize > 0) {
 			String mimetype = "application/x-msdownload";
@@ -534,7 +534,6 @@ public class PatientsController {
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
