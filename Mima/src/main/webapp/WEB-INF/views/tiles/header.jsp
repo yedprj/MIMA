@@ -167,7 +167,7 @@
 	                         			<c:forEach var="notice" items="${notice}">
 	                         				<li data-value="${notice.type }" class="option">
 	                         					<c:if test="${notice.type eq 'phaCancel' }">
-	                         						<span id="cancelAlarm">약국 알림이 있습니다.</span>&nbsp;&nbsp; 
+	                         						<span id="cancelAlarm"><b>${notice.pharmacyInfo}</b>&nbsp;&nbsp;취소알림이 있습니다.</span>&nbsp;&nbsp; 
 	                         						<a id="xbtn" data-no="${notice.pushNo }"><i class="fas fa-times"></i></a>
 	                         					</c:if>
 	                         				</li>	

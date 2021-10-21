@@ -84,6 +84,10 @@
 #prescription {
 	cursor: pointer;
 }
+.doctors-appointment .doctors-table tr td .print i {
+	cursor: pointer;
+    margin-right: 5px;
+}
 </style>
 
 <!--page-title-two-->
@@ -172,7 +176,7 @@
                                                 <th>신청일자</th>
                                                 <th>주소</th>
                                                 <th>우편번호</th>
-                                                <th>처방전</th>
+                                                <th class="text-center">처방전</th>
                                                 <th>배송메모</th>
                                                 <th>&nbsp;</th>
                                                 <th>&nbsp;</th>
@@ -190,7 +194,8 @@
                                               <td class="text-center"><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
                                               <td><p>${del.delAddr},</p><p>${del.delAddr2}  ${del.delAddr3 }</p></td>
                                               <td class="text-center"><p>${del.delPostCode }</p></td>
-                                              <td class="text-center"><a id="prescription" onclick="prescriptionPdf(${del.bookingNo})" >처방전 파일</a>&nbsp;&nbsp;<span data-no="${del.bookingNo}" id="pdfDown" ><i class="fas fa-file-download"></i></span></td>
+                                              <td class="text-center"><a class="view" id="prescription" onclick="prescriptionPdf(${del.bookingNo})" ><i class="fas fa-eye"></i> 처방전</a>&nbsp;&nbsp;
+                                              							<span style="padding:9px 9px;" class="print" data-no="${del.bookingNo}" id="pdfDown" ><i class="fas fa-print"></i></span></td>
                                               <td><p id="delMemo"><c:if test="${not empty del.delNote}">메모 O</c:if></p>
                                               	<c:if test="${not empty del.delNote}"><div id="delMemoHidden">${del.delNote}</div></c:if>
                                               </td>

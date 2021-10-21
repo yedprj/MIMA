@@ -56,7 +56,7 @@ public interface CommentsMapper {
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20
 	public int docReplyDelete(ReplyVO vo);
 	
-	public ReplyVO getReply(int rcno);
+	public ReplyVO getReply(int rno);
 	
 	
 
