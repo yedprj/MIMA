@@ -263,12 +263,14 @@ public class PatientsController {
 	//환자대쉬보드 프로필페이지 e.12
 	@GetMapping("patients/ptProfileDetail")
 	public void ptMyProfile(Model model, HttpServletRequest request) throws IOException {
+		
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
 		MemberVO membervo = patientsService.ptSelectOne(memberNo);
-		
+
 		model.addAttribute("ptMyProfile", membervo );
+		
 		
 		if(membervo.getPtProfilePhoto() != null) {
 			File file = new File("path",membervo.getPtProfilePhoto());
@@ -289,6 +291,7 @@ public class PatientsController {
 			String changeString = "data:image/"+ "png" + ";base64," + s;
 			membervo.setPtProfilePhotoImg(changeString);
 		}
+		
 	}
 	
 	//e.20 환자대쉬보드 Main 프로필 이미지
