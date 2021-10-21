@@ -263,15 +263,17 @@ public class PatientsController {
 	//환자대쉬보드 프로필페이지 e.12
 	@GetMapping("patients/ptProfileDetail")
 	public void ptMyProfile(Model model, HttpServletRequest request) throws IOException {
+		
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
 		MemberVO membervo = patientsService.ptSelectOne(memberNo);
-		
+
 		model.addAttribute("ptMyProfile", membervo );
 		
+		
 		if(membervo.getPtProfilePhoto() != null) {
-			File file = new File("c:/upload",membervo.getPtProfilePhoto());
+			File file = new File("path",membervo.getPtProfilePhoto());
 			if(! file.exists())
 				return;
 				
@@ -289,6 +291,7 @@ public class PatientsController {
 			String changeString = "data:image/"+ "png" + ";base64," + s;
 			membervo.setPtProfilePhotoImg(changeString);
 		}
+		
 	}
 	
 	//e.20 환자대쉬보드 Main 프로필 이미지
@@ -302,7 +305,7 @@ public class PatientsController {
 		String s = "";
 		byte[] fileArray = null;
 		if(membervo.getPtProfilePhoto() != null) {
-			File file = new File("c:/upload",membervo.getPtProfilePhoto());
+			File file = new File(path,membervo.getPtProfilePhoto());
 			if(! file.exists())
 				return new ResponseEntity<byte[]>(null, null, HttpStatus.NOT_FOUND);
 				
@@ -332,7 +335,7 @@ public class PatientsController {
 	@RequestMapping(value = "/patients/FileDown.do")
 	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+		File uFile = new File(path, (String)commandMap.get("fname"));
 		long fSize = uFile.length();
 		if (fSize > 0) {
 			String mimetype = "application/x-msdownload";
@@ -534,7 +537,6 @@ public class PatientsController {
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
@@ -556,5 +558,7 @@ public class PatientsController {
 		}
 		return attachVo;
 	}
+	
+	// 환자 대쉬보드 환자 프로필 이름 밑_J21
 
 }

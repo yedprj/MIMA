@@ -15,4 +15,5 @@ public class PushVO {
 	private String pushDt;		// 이동할 주소 ?? 
 	private Date pushDate;		// 알람 발생 일시
 	private Date checkDate;		// 알람 확인 일시
+	private String pharmacyInfo; // 약국이름
 }

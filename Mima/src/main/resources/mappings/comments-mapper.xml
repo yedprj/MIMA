@@ -323,15 +323,15 @@
 	<!-- 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20 -->
 		<update id="docReplyUpdate">
 			UPDATE REPLY
-			SET CONTENTS = #{contents},
-				EDIT_DATE = SYSDATE
-			WHERE CNO = #{cno}
+			SET RCONTENTS = #{rcontents},
+				REDIT_DATE = SYSDATE
+			WHERE RNO = #{rno}
 		</update>
 		
 		
 		<select id="getReply" resultType="replyVO">
 			SELECT * FROM REPLY
-			WHERE RCNO = #{rcno}
+			WHERE RNO = #{rno}
 		</select>
 		
 </mapper>

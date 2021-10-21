@@ -156,6 +156,7 @@
 	<select id="checkDocDetail" resultType="DocInfoVO">
 		SELECT
 		MEMBER_NO,
+		PROFILE_PHOTO,
 		PROFILE_CONTENTS,
 		PROFILE_EDUCATION,
 		CLINIC_INFO,

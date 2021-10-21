@@ -98,15 +98,20 @@
                                             <div class="text">
                                                 <h3>전문의 Dr. ${item.name }님은요...</h3>
                                                 <p>${item.profileContents }</p>
+                                                <div class="row">
+                                                <div class="col-6">
                                                 <h3>진료과목</h3>
                                                 <p class="treatments-list clearfix">
                                                    <span><i class="fas fa-stethoscope"></i> ${item.subjects.category1 }</span><br>
                                                    <span><i class="fas fa-stethoscope"></i> ${item.subjects.category2 }</span><br>
                                                    <span><i class="fas fa-stethoscope"></i> ${item.subjects.category3 }</span>
                                                 </p>
+                                                </div>
+                                                 <div class="col-6">
                                                 <h3>학력</h3>
-                                                <p>${item.profileEducation } 을 밑에 잘라 넣으면 됩니다.</p>
-                                                <ul id="uploadedExp clearfix"></ul>
+                                                <ul id="uploadedEdu"class="clearfix"></ul>
+                                                 </div>
+                                                </div>
                                                 
                                             </div>
                                             <div class="accordion-box">
@@ -348,19 +353,21 @@
  
     	});//tab 온클릭이벤트 끝
 
-	
+   	/* 페이지 온 로드 */
+   	$(function(){
     	var education = "<c:out value='${item.profileEducation }'/>";
-    	console.log(education);
     	var arr = education.split("!");
-    	
-    	for(var i=0; i<arr.length-1; i++){
-    		var str="";
+    	var str ="";
+    	for(var i=0; i<arr.length-1;i++){
     		
-    		str += "<li id='scholl_1'>"+arr[i]+"<span id="sub_1"></span></li>"
-            str += "<li id='scholl_2'>"++"<span id="sub_3"></span></li>"
-            str += "<li id='scholl_3'>"++"<span id="sub_3"></span></li>"
+    		console.log(arr[i].replace(/,$/, ''))
+    		
+    		str+="<li>";
+    		str+= arr[i].replace(/,$/, '') +"</li>";
     	}
-    	
-    	
+    	console.log(str);
+    	console.log($('#uploadedEdu'))
+    	$('#uploadedEdu').append(str);
+   	});
     </script>
     

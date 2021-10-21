@@ -2,12 +2,17 @@ package com.mima.app.doc.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +29,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -180,20 +188,26 @@ public class PatnerDoctorController {
 	@PostMapping("doctor/docReplyInsert")
 	@ResponseBody
 	public ReplyVO docReplyInsert(ReplyVO replyvo) {
-			int result = commentsService.docReplyInsert(replyvo);
-			ReplyVO vo = new ReplyVO();
-			if ( result > 0 ) {
-				vo = commentsService.getReply(replyvo.getRcno());
-			} 
+		int result = commentsService.docReplyInsert(replyvo);
+		ReplyVO vo = new ReplyVO();
+		if ( result > 0 ) {
+			vo = commentsService.getReply(replyvo.getRno());
+		}
 		return vo;
 		
 	}
 	
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
-	@PostMapping("doctor/docReplyUpdate")
-	public int docReplyUpdate(ReplyVO replyvo) {
-		return commentsService.docReplyUpdate(replyvo);
-	}
+	   @PostMapping("doctor/docReplyUpdate")
+	   @ResponseBody
+	   public ReplyVO docReplyUpdate(ReplyVO replyvo) {
+	      int result = commentsService.docReplyUpdate(replyvo);
+	      ReplyVO vo = new ReplyVO();
+	      if ( result > 0 ) {
+	         vo = commentsService.getReply(replyvo.getRno());
+	      }
+	      return vo;
+	   }
 	
 	// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20
 	@PostMapping("doctor/replyDelete")
@@ -274,13 +288,12 @@ public class PatnerDoctorController {
 		String clinicName = doctorService.clinicName(memberNo);
 		
 		return clinicName;
-		
 	}
 	
 	
 	//s:1005 docProfileInsertFrm
 	@GetMapping("doctor/docProfileInsertForm")
-	public String docProfileInsertForm(Model model, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
+	public String docProfileInsertForm(Model model, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) throws IOException {
 		
 		// 닥터 프로필 병원 이름 호출_J17
 		model.addAttribute("clinicName", clinicName(request));
@@ -299,8 +312,31 @@ public class PatnerDoctorController {
 			model.addAttribute("expList", experienceService.getExpList(expVo));
 		}
 		
-		return "docDash/docProfileInsertForm";
+			//프로필 사진 가져오기 시작
+			if(docVo.getProfilePhoto() != null) {
+				File file = new File("c:/upload",docVo.getProfilePhoto());
+				
+				if(! file.exists()) {
+					return "docDash/docProfileInsertForm";
+				}
+				 
+					
+				FileInputStream inputStream = new FileInputStream(file);
+				ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
+				
+				int len = 0;
+				byte[] buf = new byte[1024];
+				while((len = inputStream.read(buf))!= -1) {
+					byteOutStream.write(buf,0,len);
+				}
+				byte[] fileArray = byteOutStream.toByteArray();
+				String s = new String (Base64.getEncoder().encodeToString(fileArray));
+				
+				String changeString = "data:image/"+ "png" + ";base64," + s;
+				docVo.setProfilePhoto(changeString);
+			}//프로필 사진 가져오기 끝
 		
+		return "docDash/docProfileInsertForm";	
 	}
 	
 	//s:1020 의사 프로필 페이지 학력조회 ajax 
@@ -430,7 +466,7 @@ public class PatnerDoctorController {
 		System.out.println("파트너 의사 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
 		
 		rttr.addFlashAttribute("result", vo.getMemberNo());
-		return "redirect:/docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
+		return "redirect:docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
 	}
 	
 	
@@ -441,7 +477,8 @@ public class PatnerDoctorController {
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
+
+		String imgPath = path;
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
@@ -451,15 +488,16 @@ public class PatnerDoctorController {
 			// String saveName = System.currentTimeMillis()+""; //이거를 팀별로 상의해서 지정해 주면 된다.
 			// File file =new File("c:/upload", saveName);
 			UUID uuid = UUID.randomUUID();
-			File file = new File(path, uuid + filename);
+			File file = new File(imgPath, uuid + filename);
+			System.out.println("이미지패스랑 유유아디파일"+file);
 			uFile.transferTo(file);
 
 			attachVo = new MeditAttachVO(); // attachVO list안에 파일정보 저장하기 위해 만듦
 			attachVo.setPImgName(filename);
 			attachVo.setUuid(uuid.toString());
-			attachVo.setUploadPath(path);
+			attachVo.setUploadPath(imgPath);
 
-			System.out.println(attachVo);
+			System.out.println("어태치보 확인"+attachVo);
 		}
 		return attachVo;
 	}
@@ -529,6 +567,33 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
-	
+		//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
+		@RequestMapping(value = "/doctor/FileDown.do")
+		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
+			File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+			
+			long fSize = uFile.length();
+			if (fSize > 0) {
+				String mimetype = "application/x-msdownload";
+				response.setContentType(mimetype);
+
+				BufferedInputStream in = null;
+				BufferedOutputStream out = null;
+				try {
+					in = new BufferedInputStream(new FileInputStream(uFile));
+					out = new BufferedOutputStream(response.getOutputStream());
+					FileCopyUtils.copy(in, out);
+					out.flush();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				} finally {
+					in.close();
+					response.getOutputStream().flush();
+					response.getOutputStream().close();
+				}
+			} 
+		}//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기 끝
 	
 }

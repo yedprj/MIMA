@@ -399,8 +399,8 @@ th, td {
 				
 				alert('진료를 시작합니다.');
 				
-				//window.open('https://3.37.209.146:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
-				window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
+				window.open('https://mima.miraclemind.kro.kr:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
+				//window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
 				let url="";
 				//uuid 구해서 링크 받아오기 s:1011
 				$.ajax({ 
@@ -418,8 +418,8 @@ th, td {
 		            success: function(data) {
 		                        console.log("진료방 시작후 방번호",data.roomId);
 		                        console.log("진료방 시작후 환자번호",data.ptNo);
-		                        //url="https://3.37.209.146:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
-		                        url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
+		                        url="https://mima.miraclemind.kro.kr:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
+		                        //url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
 		                        console.log(url);
 		                      },
 		            error: function(jqXHR, textStatus, err){
