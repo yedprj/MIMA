@@ -556,5 +556,7 @@ public class PatientsController {
 		}
 		return attachVo;
 	}
+	
+	// 환자 대쉬보드 환자 프로필 이름 밑_J21
 
 }

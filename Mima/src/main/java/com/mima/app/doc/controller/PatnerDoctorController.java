@@ -281,7 +281,6 @@ public class PatnerDoctorController {
 		String clinicName = doctorService.clinicName(memberNo);
 		
 		return clinicName;
-		
 	}
 	
 	

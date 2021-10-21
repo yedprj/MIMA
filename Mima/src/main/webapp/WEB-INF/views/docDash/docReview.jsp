@@ -331,8 +331,15 @@ textarea {
 		$(".comment #reply").empty();
 	});
 	
+	// 수정폼 취소 버튼
+	$(document).on('click', '#updateCancel', function(){
+		$(".comment #reply").empty();
+		
+	});
+	
 	// 등록폼 등록 버튼
 	$(document).on('click', '#insert', function(){
+		
 		
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
@@ -445,14 +452,14 @@ textarea {
 				
 				$("#comment").append('<div class="add-listing">'
 	                	+'<form id="replyForm">'
-	                    +'<br><label><b>댓글 수정</b></label><br>'
+	                    +'<label><b>댓글 수정</b></label><br>'
 						+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
 	                    +'    <textarea id="replyContents" name="rcontents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
 	                	+'  </div>'
 	                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
 	                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
 	                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
-	                	+'<p><button type="button" class="theme-btn-one" id="update">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
+	                	+'<p><button type="button" class="theme-btn-one" id="update">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="updateCancel">취소</button></p>'
 	                	+'</form>'
 	                	+'<div>')
 			});
