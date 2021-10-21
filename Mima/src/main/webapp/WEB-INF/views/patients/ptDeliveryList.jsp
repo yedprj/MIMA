@@ -69,19 +69,20 @@ th, td {
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
-						<h3>Dr. Rex Allen</h3>
+						<h3>${session.name}</h3>
 						<p>MDS - Periodontology</p>
 					</div>
 				</div>
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
 					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
 					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
+					<li><a href="ptMedelivery"><i class="fas fa-comment-medical"></i>약배달 신청</a></li>
+					<li><a href="ptDeliveryList" class="current"><i class="fas fa-ambulance"></i>배송 현황</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
@@ -327,7 +328,7 @@ $(function(){
 		var bkNo = $(this).data("no");
 		window.open("${pageContext.request.contextPath}/patients/ptPhaReviewFrm?bookingNo="+bkNo, "review", "width=680,height=950");
 		console.log($(this));
-		$(this).attr('disabled', true);
+		$(this).remove();
 	});// 리뷰쓰기 end
 	
 	
