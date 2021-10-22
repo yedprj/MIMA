@@ -301,7 +301,6 @@ public class PatnerDoctorController {
 		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
 		HttpSession session = request.getSession();
 		mVo = (MemberVO) session.getAttribute("session");
-		System.out.println(mVo);
 		
 		docVo = doctorService.checkDocDetail(mVo);
 		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
@@ -320,7 +319,6 @@ public class PatnerDoctorController {
 					return "docDash/docProfileInsertForm";
 				}
 				 
-					
 				FileInputStream inputStream = new FileInputStream(file);
 				ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
 				
@@ -455,7 +453,12 @@ public class PatnerDoctorController {
 		
 	//s:1006 의사프로필등록
 	@PostMapping("doctor/register")
-	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
+	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		MemberVO membervo  = (MemberVO) session.getAttribute("session");
+		int memberNo = membervo.getMemberNo();
+		vo.setMemberNo(memberNo);
 		
 		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo.getProfileEducation());
 		//s:1006 파트너의사테이블에 저장
@@ -464,9 +467,8 @@ public class PatnerDoctorController {
 		//s:1007 멤버 테이블 주소 업데이트
 		doctorService.docAddrUpdate(mVo);
 		System.out.println("파트너 의사 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
-		
-		rttr.addFlashAttribute("result", vo.getMemberNo());
-		return "redirect:docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
+
+		return "redirect:/doctor/docProfileInsertForm";
 	}
 	
 	
@@ -567,12 +569,12 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
-		//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
+		//s:1021 제은이꺼 훔쳐옴 의사 dash 프로필 이미지 불러오기
 		@RequestMapping(value = "/doctor/FileDown.do")
 		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
 				HttpServletResponse response) throws Exception {
 			log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
-			File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+			File uFile = new File(path, (String)commandMap.get("fname"));
 			
 			long fSize = uFile.length();
 			if (fSize > 0) {
@@ -594,15 +596,14 @@ public class PatnerDoctorController {
 					response.getOutputStream().close();
 				}
 			} 
-		}//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기 끝
+		}//s:1021 제은이꺼 훔쳐옴 의사 dash 프로필 이미지 불러오기 끝
 		
-		
-		//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
+		//s:1021 제은이꺼 훔쳐옴 의사 totaList 프로필 이미지 불러오기
 				@RequestMapping(value = "/FileDown.do")
-				public void cvplFileDownload2(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+				public void cvplFileDownloadDocList(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
 						HttpServletResponse response) throws Exception {
 					log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
-					File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+					File uFile = new File(path, (String)commandMap.get("fname"));
 					
 					long fSize = uFile.length();
 					if (fSize > 0) {
@@ -624,6 +625,10 @@ public class PatnerDoctorController {
 							response.getOutputStream().close();
 						}
 					} 
+
 				}//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기 끝
 	
 }
+
+		
+		
