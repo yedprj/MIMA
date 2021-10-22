@@ -317,7 +317,7 @@ public class PartnerPharmacyController {
 	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
-		File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+		File uFile = new File(path, (String)commandMap.get("fname"));
 		
 		long fSize = uFile.length();
 		if (fSize > 0) {
