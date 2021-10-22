@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mima.app.member.domain.ExperienceVO;
+import com.mima.app.member.domain.MemberVO;
 import com.mima.app.member.mapper.ExperienceMapper;
 
 @Service
@@ -36,5 +37,18 @@ public class ExperienceServiceImpl implements ExperienceService {
 	public int deleteExp(ExperienceVO vo) {
 		return experienceMapper.deleteExp(vo);
 	}
+	
+	//s:1020 의사 프로필 경력 입력
+	@Override
+	public int insertExpAjax(ExperienceVO vo) {
+		
+		return experienceMapper.insertExpAjax(vo);
+	}
 
+	//s:1020 의사 프로필 경력 수정
+	@Override
+	public int updateExpAjax(ExperienceVO vo) {
+		return experienceMapper.updateExpAjax(vo);
+	}
+	
 }

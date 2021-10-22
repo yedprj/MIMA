@@ -12,7 +12,8 @@
 		   B.CONSULT_DATE,
 		   B.CONSULT_TIME,
 		   B.BOOKING_STATUS,
-		   M.NAME
+		   M.NAME,
+		   M.PT_PROFILE_PHOTO
 	FROM BOOKING B JOIN MEMBER M
 	ON B.PT_NO=M.MEMBER_NO
 	WHERE B.CONSULT_DATE=TO_DATE(SYSDATE)
@@ -41,7 +42,8 @@
 		   B.PRICE,
 		   B.CONSULT_DATE,
 		   B.CONSULT_TIME,
-		   M.NAME
+		   M.NAME,
+		   M.PT_PROFILE_PHOTO
     FROM BOOKING B JOIN MEMBER M
     ON B.PT_NO=M.MEMBER_NO
     WHERE ROWNUM < 6
@@ -81,7 +83,8 @@
                  B.CONSULT_DATE,
                  B.CONSULT_TIME,
                  B.BOOKING_STATUS,
-                 M.NAME
+                 M.NAME,
+                 M.PT_PROFILE_PHOTO
 		  FROM BOOKING B JOIN MEMBER M
           ON B.PT_NO=M.MEMBER_NO
 		  WHERE <include refid="criteria"></include>
@@ -105,7 +108,8 @@
                  B.CONSULT_DATE,
                  B.CONSULT_TIME,
                  B.BOOKING_STATUS,
-                 M.NAME
+                 M.NAME,
+                 M.PT_PROFILE_PHOTO
 		  FROM BOOKING B JOIN MEMBER M
           ON B.PT_NO=M.MEMBER_NO
 		  WHERE <include refid="criteria"></include>
@@ -131,7 +135,8 @@
                  B.CONSULT_DATE,
                  B.CONSULT_TIME,
                  B.BOOKING_STATUS,
-                 M.NAME
+                 M.NAME,
+                 M.PT_PROFILE_PHOTO
 		  FROM BOOKING B JOIN MEMBER M
           ON B.PT_NO=M.MEMBER_NO
 		  WHERE <include refid="criteria"></include>
@@ -175,7 +180,8 @@
 				  B.ROOM_ID,
 				  B.FIRST_SESSION,
 				  B.SUBJECT,
-				  M.NAME
+				  M.NAME,
+				  M.PT_PROFILE_PHOTO
 		  FROM BOOKING B JOIN MEMBER M
                 ON PT_NO = M.MEMBER_NO
 		  WHERE <if test ="cri.keyword != null">
@@ -335,8 +341,19 @@
 <!-- Booking table 결제 status 업데이트 p.10/09 -->
 <update id="updateBookingStatus"> 
 	UPDATE BOOKING
-	SET BOOKING_STATUS = 'p'
+	SET BOOKING_STATUS = 'p',
+	PRICE = #{price}
 	WHERE BOOKING_NO = #{bookingNo}
 </update>
+
+<!-- 예약번호로 의사,환자 이름찾기 -->
+<select id="findNamePtDoc" resultType="bookingVO">
+	SELECT M.NAME , MM.NAME "DOC_NAME"
+	FROM BOOKING B, MEMBER M, MEMBER MM
+	WHERE B.PT_NO = M.MEMBER_NO
+	AND B.DOC_NO = MM.MEMBER_NO
+	AND BOOKING_NO = #{bookingNo}
+</select>
+
 
 </mapper>

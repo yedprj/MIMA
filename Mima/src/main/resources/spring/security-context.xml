@@ -13,6 +13,8 @@
 	<!-- 시큐리티 적용 안되는 부분있어서 수정 /가 시큐리티에서 resources를 찾아서 변경 p.30  -->
 	<security:http pattern="/assets/**" security="none" />
 	<security:http pattern="/meditVideo/**" security="none" />
+	<security:http pattern="/profileimage/**" security="none" />
+	<security:http pattern="/imgs/**" security="none" />
 	
 
 	<security:http auto-config="true" use-expressions="true">
@@ -42,7 +44,7 @@
 		<security:logout 
 			logout-url="/logout"
 			invalidate-session="true"
-			logout-success-url="/"/>
+			logout-success-url="/login"/>
 			
 		<!-- 접근제한 -->
 		<security:access-denied-handler ref="customAccessDenied"/>

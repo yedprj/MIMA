@@ -126,7 +126,6 @@
                         <div class="wrapper list">
                             <!-- 의사 블록 컨텐츠 리스트 -->
                             <div class="clinic-list-content list-item" id="docList">
-                            
                                <c:forEach  var="item" items="${list }">
                                 <div class="clinic-block-one">
                                     <div class="inner-box">
@@ -136,7 +135,18 @@
                                             <div class="pattern-2"
                                                 style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-25.png);"></div>
                                         </div>
-                                        <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt="">
+                                        <!--s:1022 의사 프로필 사진 -->
+                  
+                                        <figure class="image-box">
+                                        <c:choose>
+						                     <c:when test="${not empty item.profilePhoto }">
+						                        <img src="FileDown.do?fname=${item.profilePhoto}">
+						                     </c:when>
+						                     <c:otherwise>
+						                        <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt="">
+						                     </c:otherwise>
+						                  </c:choose>
+                                      <%--   <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt=""> --%>
                                         </figure>
                                         <div class="content-box">
                                         <!-- e.15 like -->
@@ -151,10 +161,10 @@
                                                 <li><i class="icon-Trust-1"></i></li>
                                                 <li><i class="icon-Trust-2"></i></li>
                                             </ul>
-                                            <span class="designation">${item.profileEducation }</span>
-                                            <div class="text">
+                                            <span class="designation">${item.clinicInfo }</span>
+                                            <%-- <div class="text">
                                                 <p>${item.profileContents }</p>
-                                            </div>
+                                            </div> --%>
                                             <div class="rating-box clearfix">
                                                 <ul class="rating clearfix">
                                                     <li><i class="icon-Star"></i></li>

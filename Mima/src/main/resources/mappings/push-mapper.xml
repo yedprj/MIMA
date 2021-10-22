@@ -4,29 +4,39 @@
 	
 	<!--K.10/17 MEMBER_NO 알람 내용 확인 -->
 	<select id="selectMemberPush" resultType="pushVO">
-		SELECT 	PUSH_NO, 
-				TO_MEMBER_NO, 
-				USER_MEMBER_NO, 
-				TYPE, 
-				CONTENT_ID,
-				MESSAGE, 
-				PUSH_DATE
+		SELECT	p.PUSH_NO, 
+                    P.TO_MEMBER_NO, 
+                    PH.PHARMACY_INFO,
+                    P.USER_MEMBER_NO, 
+                    P.TYPE, 
+                    P.CONTENT_ID,
+                    P.MESSAGE, 
+                    P.PUSH_DATE
+		FROM PUSH P , PARTNER_PHARMACY PH
+		WHERE P.USER_MEMBER_NO = PH.MEMBER_NO
+        AND P.TO_MEMBER_NO = #{toMemberNo}
+	</select>
+	
+	<!--K.10/21 MEMBER_NO 약국 알람 건수 확인 -->
+	<select id="selectMemberPushCount" resultType="int">
+		SELECT 	count(*)
 		FROM PUSH
 		WHERE TO_MEMBER_NO = #{toMemberNo}
+		AND TYPE = 'phaCancel'
 	</select>
 	
 	<!-- K. 10/16 약 배달 취소 알람 -->
 	<insert id="delCancelAlarm">
-		insert into push(
-				push_no, 
-				to_member_no, 
-				user_member_no,
-				type,
-				content_id, 
-				message, 
-				push_date
+		INSERT INTO PUSH(
+				PUSH_NO, 
+				TO_MEMBER_NO, 
+				USER_MEMBER_NO,
+				TYPE,
+				CONTENT_ID, 
+				MESSAGE, 
+				PUSH_DATE
 				)
-		values(
+		VALUES(
 			SEQ_PUSH.nextval,
 			#{toMemberNo},
 			#{userMemberNo},
@@ -37,5 +47,10 @@
 			)
 		
 	</insert>
+	
+	<delete id="pushDelete">
+		DELETE FROM PUSH 
+		WHERE PUSH_NO = #{pushNo}
+	</delete>
 
 </mapper>

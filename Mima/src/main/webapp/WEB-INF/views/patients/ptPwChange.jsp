@@ -30,7 +30,18 @@
             <div class="left-panel">
                 <div class="profile-box">
                     <div class="upper-box">
-                        <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
+                        <figure class="profile-image">
+							<c:choose>
+								<c:when test="${not empty session.ptProfilePhoto }">
+									<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+								</c:when>
+								<c:otherwise>
+									<img
+										src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+										alt="">
+								</c:otherwise>
+							</c:choose>
+						</figure>
                         <div class="title-box centred">
                             <div class="inner">
                                 <h3>${session.name}</h3>
@@ -43,9 +54,9 @@
 					<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
-					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
 					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
+					<li><a href="ptMedelivery"><i class="fas fa-comment-medical"></i>약배달 신청</a></li>
+					<li><a href="ptDeliveryList"><i class="fas fa-ambulance"></i>배송 현황</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm" class="current"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li>

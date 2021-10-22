@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.PartnerDoctorVO;
 import com.mima.app.likes.domain.LikesVO;
@@ -131,12 +132,6 @@ public class PatientsServiceImpl implements PatientsService {
 		return patientsMapper.getTotalPthCount(memberNo, cri);
 	}
 	
-	//환자대쉬보드 내가 찜한 의사 e.14
-	@Override
-	public List<LikesVO> ptDoctor(int memberNo) {
-		return patientsMapper.ptDoctor(memberNo);
-	}   
-	
 	//환자대쉬보드 Main 나의후기 e.5
 	@Override
 	public List<CommentsVO> ptMainreList(int memberNo) {
@@ -249,6 +244,12 @@ public class PatientsServiceImpl implements PatientsService {
 	@Override
 	public List<BookingVO> ptHistoryOldestList(int memberNo, Criteria cri) {
 		return patientsMapper.ptHistoryOldestList(memberNo, cri);
+	}
+	
+	// 환자 약배달 신청 약국 변경 K.10/19 
+	@Override
+	public int delPhaUpdate(PatientsVO vo) {
+		return patientsMapper.delPhaUpdate(vo);
 	}
 	
 

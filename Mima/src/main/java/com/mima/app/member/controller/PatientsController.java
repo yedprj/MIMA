@@ -1,28 +1,45 @@
 package com.mima.app.member.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialException;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -41,7 +58,9 @@ import com.mima.app.pharmacy.domain.MedDeliveryVO;
 import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
+import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.service.BookingService;
+import com.mima.app.session.service.ConsultationService;
 
 import lombok.extern.java.Log;
 
@@ -52,14 +71,16 @@ public class PatientsController {
 	
 	// e.10/11 환자대쉬보드
 	@Autowired PatientsService patientsService;
-	
 	@Autowired CommentsService commentsService;
-
 	@Autowired BookingService bookingService; // K.10/09 booking 확인
 	@Autowired PatnerPharmacyService phaService; // K.10/07 약국 검색
 	@Autowired MedDeliveryService deliveryService; // K.10/09 약배달
 	@Autowired MemberService memberService; // K.10/11 약배달 신청 유무
+	@Autowired ConsultationService consultationService; // K. 10/21 약국 후기 등록
 
+	@Value("#{global['path']}")
+	String path;
+	
 	//e.4
 	//환자대쉬보드 메인 페이지
 	@GetMapping("patients/ptMain")
@@ -82,25 +103,67 @@ public class PatientsController {
 	}
 	
 	
-	//환자대쉬보드 메인 페이지
+	// K. 10/18 약 배달 현황 전체 조회
 	@GetMapping("patients/ptDeliveryList")
 	public String ptDeliveryList(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		
 		int memberNo = vo.getMemberNo();
 		// 환자 약배달 현황
 		model.addAttribute("ptDeliveryStatusList", patientsService.ptDeliveryStatusAllList(memberNo));
+		model.addAttribute("memberNo", memberNo);
 
 		return "patients/ptDeliveryList";
+	}
+	
+	// K. 10/21 약국 후기 폼
+	@GetMapping("patients/ptPhaReviewFrm")
+	public String ptPhaReviewFrm(Model model, HttpServletRequest request, MedDeliveryVO mvo) {
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session");
+		int memberNo = vo.getMemberNo();
+		mvo = deliveryService.phaNameSelectOne(mvo.getBookingNo());
+		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("pha", mvo);
+		return "patients/ptPhaReviewFrm";
+	}
+	
+	@PostMapping("patients/ptReviewInsert")
+	@ResponseBody
+	public int ptReviewInsert(CommentsVO vo) {
+		int result = consultationService.ptReviewInsert(vo);
+		return result;
+	}
+	
+	// K. 10/18 환자 약배달 수령완료시 상태 업데이트
+	@PostMapping("patients/delcompleteUpdate")
+	@ResponseBody
+	public int delcompleteUpdate(MedDeliveryVO vo) {
+		int result = deliveryService.delcompleteUpdate(vo);
+		return result;
+	}
+	
+	// K. 10/19 환자 약배달 재신청하기
+	@PostMapping("patients/delReapply")
+	@ResponseBody
+	public int delReapply(MedDeliveryVO vo) {
+		int result = deliveryService.delReapply(vo);
+		return result;
+	}
+	
+	// K. 10/19 환자 약배달 신청 약국 변경하기
+	@PostMapping("patients/delPhaUpdate")
+	@ResponseBody
+	public int delPhaUpdate(PatientsVO vo) {
+		int result = patientsService.delPhaUpdate(vo);
+		return result;
 	}
 	
 	// K. 10/18 환자 약배달 취소 내역 조회
 	@PostMapping("patients/ptDelCancelSelect")
 	@ResponseBody
 	public MedDeliveryVO ptDelCancelSelect(MedDeliveryVO vo) {
-		log.info("******************취소내역");
 		return deliveryService.delCancelReason(vo.getBookingNo());
 	}
 	
@@ -115,13 +178,18 @@ public class PatientsController {
 		
 		int total = patientsService.ptbmListCount(cri, memberNo);
 		
-		model.addAttribute("ptbmList", patientsService.ptbmList(memberNo, cri));
-		model.addAttribute("ptbmListPage", patientsService.ptbmListPage(cri, memberNo));
-		model.addAttribute("ptbmListSoonPage", patientsService.ptbmListSoonPage(cri, memberNo));
-		model.addAttribute("ptbmListCanceledPage", patientsService.ptbmListCanceledPage(cri, memberNo));
-		System.out.println(patientsService.ptbmListCanceledPage(cri, memberNo));
-		System.out.println("*******"+patientsService.ptbmListSoonPage(cri, memberNo));
+//		model.addAttribute("ptbmList", patientsService.ptbmList(memberNo, cri));
+		
+		if (cri.getKeyword() == null || cri.getKeyword().equals("all")) {
+			model.addAttribute("ptbmListPage", patientsService.ptbmListPage(cri, memberNo));
+		} else if (cri.getKeyword() == null || cri.getKeyword().equals("soon")) {
+			model.addAttribute("ptbmListPage", patientsService.ptbmListSoonPage(cri, memberNo));
+		} else {
+			model.addAttribute("ptbmListPage", patientsService.ptbmListCanceledPage(cri, memberNo));
+		}
+		
 		model.addAttribute("pageMaker", new PageVO(cri,total));
+		
 		return "patients/ptBookManage";
 	}
 	
@@ -135,30 +203,20 @@ public class PatientsController {
 		
 		int total = patientsService.getTotalPthCount(memberNo, cri);
 		
-		model.addAttribute("ptHistoryList", patientsService.ptHistoryList(memberNo, cri));
-		model.addAttribute("ptHistoryOldestList", patientsService.ptHistoryOldestList(memberNo, cri));
+		if (cri.getKeyword() == null || cri.getKeyword().equals("latest")) {
+			model.addAttribute("ptHistoryList", patientsService.ptHistoryList(memberNo, cri));
+		} else {
+			model.addAttribute("ptHistoryList", patientsService.ptHistoryOldestList(memberNo, cri));
+		}
+		
+		System.out.println(patientsService.ptHistoryList(memberNo, cri) + "*******");
+		System.out.println(patientsService.ptHistoryOldestList(memberNo, cri) + "^^^^^^^^");
+		
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		return "patients/ptHistory";
 	}
 	
-	//환자대쉬보드 내가 찜한 의사 e.14
-	@GetMapping("patients/ptDoctor")
-	public List<LikesVO> ptDoctor(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberVO vo = (MemberVO) session.getAttribute("session");
-		int memberNo = vo.getMemberNo();
-		List<LikesVO> list = new ArrayList<LikesVO>();
-		list = patientsService.ptDoctor(memberNo);
-
-		System.out.println("리스트 확인"+list);
-		System.out.println("보 확인!!!!"+ vo);
-
-		model.addAttribute("ptDoctorList", list);
-		return list; 
-		 
-	}
-	
-	//환자대쉬보드 나의후기 페이지 e.5
+	// 환자 대쉬보드 나의후기 페이지 e.5
 	@GetMapping("patients/ptReview")
 	public String ptReview(Model model, CommentsVO commentsvo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
@@ -177,10 +235,20 @@ public class PatientsController {
 		return "patients/ptReview";
 	}
 	
+	// 환자 대쉬보드 나의 후기 댓글 조회_J20
+//	@GetMapping
+//	public String ptReplySelect(Model model, CommentsVO commentsvo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
+//		HttpSession session = request.getSession();
+//		MemberVO vo = (MemberVO) session.getAttribute("session");
+//		int memberNo = vo.getMemberNo();
+//		
+//		return null;
+//		
+//	}
+	
 	// 환자 대쉬보드 비밀번호 변경 페이지 수정 폼 e.11
 	@GetMapping("patients/ptPwChangeForm")
 	public String ptPwUpdateForm() {
-		
 		return "patients/ptPwChange";
 	}
 	
@@ -194,20 +262,109 @@ public class PatientsController {
 	
 	//환자대쉬보드 프로필페이지 e.12
 	@GetMapping("patients/ptProfileDetail")
-	public void ptMyProfile(Model model, HttpServletRequest request) {
+	public void ptMyProfile(Model model, HttpServletRequest request) throws IOException {
+		
 		HttpSession session = request.getSession();
 		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
-		model.addAttribute("ptMyProfile",patientsService.ptSelectOne(memberNo));
+		MemberVO membervo = patientsService.ptSelectOne(memberNo);
+
+		model.addAttribute("ptMyProfile", membervo );
+		
+		
+		if(membervo.getPtProfilePhoto() != null) {
+			File file = new File("path",membervo.getPtProfilePhoto());
+			if(! file.exists())
+				return;
+				
+			FileInputStream inputStream = new FileInputStream(file);
+			ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
+			
+			int len = 0;
+			byte[] buf = new byte[1024];
+			while((len = inputStream.read(buf))!= -1) {
+				byteOutStream.write(buf,0,len);
+			}
+			byte[] fileArray = byteOutStream.toByteArray();
+			String s = new String (Base64.getEncoder().encodeToString(fileArray));
+			
+			String changeString = "data:image/"+ "png" + ";base64," + s;
+			membervo.setPtProfilePhotoImg(changeString);
+		}
+		
 	}
 	
-	//환자대쉬보드 프로필 수정 - ajax - e.12
-	@PostMapping("/ptprofileUpdate")
-	@ResponseBody
-	public String ptprofileUpdate(MemberVO vo, Model model, HttpServletRequest request) {
+	//e.20 환자대쉬보드 Main 프로필 이미지
+	@GetMapping("patients/ptProfileImg")
+	public ResponseEntity<byte[]> ptProfileImg(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException, SerialException, SQLException {
 		HttpSession session = request.getSession();
-		vo  = (MemberVO) session.getAttribute("session");
+		MemberVO vo = (MemberVO) session.getAttribute("session");
 		int memberNo = vo.getMemberNo();
+		MemberVO membervo = patientsService.ptSelectOne(memberNo);
+		String changeString = "";
+		String s = "";
+		byte[] fileArray = null;
+		if(membervo.getPtProfilePhoto() != null) {
+			File file = new File(path,membervo.getPtProfilePhoto());
+			if(! file.exists())
+				return new ResponseEntity<byte[]>(null, null, HttpStatus.NOT_FOUND);
+				
+			FileInputStream inputStream = new FileInputStream(file);
+			ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
+			
+			int len = 0;
+			byte[] buf = new byte[1024];
+			while((len = inputStream.read(buf))!= -1) {
+				byteOutStream.write(buf,0,len);
+			}
+			fileArray = byteOutStream.toByteArray();
+			//s = new String (Base64.getEncoder().encodeToString(fileArray));
+			
+			//changeString = "data:image/"+ "png" + ";base64," + s;
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_PNG);
+			return new ResponseEntity<byte[]>(fileArray, headers, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<byte[]>(null, null, HttpStatus.NOT_FOUND);
+		}
+		
+		
+	}	
+	
+	//e.20 환자대쉬보드 Main 프로필 이미지
+	@RequestMapping(value = "/patients/FileDown.do")
+	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		File uFile = new File(path, (String)commandMap.get("fname"));
+		long fSize = uFile.length();
+		if (fSize > 0) {
+			String mimetype = "application/x-msdownload";
+			response.setContentType(mimetype);
+
+			BufferedInputStream in = null;
+			BufferedOutputStream out = null;
+			try {
+				in = new BufferedInputStream(new FileInputStream(uFile));
+				out = new BufferedOutputStream(response.getOutputStream());
+				FileCopyUtils.copy(in, out);
+				out.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			} finally {
+				in.close();
+				response.getOutputStream().flush();
+				response.getOutputStream().close();
+			}
+		} 
+	}
+	
+	//환자대쉬보드 프로필 수정- e.12
+	@PostMapping("patients/ptprofileUpdate")
+	public String ptprofileUpdate(MemberVO vo,  Model model, HttpServletRequest request) throws IllegalStateException, IOException {
+
+		HttpSession session = request.getSession();
+		MemberVO membervo  = (MemberVO) session.getAttribute("session");
+		int memberNo = membervo.getMemberNo();
 		vo.setMemberNo(memberNo);
 		int result = patientsService.ptprofileUpdate(vo);
 		if(result == 1) {
@@ -216,7 +373,7 @@ public class PatientsController {
 			model.addAttribute("result","수정에 실패하였습니다.");
 		}
 		
-		return "patients/ptProfileDetail";
+		return "redirect:/patients/ptProfileDetail";
 	}
 	
 	//환자대쉬보드 약배달 페이지 K.10/09
@@ -373,14 +530,13 @@ public class PatientsController {
 		return result;
 	}
 	
-	//e.18 환자대쉬보드 프로필 관리
+	//e.18 환자대쉬보드 프로필 사진
 	@PostMapping("patients/phaAjaxInsert")
 	@ResponseBody
 	// 업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
@@ -402,5 +558,7 @@ public class PatientsController {
 		}
 		return attachVo;
 	}
+	
+	// 환자 대쉬보드 환자 프로필 이름 밑_J21
 
 }

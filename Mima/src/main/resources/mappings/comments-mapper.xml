@@ -56,7 +56,8 @@
 				a.REG_DATE,
 				a.EDIT_DATE,
 				a.CNO,
-                b.NICKNAME
+                b.NICKNAME,
+                b.PT_PROFILE_PHOTO
 			from (
 				SELECT /* + INDEX(COMMENTS, IDX_COMMENTS) */
 							ROWNUM RN, CMAIN_CATEGORY, CMAIN_NO, 
@@ -88,7 +89,8 @@
                C.CONTENTS,
                C.REVIEW_POINT,
                C.REG_DATE,
-               M.NICKNAME
+               M.NICKNAME,
+               M.PT_PROFILE_PHOTO
         FROM COMMENTS C JOIN MEMBER M
         ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         WHERE ROWNUM < 6
@@ -104,7 +106,9 @@
                C.CONTENTS,
                C.REVIEW_POINT,
                C.REG_DATE,
-               M.NICKNAME
+               C.COMMENT_WRITER_NO,
+               M.NICKNAME,
+               M.PT_PROFILE_PHOTO
         FROM COMMENTS C JOIN MEMBER M
         ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         AND C.CMAIN_NO = #{memberNo}
@@ -192,9 +196,19 @@
 					 C.REG_DATE,
 					 C.EDIT_DATE,
 					 C.CNO,
-                     M.NICKNAME
+                     M.NAME,
+                     M.PT_PROFILE_PHOTO,
+                     R.RNO,
+                     R.RMAIN_NO,
+                     R.RWRITER_NO,
+                     R.RREG_DATE,
+                     R.REDIT_DATE,
+                     R.RCONTENTS,
+                     R.RCNO
 				FROM COMMENTS C JOIN MEMBER M
 				ON C.COMMENT_WRITER_NO = M.MEMBER_NO
+                FULL OUTER JOIN REPLY R
+                ON C.CNO = R.RCNO
 				WHERE <include refid="criteriaDocReview"></include>
 						<![CDATA[
 						ROWNUM <= #{cri.pageNum} * #{cri.amount}
@@ -216,9 +230,18 @@
 					 C.REG_DATE,
 					 C.EDIT_DATE,
 					 C.CNO,
-                     M.NICKNAME
+                     M.NAME,
+                     R.RNO,
+                     R.RMAIN_NO,
+                     R.RWRITER_NO,
+                     R.RREG_DATE,
+                     R.REDIT_DATE,
+                     R.RCONTENTS,
+                     R.RCNO
 				FROM COMMENTS C JOIN MEMBER M
 				ON C.COMMENT_WRITER_NO = M.MEMBER_NO
+                FULL OUTER JOIN REPLY R
+                ON C.CNO = R.RCNO
 				WHERE <include refid="criteriaDocReview"></include>
 						<![CDATA[
 						ROWNUM <= #{cri.pageNum} * #{cri.amount}
@@ -275,5 +298,44 @@
 		AND C.CMAIN_CATEGORY = 'pha'
 		AND C.CMAIN_NO = #{cmainNo}
 	</select>
-
+	
+	<!-- 닥터 대쉬보드 나의 후기 페이지 댓글 등록_J20 -->
+		<insert id="docReplyInsert">
+			<selectKey keyProperty="rno" resultType="int" order="BEFORE">
+				SELECT SEQ_REPLY.NEXTVAL FROM DUAL
+			</selectKey>
+			INSERT INTO REPLY (RNO,
+		                       RMAIN_NO,
+		                       RWRITER_NO,
+		                       RREG_DATE,
+		                       RCONTENTS,
+		                       RCNO)
+			VALUES (#{rno},
+					#{rmainNo},
+					#{rwriterNo},
+					SYSDATE,
+					#{rcontents},
+					#{rcno})
+		</insert>
+	
+	<!-- 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20 -->
+		<delete id="docReplyDelete">
+			DELETE FROM REPLY
+			WHERE RNO = #{rno}
+		</delete>
+	
+	<!-- 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20 -->
+		<update id="docReplyUpdate">
+			UPDATE REPLY
+			SET RCONTENTS = #{rcontents},
+				REDIT_DATE = SYSDATE
+			WHERE RNO = #{rno}
+		</update>
+		
+		
+		<select id="getReply" resultType="replyVO">
+			SELECT * FROM REPLY
+			WHERE RNO = #{rno}
+		</select>
+		
 </mapper>

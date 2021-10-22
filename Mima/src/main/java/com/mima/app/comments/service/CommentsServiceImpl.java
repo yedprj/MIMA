@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mima.app.comments.domain.CommentsPageVO;
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.comments.mapper.CommentsMapper;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.meditation.mapper.MeditationMapper;
@@ -112,5 +113,30 @@ public class CommentsServiceImpl implements CommentsService {
 	public int phaReviewCnt(int cmainNo) {
 		return commentsMapper.phaReviewCnt(cmainNo);
 	}
+
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 등록_J20
+	@Override
+	public int docReplyInsert(ReplyVO vo) {
+		return commentsMapper.docReplyInsert(vo);
+	}
+
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
+	@Override
+	public int docReplyUpdate(ReplyVO vo) {
+		return commentsMapper.docReplyUpdate(vo);
+	}
+
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20
+	@Override
+	public int docReplyDelete(ReplyVO vo) {
+		return commentsMapper.docReplyDelete(vo);
+	}
+
+	@Override
+	public ReplyVO getReply(int rno) {
+		return commentsMapper.getReply(rno);
+	}
+
+
 	
 }

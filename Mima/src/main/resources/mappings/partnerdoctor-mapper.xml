@@ -3,28 +3,18 @@
 <mapper namespace="com.mima.app.doc.mapper.PartnerDoctorMapper">
 
 	<!-- 닥터프로필인서트갑미다 s:1006 -->
-	<insert id="docProfileInsert">
-		INSERT INTO PARTNER_DOCTOR(
-		MEMBER_NO,
-		PROFILE_PHOTO,
-		PROFILE_CONTENTS,
-		PROFILE_EDUCATION,
-		CLINIC_INFO,
-		CLINIC_PHONE,
-		CLINIC_EMAIL,
-		REG_DATE
-		)
-		VALUES(
-		#{memberNo},
-		#{profilePhoto},
-		#{profileContents},
-		#{profileEducation},
-		#{clinicInfo},
-		#{clinicPhone},
-		#{clinicEmail},
-		sysdate
-		)
-	</insert>
+	<update id="docProfileInsert">
+		UPDATE PARTNER_DOCTOR
+		SET
+			PROFILE_PHOTO=#{profilePhoto},
+			PROFILE_CONTENTS=#{profileContents},
+			CLINIC_INFO=#{clinicInfo},
+			CLINIC_PHONE=#{clinicPhone},
+			CLINIC_EMAIL=#{clinicEmail},
+			REG_DATE=sysdate
+		where MEMBER_NO=#{memberNo}
+			
+	</update>
 
 	<!-- s:1007 프로필 등록 시 주소 멤버 테이블에 업데이트 -->
 	<update id="docAddrUpdate">
@@ -123,6 +113,7 @@
 		b.PROFILE_PHOTO,
 		b.PROFILE_CONTENTS,
 		b.PROFILE_EDUCATION,
+		b.CLINIC_INFO,
 		b.COMMENTSCNT,
 		C.CATEGORY_1,
 		C.CATEGORY_2,
@@ -164,10 +155,34 @@
 	<!-- s:1010 의사프로필 디테일 유무 확인 -->
 	<select id="checkDocDetail" resultType="DocInfoVO">
 		SELECT
-		MEMBER_NO
+		MEMBER_NO,
+		PROFILE_PHOTO,
+		PROFILE_CONTENTS,
+		PROFILE_EDUCATION,
+		CLINIC_INFO,
+		CLINIC_PHONE,
+		CLINIC_EMAIL
 		FROM PARTNER_DOCTOR
 		WHERE MEMBER_NO=#{memberNo}
 	</select>
+	
+	<!-- s:1020 의사 프로필 학력 조회 -->
+	<select id="checkEduDetail" resultType="DocInfoVO">
+	 SELECT PROFILE_EDUCATION
+		 FROM PARTNER_DOCTOR 
+		 WHERE MEMBER_NO = #{memberNo}
+	</select>
+	<!-- s:1020 의사 프로필 학력 입력 -->
+	<insert id="insertEduAjax">
+		INSERT INTO PARTNER_DOCTOR (MEMBER_NO, PROFILE_EDUCATION) 
+		VALUES(#{memberNo}, #{profileEducation})
+	</insert>
+	
+	<!-- s:1020 의사 프로필 학력 수정 -->
+	<update id="updateEduAjax">
+		UPDATE PARTNER_DOCTOR SET PROFILE_EDUCATION = #{profileEducation} WHERE MEMBER_NO =#{memberNo}
+	</update>
+	
 
 	<!-- 닥터 대쉬보드 병원 이름_J13 -->
 	<select id="clinicName" resultType="string">

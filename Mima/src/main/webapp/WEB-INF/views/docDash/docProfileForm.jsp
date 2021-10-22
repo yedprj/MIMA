@@ -30,7 +30,18 @@
             <div class="left-panel">
                 <div class="profile-box">
                     <div class="upper-box">
-                        <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
+                        <!-- s:1022 의사 왼쪽 프로필사진 세션에서 가져오는것-->
+                        <figure class="image-box profile-image">
+							<c:choose>
+			                     <c:when test="${not empty session.ptProfilePhoto }">
+			                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+			                     </c:when>
+			                     <c:otherwise>
+			                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+			                  alt="">
+			                     </c:otherwise>
+			                  </c:choose>
+						</figure>
                         <div class="title-box centred">
                             <div class="inner">
 
@@ -297,59 +308,27 @@ $(function(){
 		$("#saveAvailBtn").text("수정하기");
 	}
 	
+	
+	
 	var subjectvo = "<c:out value='${sub}'/>";
 	console.log(subjectvo);
 	if(subjectvo != ""){
-		if("${sub.category1}" != ""){
-			//$('#category1').val('${sub.category1}').attr('selected', 'selected');
-			var category1 = "${sub.category1}";
-			let num = 0;
-			
-			if (category1 == "정신분석"){
-				num = 0;
-			}
-			else if (category1 == "스트레스"){
-				num = 1;
-			}
-			else if (category1 == "기분"){
-				num = 2;
-			}
-			else if (category1 == "신경증"){
-				num = 3;
-			}
-			else if (category1 == "직장인"){
-				num = 4;
-			}
-			else if (category1 == "중독"){
-				num = 5;
-			}
-			else if (category1 == "노인"){
-				num = 6;
-			}
-			else if (category1 == "해리"){
-				num = 7;
-			}
-			
-			console.log(num);
-			$('#category1 option:eq('+num+')').prop("selected", true);
-			console.log("${sub.category1}")
+				
+		//ㄴ:1019 진료과목 데이터 있으면 값 넣어주기
+		$('#category1').val("${sub.category1}");
+		$('#category1').niceSelect('update');
+		$('#category2').val("${sub.category2}");
+		$('#category2').niceSelect('update');
+		$('#category3').val("${sub.category3}");
+		$('#category3').niceSelect('update');
+		$('#price1').val("${sub.price1}");
+		$('#price2').val("${sub.price2}");
+		$('#price3').val("${sub.price3}");
+		if(subjectvo != ""){
+			$("#insertSubFrm").attr('action', 'updateSub');
+			$("#subjectPriceInsertBtn").text("수정하기");
 		}
-		if("${sub.price1}" !=""){
-			 $('#price1').val("${sub.price1}");
-		}
-		if("${sub.category2}" !=""){
-			$("#category2").val("${sub.category2}").prop("selected");
-			 console.log($("#category2").val("${sub.category2}"))
-		}
-		if("${sub.price2}" !=""){
-			 $('#price2').val("${sub.price2}");
-		}
-		if("${sub.category3}" !=""){
-			 $('#category3').val("${sub.category3}");
-		}
-		if("${sub.price3}" !=""){
-			 $('#price3').val("${sub.price3}");
-		}
+		
 		$("#insertSubFrm").attr('action', 'updateSub');
 		$("#subjectPriceInsertBtn").text("수정하기");
 	}

@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.HttpHeaders;
@@ -54,14 +57,18 @@ public class AdminController {
 	@Autowired ReportService reportService;
 	@Autowired MeditationService meditationService;
 	
+
+	@Value("#{global['path']}")
+	String path = "c:/upload";
+	
 	//e.29
 	//K 10/06 수정
 	//관리자 회원정보조회(환자,의사,약국)
 	@GetMapping("/adlist")
 	public String list(Model model, @ModelAttribute("cri") Criteria cri) {
 		int total = patientsService.getTotalPatientsCount(cri);
-		int total1 = patientsService.getTotaldoctorCount(cri);
-		int total2 = patientsService.getTotalpharCount(cri);
+		int totalDoc = patientsService.getTotaldoctorCount(cri);
+		int totalPhar = patientsService.getTotalpharCount(cri);
 		
 		model.addAttribute("getptList", patientsService.getptList());
 		model.addAttribute("getdocList", patientsService.getdocList());
@@ -71,6 +78,8 @@ public class AdminController {
 		model.addAttribute("getdoctorList", patientsService.getdoctorList(cri));
 		model.addAttribute("getpharList", patientsService.getpharList(cri));
 		model.addAttribute("pageMaker", new PageVO(cri,total));
+		model.addAttribute("pageMakerDoc", new PageVO(cri,totalDoc));
+		model.addAttribute("pageMakerPhar", new PageVO(cri,totalPhar));
 		return "admin/adlist";
 	}
 	
@@ -135,6 +144,10 @@ public class AdminController {
 		vo.setReportNo(reportNo);
 		int result = reportService.adminDelete(vo);
 		
+		
+		 //알림전송 "신고글이 접수되었습니다."
+		 
+		
 		if(result == 1) {
 			rttr.addFlashAttribute("result","success");
 		}
@@ -175,10 +188,10 @@ public class AdminController {
 	@PostMapping("/meditAjaxInsert")
 	@ResponseBody
 	// 업로드 폼에서 인풋에서 타입이 파일이기 때문에 멀티파트파일로 주고 그 네임을 찾아서 여기 업로드파일 변수에 담아줌
-	public MeditAttachVO meditAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
+	public MeditAttachVO meditAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo, HttpServletRequest request)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
+		//String path =  request.getSession().getServletContext().getRealPath("/WEB-INF/resources/meditVideo");;
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {

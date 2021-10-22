@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.domain.QnaVO;
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.doc.domain.DocInfoVO;
 import com.mima.app.doc.domain.PartnerDoctorVO;
@@ -88,9 +89,6 @@ public interface PatientsService {
 	//전체 데이터 수 조회 진료내역 페이징 e.6
 	public int getTotalPthCount(@Param("memberNo") int memberNo, @Param("cri") Criteria cri);
 	
-	//환자대쉬보드 내가 찜한 의사 e.14
-	public List<LikesVO> ptDoctor(int memberNo);
-	
 	//환자대쉬보드 Main 나의후기 e.5
 	public List<CommentsVO> ptMainreList(int memberNo);
 	
@@ -135,5 +133,8 @@ public interface PatientsService {
 	
 	// 환자 약배달현황 전체 조회 K. 10/18
 	public List<PtDeliveryVO>ptDeliveryStatusAllList(int memberNo);
-
+	
+	// 환자 약배달 신청 약국 변경 K. 10/19
+	public int delPhaUpdate(PatientsVO vo);
+	
 }

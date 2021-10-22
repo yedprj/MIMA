@@ -35,6 +35,9 @@ public class MemberVO implements UserDetails{
 	// K.10/10
 	private String deliveryStatus; 	// 약배달신청 유무
 	
+	//e.20
+	private String ptProfilePhotoImg;	// 환자대쉬보드 프로필페이지 이미지
+	
 	// Session 때문에 추가 코드 p.30
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

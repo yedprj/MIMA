@@ -1,19 +1,41 @@
 package com.mima.app.doc.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Base64;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,6 +43,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mima.app.admin.domain.CscVO;
 import com.mima.app.admin.service.CscService;
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.comments.service.CommentsService;
 import com.mima.app.criteria.domain.Criteria;
 import com.mima.app.criteria.domain.PageVO;
@@ -41,9 +64,14 @@ import com.mima.app.session.domain.BookingVO;
 import com.mima.app.session.domain.PtInfoVO;
 import com.mima.app.session.service.BookingService;
 
+import lombok.extern.java.Log;
+
+
+
 // 타일스 때문에 RequestMapping제거 p.10/06
 // 타일스로 인해 아래 맵핑 해주는 클래스 String으로 수정 return으로 페이지 이동 p.10/06
 // 시큐리티 권한 부여 때문에 전체적인 Mapping 수정 p.10/11
+@Log
 @Controller
 public class PatnerDoctorController {
 	
@@ -56,6 +84,11 @@ public class PatnerDoctorController {
 	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired DocAvailabilityService docAvailabilityService;
 	@Autowired MentalSubjectService mentalSubjectService;
+	
+	
+
+	@Value("#{global['path']}")
+	String path;
 	
 	// 닥터 대쉬보드 메인 페이지_J
 	@GetMapping("doctor/docMain")
@@ -132,7 +165,7 @@ public class PatnerDoctorController {
 	
 	// 닥터 대쉬보드 나의 후기 페이지_J29
 	@GetMapping("doctor/docReview")
-	public String docReview(Model model, CommentsVO commentsvo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
+	public String docReview(Model model, CommentsVO commentsvo, ReplyVO vo, HttpServletRequest request, @ModelAttribute("cri")Criteria cri) {
 		HttpSession session = request.getSession();
 		MemberVO mvo = (MemberVO) session.getAttribute("session");
 		int memberNo = mvo.getMemberNo();
@@ -149,6 +182,38 @@ public class PatnerDoctorController {
 		model.addAttribute("pageMaker", new PageVO(cri,total));
 		
 		return "docDash/docReview";
+	}
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 등록_J20
+	@PostMapping("doctor/docReplyInsert")
+	@ResponseBody
+	public ReplyVO docReplyInsert(ReplyVO replyvo) {
+		int result = commentsService.docReplyInsert(replyvo);
+		ReplyVO vo = new ReplyVO();
+		if ( result > 0 ) {
+			vo = commentsService.getReply(replyvo.getRno());
+		}
+		return vo;
+		
+	}
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
+	   @PostMapping("doctor/docReplyUpdate")
+	   @ResponseBody
+	   public ReplyVO docReplyUpdate(ReplyVO replyvo) {
+	      int result = commentsService.docReplyUpdate(replyvo);
+	      ReplyVO vo = new ReplyVO();
+	      if ( result > 0 ) {
+	         vo = commentsService.getReply(replyvo.getRno());
+	      }
+	      return vo;
+	   }
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20
+	@PostMapping("doctor/replyDelete")
+	@ResponseBody
+	public int replyDelete(ReplyVO replyvo) {
+		return commentsService.docReplyDelete(replyvo);
 	}
 	
 	@GetMapping("doctor/docQna")
@@ -223,49 +288,143 @@ public class PatnerDoctorController {
 		String clinicName = doctorService.clinicName(memberNo);
 		
 		return clinicName;
-		
 	}
-	
-	
-	/*
-	 * @ModelAttribute("option") public Map<String, Object> jobs(){ Map<String,
-	 * Object> map = new HashMap<String, Object>(); map.put("contentAll",
-	 * jobService.getJobList()); map.put("booked", deptService.getDeptList());
-	 * map.put("canceled", deptService.getDeptList()); return map; }
-	 */
 	
 	
 	//s:1005 docProfileInsertFrm
-
 	@GetMapping("doctor/docProfileInsertForm")
-	public String docProfileInsertForm(Model model, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) {
-		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
-		
-		HttpSession session = request.getSession();
-		mVo = (MemberVO) session.getAttribute("session");
-		System.out.println(mVo);
-		docVo = doctorService.checkDocDetail(mVo);
-		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
-		String path="docDash/docProfileInsertForm";
+	public String docProfileInsertForm(Model model, MemberVO mVo, ExperienceVO expVo, DocInfoVO docVo, HttpServletRequest request ) throws IOException {
 		
 		// 닥터 프로필 병원 이름 호출_J17
 		model.addAttribute("clinicName", clinicName(request));
+
+		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
 		
-		//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 있으면 값을 가져와서 넘겨주고 수정할 수 있도록
-		if( docVo != null) {
-			System.out.print("테이블에 값 잇음!!");
+		docVo = doctorService.checkDocDetail(mVo);
+		System.out.println("파트너닥터컨트롤러 값이 있나 확인"+docVo);
+		
+		if(docVo != null) {
 			expVo.setMemberNo(docVo.getMemberNo());
 			model.addAttribute("doc", doctorService.getDocDetail(docVo));
 			model.addAttribute("expList", experienceService.getExpList(expVo));
-			 path="docDash/docProfileEditForm";
-			return path;
-		}else {
-			//s:1010 만약, 파트너의사 테이블 확인 후 멤버번호가 없으면 바로 인서트 할 수 있도록
-			System.out.print("테이블에 값 없음");
-			return path;
 		}
 		
+			//프로필 사진 가져오기 시작
+			if(docVo.getProfilePhoto() != null) {
+				File file = new File("c:/upload",docVo.getProfilePhoto());
+				
+				if(! file.exists()) {
+					return "docDash/docProfileInsertForm";
+				}
+				 
+				FileInputStream inputStream = new FileInputStream(file);
+				ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
+				
+				int len = 0;
+				byte[] buf = new byte[1024];
+				while((len = inputStream.read(buf))!= -1) {
+					byteOutStream.write(buf,0,len);
+				}
+				byte[] fileArray = byteOutStream.toByteArray();
+				String s = new String (Base64.getEncoder().encodeToString(fileArray));
+				
+				String changeString = "data:image/"+ "png" + ";base64," + s;
+				docVo.setProfilePhoto(changeString);
+			}//프로필 사진 가져오기 끝
+		
+		return "docDash/docProfileInsertForm";	
 	}
+	
+	//s:1020 의사 프로필 페이지 학력조회 ajax 
+	@GetMapping("doctor/getEduAjax")
+	@ResponseBody
+	public DocInfoVO getEduAjax(MemberVO mVo, DocInfoVO docVo, HttpServletRequest request  ) {
+		//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+		HttpSession session = request.getSession();
+		mVo = (MemberVO) session.getAttribute("session");
+		System.out.println("세션확인..."+mVo);
+		docVo = doctorService.checkEduDetail(mVo);
+		System.out.println("확인중..."+docVo);
+		
+		return docVo;
+	}
+	
+	//s:1020  의사 프로필 페이지 학력입력 ajax 
+		@PostMapping("doctor/insertEduAjax")
+		@ResponseBody
+		public int insertEduAjax(MemberVO mVo, PartnerDoctorVO docVo, HttpServletRequest request  ) {
+			//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+			HttpSession session = request.getSession();
+			mVo = (MemberVO) session.getAttribute("session");
+			docVo.setMemberNo(mVo.getMemberNo());
+			System.out.println("입력할 학력 조회" +docVo);
+					
+			int result = doctorService.insertEduAjax(docVo);
+			return result;
+		}
+		
+		//s:1020  의사 프로필 페이지 학력수정 ajax 
+		@PostMapping("doctor/updateEduAjax")
+		@ResponseBody
+		public int updateEduAjax(MemberVO mVo, PartnerDoctorVO docVo, HttpServletRequest request  ) {
+			//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+			HttpSession session = request.getSession();
+			mVo = (MemberVO) session.getAttribute("session");
+			docVo.setMemberNo(mVo.getMemberNo());
+			System.out.println("입력할 학력 조회" +docVo);
+					
+			int result = doctorService.updateEduAjax(docVo);
+			return result;
+		}
+		
+		//s:1020 의사 프로필 페이지 경력조회 ajax 
+		@GetMapping("doctor/getExpAjax")
+		@ResponseBody
+		public List<ExperienceVO> getExpAjax(MemberVO mVo, ExperienceVO expVo, HttpServletRequest request) {
+			//s:1010 세션에서 의사번호 가져와서 파트너의사 테이블 검색 후 널이면 인서트 널이 아니면 수정
+			HttpSession session = request.getSession();
+			mVo = (MemberVO) session.getAttribute("session");
+			expVo.setMemberNo(mVo.getMemberNo());
+			System.out.println("경력확인중.."+expVo);
+			return experienceService.getExpList(expVo);
+		}
+	
+		//s:1020  의사 프로필 페이지 경력 입력 ajax 
+		@PostMapping("doctor/insertExpAjax")
+		@ResponseBody
+		public List<ExperienceVO> insertExpAjax(@RequestBody ExperienceVO expVo, HttpServletRequest request  ) {
+			
+			System.out.println("입력할 경력 조회" +expVo);
+					
+			int result = experienceService.insertExpAjax(expVo);
+			
+			return experienceService.getExpList(expVo);
+		}
+		
+		//s:1020  의사 프로필 페이지 경력 입력 ajax 
+		@PostMapping("doctor/delExpAjax")
+		@ResponseBody
+		public int delExpAjax(@RequestBody ExperienceVO expVo, HttpServletRequest request  ) {
+			
+			System.out.println("경력삭제" +expVo);
+					
+			int result = experienceService.deleteExp(expVo);
+			
+			return result;
+		}
+	
+		//s:1020  의사 프로필 페이지 경력수정 ajax 
+		@PostMapping("doctor/updateExpAjax")
+		@ResponseBody
+		public int updateExpAjax(ExperienceVO expVo, HttpServletRequest request  ) {
+			
+			System.out.println("수정할 경력 조회" +expVo);
+					
+			int result = experienceService.updateExpAjax(expVo);
+			return result;
+		}
 
 	// S:1005 닥터 진료가능 요일 시간 등록 폼 페이지
 	@GetMapping("doctor/docProfileForm")
@@ -293,23 +452,23 @@ public class PatnerDoctorController {
 	}
 		
 	//s:1006 의사프로필등록
-	@PostMapping("/register")
-	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
+	@PostMapping("doctor/register")
+	public String register(PartnerDoctorVO vo, MemberVO mVo, ExperienceVO expVo, MultipartFile[] uploadFile, RedirectAttributes rttr, HttpServletRequest request) {
 		
-		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
+		HttpSession session = request.getSession();
+		MemberVO membervo  = (MemberVO) session.getAttribute("session");
+		int memberNo = membervo.getMemberNo();
+		vo.setMemberNo(memberNo);
+		
+		System.out.println("파트너 의사 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo.getProfileEducation());
 		//s:1006 파트너의사테이블에 저장
 		doctorService.docProfileInsert(vo);
 		
 		//s:1007 멤버 테이블 주소 업데이트
 		doctorService.docAddrUpdate(mVo);
 		System.out.println("파트너 의사 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
-		
-		//s:1007 경력 테이블 인서트
-		System.out.println("파트너 의사 컨트롤러-> 경력테이블 인서트 보 보는거임======" + expVo);
-		experienceService.insertExp(expVo);
-		
-		rttr.addFlashAttribute("result", vo.getMemberNo());
-		return "redirect:/docMain"; // 파라미터 전달하고 싶을 때 redirectAttr사용
+
+		return "redirect:/doctor/docProfileInsertForm";
 	}
 	
 	
@@ -320,7 +479,8 @@ public class PatnerDoctorController {
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
+
+		String imgPath = path;
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
@@ -330,15 +490,16 @@ public class PatnerDoctorController {
 			// String saveName = System.currentTimeMillis()+""; //이거를 팀별로 상의해서 지정해 주면 된다.
 			// File file =new File("c:/upload", saveName);
 			UUID uuid = UUID.randomUUID();
-			File file = new File(path, uuid + filename);
+			File file = new File(imgPath, uuid + filename);
+			System.out.println("이미지패스랑 유유아디파일"+file);
 			uFile.transferTo(file);
 
 			attachVo = new MeditAttachVO(); // attachVO list안에 파일정보 저장하기 위해 만듦
 			attachVo.setPImgName(filename);
 			attachVo.setUuid(uuid.toString());
-			attachVo.setUploadPath(path);
+			attachVo.setUploadPath(imgPath);
 
-			System.out.println(attachVo);
+			System.out.println("어태치보 확인"+attachVo);
 		}
 		return attachVo;
 	}
@@ -357,16 +518,30 @@ public class PatnerDoctorController {
 
 	//s:1007 의사 프로필 디테일 페이지로 이동하는거 s:1012
 	@GetMapping("/docProfileDetail")
-	public String docProfileDetail(DocInfoVO docVo, Model model, MemberVO mVo, HttpServletRequest request) {
+	public String docProfileDetail(DocInfoVO docVo, Model model, MemberVO mVo, CommentsVO comVo, ExperienceVO expVo, @ModelAttribute("cri")Criteria cri, HttpServletRequest request) {
 		
 		System.out.println("넘겨받은 멤버보"+mVo);
 		docVo = doctorService.checkDocDetail(mVo);
+		expVo.setMemberNo(mVo.getMemberNo());
 		
-		System.out.println(docVo+"보 값 널 확인");
+		//s:1019 의사 리뷰 가져오기
+		int mNo = mVo.getMemberNo();
+		//토탈리뷰수
+		int reviewTotal = commentsService.docReviewCount(cri, mNo);
+		System.out.println("총 리뷰 숫자"+ reviewTotal);
+		
 		if(docVo !=null) {
 			docVo = doctorService.getDocDetail(docVo);
+			System.out.println(docVo+"보 값 확인");
 			System.out.print("테이블에 값 잇음");
+			List<ExperienceVO> expList = experienceService.getExpList(expVo);
 			model.addAttribute("item", docVo);
+			model.addAttribute("expList", expList);
+			//의사리뷰리스트
+			model.addAttribute("docReviewPage",  commentsService.docReviewPage(cri, mNo));
+			model.addAttribute("reviewTotalNum", reviewTotal);
+			model.addAttribute("pageMaker", new PageVO(cri,reviewTotal));
+						
 			return "/docList/docProfileDetail";
 		}else {
 			System.out.print("테이블에 값 없음 노노 ");
@@ -394,4 +569,65 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
+		//s:1021 제은이꺼 훔쳐옴 의사 dash 프로필 이미지 불러오기
+		@RequestMapping(value = "/doctor/FileDown.do")
+		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
+			File uFile = new File(path, (String)commandMap.get("fname"));
+			
+			long fSize = uFile.length();
+			if (fSize > 0) {
+				String mimetype = "application/x-msdownload";
+				response.setContentType(mimetype);
+
+				BufferedInputStream in = null;
+				BufferedOutputStream out = null;
+				try {
+					in = new BufferedInputStream(new FileInputStream(uFile));
+					out = new BufferedOutputStream(response.getOutputStream());
+					FileCopyUtils.copy(in, out);
+					out.flush();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				} finally {
+					in.close();
+					response.getOutputStream().flush();
+					response.getOutputStream().close();
+				}
+			} 
+		}//s:1021 제은이꺼 훔쳐옴 의사 dash 프로필 이미지 불러오기 끝
+		
+		//s:1021 제은이꺼 훔쳐옴 의사 totaList 프로필 이미지 불러오기
+				@RequestMapping(value = "/FileDown.do")
+				public void cvplFileDownloadDocList(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+						HttpServletResponse response) throws Exception {
+					log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
+					File uFile = new File(path, (String)commandMap.get("fname"));
+					
+					long fSize = uFile.length();
+					if (fSize > 0) {
+						String mimetype = "application/x-msdownload";
+						response.setContentType(mimetype);
+
+						BufferedInputStream in = null;
+						BufferedOutputStream out = null;
+						try {
+							in = new BufferedInputStream(new FileInputStream(uFile));
+							out = new BufferedOutputStream(response.getOutputStream());
+							FileCopyUtils.copy(in, out);
+							out.flush();
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						} finally {
+							in.close();
+							response.getOutputStream().flush();
+							response.getOutputStream().close();
+						}
+					} 
+				}//s:1021 제은이꺼 훔쳐옴 의사 totaList 프로필 이미지 불러오기 끝
+	
 }
+
+		
+		

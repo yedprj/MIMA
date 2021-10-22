@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.mima.app.comments.domain.CommentsVO;
+import com.mima.app.comments.domain.ReplyVO;
 import com.mima.app.criteria.domain.Criteria;
 
 public interface CommentsMapper {
@@ -15,7 +16,6 @@ public interface CommentsMapper {
 	public CommentsVO read(CommentsVO vo);
 	//게시글번호에 해당하는 댓글 조회
 	public  List<CommentsVO> getList(@Param("cri") Criteria cri,@Param("cmainCategory") String cmainCategory, @Param("cmainNo") int cmainNo);
-
 
 	//해당 게시글의 댓글 수
 	public int getCountByMeditNo(CommentsVO vo);
@@ -46,5 +46,18 @@ public interface CommentsMapper {
 	
 	// K. 10/14 약국 리뷰 갯수
 	public int phaReviewCnt(int cmainNo);
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 등록_J20
+	public int docReplyInsert(ReplyVO vo);
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20
+	public int docReplyUpdate(ReplyVO vo);
+	
+	// 닥터 대쉬보드 나의 후기 페이지 댓글 삭제_J20
+	public int docReplyDelete(ReplyVO vo);
+	
+	public ReplyVO getReply(int rno);
+	
+	
 
 }

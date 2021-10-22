@@ -124,8 +124,14 @@ public class BookingServiceImpl implements BookingService {
 
 	// Booking table 결제 status 업데이트 p.10/09
 	@Override
-	public int updateBookingStatus(int bookingNo) {
-		return bookingMapper.updateBookingStatus(bookingNo);
+	public int updateBookingStatus(BookingVO vo) {
+		return bookingMapper.updateBookingStatus(vo);
+	}
+
+	// K.10/21 예약환자, 의사이름 찾기
+	@Override
+	public BookingVO findNamePtDoc(int bookingNo) {
+		return bookingMapper.findNamePtDoc(bookingNo);
 	}
 
 

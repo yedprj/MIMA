@@ -63,25 +63,32 @@ th, td {
 		<div class="profile-box">
 			<div class="upper-box">
 				<figure class="profile-image">
-					<img
-						src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-						alt="">
+					<c:choose>
+						<c:when test="${not empty session.ptProfilePhoto }">
+							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+						</c:when>
+						<c:otherwise>
+							<img
+								src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+								alt="">
+						</c:otherwise>
+					</c:choose>
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
-						<h3>Dr. Rex Allen</h3>
+						<h3>${session.name}</h3>
 						<p>MDS - Periodontology</p>
 					</div>
 				</div>
 			</div>
 			<div class="profile-info">
 				<ul class="list clearfix">
-					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
+					<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
-					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
 					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
+					<li><a href="ptMedelivery"><i class="fas fa-comment-medical"></i>약배달 신청</a></li>
+					<li><a href="ptDeliveryList" class="current"><i class="fas fa-ambulance"></i>배송 현황</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li><a href="login.html"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
@@ -125,19 +132,24 @@ th, td {
 												<c:if test="${del.deliveryStatus eq 'p'}">
 													<span class="status">배달완료</span>
 												</c:if>
-												<c:if test="${del.deliveryStatus eq 'y'}">
-													<span class="status pending">수령완료</span>
+												<c:if test="${del.deliveryStatus eq 'n'}">
+													<span class="status pending">배달신청</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'c'}">
 													<span id="deliveryCancelBtn" data-no="${del.bookingNo}" class="status cancel">신청취소</span>
 												</c:if>
-												<c:if test="${del.deliveryStatus eq 'n'}">
+												<c:if test="${del.deliveryStatus eq 'y'}">
 													<span class="status pending">배송시작</span>
 												</c:if>
 											</td>
-											<td>
-												<c:if test="${del.deliveryStatus eq 'n'}">
+											<td class="text-center">
+												<c:if test="${del.deliveryStatus eq 'y'}">
 													<span id="delCheckBtn" data-no="${del.bookingNo}" class="status">수령완료</span>
+												</c:if>
+												<c:if test="${del.deliveryStatus eq 'p'}">
+													<c:if test="${del.check < 1 }">
+														<span id="delReview" data-no="${del.bookingNo}" class="status cancel">후기쓰기</span>
+													</c:if>
 												</c:if>
 											</td>
 										</tr>
@@ -156,12 +168,6 @@ th, td {
 	</div>
 </section>
 <!-- doctors-dashboard -->
-
-<!--Scroll to top-->
-<button class="scroll-top scroll-to-target" data-target="html">
-	<span class="fa fa-arrow-up"></span>
-</button>
-
  <!-- appointment-section -->
  		<div class="modal">
         <section class="modal_content appointment-section bg-color-3">
@@ -174,17 +180,21 @@ th, td {
                             </div>
                             <div class="inner-box">
                                 <div class="information-form">
-                                    <h3>약배달 신청 취소 내역</h3>
                                     <form action="book-appointment.html" method="post">
                                         <div class="row clearfix">
-                                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                                <label>취소 약국명</label>
-                                                <input type="text" name=pharmacyName >
-                                            </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                                <label>(취소사유)</label>
+                                                <label>약국 취소 사유</label>
                                                 <textarea id="message" name="deliveryDecline" ></textarea>
                                             </div>
+                                            <div class="col-lg-10 col-md-6 col-sm-12 form-group">
+                                                <label>취소 약국명</label>
+                                                <input id="phaName" type="text" name=phaName >
+                                                <input id="pharmacyNo" type="hidden" name=pharmacyNo value="" >
+                                            </div>
+                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
+												<button id="searchBtn" type="button" onclick="window.open('phaSearch', '약국찾기', 'top=100px, left=300, width=600px, height=700px , scrollbars=yes');">검색</button>                                             	
+                                            </div>
+                                            
                                         </div>
                                     </form>
                                 </div>
@@ -200,6 +210,13 @@ th, td {
         </section>
         <!-- appointment-section end -->
         </div>
+
+<!--Scroll to top-->
+<button class="scroll-top scroll-to-target" data-target="html">
+	<span class="fa fa-arrow-up"></span>
+</button>
+
+
 
 <script>
 $(function(){
@@ -223,7 +240,7 @@ $(function(){
 			success : function(data) {
 				console.log(data);
 				$(".modal").fadeIn();
-				$("input[name='pharmacyName']").val(data.pharmacyName);
+				$("input[name='phaName']").val(data.pharmacyName);
 				$("#message").val(data.deliveryDecline);
 				
 			}
@@ -234,30 +251,94 @@ $(function(){
 		    $(".modal").fadeOut();
 		});
 		
+		// 재신청 하러가기 버튼 
+		$("#delReturnBtn").on("click",function(){
+			var pharmacyNo = $("#pharmacyNo").val();
+			var memberNo = ${memberNo};
+			
+			if(pharmacyNo == ""){
+				alert("새로 신청할 약국을 다시 선택해주세요!");
+				return;
+			} else {
+				$.ajax({
+					url : 'delReapply',
+					type : 'post',
+					data : { 
+						delPharmacyNo : pharmacyNo,
+						bookingNo : bookingNo
+					},
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},		 
+					success : function(data) {
+						if(data > 0 ){
+							var result = confirm("재신청이 완료되었습니다. /n 약배달신청도 해당약국으로 수정하시겠습니까?")
+							if(result){
+								// 약배달 신청 약국도 수정 (patient )
+								$.ajax({
+									url : 'delPhaUpdate',
+									type : 'post',
+									data : { 
+										memberNo : memberNo,
+										bookingNo : bookingNo
+									},
+									beforeSend : function(xhr) {
+										xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+									},		 
+									success : function(data) {
+										console.log("약배달 신청 약국도 변경 성공!")
+									}
+								});// ajax end
+							}
+							$(".modal").fadeOut();
+							location.href= "ptDeliveryList";
+						} else {
+							alert("다시 재신청 해주세요.")
+						}
+					}
+				});// ajax end
+			}
+			
+		}) // 재신청 버튼 end
+		
 	}); // 약배달 취소버튼 클릭 end
 	
 	// 수령확인 완료 버튼 클릭
 	$(document).on("click","#delCheckBtn",function(){
 		var bookingNo = $(this).data("no");
 		
-		$.ajax({
-			url : 'ptDeliveryUpdate',
-			type : 'post',
-			data : { 
-				bookingNo : bookingNo
-			},
-			beforeSend : function(xhr) {
-				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-			},		 
-			success : function(data) {
-				console.log(data);
-				$(".modal").fadeIn();
-				$("input[name='pharmacyName']").val(data.pharmacyName);
-				$("#message").val(data.deliveryDecline);
-				
-			}
-		});// ajax end
-	});
+		var result = confirm("약배달을 수령하셨나요?");
+		if(result){
+			$.ajax({
+				url : 'delcompleteUpdate',
+				type : 'post',
+				data : { 
+					deliveryStatus : 'p',
+					bookingNo : bookingNo
+				},
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				},		 
+				success : function(data) {
+					// 리다이렉트로 가는 방법로 다시 수정하기(약배달현황에서 클릭시 자꾸 주소가 더붙음)
+					location.href= "ptDeliveryList";
+					alert("약국에서 복약지도 연락이 가오니 잠시만 기다려주세요~!");
+				}
+			});// ajax end
+		} else {
+			return;
+		}
+		
+	}); // 약배달 수령확인 버튼 end
+	
+	// K. 10/21 약배달 리뷰쓰기 Btn
+	$("#delReview").on("click",function(){
+		var bkNo = $(this).data("no");
+		window.open("${pageContext.request.contextPath}/patients/ptPhaReviewFrm?bookingNo="+bkNo, "review", "width=680,height=950");
+		console.log($(this));
+		$(this).remove();
+	});// 리뷰쓰기 end
+	
 	
 });
 </script>

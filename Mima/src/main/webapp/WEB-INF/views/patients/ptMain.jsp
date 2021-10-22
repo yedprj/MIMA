@@ -80,9 +80,15 @@ th, td {
 		<div class="profile-box">
 			<div class="upper-box">
 				<figure class="profile-image">
-					<img
-						src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-						alt="">
+					<c:choose>
+							<c:when test="${not empty session.ptProfilePhoto }">
+								<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+							</c:when>
+							<c:otherwise>
+								<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+							</c:otherwise>
+						</c:choose>
+
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
@@ -96,9 +102,9 @@ th, td {
 					<li><a href="ptMain" class="current"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
-					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
 					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
+					<li><a href="ptMedelivery"><i class="fas fa-comment-medical"></i>약배달 신청</a></li>
+					<li><a href="ptDeliveryList"><i class="fas fa-ambulance"></i>배송 현황</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li>
@@ -197,9 +203,16 @@ th, td {
 											<td>
 												<div class="name-box">
 													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
+														<c:choose>
+															<c:when test="${not empty session.ptProfilePhoto }">
+																<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+															</c:when>
+															<c:otherwise>
+																<img
+																	src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+																	alt="">
+															</c:otherwise>
+														</c:choose>
 													</figure>
 													<h5>${list.name} 의사</h5>
 													<span class="docno"># ${list.docNo}</span>
@@ -238,7 +251,7 @@ th, td {
 							<table class="doctors-table">
 								<thead class="table-header">
 									<tr>
-										<th>환자명</th>
+										<th>의사명</th>
 										<th>예약번호</th>
 										<th>진료일</th>
 										<th>예약일</th>
@@ -251,9 +264,16 @@ th, td {
 											<td>
 												<div class="name-box">
 													<figure class="image">
-														<img
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png"
-															alt="">
+														<c:choose>
+															<c:when test="${not empty session.ptProfilePhoto }">
+																<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+															</c:when>
+															<c:otherwise>
+																<img
+																	src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+																	alt="">
+															</c:otherwise>
+														</c:choose>
 													</figure>
 													<h5>${ptMainhisList.name} 의사</h5>
 													<span class="ptno">#${ptMainhisList.ptNo}</span>
@@ -310,13 +330,13 @@ th, td {
 												<c:if test="${del.deliveryStatus eq 'p'}">
 													<span class="status">배달완료</span>
 												</c:if>
-												<c:if test="${del.deliveryStatus eq 'y'}">
-													<span class="status pending">수령완료</span>
+												<c:if test="${del.deliveryStatus eq 'n'}">
+													<span class="status pending">배달신청</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'c'}">
 													<span id="deliveryCancelBtn" data-no="${del.bookingNo }" class="status cancel">신청취소</span>
 												</c:if>
-												<c:if test="${del.deliveryStatus eq 'n'}">
+												<c:if test="${del.deliveryStatus eq 'y'}">
 													<span class="status pending">배송시작</span>
 												</c:if>
 											</td>
@@ -345,7 +365,18 @@ th, td {
 							var="ptMainreList">
 							<div class="single-comment-box">
 								<div class="comment">
-									<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+									<figure class="comment-thumb">
+										<c:choose>
+											<c:when test="${not empty session.ptProfilePhoto }">
+												<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+											</c:when>
+											<c:otherwise>
+												<img
+													src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+													alt="">
+											</c:otherwise>
+										</c:choose>
+									</figure>
 									<c:if test="${ptMainreList.cmainCategory eq 'doc'}">
 						             	<h4>${ptMainreList.name} 의사</h4>
 						             </c:if>

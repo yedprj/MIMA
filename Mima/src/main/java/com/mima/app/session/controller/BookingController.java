@@ -114,17 +114,20 @@ public class BookingController {
 	// 결제 후 이동 페이지 맵핑 수정 p.10/11
 	@PostMapping("patients/insertPayment")
 	@ResponseBody
-	public int insertPayment(PaymentVO vo, RedirectAttributes rttr) {
+	public int insertPayment(PaymentVO vo, BookingVO bvo, RedirectAttributes rttr) {
 		
 		int bookingNo = vo.getPayItem();
+		int price = vo.getPayAmount();
+		
+		bvo.setBookingNo(bookingNo);
+		bvo.setPrice(price);
 		
 		int result = raymentService.insertPayment(vo);
 		
 		if (result == 1) {
-			bookingService.updateBookingStatus(bookingNo);
+			bookingService.updateBookingStatus(bvo);
 		}
 		
 		return result;
 	}
-	
 }

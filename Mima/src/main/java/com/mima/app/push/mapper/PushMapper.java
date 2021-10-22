@@ -11,5 +11,8 @@ public interface PushMapper {
 	
 	// K. 10/17 회원별 알림건 조회
 	public List<PushVO> selectMemberPush(int toMemberNo);
-
+	
+	// K. 10/19 알림 확인시 삭제
+	public int pushDelete(int pushNo);
+	
 }

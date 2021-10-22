@@ -28,21 +28,9 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 	// s:1006 의사프로필 인서트 + 첨부파일(프로필 사진 인서트)
 	@Override
 	public int docProfileInsert(PartnerDoctorVO vo) {
+		System.out.println("니뭐고--------------------" + vo);
+		return partnerDoctorMapper.docProfileInsert(vo);
 		
-		partnerDoctorMapper.docProfileInsert(vo); //doc table에 인서트
-		
-	//첨부파일 등록 (첨부파일 테이블에) 교재 567
-		if (vo.getAttachFile() == null) {
-			return 2;
-		}
-		// BoardServiceImpl 참고
-		//여기 그냥 메딧어태치 보 쓰고 같은 테이블 사용함
-		MeditAttachVO attach =vo.getAttachFile();
-						
-		System.out.println("첨부파일 인서트 제발 좀 들어가-"+attach+"meditationServiceImpl");
-		attachMapper.insertImg(attach);
-
-		return 1;
 	}
 
 
@@ -88,6 +76,24 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 		return partnerDoctorMapper.checkDocDetail(vo);
 	}
 
+	//s:1020 의사 프로필 학력 조회
+	@Override
+	public DocInfoVO checkEduDetail(MemberVO vo) {
+		return partnerDoctorMapper.checkEduDetail(vo);
+	}
+
+	//s:1020 의사 프로필 학력 입력
+	@Override
+	public int insertEduAjax(PartnerDoctorVO vo) {
+		return partnerDoctorMapper.insertEduAjax(vo);
+	}
+
+	//s:1020  의사 프로필 페이지 학력수정 ajax 
+	@Override
+	public int updateEduAjax(PartnerDoctorVO vo) {
+		return partnerDoctorMapper.updateEduAjax(vo);
+	}
+
 	// 닥터 대쉬보드 병원 이름_J13
 	@Override
 	public String clinicName(int memberNo) {
@@ -105,5 +111,6 @@ public class PartnerDoctorServiceImpl implements PartnerDoctorService {
 	public int deleteDocLike(LikesVO vo) {
 		return partnerDoctorMapper.deleteDocLike(vo);
 	}
+
 
 }

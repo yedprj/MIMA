@@ -16,4 +16,10 @@ public interface ExperienceMapper {
 	
 	//s:1008 경력 테이블 한 의사의 경력 삭제하기(경력번호를 넣어줘야함)
 	public int deleteExp(ExperienceVO vo);
+
+	//s:1020  의사 프로필 페이지 경력입력 ajax 
+	public int insertExpAjax(ExperienceVO vo);
+	//s:1020  의사 프로필 페이지 경력수정 ajax 
+	public int updateExpAjax(ExperienceVO vo);
+	
 }

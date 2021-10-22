@@ -50,10 +50,17 @@ th, td {
 	<div class="left-panel">
 		<div class="profile-box">
 			<div class="upper-box">
-				<figure class="profile-image">
-					<img
-						src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-						alt="">
+				 <!-- s:1022 의사 왼쪽 프로필사진 세션에서 가져오는것-->
+                <figure class="image-box profile-image">
+					<c:choose>
+	                     <c:when test="${not empty session.ptProfilePhoto }">
+	                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+	                     </c:when>
+	                     <c:otherwise>
+	                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+	                  alt="">
+	                     </c:otherwise>
+	                  </c:choose>
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
@@ -336,11 +343,7 @@ th, td {
 							</ul>
 						</div>
 						<!-- pagination end -->
-						
-					
-				
 			</div>
-
 		</div>
 	</div>
 
@@ -399,8 +402,8 @@ th, td {
 				
 				alert('진료를 시작합니다.');
 				
+				//window.open('https://mima.miraclemind.kro.kr:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
 				window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
-				
 				let url="";
 				//uuid 구해서 링크 받아오기 s:1011
 				$.ajax({ 
@@ -418,6 +421,7 @@ th, td {
 		            success: function(data) {
 		                        console.log("진료방 시작후 방번호",data.roomId);
 		                        console.log("진료방 시작후 환자번호",data.ptNo);
+		                        //url="https://mima.miraclemind.kro.kr:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
 		                        url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
 		                        console.log(url);
 		                      },

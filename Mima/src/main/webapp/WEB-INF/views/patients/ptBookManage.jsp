@@ -51,10 +51,21 @@ th, td {
 	<div class="left-panel">
 		<div class="profile-box">
 			<div class="upper-box">
+
 				<figure class="profile-image">
-					<img
-						src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-						alt="">
+	
+					<c:choose>
+						<c:when test="${not empty session.ptProfilePhoto }">
+							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+						</c:otherwise>
+					</c:choose>
+				
+						
+				
+					
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
@@ -68,9 +79,9 @@ th, td {
 					<li><a href="ptMain"><i class="fas fa-columns"></i>대쉬보드</a></li>
 					<li><a href="ptBookManage" class="current"><i class="fas fa-calendar-alt"></i>나의 예약관리</a></li>
 					<li><a href="ptHistory"><i class="fas fa-calendar-alt"></i>나의 진료내역</a></li>
-					<li><a href="ptDoctor"><i class="fas fa-wheelchair"></i>내가 찜한 의사</a></li>
 					<li><a href="ptReview"><i class="fas fa-star"></i>나의 후기</a></li>
-					<li><a href="ptMedelivery"><i class="fas fa-ambulance"></i>약 배달관리</a></li>
+					<li><a href="ptMedelivery"><i class="fas fa-comment-medical"></i>약배달 신청</a></li>
+					<li><a href="ptDeliveryList"><i class="fas fa-ambulance"></i>배송 현황</a></li>
 					<li><a href="ptProfileDetail"><i class="fas fa-user"></i>프로필 관리</a></li>
 					<li><a href="ptPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
 					<li>
@@ -97,19 +108,13 @@ th, td {
 						<div class="select-box pull-right">
 							<select class="wide" id="selectBox" onchange="searchCheck()">
 								<option value="all">모두보기</option>
-								<option value="soon">예약된 접수</option>
+								<option value="soon">예정된 접수</option>
 								<option value="canceled">취소된 접수</option>
 							</select>
+							<script type="text/javascript">
+	                        	$("#selectBox").val("${cri.keyword}"== ""?"all" : "${cri.keyword}")
+	                        </script>
 						</div>
-						
-						<form>
-							<div class="form-group">
-								<input type="hidden" name="type" value="">
-		                    	<input type="hidden" id="pageNum" name="pageNum" value="${pageMaker.cri.pageNum}">
-              					<input type="hidden" id="amount" name="amount" value="${pageMaker.cri.amount}">
-              					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-			                </div>
-						</form>
 						
 					</div>
 					<div class="doctors-appointment">
@@ -133,7 +138,16 @@ th, td {
 												<td>
 													<div class="name-box">
 													<figure class="image">
-															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+															<c:choose>
+																<c:when test="${not empty session.ptProfilePhoto }">
+																	<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+																</c:when>
+																<c:otherwise>
+																	<img
+																		src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+																		alt="">
+																</c:otherwise>
+															</c:choose>
 														</figure>
 														<h5>${ptbmList.name}</h5>
 														<span class="docno"># ${ptbmList.docNo}</span>
@@ -169,7 +183,7 @@ th, td {
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 							</div>
 						</div>
-						
+						<%-- 
 						<div class="doctors-list"  id="soon" style="display: none;">
 							<div class="table-outer">
 								<table class="doctors-table table-hover">
@@ -282,13 +296,13 @@ th, td {
 								</table>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 							</div>
-						</div>
+						</div> --%>
 						
 					</div>
 				</div>
 			</div>
 					<!-- pagination  -->
-						<div class="pagination-wrapper" id="allPage" style="display: block;">
+						<div class="pagination-wrapper">
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev}">
 									<li class="paginate_button previous"><a href="ptBookManage?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
@@ -305,7 +319,7 @@ th, td {
 						</div>
 						<!-- pagination end -->
 						
-						<!-- pagination  -->
+						<%-- <!-- pagination  -->
 						<div class="pagination-wrapper" id="soonPage" style="display: none;">
 							<ul class="pagination">
 								<c:if test="${pageMaker.prev}">
@@ -339,7 +353,7 @@ th, td {
 								</c:if>
 							</ul>
 						</div>
-						<!-- pagination end -->
+						<!-- pagination end --> --%>
 		</div>
 	</div>
 
@@ -385,7 +399,7 @@ th, td {
 	function searchCheck() {
 		var choose = $("#selectBox option:selected").val();
 		
-		if (choose == 'all') {
+		/* if (choose == 'all') {
 			$("#all").css('display','block');
 			$("#soon").css('display', 'none');   
 			$("#canceled").css('display', 'none');
@@ -406,12 +420,15 @@ th, td {
 			$("#allPage").css('display','none');
 			$("#soonPage").css('display', 'none');   
 			$("#canceledPage").css('display', 'block');
-		}
+		} */
+		
+		location.href="ptBookManage?pageNum=1&keyword="+choose
+		
 	}
 
 	$(document).ready(function() {
 		$('#selectBox').val('${cri.category}').prop("selected", true);
-		searchCheck();
+		//searchCheck();
 		
 		// 로그아웃_J18
 		$("#logoutBtn1").on("click", function(){

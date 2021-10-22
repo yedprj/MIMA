@@ -33,4 +33,10 @@ public class BookingVO {
 	//s:1012 주민번호
 	private String identifyNo;
 	
+	// 환자 후기쓰기 버튼 유무_J19
+	private String comments;
+	
+	//s:1022 환자프로필사진
+	private String ptProfilePhoto;
+	
 }
