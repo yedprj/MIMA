@@ -189,20 +189,13 @@ public class PartnerPharmacyController {
 	// 프로필 페이지 [K]210929
 	
 	@GetMapping("/myProfile") 
-	public void myProfile(Model model,
-			HttpServletRequest request) 
-	{ HttpSession session = request.getSession();
-			MemberVO vo = (MemberVO) session.getAttribute("session"); 
-			int memberNo = vo.getMemberNo(); model.addAttribute("profile",partPhaService.selectOne(memberNo)); }
+	public void myProfile(Model model,HttpServletRequest request) { 
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session"); 
+		int memberNo = vo.getMemberNo(); 
+		model.addAttribute("profile",partPhaService.selectOne(memberNo)); 
+	}
 		
-		
-		
-		
-	
-	
-	
-		
-		 
 	
 	// 프로필 수정 - ajax [K]210929
 	@PutMapping("/profileUpdate")

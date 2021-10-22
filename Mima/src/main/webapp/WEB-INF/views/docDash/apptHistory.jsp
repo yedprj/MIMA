@@ -46,7 +46,7 @@ th, td {
 <div class="left-panel">
 	<div class="profile-box">
 	    <div class="upper-box">
-        	<figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
+        	<figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/임태림.PNG" alt=""></figure>
 	        <div class="title-box centred">
 	        	<div class="inner">
 		            <h3>${session.name}</h3>
