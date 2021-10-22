@@ -331,7 +331,7 @@ th, td {
 													<span class="status">배달완료</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'n'}">
-													<span class="status pending">배달신청</span>
+													<span class="status pending">신청완료</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'c'}">
 													<span id="deliveryCancelBtn" data-no="${del.bookingNo }" class="status cancel">신청취소</span>

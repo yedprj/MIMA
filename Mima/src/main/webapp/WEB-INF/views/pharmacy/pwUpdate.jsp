@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!--page-title-two-->
 <section class="page-title-two">
 	<div class="title-box centred bg-color-2">
@@ -31,7 +31,15 @@
 		<div class="profile-box">
 			<div class="upper-box">
 				<figure class="profile-image">
-					<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+					<c:choose>
+							<c:when test="${not empty session.ptProfilePhoto }">
+								<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+							</c:when>
+							<c:otherwise>
+								<img	src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+						alt="">
+							</c:otherwise>
+						</c:choose>
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
