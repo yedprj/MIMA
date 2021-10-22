@@ -57,7 +57,18 @@
                         <div class="clinic-details-content doctor-details-content">
                             <div class="clinic-block-one">
                                 <div class="inner-box">
-                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-33.jpg" alt=""></figure>
+                                    <!--s:1022 의사 프로필 사진 -->
+                                     <figure class="image-box">
+                                        <c:choose>
+						                     <c:when test="${not empty item.profilePhoto }">
+						                        <img src="FileDown.do?fname=${item.profilePhoto}" style="width:190px; height:220px">
+						                     </c:when>
+						                     <c:otherwise>
+						                        <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt="">
+						                     </c:otherwise>
+						                  </c:choose>
+                                      <%--   <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt=""> --%>
+                                        </figure>
                                     <div class="content-box">
                                         <div class="like-box"><a href="doctors-details.html"><i class="far fa-heart"></i></a></div>
                                         <div class="share-box">
@@ -98,15 +109,20 @@
                                             <div class="text">
                                                 <h3>전문의 Dr. ${item.name }님은요...</h3>
                                                 <p>${item.profileContents }</p>
+                                                <div class="row">
+                                                <div class="col-6">
                                                 <h3>진료과목</h3>
                                                 <p class="treatments-list clearfix">
                                                    <span><i class="fas fa-stethoscope"></i> ${item.subjects.category1 }</span><br>
                                                    <span><i class="fas fa-stethoscope"></i> ${item.subjects.category2 }</span><br>
                                                    <span><i class="fas fa-stethoscope"></i> ${item.subjects.category3 }</span>
                                                 </p>
+                                                </div>
+                                                 <div class="col-6">
                                                 <h3>학력</h3>
-                                                <p>${item.profileEducation } 을 밑에 잘라 넣으면 됩니다.</p>
-                                                <ul id="uploadedExp clearfix"></ul>
+                                                <ul id="uploadedEdu"class="clearfix"></ul>
+                                                 </div>
+                                                </div>
                                                 
                                             </div>
                                             <div class="accordion-box">
@@ -168,7 +184,7 @@
                                     </div>
                                     <div class="tab" id="tab-4">
                                         <div class="review-box">
-                                            <h3>Dr. ${item.name } Reviews</h3>
+                                            <h3>Dr. ${item.name }'s Reviews</h3>
                                             <div class="review-inner">
                                             	<c:if test="${empty docReviewPage }">
                                             		<p>아직 등록된 리뷰가 없습니다.</p>
@@ -176,7 +192,17 @@
                                             	<c:if test="${not empty docReviewPage }">
                                             		<c:forEach var="review" items="${docReviewPage }">
 	                                            		<div class="single-review-box">
-		                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-1.jpg" alt=""></figure>
+		                                                    <!--s:1022 의사 프로필 사진 -->
+						                                     <figure class="image-box">
+						                                        <c:choose>
+												                     <c:when test="${not empty review.ptProfilePhoto }">
+												                        <img src="FileDown.do?fname=${review.ptProfilePhoto}" style="width:95px; height:95px">
+												                     </c:when>
+												                     <c:otherwise>
+												                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-1.jpg" alt="">
+												                     </c:otherwise>
+												                  </c:choose>
+						                                        </figure>
 		                                                    <c:if test="${review.reviewPoint == 1}">
 			                                                    <div class="starRev">
 								                                	<span class="starR on">별1</span>
@@ -348,19 +374,21 @@
  
     	});//tab 온클릭이벤트 끝
 
-	
+   	/* 페이지 온 로드 */
+   	$(function(){
     	var education = "<c:out value='${item.profileEducation }'/>";
-    	console.log(education);
     	var arr = education.split("!");
-    	
-    	for(var i=0; i<arr.length-1; i++){
-    		var str="";
+    	var str ="";
+    	for(var i=0; i<arr.length-1;i++){
     		
-    		str += "<li id='scholl_1'>"+arr[i]+"<span id="sub_1"></span></li>"
-            str += "<li id='scholl_2'>"++"<span id="sub_3"></span></li>"
-            str += "<li id='scholl_3'>"++"<span id="sub_3"></span></li>"
+    		console.log(arr[i].replace(/,$/, ''))
+    		
+    		str+="<li>";
+    		str+= arr[i].replace(/,$/, '') +"</li>";
     	}
-    	
-    	
+    	console.log(str);
+    	console.log($('#uploadedEdu'))
+    	$('#uploadedEdu').append(str);
+   	});
     </script>
     

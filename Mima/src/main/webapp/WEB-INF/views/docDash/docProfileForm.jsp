@@ -30,7 +30,18 @@
             <div class="left-panel">
                 <div class="profile-box">
                     <div class="upper-box">
-                        <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
+                        <!-- s:1022 의사 왼쪽 프로필사진 세션에서 가져오는것-->
+                        <figure class="image-box profile-image">
+							<c:choose>
+			                     <c:when test="${not empty session.ptProfilePhoto }">
+			                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+			                     </c:when>
+			                     <c:otherwise>
+			                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+			                  alt="">
+			                     </c:otherwise>
+			                  </c:choose>
+						</figure>
                         <div class="title-box centred">
                             <div class="inner">
 

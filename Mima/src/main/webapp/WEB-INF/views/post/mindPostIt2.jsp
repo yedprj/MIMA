@@ -230,10 +230,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			<form name="insert"
 				style="padding-bottom: 10px; padding-top: 10px; height: 200px;">
 				<textarea id="contents" name="contents"
-					style="background-color: transparent; line-height: 1.5; width: 100%; height: 170px;"></textarea>
+					style="background-color: transparent; line-height: 1.5; width: 100%; height: 200px;"></textarea>
 				<br />
 			</form>
-			<div style="cursor: pointer; flex-direction: none;">
+			<div style="cursor: pointer; flex-direction: none; margin-top: 50px;">
 				<span id="palletBox" class="pallet"></span> <span
 					class="accept insertBtn" style="float: right;"><i
 					class="fas fa-check"></i></span> <span class="cancel closeBtn"

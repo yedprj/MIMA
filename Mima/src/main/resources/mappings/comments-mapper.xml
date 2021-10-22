@@ -56,7 +56,8 @@
 				a.REG_DATE,
 				a.EDIT_DATE,
 				a.CNO,
-                b.NICKNAME
+                b.NICKNAME,
+                b.PT_PROFILE_PHOTO
 			from (
 				SELECT /* + INDEX(COMMENTS, IDX_COMMENTS) */
 							ROWNUM RN, CMAIN_CATEGORY, CMAIN_NO, 
@@ -88,7 +89,8 @@
                C.CONTENTS,
                C.REVIEW_POINT,
                C.REG_DATE,
-               M.NICKNAME
+               M.NICKNAME,
+               M.PT_PROFILE_PHOTO
         FROM COMMENTS C JOIN MEMBER M
         ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         WHERE ROWNUM < 6
@@ -105,7 +107,8 @@
                C.REVIEW_POINT,
                C.REG_DATE,
                C.COMMENT_WRITER_NO,
-               M.NICKNAME
+               M.NICKNAME,
+               M.PT_PROFILE_PHOTO
         FROM COMMENTS C JOIN MEMBER M
         ON C.COMMENT_WRITER_NO = M.MEMBER_NO
         AND C.CMAIN_NO = #{memberNo}
@@ -194,6 +197,7 @@
 					 C.EDIT_DATE,
 					 C.CNO,
                      M.NAME,
+                     M.PT_PROFILE_PHOTO,
                      R.RNO,
                      R.RMAIN_NO,
                      R.RWRITER_NO,
@@ -323,15 +327,15 @@
 	<!-- 닥터 대쉬보드 나의 후기 페이지 댓글 수정_J20 -->
 		<update id="docReplyUpdate">
 			UPDATE REPLY
-			SET CONTENTS = #{contents},
-				EDIT_DATE = SYSDATE
-			WHERE CNO = #{cno}
+			SET RCONTENTS = #{rcontents},
+				REDIT_DATE = SYSDATE
+			WHERE RNO = #{rno}
 		</update>
 		
 		
 		<select id="getReply" resultType="replyVO">
 			SELECT * FROM REPLY
-			WHERE RCNO = #{rcno}
+			WHERE RNO = #{rno}
 		</select>
 		
 </mapper>

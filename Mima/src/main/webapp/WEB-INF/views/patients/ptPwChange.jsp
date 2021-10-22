@@ -31,17 +31,17 @@
                 <div class="profile-box">
                     <div class="upper-box">
                         <figure class="profile-image">
-					<c:choose>
-						<c:when test="${not empty session.ptProfilePhoto }">
-							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
-						</c:when>
-						<c:otherwise>
-							<img
-								src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-								alt="">
-						</c:otherwise>
-					</c:choose>
-				</figure>
+							<c:choose>
+								<c:when test="${not empty session.ptProfilePhoto }">
+									<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+								</c:when>
+								<c:otherwise>
+									<img
+										src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+										alt="">
+								</c:otherwise>
+							</c:choose>
+						</figure>
                         <div class="title-box centred">
                             <div class="inner">
                                 <h3>${session.name}</h3>

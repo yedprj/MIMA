@@ -1,23 +1,38 @@
 package com.mima.app.pharmacy.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Base64;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,6 +66,7 @@ public class PartnerPharmacyController {
 	@Autowired CommentsService commentsService;
 	@Autowired PushService pushService;
 	@Autowired BookingService bookingService;
+	@Autowired MemberService memberService;
 
 
 	@Value("#{global['path']}")
@@ -168,14 +184,25 @@ public class PartnerPharmacyController {
 		
 	}
 	
+	
+		
 	// 프로필 페이지 [K]210929
-	@GetMapping("/myProfile")
-	public void myProfile(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		MemberVO vo = (MemberVO) session.getAttribute("session");
-		int memberNo = vo.getMemberNo();
-		model.addAttribute("profile", partPhaService.selectOne(memberNo));
-	}
+	
+	@GetMapping("/myProfile") 
+	public void myProfile(Model model,
+			HttpServletRequest request) 
+	{ HttpSession session = request.getSession();
+			MemberVO vo = (MemberVO) session.getAttribute("session"); 
+			int memberNo = vo.getMemberNo(); model.addAttribute("profile",partPhaService.selectOne(memberNo)); }
+		
+		
+		
+		
+	
+	
+	
+		
+		 
 	
 	// 프로필 수정 - ajax [K]210929
 	@PutMapping("/profileUpdate")
@@ -235,7 +262,7 @@ public class PartnerPharmacyController {
 	
 	//K.10/11 약국프로필등록
 	@PostMapping("/register")
-	public String register(PartnerPharmacyVO vo, MemberVO mVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
+	public String register(HttpServletRequest request, PartnerPharmacyVO vo, MemberVO mVo, MultipartFile[] uploadFile, RedirectAttributes rttr) {
 		log.info("파트너 약국 컨트롤러-> 인서트// 등록할때 보 보는거임======" + vo);
 		//K.10/11 파트너약국테이블에 저장
 		partPhaService.profileUpdate(vo);
@@ -247,6 +274,10 @@ public class PartnerPharmacyController {
 		mVo.setPostcode(vo.getPharmacyPostCode());
 		mVo.setMemberNo(vo.getMemberNo());
 		partPhaService.phaAddrUpdate(mVo);
+		
+		// 단건 조회후 세션에 다시 담아줌
+		MemberVO mvo = memberService.getUserById(mVo.getMemberId());
+		request.getSession().setAttribute("session", mvo);
 		
 		log.info("파트너 약국 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
 		
@@ -261,7 +292,6 @@ public class PartnerPharmacyController {
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {

@@ -133,8 +133,8 @@ public class CommentsServiceImpl implements CommentsService {
 	}
 
 	@Override
-	public ReplyVO getReply(int rcno) {
-		return commentsMapper.getReply(rcno);
+	public ReplyVO getReply(int rno) {
+		return commentsMapper.getReply(rno);
 	}
 
 
