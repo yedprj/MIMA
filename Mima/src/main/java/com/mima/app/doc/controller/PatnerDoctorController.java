@@ -2,12 +2,15 @@ package com.mima.app.doc.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,10 +27,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -529,6 +535,32 @@ public class PatnerDoctorController {
 	}
 	
 	//e.21 프로필 Main 이미지 등록
-	
+	//e.20 환자대쉬보드 Main 프로필 이미지
+		@RequestMapping(value = "/doctor/FileDown.do")
+		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			File uFile = new File(path, (String)commandMap.get("fname"));
+			long fSize = uFile.length();
+			if (fSize > 0) {
+				String mimetype = "application/x-msdownload";
+				response.setContentType(mimetype);
+
+				BufferedInputStream in = null;
+				BufferedOutputStream out = null;
+				try {
+					in = new BufferedInputStream(new FileInputStream(uFile));
+					out = new BufferedOutputStream(response.getOutputStream());
+					FileCopyUtils.copy(in, out);
+					out.flush();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				} finally {
+					in.close();
+					response.getOutputStream().flush();
+					response.getOutputStream().close();
+				}
+			} 
+		}
+		
 	
 }
