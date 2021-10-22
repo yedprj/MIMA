@@ -131,15 +131,13 @@ input::placeholder {
 			<div class="upper-box">
 				<figure class="profile-image">
 					<c:choose>
-							<c:when test="${not empty session.ptProfilePhoto }">
-								<img src="FileDown.do?fname=${session.ptProfilePhoto}">
-							</c:when>
-							<c:otherwise>
-								<img
-						src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-						alt="">
-							</c:otherwise>
-						</c:choose>
+						<c:when test="${not empty session.ptProfilePhoto }">
+							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+						</c:otherwise>
+					</c:choose>
 				</figure>
 				<div class="title-box centred">
 				
@@ -184,7 +182,18 @@ input::placeholder {
                         <div class="inner-box">
                             <div class="profile-title">
                                 <div>
-                                    <figure class="image-box"><img width="300" height="300"  id="profileImg" src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png" alt="프로필 미리보기"></figure>
+                                    <figure class="image-box">
+                                    	<c:choose>
+											<c:when test="${not empty session.ptProfilePhoto }">
+												<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+											</c:when>
+											<c:otherwise>
+												<img
+													src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+													alt="">
+											</c:otherwise>
+										</c:choose>
+                                    </figure>
                                     <ul id="uploaded"></ul>
                                 </div>
                                 <div class="upload-photo">
@@ -597,7 +606,7 @@ $(function(){
 			str += "<input type='hidden' name='attachFile.pImgName' value='"+li.data("pimgname")+"'>";
 		    str += "<input type='hidden' name='attachFile.uuid' value='"+li.data("uuid")+"'>";
 		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
-		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+"'>";
+		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+li.data("pimgname")+"'>";
 		    str += "<input type='hidden' name='openHours'  value='"+ openHours +"'>";
 		    
 		$("#phaInsertFrm").append(str);
