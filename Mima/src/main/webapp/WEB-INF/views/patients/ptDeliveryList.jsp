@@ -77,7 +77,6 @@ th, td {
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${session.name}</h3>
-						<p>MDS - Periodontology</p>
 					</div>
 				</div>
 			</div>
