@@ -23,7 +23,7 @@
 	SELECT *
 	FROM (
 	        SELECT /*+INDEX_DESC(MED_DELIVERY MED_DELIVERY_PK)  */
-	        ROWNUM RN, M.PT_EDUCATION, M.DELIVERY_STATUS, M.PHARMACY_NO, 
+	        ROWNUM RN, M.PT_EDUCATION, M.DELIVERY_STATUS, M.PHARMACY_NO, MM.PT_PROFILE_PHOTO ,
 	                MM.NAME,MM.PHONE, M.BOOKING_NO, B.CONSULT_DATE , 
 	                P.DEL_ADDR, P.DEL_ADDR2, P.DEL_ADDR3, P.DEL_POST_CODE
 	        FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
@@ -154,6 +154,7 @@
 	FROM (
 	            SELECT ROWNUM RN,  
 	                    M.PHARMACY_NO, 
+	                    MM.PT_PROFILE_PHOTO ,
 	                    MM.NAME, 
 	                    M.BOOKING_NO, 
 	                    B.CONSULT_DATE , 
