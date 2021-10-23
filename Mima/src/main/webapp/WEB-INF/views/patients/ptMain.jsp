@@ -81,14 +81,13 @@ th, td {
 			<div class="upper-box">
 				<figure class="profile-image">
 					<c:choose>
-							<c:when test="${not empty session.ptProfilePhoto }">
-								<img src="FileDown.do?fname=${session.ptProfilePhoto}">
-							</c:when>
-							<c:otherwise>
-								<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
-							</c:otherwise>
-						</c:choose>
-
+						<c:when test="${not empty session.ptProfilePhoto}">
+							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+						</c:otherwise>
+					</c:choose>
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
@@ -331,7 +330,7 @@ th, td {
 													<span class="status">배달완료</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'n'}">
-													<span class="status pending">배달신청</span>
+													<span class="status pending">신청완료</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'c'}">
 													<span id="deliveryCancelBtn" data-no="${del.bookingNo }" class="status cancel">신청취소</span>

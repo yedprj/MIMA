@@ -569,6 +569,7 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
+
 		//s:1021 제은이꺼 훔쳐옴 의사 dash 프로필 이미지 불러오기
 		@RequestMapping(value = "/doctor/FileDown.do")
 		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
@@ -625,8 +626,8 @@ public class PatnerDoctorController {
 							response.getOutputStream().close();
 						}
 					} 
+
 				}//s:1021 제은이꺼 훔쳐옴 의사 totaList 프로필 이미지 불러오기 끝
-	
 }
 
 		
