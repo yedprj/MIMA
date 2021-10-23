@@ -95,14 +95,14 @@
 		</div>
 		<div class="auto-container">
 			<div class="title">
-				<h1>약배달 관리</h1>
+				<h1>약배달 현황</h1>
 			</div>
 		</div>
 	</div>
 	<div class="lower-content">
 		<ul class="bread-crumb clearfix">
 			<li><a href="${pageContext.request.contextPath}">Home</a></li>
-			<li>약배달 관리</li>
+			<li>약배달 현황</li>
 		</ul>
 	</div>
 </section>
@@ -134,7 +134,7 @@
 				<ul class="list clearfix">
 					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash" ><i
 							class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery" class="current"><i class="fas fa-ambulance"></i>약배달관리</a></li>
+					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery" class="current"><i class="fas fa-ambulance"></i>약배달현황</a></li>
 					<li><a href="${pageContext.request.contextPath}/pharmacy/deliveryRegCancel"><i class="fas fa-laptop-medical"></i>약배달 등록/취소</a></li>
 					<li><a id="guid" href="${pageContext.request.contextPath}/pharmacy/medGuid"><i class="fas fa-comment-medical"></i>복약지도관리</a></li>
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review"><i class="fas fa-star"></i>약국 후기</a></li>
@@ -216,7 +216,7 @@
 														<span class="status">배달완료</span>
 													</c:if>
 													<c:if test="${phaDel.deliveryStatus eq 'y'}">
-														<span class="status pending">배달예정</span>
+														<span class="status pending">배달중</span>
 													</c:if>
 													<c:if test="${phaDel.deliveryStatus eq 'c'}">
 														<span class="status cancel">신청취소</span>

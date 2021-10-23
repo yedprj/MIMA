@@ -101,14 +101,14 @@
 		</div>
 		<div class="auto-container">
 			<div class="title">
-				<h1>약국 대쉬보드</h1>
+				<h1>약배달 등록/취소</h1>
 			</div>
 		</div>
 	</div>
 	<div class="lower-content">
 		<ul class="bread-crumb clearfix">
 			<li><a href="${pageContext.request.contextPath}">Home</a></li>
-			<li>약국 대쉬보드</li>
+			<li>약배달 등록/취소</li>
 		</ul>
 	</div>
 </section>
@@ -140,7 +140,7 @@
 				<ul class="list clearfix">
 					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash" ><i
 							class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery"><i class="fas fa-ambulance"></i>약배달관리</a></li>
+					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery"><i class="fas fa-ambulance"></i>약배달현황</a></li>
 					<li><a href="${pageContext.request.contextPath}/pharmacy/deliveryRegCancel" class="current"><i class="fas fa-laptop-medical"></i>약배달 등록/취소</a></li>
 					<li><a id="guid" href="${pageContext.request.contextPath}/pharmacy/medGuid" ><i class="fas fa-comment-medical"></i>복약지도관리</a></li>
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review"><i class="fas fa-star"></i>약국 후기</a></li>
@@ -274,7 +274,7 @@
                                 </div>
 		                        <div class="btn-box">
 		                            <a id="delReturnBtn" class="theme-btn-one">약배달 취소 및 반환<i class="icon-Arrow-Right"></i></a>
-		                            <button id="cancelBtn" class="cancel-btn">취소</button>
+		                            <button id="cancelBtn" class="cancel cancel-btn">취소</button>
 		                        </div>
                             </div>
                         </div>
