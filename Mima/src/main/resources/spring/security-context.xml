@@ -44,7 +44,7 @@
 		<security:logout 
 			logout-url="/logout"
 			invalidate-session="true"
-			logout-success-url="/"/>
+			logout-success-url="/login"/>
 			
 		<!-- 접근제한 -->
 		<security:access-denied-handler ref="customAccessDenied"/>

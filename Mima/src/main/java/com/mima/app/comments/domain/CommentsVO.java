@@ -22,6 +22,9 @@ public class CommentsVO {
 	private String nickname;		//	s:1013 댓글 회원 닉네임
 	private int bookingNo;//s:1019 진료리뷰 의사리뷰달기 예약번호
 	
+	//s:1022 리뷰회원 사진
+	private String ptProfilePhoto;
+	
 // 	K. 10/14 리뷰 회원 성별
 	private String gender;
 	private String ptProfilePhoto;		// 환자 이미지

@@ -57,7 +57,18 @@
                         <div class="clinic-details-content doctor-details-content">
                             <div class="clinic-block-one">
                                 <div class="inner-box">
-                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-33.jpg" alt=""></figure>
+                                    <!--s:1022 의사 프로필 사진 -->
+                                     <figure class="image-box">
+                                        <c:choose>
+						                     <c:when test="${not empty item.profilePhoto }">
+						                        <img src="FileDown.do?fname=${item.profilePhoto}" style="width:190px; height:220px">
+						                     </c:when>
+						                     <c:otherwise>
+						                        <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt="">
+						                     </c:otherwise>
+						                  </c:choose>
+                                      <%--   <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt=""> --%>
+                                        </figure>
                                     <div class="content-box">
                                         <div class="like-box"><a href="doctors-details.html"><i class="far fa-heart"></i></a></div>
                                         <div class="share-box">
@@ -173,7 +184,7 @@
                                     </div>
                                     <div class="tab" id="tab-4">
                                         <div class="review-box">
-                                            <h3>Dr. ${item.name } Reviews</h3>
+                                            <h3>Dr. ${item.name }'s Reviews</h3>
                                             <div class="review-inner">
                                             	<c:if test="${empty docReviewPage }">
                                             		<p>아직 등록된 리뷰가 없습니다.</p>
@@ -181,7 +192,17 @@
                                             	<c:if test="${not empty docReviewPage }">
                                             		<c:forEach var="review" items="${docReviewPage }">
 	                                            		<div class="single-review-box">
-		                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-1.jpg" alt=""></figure>
+		                                                    <!--s:1022 의사 프로필 사진 -->
+						                                     <figure class="image-box">
+						                                        <c:choose>
+												                     <c:when test="${not empty review.ptProfilePhoto }">
+												                        <img src="FileDown.do?fname=${review.ptProfilePhoto}" style="width:95px; height:95px">
+												                     </c:when>
+												                     <c:otherwise>
+												                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-1.jpg" alt="">
+												                     </c:otherwise>
+												                  </c:choose>
+						                                        </figure>
 		                                                    <c:if test="${review.reviewPoint == 1}">
 			                                                    <div class="starRev">
 								                                	<span class="starR on">별1</span>
