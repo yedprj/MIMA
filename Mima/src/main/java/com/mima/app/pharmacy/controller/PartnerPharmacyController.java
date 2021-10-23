@@ -189,20 +189,13 @@ public class PartnerPharmacyController {
 	// 프로필 페이지 [K]210929
 	
 	@GetMapping("/myProfile") 
-	public void myProfile(Model model,
-			HttpServletRequest request) 
-	{ HttpSession session = request.getSession();
-			MemberVO vo = (MemberVO) session.getAttribute("session"); 
-			int memberNo = vo.getMemberNo(); model.addAttribute("profile",partPhaService.selectOne(memberNo)); }
+	public void myProfile(Model model,HttpServletRequest request) { 
+		HttpSession session = request.getSession();
+		MemberVO vo = (MemberVO) session.getAttribute("session"); 
+		int memberNo = vo.getMemberNo(); 
+		model.addAttribute("profile",partPhaService.selectOne(memberNo)); 
+	}
 		
-		
-		
-		
-	
-	
-	
-		
-		 
 	
 	// 프로필 수정 - ajax [K]210929
 	@PutMapping("/profileUpdate")
@@ -267,6 +260,10 @@ public class PartnerPharmacyController {
 		//K.10/11 파트너약국테이블에 저장
 		partPhaService.profileUpdate(vo);
 		
+		HttpSession session = request.getSession();
+		MemberVO msvo = (MemberVO) session.getAttribute("session"); 
+		log.info("**************msvo********" + msvo);
+		
 		//K.10/11 멤버 테이블 주소 업데이트
 		mVo.setAddr1(vo.getDeliveryArea());
 		mVo.setAddr2(vo.getDeliveryArea2());
@@ -276,7 +273,7 @@ public class PartnerPharmacyController {
 		partPhaService.phaAddrUpdate(mVo);
 		
 		// 단건 조회후 세션에 다시 담아줌
-		MemberVO mvo = memberService.getUserById(mVo.getMemberId());
+		MemberVO mvo = memberService.getUserById(msvo.getMemberId());
 		request.getSession().setAttribute("session", mvo);
 		
 		log.info("파트너 약국 컨트롤러-> 멤버테이블 주소 업뎃 보 보는거임======" + mVo);
@@ -313,6 +310,41 @@ public class PartnerPharmacyController {
 		}
 		return attachVo;
 	}
+	
+	
+	//제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기
+	@RequestMapping(value = "/pharmacy/FileDown.do")
+	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		log.info("파일 다운로드 커맨드맵 이미지"+commandMap.toString());
+		File uFile = new File(path, (String)commandMap.get("fname"));
+		
+		long fSize = uFile.length();
+		if (fSize > 0) {
+			String mimetype = "application/x-msdownload";
+			response.setContentType(mimetype);
+
+			BufferedInputStream in = null;
+			BufferedOutputStream out = null;
+			try {
+				in = new BufferedInputStream(new FileInputStream(uFile));
+				out = new BufferedOutputStream(response.getOutputStream());
+				FileCopyUtils.copy(in, out);
+				out.flush();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			} finally {
+				in.close();
+				response.getOutputStream().flush();
+				response.getOutputStream().close();
+			}
+		} 
+	}//제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기 끝
+	
+	
+
+	
+	
 	
 	/*
 	 * @RequestMapping("/pharmacyApi") public void pharmacyApi() throws IOException
