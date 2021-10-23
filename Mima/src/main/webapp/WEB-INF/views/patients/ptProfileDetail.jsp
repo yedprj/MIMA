@@ -57,7 +57,7 @@
 
 							<p>MDS - Periodontology</p>
 						</div>
-					</div>
+					</div>      
 				</div>
 				<div class="profile-info">
 					<ul class="list clearfix">
