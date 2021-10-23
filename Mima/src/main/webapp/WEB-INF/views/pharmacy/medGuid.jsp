@@ -189,7 +189,16 @@
                                           <tr id="trList">
                                               <td>
                                                   <div class="name-box">
-                                                      <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
+                                                      <figure class="image">
+                                                      		<c:choose>
+																<c:when test="${not empty ptEdu.ptProfilePhoto }">
+																	<img src="FileDown.do?fname=${ptEdu.ptProfilePhoto}">
+																</c:when>
+																<c:otherwise>
+																	<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+																</c:otherwise>
+															</c:choose>
+                                                      	</figure>
                                                       <h5>${ptEdu.name}</h5>
                                                   </div>
                                               </td>
