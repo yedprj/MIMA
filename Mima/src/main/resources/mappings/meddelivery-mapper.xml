@@ -98,7 +98,7 @@
 <select id="phaSelectOne" resultType="medDeliveryVO">
 	SELECT *
 	FROM (
-          SELECT ROWNUM RN, M.*,MM.PT_PROFILE_PHOTO, MM.NAME, B.CONSULT_DATE
+          SELECT ROWNUM RN, M.*, MM.PT_PROFILE_PHOTO, MM.NAME, B.CONSULT_DATE
               FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
               WHERE M.BOOKING_NO = B.BOOKING_NO
               AND B.PT_NO = MM.MEMBER_NO
