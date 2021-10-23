@@ -202,7 +202,7 @@ th, td {
 													<figure class="image">
 													  <c:choose>
 									                     <c:when test="${not empty bookingList.ptProfilePhoto }">
-									                        <img src="FileDown.do?fname=${bookingList.ptProfilePhoto}" style="width:55px; height:55px">
+									                        <img src="FileDown.do?fname=${bookingList.ptProfilePhoto}" style="width:55px; height:55px margin-right:20px;">
 									                     </c:when>
 									                     <c:otherwise>
 									                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
@@ -210,7 +210,7 @@ th, td {
 									                  </c:choose>
 													</figure>
 													<h5>${bookingList.name}</h5>
-													<span class="ptno">#${bookingList.ptNo}</span>
+													<span class="ptno"># no.${bookingList.ptNo}</span>
 												</div>
 											</td>
 											<td>${bookingList.bookingNo}</td>
@@ -277,7 +277,7 @@ th, td {
 										                  </c:choose>
 													</figure>
 													<h5>${getlatestapptList.name}</h5>
-													<span class="ptno">#${getlatestapptList.ptNo}</span>
+													<span class="ptno"># no.${getlatestapptList.ptNo}</span>
 												</div>
 											</td>
 											<td>${getlatestapptList.bookingNo}</td>
@@ -322,7 +322,7 @@ th, td {
 						                     </c:otherwise>
 						                  </c:choose>
 									</figure>
-	             					<h4>${getlatestreviewList.nickname}</h4>
+	             					<h4>${getlatestreviewList.name}</h4>
 									<span class="comment-time"><i
 										class="fas fa-calendar-alt"></i>
 									<fmt:formatDate value="${getlatestreviewList.regDate}"

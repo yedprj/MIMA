@@ -142,7 +142,7 @@ th, td {
 															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
 														</figure>
 														<h5>${apptList.name}</h5>
-														<span class="ptno"># ${apptList.ptNo}</span>
+														<span class="ptno"># no.${apptList.ptNo}</span>
 													</div>
 												</td>
 												<td>${apptList.bookingNo}</td>

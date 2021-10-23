@@ -89,7 +89,7 @@
                C.CONTENTS,
                C.REVIEW_POINT,
                C.REG_DATE,
-               M.NICKNAME,
+               M.NAME,
                M.PT_PROFILE_PHOTO
         FROM COMMENTS C JOIN MEMBER M
         ON C.COMMENT_WRITER_NO = M.MEMBER_NO

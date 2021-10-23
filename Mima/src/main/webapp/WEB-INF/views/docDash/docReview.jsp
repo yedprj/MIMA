@@ -266,7 +266,7 @@ textarea {
 		              +'<form id="replyForm">'
 		              +'<label><b>댓글 수정</b></label><br>'
 		          	  +'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
-		              +'    <textarea id="replyContents" name="rcontents" placeholder="'+rcontents+'"></textarea>'
+		              +'    <textarea id="replyContents" name="rcontents">'+rcontents+'</textarea>'
 		              +'  </div>'
 		              +'  <input type="hidden" name="rcno" value="'+cno+'">'
 		              +'  <input type="hidden" name="rwriterNo" value="${session.memberNo}">'
@@ -312,14 +312,14 @@ textarea {
                pa.find(".replay-btn").remove();
                pa.append('<div class="comment replay-comment">'
                                    +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
-                                 +'<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
+                                 +'<h4><i class="fas fa-comments"></i> ${session.name} 의사</h4>'
                                  +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
-                                 +'<p id="rcontents">'+datas.rcontents+'</p>'
                                  +'<span class="rating clearfix">'
                                  +'<a type="button" id="updateBtn" class="theme-btn-one" data-no="'+datas.rno+'"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
                                  +'&nbsp;'
                                  +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
                                  +'</span>'
+                                 +'<p id="rcontents">'+datas.rcontents+'</p>'
                                  +'</div>');
                alert("댓글이 등록되었습니다.");
          } // success end
@@ -358,7 +358,7 @@ textarea {
                pa.find(".replay-btn").remove();
                pa.append('<div class="comment replay-comment">'
             					   +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
-                                 +'<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
+                                 +'<h4><i class="fas fa-comments"></i> ${session.name} 의사</h4>'
                                  +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
                                  +'<p id="rcontents">'+datas.rcontents+'</p>'
                                  +'<span class="rating clearfix">'
@@ -419,6 +419,7 @@ textarea {
       var replyDiv = pa.prev('#reply');
       var delReply = pa.find(".replay-comment");
       
+      
       $.ajax({
          url : "replyDelete",
          method : "post",
@@ -435,6 +436,7 @@ textarea {
                   replyDiv.before(replyBtnBackup);
                   replyBtnBackup.append()
                   location.href="docReview";
+
                }
          } // success end
       }) //ajax end
