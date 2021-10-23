@@ -146,7 +146,7 @@ input[type="time"]:valid::before {
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";
 	
-	//진료과목 추가 p.10/07
+	//진료과목 추가 수정 p.10/23 
 	function categorySelect(){
 		
 		var docNo = $("#doctorSelect option:selected").val();
@@ -163,7 +163,8 @@ input[type="time"]:valid::before {
 			success : function(data) {
 				console.log(data);
 				$("#selectCategory").empty();
-				$('#selectCategory').append(selectCategory(data));	
+				$('#selectCategory').append(selectCategory(data));
+				
 			}, error : function(reject) {
 				console.log(reject);
 			}
@@ -184,7 +185,7 @@ input[type="time"]:valid::before {
 	}
 	
 	$(function() {
-			
+		 
 		$("#selecttime").on("click", function() {
 			
 			var week = new Array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT');
@@ -274,7 +275,7 @@ input[type="time"]:valid::before {
 			date = new Date(date);
 			
 			var year = date.getFullYear();	// 년도
-			var month = date.getMonth();	// 월
+			var month = date.getMonth()+1;	// 월
 			var day = date.getDate();		// 일
 			
 			var time = year + "년 " + month + "월 " + day + "일"

@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -532,6 +533,7 @@ public class PatnerDoctorController {
 		
 		if(docVo !=null) {
 			docVo = doctorService.getDocDetail(docVo);
+			
 			System.out.println(docVo+"보 값 확인");
 			System.out.print("테이블에 값 잇음");
 			List<ExperienceVO> expList = experienceService.getExpList(expVo);
