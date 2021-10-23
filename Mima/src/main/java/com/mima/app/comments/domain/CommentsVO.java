@@ -24,6 +24,7 @@ public class CommentsVO {
 	
 // 	K. 10/14 리뷰 회원 성별
 	private String gender;
+	private String ptProfilePhoto;		// 환자 이미지
 	
 	// 댓글 다는 의사와 약사의 이름_J18.19
 	private String name;
@@ -37,5 +38,6 @@ public class CommentsVO {
 	private Date reditDate;
 	private String rcontents;
 	private int rcno;
+	
 	
 }

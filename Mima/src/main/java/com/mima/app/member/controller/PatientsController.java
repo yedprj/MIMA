@@ -148,6 +148,8 @@ public class PatientsController {
 	@PostMapping("patients/delReapply")
 	@ResponseBody
 	public int delReapply(MedDeliveryVO vo) {
+		log.info("***********약국번호"+ vo.getPharmacyNo());
+		log.info("***********예약번호"+ vo.getBookingNo());
 		int result = deliveryService.delReapply(vo);
 		return result;
 	}

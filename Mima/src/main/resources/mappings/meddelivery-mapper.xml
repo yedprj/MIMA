@@ -67,7 +67,7 @@
 <!-- 오늘의 배달건수 -->
 <select id="todayDelivery" resultType="memDeliveryVO">
 
-	SELECT 	M.PHARMACY_NO, MM.NAME, M.BOOKING_NO, B.CONSULT_DATE, 
+	SELECT 	M.PHARMACY_NO, MM.PT_PROFILE_PHOTO ,MM.NAME,M.BOOKING_NO, B.CONSULT_DATE, 
 			M.PRESCRIPTION, P.DEL_ADDR, P.DEL_ADDR2, P.DEL_ADDR3,
 			P.DEL_POST_CODE , P.DEL_NOTE  
 	FROM MED_DELIVERY M, BOOKING B, PATIENTS P, MEMBER MM
@@ -98,7 +98,7 @@
 <select id="phaSelectOne" resultType="medDeliveryVO">
 	SELECT *
 	FROM (
-          SELECT ROWNUM RN, M.*, MM.NAME, B.CONSULT_DATE
+          SELECT ROWNUM RN, M.*,MM.PT_PROFILE_PHOTO, MM.NAME, B.CONSULT_DATE
               FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
               WHERE M.BOOKING_NO = B.BOOKING_NO
               AND B.PT_NO = MM.MEMBER_NO
@@ -124,7 +124,7 @@
 <select id="phaCompleteDel" resultType="medDeliveryVO">
 	SELECT *
 	FROM (
-            SELECT ROWNUM RN, M.*, MM.NAME, B.CONSULT_DATE
+            SELECT ROWNUM RN, M.*, MM.PT_PROFILE_PHOTO , MM.NAME, B.CONSULT_DATE
                 FROM MED_DELIVERY M ,BOOKING B, MEMBER MM
                 WHERE M.BOOKING_NO = B.BOOKING_NO
                 AND B.PT_NO = MM.MEMBER_NO

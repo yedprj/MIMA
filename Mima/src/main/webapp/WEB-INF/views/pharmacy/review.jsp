@@ -94,12 +94,14 @@
                         <div class="single-comment-box">
                             <div class="comment">
                                 <figure class="comment-thumb">
-                                	<c:if test="${review.gender eq '여'}">
-                                		<img src="${pageContext.request.contextPath}/resources/assets/images/icons/girl.png" alt="여자아이콘">
-                                	</c:if>
-                                	<c:if test="${review.gender eq '남'}">
-                                		<img src="${pageContext.request.contextPath}/resources/assets/images/icons/man.png" alt="남자아이콘">
-                                	</c:if>
+                                	<c:choose>
+										<c:when test="${not empty review.ptProfilePhoto }">
+											<img src="FileDown.do?fname=${review.ptProfilePhoto}">
+										</c:when>
+										<c:otherwise>
+											<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+										</c:otherwise>
+									</c:choose>
                                 </figure>
                                 <h4>${review.nickname }</h4>
                                 <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${review.regDate}" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></span>
