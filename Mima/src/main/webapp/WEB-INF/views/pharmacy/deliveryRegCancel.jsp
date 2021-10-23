@@ -341,17 +341,13 @@ $(function(){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 				},		 
 				success : function(data) {
-					if(data > 0 ){
-						console.log(data);
-						thisTr.remove();
-					}else {
-						alert("배송등록이 실패했습니다!")
-					}
+					if(data > 0 ){ thisTr.remove(); }
+					else { alert("배송등록이 실패했습니다!") }
 				}
 			});// ajax end
 		} else { return; } 
-		
 	}); // 배달 등록 btn end
+	
 	
 	// 반환 btn
 	$("#trList > td").on("click",".cancel",function(){
@@ -373,13 +369,11 @@ $(function(){
 		});
 		
 		$("#delReturnBtn").click(function(){
-			
 			var message = $("#message").val();
 			if (message == ''){
 				alert("취소하는 사유를 간단하게 적어주세요!");
 				return;
 			}else {
-				
 				$.ajax({
 					url : 'delCancel',
 					type : 'post',
@@ -395,18 +389,12 @@ $(function(){
 						if(data > 0 ){
 							console.log(data);
 							alert("약배달 신청이 취소되었습니다.")
-							
 							// socket 테스트 (보내는 번호, 받는사람 번호, 메세지가 넘어가야함)
 							socket.send("med="+bookingNo+"="+message+"="+pharmacyNo+"");
-							
 							$(".modal").fadeOut();
 							thisTr.remove();
-							
-						}else {
-							alert("배송등록이 실패했습니다!")
-						}
+						}else { alert("배송등록이 실패했습니다!") }
 					}
-					
 				});// ajax end
 			}
 		}); // cancelBtn end
@@ -415,7 +403,7 @@ $(function(){
 	
 	
 	
-	
+	// PDF 다운
 	$("#trList > td").on("click","#pdfDown",function(){
 		var bookingNo = $(this).data("no");
 		location.href= "${pageContext.request.contextPath}/prePdf3?bookingNo="+ bookingNo;

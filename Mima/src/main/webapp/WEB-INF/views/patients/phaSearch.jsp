@@ -452,9 +452,16 @@
 	}); // function end
 	
 	function dataView(data){
+		// 이미지 존재 유무
+		str = "";
+		if (data.ptProfilePhoto == ''){
+			str = '<img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png">'
+		} else {
+			str = '<img src="FileDown.do?fname='+data.ptProfilePhoto+'">'
+		}
 		$(".list-item").append(
 				'<div class="clinic-block-one"><div class="inner-box">'
-                +    '<form><figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt=""></figure>'
+                +    '<form><figure class="image-box">'+str+'</figure>'
                 +    '<div class="content-box"><ul class="name-box clearfix">'
                 +            '<li class="name"><h3>'+data.pharmacyInfo+'</h3></li>'
                 +            '<li><i class="icon-Trust-1"></i></li>'

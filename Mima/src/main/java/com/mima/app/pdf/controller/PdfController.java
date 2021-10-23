@@ -64,7 +64,8 @@ public class PdfController {
 		log.info("************이름***********"+ bvo.getName() );
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, conn);
 		response.setContentType( "application/pdf" );
-		response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(bvo.getName() +"_처방전", "UTF-8") + ".pdf" ); // 다운 
+		response.setHeader("Content-disposition", "attachment; filename=" 
+		                    + URLEncoder.encode(bvo.getName() +"_처방전", "UTF-8") + ".pdf" ); // 다운 
 		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 	
 	}
