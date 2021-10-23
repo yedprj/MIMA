@@ -41,5 +41,4 @@ public class CommentsVO {
 	private String rcontents;
 	private int rcno;
 	
-	
 }

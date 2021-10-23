@@ -196,16 +196,7 @@
                                      <tr id="trList">
                                          <td>
                                              <div class="name-box">
-                                                 <figure class="image">
-                                                 	<c:choose>
-														<c:when test="${not empty del.ptProfilePhoto }">
-															<img src="FileDown.do?fname=${del.ptProfilePhoto}">
-														</c:when>
-														<c:otherwise>
-															<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
-														</c:otherwise>
-													</c:choose>
-                                                 </figure>
+                                                 <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
                                                  <h5>${del.name}</h5>
                                              </div>
                                          </td>

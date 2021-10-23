@@ -77,7 +77,6 @@ th, td {
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${session.name}</h3>
-						<p>MDS - Periodontology</p>
 					</div>
 				</div>
 			</div>
@@ -255,7 +254,7 @@ $(function(){
 		$("#delReturnBtn").on("click",function(){
 			var pharmacyNo = $("#pharmacyNo").val();
 			var memberNo = ${memberNo};
-		
+			
 			if(pharmacyNo == ""){
 				alert("새로 신청할 약국을 다시 선택해주세요!");
 				return;
@@ -264,7 +263,7 @@ $(function(){
 					url : 'delReapply',
 					type : 'post',
 					data : { 
-						pharmacyNo : pharmacyNo,
+						delPharmacyNo : pharmacyNo,
 						bookingNo : bookingNo
 					},
 					beforeSend : function(xhr) {

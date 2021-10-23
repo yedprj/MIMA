@@ -275,8 +275,7 @@
 	<select id="phaReviewList" resultType="CommentsVO">
 		SELECT *
 		FROM(
-		        SELECT ROWNUM RN, C.*,
-		        			M.PT_PROFILE_PHOTO,
+		        SELECT ROWNUM RN, C.*, 
 		                    M.NICKNAME,
 		                    M.GENDER
 				FROM COMMENTS C , MEMBER M

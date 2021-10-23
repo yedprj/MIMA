@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -532,6 +533,7 @@ public class PatnerDoctorController {
 		
 		if(docVo !=null) {
 			docVo = doctorService.getDocDetail(docVo);
+			
 			System.out.println(docVo+"보 값 확인");
 			System.out.print("테이블에 값 잇음");
 			List<ExperienceVO> expList = experienceService.getExpList(expVo);
@@ -569,7 +571,6 @@ public class PatnerDoctorController {
 		return "/docList/getSubjectDocList";
 	}
 	
-
 		//s:1021 제은이꺼 훔쳐옴 의사 dash 프로필 이미지 불러오기
 		@RequestMapping(value = "/doctor/FileDown.do")
 		public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
@@ -627,7 +628,8 @@ public class PatnerDoctorController {
 						}
 					} 
 
-				}//s:1021 제은이꺼 훔쳐옴 의사 totaList 프로필 이미지 불러오기 끝
+				}//s:1021 제은이꺼 훔쳐옴 의사 리스트 프로필 이미지 불러오기 끝
+	
 }
 
 		

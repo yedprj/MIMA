@@ -10,7 +10,6 @@ import lombok.Data;
 public class MemDeliveryVO {
 	
 	private int pharmacyNo;			// 약국 번호
-	private String ptProfilePhoto;	// 환자사진
 	private String name;			// 환자이름
 	private int bookingNo;			// 예약번호
 	@JsonFormat(pattern = "YY/MM/dd")
