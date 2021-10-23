@@ -255,7 +255,7 @@ $(function(){
 		$("#delReturnBtn").on("click",function(){
 			var pharmacyNo = $("#pharmacyNo").val();
 			var memberNo = ${memberNo};
-			
+		
 			if(pharmacyNo == ""){
 				alert("새로 신청할 약국을 다시 선택해주세요!");
 				return;
@@ -264,7 +264,7 @@ $(function(){
 					url : 'delReapply',
 					type : 'post',
 					data : { 
-						delPharmacyNo : pharmacyNo,
+						pharmacyNo : pharmacyNo,
 						bookingNo : bookingNo
 					},
 					beforeSend : function(xhr) {
