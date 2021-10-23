@@ -626,9 +626,8 @@ public class PatnerDoctorController {
 							response.getOutputStream().close();
 						}
 					} 
-				}//s:1021 제은이꺼 훔쳐옴 의사 totaList 프로필 이미지 불러오기 끝
 
-	
+				}//s:1021 제은이꺼 훔쳐옴 의사 totaList 프로필 이미지 불러오기 끝
 }
 
 		

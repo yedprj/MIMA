@@ -64,7 +64,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	    System.out.println(cookie.getValue());
 	    System.out.println("++++++++++++++++++++");
 		
-		response.sendRedirect("/app");
+		response.sendRedirect("/");
 	}
 	
 	/*

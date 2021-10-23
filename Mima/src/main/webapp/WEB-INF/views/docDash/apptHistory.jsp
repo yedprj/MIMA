@@ -59,6 +59,7 @@ th, td {
                   </c:choose>
 				
 			</figure>
+    
 	        <div class="title-box centred">
 	        	<div class="inner">
 		            <h3>${session.name}</h3>
