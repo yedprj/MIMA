@@ -24,6 +24,8 @@ public class MemDeliveryVO {
 	private String ptEducation;		// 복약지도
 	private String deliveryStatus;	// 배달유무
 	
+	private String ptProfilePhoto;
+	
 	
 
 }

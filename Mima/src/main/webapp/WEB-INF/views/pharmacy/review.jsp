@@ -52,7 +52,7 @@
 				<ul class="list clearfix">
 					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash" ><i
 							class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery"><i class="fas fa-ambulance"></i>약배달관리</a></li>
+					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery"><i class="fas fa-ambulance"></i>약배달현황</a></li>
 					<li><a href="${pageContext.request.contextPath}/pharmacy/deliveryRegCancel"><i class="fas fa-laptop-medical"></i>약배달 등록/취소</a></li>
 					<li><a id="guid" href="${pageContext.request.contextPath}/pharmacy/medGuid"><i class="fas fa-comment-medical"></i>복약지도관리</a></li>
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review" class="current"><i class="fas fa-star"></i>약국 후기</a></li>
@@ -94,12 +94,14 @@
                         <div class="single-comment-box">
                             <div class="comment">
                                 <figure class="comment-thumb">
-                                	<c:if test="${review.gender eq '여'}">
-                                		<img src="${pageContext.request.contextPath}/resources/assets/images/icons/girl.png" alt="여자아이콘">
-                                	</c:if>
-                                	<c:if test="${review.gender eq '남'}">
-                                		<img src="${pageContext.request.contextPath}/resources/assets/images/icons/man.png" alt="남자아이콘">
-                                	</c:if>
+                                	<c:choose>
+										<c:when test="${not empty review.ptProfilePhoto }">
+											<img src="FileDown.do?fname=${review.ptProfilePhoto}">
+										</c:when>
+										<c:otherwise>
+											<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+										</c:otherwise>
+									</c:choose>
                                 </figure>
                                 <h4>${review.nickname }</h4>
                                 <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${review.regDate}" type="both" pattern="yyyy-MM-dd HH:mm:ss" /></span>

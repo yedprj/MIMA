@@ -276,6 +276,7 @@
 		SELECT *
 		FROM(
 		        SELECT ROWNUM RN, C.*, 
+		        			M.PT_PROFILE_PHOTO,
 		                    M.NICKNAME,
 		                    M.GENDER
 				FROM COMMENTS C , MEMBER M
