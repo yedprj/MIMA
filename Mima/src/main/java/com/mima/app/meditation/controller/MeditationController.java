@@ -115,7 +115,7 @@ public class MeditationController {
 	public ResponseEntity<ResourceRegion> getVideo(@RequestHeader HttpHeaders headers, @PathVariable String name)
 			throws IOException {
 		//log.info("VideoController.getVideo");
-		UrlResource video = new UrlResource("file:"+path + name + ".mp4");
+		UrlResource video = new UrlResource("file:"+path+ "/" + name + ".mp4");
 		//System.out.println(video+"명상컨트롤러 비디오");
 		ResourceRegion resourceRegion;
 		final long chunkSize = 1000000L;

@@ -22,9 +22,9 @@
 		<security:intercept-url pattern="/admin/**" access="hasAuthority('admin')"/>
 
 		<!-- 로그인시 가지고 있는 롤로 접근 제한 p.10/12 -->
-		<!-- <security:intercept-url pattern="/patients/**" access="hasAuthority('pt')"/>
+		<security:intercept-url pattern="/patients/**" access="hasAuthority('pt')"/>
 		<security:intercept-url pattern="/doctor/**" access="hasAuthority('doctor')"/>
-		<security:intercept-url pattern="/pharmacy/**" access="hasAuthority('pharmacy')"/> -->
+		<security:intercept-url pattern="/pharmacy/**" access="hasAuthority('pharmacy')"/>
 
 		<!-- 이거 수정해야함 주유니 ***예시*** -->
 		<!-- <security:intercept-url pattern="/consultation/pt/**" access="hasAuthority('pt')"/> -->

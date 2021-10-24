@@ -62,7 +62,7 @@
 								<!-- li 부분 더 필요하면 만들어서 사용하면 됨 -->
 								
 								<!-- 진료예약 nav 시작 -->
-								<li class="dropdown"><a href="${pageContext.request.contextPath}/patients/reservationForm">진료예약</a>
+								<li class="dropdown"><a href="#">진료예약</a>
 									<ul>
 										<li class="dropdown"><a href="doctors-dashboard.html">진료과목</a>
 											<ul>
@@ -75,8 +75,7 @@
 												<li><a href="${pageContext.request.contextPath}/subject/geri">노인장애</a></li>
 												<li><a href="${pageContext.request.contextPath}/subject/dd">해리장애(다중인격)</a></li>
 											</ul></li>
-										<li><a href="#">빠른 진료상담</a></li>
-										<li><a href="#">추천의사</a></li>
+										<li><a href="${pageContext.request.contextPath}/patients/reservationForm">빠른 진료상담</a></li>
 										<!-- s:1014 전체 의사 리스트로 이동 -->
 										<li><a href="${pageContext.request.contextPath}/getTotalDocList">의사검색</a></li>
 									</ul>
@@ -87,7 +86,6 @@
 								<li class="dropdown"><a href="${pageContext.request.contextPath}/meditation/meditationMain">마음챙김</a>
 									<ul>
 										<li><a href="${pageContext.request.contextPath}/meditation/totalList"> 전체명상리스트</a>
-										<li><a href="${pageContext.request.contextPath}/meditation/meditationInsertForm"> 명상 등록</a>
 									</ul>
 								</li>
 								<!-- 마음 챙김 nav 끝 -->
@@ -139,16 +137,27 @@
 								<!-- 문의 nav 끝 -->
 								
 								<!-- 로그인 nav 시작 -->
+								<c:if test="${not empty session}">
 								<li class="dropdown"><a href="#">마이페이지</a>
 									<ul>
-									
-										<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
-										<!-- 링트 수정 p.10/06 -->
-										<li><a href="${pageContext.request.contextPath}/doctor/docMain">닥터 대쉬보드</a></li>
-										<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash">약국 대쉬보드</a></li>
-										<li><a href="${pageContext.request.contextPath}/patients/ptMain">환자 대쉬보드</a></li>
+										<c:if test="${session.role eq 'admin' }">									
+											<li><a href="${pageContext.request.contextPath}/admin/adMain">관리자 페이지</a></li>
+										</c:if>
+										
+										<c:if test="${session.role eq 'doctor' }">
+											<li><a href="${pageContext.request.contextPath}/doctor/docMain">닥터 대쉬보드</a></li>
+										</c:if>
+										
+										<c:if test="${session.role eq 'pharmacy' }">
+											<li><a href="${pageContext.request.contextPath}/pharmacy/pharmacyDash">약국 대쉬보드</a></li>								
+										</c:if>
+										
+										<c:if test="${session.role eq 'pt' }">
+											<li><a href="${pageContext.request.contextPath}/patients/ptMain">환자 대쉬보드</a></li>
+										</c:if>
 									</ul>
 								</li>
+								</c:if>
 							</ul>
 						</div>
 					</nav>

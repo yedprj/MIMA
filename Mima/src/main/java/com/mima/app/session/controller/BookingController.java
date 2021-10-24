@@ -52,9 +52,13 @@ public class BookingController {
 	
 	//  의사 디테일 페이지에서 예약하기 버튼 클릭 시 이동하는 페이지.. p.10/23
 	@PostMapping("patients/reservationSelectForm")
-	public String reservationSelectForm(Model model, @Param("name") String name, @Param("subject") String subject) {
+	public String reservationSelectForm(Model model, 
+										@Param("name") String name, 
+										@Param("subject") String subject,
+										@Param("docNo") String docNo) {
 		model.addAttribute("name", name);
 		model.addAttribute("subject", subject);
+		model.addAttribute("docNo", docNo);
 		return "booking/reservationSelectForm";
 	}
 	

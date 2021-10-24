@@ -33,7 +33,4 @@ public interface ConsultationMapper {
 	public int ptReviewInsert(CommentsVO vo);
 	
 	
-	
-	
-		
 }
