@@ -63,8 +63,18 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	    response.addCookie(cookie);
 	    System.out.println(cookie.getValue());
 	    System.out.println("++++++++++++++++++++");
+	    
+	    String path = request.getContextPath();
+	    if (roleNames.contains("admin")) {
+	    	response.sendRedirect(path + "/admin/adMain");
+	    } else if (roleNames.contains("doctor")) {
+	    	response.sendRedirect(path + "/doctor/docMain");
+	    } else if (roleNames.contains("pharmacy")) {
+	    	response.sendRedirect(path + "/pharmacy/pharmacyDash");
+	    } else {
+	    	response.sendRedirect("/");
+	    }
 		
-		response.sendRedirect("/app");
 	}
 	
 	/*

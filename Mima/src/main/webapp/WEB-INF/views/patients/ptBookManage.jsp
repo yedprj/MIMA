@@ -70,7 +70,6 @@ th, td {
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${session.name}</h3>
-						<p>MDS - Periodontology</p>
 					</div>
 				</div>
 			</div>
@@ -356,7 +355,29 @@ th, td {
 						<!-- pagination end --> --%>
 		</div>
 	</div>
-
+	
+	<!-- Modal 추가 p.10/24 -->
+	<div class="modal modal-center fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-80size modal-center">
+			<div class="modal-content modal-80size">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">취소 확인</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<h5>＊＊결제가 취소되었습니다＊＊</h5>
+					<p><b>취소</b>가 정상적으로 완료되었습니다.</p>
+					<br>
+					<p>취소한 내역은 취소된 접수에서 확인할 수 있습니다.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="btnSuccess"class="btn btn-secondary">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 <!-- doctors-dashboard -->
 
@@ -371,11 +392,11 @@ th, td {
 
 
 	$(function() {
-		$('#paymentCancel').on('click', function(){
+		$(document).on('click', '#paymentCancel', function(){
 			
 			var csrfHeaderName = "${_csrf.headerName}";
 			var csrfTokenValue = "${_csrf.token}";
-			var bookingNo = $('#paymentCancel').parent().children("input").val();
+			var bookingNo = $(this).parent().children("input").val();
 			
 			console.log(bookingNo);
 			
@@ -388,11 +409,18 @@ th, td {
 				},
 				success : function(object) {
 					console.log(object);
+					$('#myModal').modal('show');
 				},
 				error : function(reject) {
 					console.log(reject);
 				}
 			});
+		});
+		
+		$('#btnSuccess').on('click', function(e) {
+			e.preventDefault();
+			$('#myModal').modal('hide');
+			location.reload();
 		});
 	});
 	

@@ -88,11 +88,11 @@ th, td {
 								<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
 							</c:otherwise>
 						</c:choose>
+
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${session.name}</h3>
-						<p>MDS - Periodontology</p>
 					</div>
 				</div>
 			</div>
@@ -250,7 +250,7 @@ th, td {
 							<table class="doctors-table">
 								<thead class="table-header">
 									<tr>
-										<th>환자명</th>
+										<th>의사명</th>
 										<th>예약번호</th>
 										<th>진료일</th>
 										<th>예약일</th>
@@ -330,7 +330,7 @@ th, td {
 													<span class="status">배달완료</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'n'}">
-													<span class="status pending">배달신청</span>
+													<span class="status pending">신청완료</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'c'}">
 													<span id="deliveryCancelBtn" data-no="${del.bookingNo }" class="status cancel">신청취소</span>

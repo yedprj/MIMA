@@ -57,7 +57,18 @@
                         <div class="clinic-details-content doctor-details-content">
                             <div class="clinic-block-one">
                                 <div class="inner-box">
-                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/team/team-33.jpg" alt=""></figure>
+                                    <!--s:1022 의사 프로필 사진 -->
+                                     <figure class="image-box">
+                                        <c:choose>
+						                     <c:when test="${not empty item.profilePhoto }">
+						                        <img src="FileDown.do?fname=${item.profilePhoto}" style="width:190px; height:220px">
+						                     </c:when>
+						                     <c:otherwise>
+						                        <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt="">
+						                     </c:otherwise>
+						                  </c:choose>
+                                      <%--   <img src="${pageContext.request.contextPath}/resources/assets/images/team/team-1.jpg" alt=""> --%>
+                                        </figure>
                                     <div class="content-box">
                                         <div class="like-box"><a href="doctors-details.html"><i class="far fa-heart"></i></a></div>
                                         <div class="share-box">
@@ -173,7 +184,7 @@
                                     </div>
                                     <div class="tab" id="tab-4">
                                         <div class="review-box">
-                                            <h3>Dr. ${item.name } Reviews</h3>
+                                            <h3>Dr. ${item.name }'s Reviews</h3>
                                             <div class="review-inner">
                                             	<c:if test="${empty docReviewPage }">
                                             		<p>아직 등록된 리뷰가 없습니다.</p>
@@ -181,7 +192,17 @@
                                             	<c:if test="${not empty docReviewPage }">
                                             		<c:forEach var="review" items="${docReviewPage }">
 	                                            		<div class="single-review-box">
-		                                                    <figure class="image-box"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-1.jpg" alt=""></figure>
+		                                                    <!--s:1022 의사 프로필 사진 -->
+						                                     <figure class="image-box">
+						                                        <c:choose>
+												                     <c:when test="${not empty review.ptProfilePhoto }">
+												                        <img src="FileDown.do?fname=${review.ptProfilePhoto}" style="width:95px; height:95px">
+												                     </c:when>
+												                     <c:otherwise>
+												                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/review-1.jpg" alt="">
+												                     </c:otherwise>
+												                  </c:choose>
+						                                        </figure>
 		                                                    <c:if test="${review.reviewPoint == 1}">
 			                                                    <div class="starRev">
 								                                	<span class="starR on">별1</span>
@@ -252,33 +273,33 @@
                                         <div class="custom-check-box">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input">
+                                                    <input type="checkbox" id="category1" class="material-control-input" value="${item.subjects.category1 }">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">${item.subjects.category1 }<span class="price">$${item.subjects.price1 }</span></span>
+                                                    <span class="description">${item.subjects.category1 }<span class="price"><fmt:formatNumber value="${item.subjects.price1 }" pattern="#,###"/>원</span></span>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="custom-check-box">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input" checked="">
+                                                    <input type="checkbox" id="category2" class="material-control-input" value="${item.subjects.category2 }" checked="">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">${item.subjects.category2 }<span class="price">$${item.subjects.price2 }</span></span>
+                                                    <span class="description">${item.subjects.category2 }<span class="price"><fmt:formatNumber value="${item.subjects.price2 }" pattern="#,###"/>원</span></span>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="custom-check-box">
                                             <div class="custom-controls-stacked">
                                                 <label class="custom-control material-checkbox">
-                                                    <input type="checkbox" class="material-control-input">
+                                                    <input type="checkbox" id="category3" value="${item.subjects.category3 }" class="material-control-input">
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">${item.subjects.category3 }<span class="price">$${item.subjects.price3 }</span></span>
+                                                    <span class="description">${item.subjects.category3 }<span class="price"><fmt:formatNumber value="${item.subjects.price3 }" pattern="#,###"/>원</span></span>
                                                 </label>
                                             </div>
                                         </div>
                                         
                                         <div class="btn-box">
-                                            <a href="#" class="theme-btn-one">진료 예약 페이지로 이동<i class="icon-Arrow-Right"></i></a>
+                                            <a href="javascript:void(0);" class="theme-btn-one" onclick="reservationForm()">진료 예약 페이지로 이동<i class="icon-Arrow-Right"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -289,14 +310,48 @@
             </div>
         </section>
         <!-- doctor-details end -->
-
+		<!-- 진료 예약 페이지로 이동을 위해 폼 태그 추가 p.10/23 -->
+		<form id="frm" action="patients/reservationSelectForm" method="post" style="display: none;">
+			<input type="hidden" id="docNo" name="docNo" value="${item.memberNo}">
+			<input type="hidden" id="name" name="name" value="${item.name}">
+			<input type="hidden" id="subject" name="subject">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+			<button type="submit"></button>
+		</form>
     </div>
     
     
     
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1996b7204476ce04c73afedac09391c9&libraries=services"></script>
     <script>
-
+    // 진료 예약 페이지로 이동 p.10/23
+	function reservationForm(){
+    	
+    	var category = '';
+    	
+		if ($('#category1').is(':checked')){
+			category = $('input:checkbox[id="category1"]').val();
+		} else if ($('#category2').is(':checked')){
+			category = $('input:checkbox[id="category2"]').val();
+		} else {
+			category = $('input:checkbox[id="category3"]').val();
+		}
+		
+		$('#subject').val(category);
+		
+		$('#frm').find('button').click();
+	}
+    
+	// 체크 박스 하나만 클릭 p.10/23
+	$(document).on("click", 'input[type="checkbox"]', function(){
+		
+		// 체크박스가 클릭 되었을 때
+		if($(this).prop('checked')){
+			
+			$('input[type="checkbox"]').prop('checked', false);
+			$(this).prop('checked', true);
+		}
+	});
     
 	//카카오 맵 펑션 시작   
     function getMap(){
@@ -351,7 +406,7 @@
     $('.location').on('click', function(){
     	getMap();
  
-    	});//tab 온클릭이벤트 끝
+    });//tab 온클릭이벤트 끝
 
    	/* 페이지 온 로드 */
    	$(function(){
@@ -369,5 +424,6 @@
     	console.log($('#uploadedEdu'))
     	$('#uploadedEdu').append(str);
    	});
+    
     </script>
     

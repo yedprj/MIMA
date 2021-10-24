@@ -2,6 +2,7 @@ package com.mima.app.pdf.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class PdfController {
 	public String prePdf2(HttpServletResponse response, Model model, @RequestParam(required = false, defaultValue ="39" ) Integer bookingNo ) throws Exception{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("p_booking_no", bookingNo);
-		model.addAttribute("fileName", "/report/mima_all_prescription.jrxml");
+		model.addAttribute("fileName", "/report/mima_all_prescription2.jrxml");
 		model.addAttribute("param", map);
 		return "pdfView";
 	}
@@ -51,7 +52,7 @@ public class PdfController {
 			@RequestParam(required = false, defaultValue ="39" ) Integer bookingNo) throws Exception {
 		log.info("************넘기는 파라미터 값"+bookingNo);
 		Connection conn = dataSource.getConnection();
-		InputStream jasperStream = getClass().getResourceAsStream("/report/mima_all_prescription.jasper");
+		InputStream jasperStream = getClass().getResourceAsStream("/report/mima_all_prescription2.jasper");
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream); //파라미터 맵
 		
 		// 환자이름 찾기
@@ -63,7 +64,8 @@ public class PdfController {
 		log.info("************이름***********"+ bvo.getName() );
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, conn);
 		response.setContentType( "application/pdf" );
-		response.setHeader("Content-disposition", "attachment; filename=" + bvo.getName() + "처방전.pdf" ); // 다운 
+		response.setHeader("Content-disposition", "attachment; filename=" 
+		                    + URLEncoder.encode(bvo.getName() +"_처방전", "UTF-8") + ".pdf" ); // 다운 
 		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 	
 	}

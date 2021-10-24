@@ -40,7 +40,6 @@
         </section>
         <!--page-title-two end-->
 
-
         <!-- doctors-dashboard -->
         <section class="doctors-dashboard bg-color-3">
             <div class="left-panel">
@@ -110,10 +109,10 @@
 													<figure class="image-box">
 														<c:choose>
 										                     <c:when test="${not empty session.ptProfilePhoto }">
-										                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+										                        <img id="profileImg" src="FileDown.do?fname=${session.ptProfilePhoto}">
 										                     </c:when>
 										                     <c:otherwise>
-										                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+										                        <img id="profileImg" src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
 										                  alt="">
 										                     </c:otherwise>
 										                  </c:choose>
@@ -468,7 +467,7 @@
     			str += "<input type='hidden' name='attachFile.pImgName' value='"+li.data("pimgname")+"'>";
     		    str += "<input type='hidden' name='attachFile.uuid' value='"+li.data("uuid")+"'>";
     		    str += "<input type='hidden' name='attachFile.uploadPath' value='"+li.data("path")+"'>";
-    		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+"'>";
+    		    str += "<input type='hidden' name='profilePhoto'  value='"+li.data("uuid")+li.data("pimgname")+"'>";
     		    
     		$("#docProInsertFrm").append(str);
     		alert("프로필 등록이 완료되었습니다.")

@@ -73,9 +73,14 @@
 	<div class="left-panel">
 		<div class="profile-box">
 			<div class="upper-box">
-				<figure class="profile-image">
-					<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
-				</figure>
+				<c:choose>
+                     <c:when test="${not empty session.ptProfilePhoto }">
+                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+                     </c:when>
+                     <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+                     </c:otherwise>
+                  </c:choose>
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${profile.pharmacyInfo}</h3>
@@ -191,7 +196,16 @@
                                      <tr id="trList">
                                          <td>
                                              <div class="name-box">
-                                                 <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
+                                                 <figure class="image">
+                                                 	<c:choose>
+															<c:when test="${not empty del.ptProfilePhoto }">
+																<img src="FileDown.do?fname=${del.ptProfilePhoto}">
+															</c:when>
+															<c:otherwise>
+																<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+															</c:otherwise>
+														</c:choose>
+                                                 </figure>
                                                  <h5>${del.name}</h5>
                                              </div>
                                          </td>

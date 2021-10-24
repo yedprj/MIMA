@@ -40,25 +40,23 @@
 				<div class="upper-box">
 					<figure class="profile-image">
 						<c:choose>
-							<c:when test="${not empty ptMyProfile.ptProfilePhotoImg }">
-								<img src="${ptMyProfile.ptProfilePhotoImg }" alt="">
+							<c:when test="${not empty session.ptProfilePhoto }">
+								<img src="FileDown.do?fname=${session.ptProfilePhoto}">
 							</c:when>
 							<c:otherwise>
-								<img width="300" height="300" id="profileImg"
-									src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png"
-									alt="프로필 미리보기">
+								<img
+									src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+									alt="">
 							</c:otherwise>
 						</c:choose>
-
 					</figure>
 					<div class="title-box centred">
 						<div class="inner">
 
 							<h3>${session.name}</h3>
 
-							<p>MDS - Periodontology</p>
 						</div>
-					</div>
+					</div>      
 				</div>
 				<div class="profile-info">
 					<ul class="list clearfix">
@@ -95,7 +93,7 @@
 								value="${session.memberNo }">
 							<div class="single-box">
 								<div class="title-box">
-									<h3>나의 정보</h3>
+									<h3>나의 정보</h3>${ptMyProfile.ptProfilePhotoImg }
 								</div>
 								<div class="inner-box">
 
@@ -104,13 +102,13 @@
 										<div>
 											<figure class="image-box">
 												<c:choose>
-													<c:when test="${not empty ptMyProfile.ptProfilePhotoImg }">
-														<img id="profileImg" src="${ptMyProfile.ptProfilePhotoImg }" alt="">
+													<c:when test="${not empty session.ptProfilePhoto }">
+														<img src="FileDown.do?fname=${session.ptProfilePhoto}">
 													</c:when>
 													<c:otherwise>
-														<img width="300" height="300" id="profileImg"
-															src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-3.png"
-															alt="프로필 미리보기">
+														<img
+															src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+															alt="">
 													</c:otherwise>
 												</c:choose>
 											</figure>

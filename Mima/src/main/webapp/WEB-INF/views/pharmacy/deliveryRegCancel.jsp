@@ -84,6 +84,10 @@
 #prescription {
 	cursor: pointer;
 }
+.doctors-appointment .doctors-table tr td .print i {
+	cursor: pointer;
+    margin-right: 5px;
+}
 </style>
 
 <!--page-title-two-->
@@ -97,14 +101,14 @@
 		</div>
 		<div class="auto-container">
 			<div class="title">
-				<h1>약국 대쉬보드</h1>
+				<h1>약배달 등록/취소</h1>
 			</div>
 		</div>
 	</div>
 	<div class="lower-content">
 		<ul class="bread-crumb clearfix">
 			<li><a href="${pageContext.request.contextPath}">Home</a></li>
-			<li>약국 대쉬보드</li>
+			<li>약배달 등록/취소</li>
 		</ul>
 	</div>
 </section>
@@ -116,7 +120,14 @@
 		<div class="profile-box">
 			<div class="upper-box">
 				<figure class="profile-image">
-					<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+					<c:choose>
+						<c:when test="${not empty session.ptProfilePhoto }">
+							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+						</c:when>
+						<c:otherwise>
+							<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+						</c:otherwise>
+					</c:choose>
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
@@ -129,7 +140,7 @@
 				<ul class="list clearfix">
 					<li><a id="dash" href="${pageContext.request.contextPath}/pharmacy/pharmacyDash" ><i
 							class="fas fa-columns"></i>대쉬보드</a></li>
-					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery"><i class="fas fa-ambulance"></i>약배달관리</a></li>
+					<li><a id="delivery" href="${pageContext.request.contextPath}/pharmacy/mediDelivery"><i class="fas fa-ambulance"></i>약배달현황</a></li>
 					<li><a href="${pageContext.request.contextPath}/pharmacy/deliveryRegCancel" class="current"><i class="fas fa-laptop-medical"></i>약배달 등록/취소</a></li>
 					<li><a id="guid" href="${pageContext.request.contextPath}/pharmacy/medGuid" ><i class="fas fa-comment-medical"></i>복약지도관리</a></li>
 					<li><a id="revicw" href="${pageContext.request.contextPath}/pharmacy/review"><i class="fas fa-star"></i>약국 후기</a></li>
@@ -172,7 +183,7 @@
                                                 <th>신청일자</th>
                                                 <th>주소</th>
                                                 <th>우편번호</th>
-                                                <th>처방전</th>
+                                                <th class="text-center">처방전</th>
                                                 <th>배송메모</th>
                                                 <th>&nbsp;</th>
                                                 <th>&nbsp;</th>
@@ -183,14 +194,24 @@
                                           <tr id="trList">
                                               <td>
                                                   <div class="name-box">
-                                                      <figure class="image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/patient-1.png" alt=""></figure>
+                                                      <figure class="image">
+                                                      	<c:choose>
+															<c:when test="${not empty del.ptProfilePhoto }">
+																<img src="FileDown.do?fname=${del.ptProfilePhoto}">
+															</c:when>
+															<c:otherwise>
+																<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+															</c:otherwise>
+														</c:choose>
+                                                      </figure>
                                                       <h5>${del.name}</h5>
                                                   </div>
                                               </td>
                                               <td class="text-center"><p><fmt:formatDate value="${del.consultDate}" type="both" pattern="YY-MM-dd" /></p></td>
                                               <td><p>${del.delAddr},</p><p>${del.delAddr2}  ${del.delAddr3 }</p></td>
                                               <td class="text-center"><p>${del.delPostCode }</p></td>
-                                              <td class="text-center"><a id="prescription" onclick="prescriptionPdf(${del.bookingNo})" >처방전 파일</a>&nbsp;&nbsp;<span data-no="${del.bookingNo}" id="pdfDown" ><i class="fas fa-file-download"></i></span></td>
+                                              <td class="text-center"><a class="view" id="prescription" onclick="prescriptionPdf(${del.bookingNo})" ><i class="fas fa-eye"></i> 처방전</a>&nbsp;&nbsp;
+                                              							<span style="padding:9px 9px;" class="print" data-no="${del.bookingNo}" id="pdfDown" ><i class="fas fa-print"></i></span></td>
                                               <td><p id="delMemo"><c:if test="${not empty del.delNote}">메모 O</c:if></p>
                                               	<c:if test="${not empty del.delNote}"><div id="delMemoHidden">${del.delNote}</div></c:if>
                                               </td>
@@ -262,7 +283,7 @@
                                 </div>
 		                        <div class="btn-box">
 		                            <a id="delReturnBtn" class="theme-btn-one">약배달 취소 및 반환<i class="icon-Arrow-Right"></i></a>
-		                            <button id="cancelBtn" class="cancel-btn">취소</button>
+		                            <button id="cancelBtn" class="cancel cancel-btn">취소</button>
 		                        </div>
                             </div>
                         </div>
@@ -320,17 +341,13 @@ $(function(){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 				},		 
 				success : function(data) {
-					if(data > 0 ){
-						console.log(data);
-						thisTr.remove();
-					}else {
-						alert("배송등록이 실패했습니다!")
-					}
+					if(data > 0 ){ thisTr.remove(); }
+					else { alert("배송등록이 실패했습니다!") }
 				}
 			});// ajax end
 		} else { return; } 
-		
 	}); // 배달 등록 btn end
+	
 	
 	// 반환 btn
 	$("#trList > td").on("click",".cancel",function(){
@@ -352,13 +369,11 @@ $(function(){
 		});
 		
 		$("#delReturnBtn").click(function(){
-			
 			var message = $("#message").val();
 			if (message == ''){
 				alert("취소하는 사유를 간단하게 적어주세요!");
 				return;
 			}else {
-				
 				$.ajax({
 					url : 'delCancel',
 					type : 'post',
@@ -374,18 +389,12 @@ $(function(){
 						if(data > 0 ){
 							console.log(data);
 							alert("약배달 신청이 취소되었습니다.")
-							
 							// socket 테스트 (보내는 번호, 받는사람 번호, 메세지가 넘어가야함)
 							socket.send("med="+bookingNo+"="+message+"="+pharmacyNo+"");
-							
 							$(".modal").fadeOut();
 							thisTr.remove();
-							
-						}else {
-							alert("배송등록이 실패했습니다!")
-						}
+						}else { alert("배송등록이 실패했습니다!") }
 					}
-					
 				});// ajax end
 			}
 		}); // cancelBtn end
@@ -394,7 +403,7 @@ $(function(){
 	
 	
 	
-	
+	// PDF 다운
 	$("#trList > td").on("click","#pdfDown",function(){
 		var bookingNo = $(this).data("no");
 		location.href= "${pageContext.request.contextPath}/prePdf3?bookingNo="+ bookingNo;

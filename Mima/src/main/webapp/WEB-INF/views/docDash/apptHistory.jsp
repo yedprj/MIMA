@@ -46,7 +46,20 @@ th, td {
 <div class="left-panel">
 	<div class="profile-box">
 	    <div class="upper-box">
-        	<figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
+	    <!-- s:1022 의사 왼쪽 프로필사진 세션에서 가져오는것-->
+        	<figure class="image-box profile-image">
+				<c:choose>
+                     <c:when test="${not empty session.ptProfilePhoto }">
+                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+                     </c:when>
+                     <c:otherwise>
+                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+                  alt="">
+                     </c:otherwise>
+                  </c:choose>
+				
+			</figure>
+    
 	        <div class="title-box centred">
 	        	<div class="inner">
 		            <h3>${session.name}</h3>
@@ -137,7 +150,7 @@ th, td {
 	                                        <button class="view" id="cnote" onclick="window.open('cnote?bookingNo=${apptHistoryPage.bookingNo}', '진료노트', 'width=1100, height=800, scrollbars=yes')">
 	                                        	<i class="fas fa-eye"></i>진료노트
 	                                        </button>
-	                                      	<button class="print" id="prescription" onclick="window.open('prescription?bookingNo=${apptHistoryPage.bookingNo}', '처방전', 'width=1100, height=800, scrollbars=yes')">
+	                                      	<button class="print" id="prescription" onclick="prescriptionPdf(${apptHistoryPage.bookingNo})" >
 	                                      		<i class="fas fa-print"></i>처방전
 	                                      	</button>
 	                                    </td>
@@ -179,6 +192,12 @@ th, td {
 </button>
 
 <script>
+
+function prescriptionPdf(no){
+	window.open('${pageContext.request.contextPath}/prePdf2?bookingNo='+ no, '처방전', 'width=1000px, height=1600px , scrollbars=yes');
+}
+
+
 $(document).ready(function() {
 	 var actionForm = $('#actionForm');
 

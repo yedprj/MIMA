@@ -63,14 +63,20 @@ th, td {
 		<div class="profile-box">
 			<div class="upper-box">
 				<figure class="profile-image">
-					<img
-						src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-						alt="">
+					<c:choose>
+						<c:when test="${not empty session.ptProfilePhoto }">
+							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
+						</c:when>
+						<c:otherwise>
+							<img
+								src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+								alt="">
+						</c:otherwise>
+					</c:choose>
 				</figure>
 				<div class="title-box centred">
 					<div class="inner">
 						<h3>${session.name}</h3>
-						<p>MDS - Periodontology</p>
 					</div>
 				</div>
 			</div>
@@ -139,8 +145,10 @@ th, td {
 												<c:if test="${del.deliveryStatus eq 'y'}">
 													<span id="delCheckBtn" data-no="${del.bookingNo}" class="status">수령완료</span>
 												</c:if>
-												<c:if test="${del.check < 1 }">
-													<span id="delReview" data-no="${del.bookingNo}" class="status cancel">후기쓰기</span>
+												<c:if test="${del.deliveryStatus eq 'p'}">
+													<c:if test="${del.check < 1 }">
+														<span id="delReview" data-no="${del.bookingNo}" class="status cancel">후기쓰기</span>
+													</c:if>
 												</c:if>
 											</td>
 										</tr>

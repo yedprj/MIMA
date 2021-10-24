@@ -4,30 +4,30 @@
 
 <style>
 th, td {
-		text-align: center;
-		span: center;
-		}
+      text-align: center;
+      span: center;
+      }
 
 .doctors-dashboard .review-list .comment-inner .single-comment-box .comment.replay-comment {
-	margin-left: 0px;
+   margin-left: 0px;
 }
 
 .theme-btn-one {
-	padding: 5px 25px;
+   padding: 5px 25px;
 }
 
 .theme-btn-two {
-	padding: 4px 25px;
-	border: 1px solid #ebeef1;
+   padding: 4px 25px;
+   border: 1px solid #ebeef1;
 }
 
 .add-listing .single-box {
-	margin-bottom: 10px;
+   margin-bottom: 10px;
 }
 
 textarea {
-	width: 100%;
-	margin-top: 10px;
+   width: 100%;
+   margin-top: 10px;
 }
 
 2px solid #ebeef1
@@ -60,7 +60,19 @@ textarea {
 <div class="left-panel">
             <div class="profile-box">
                 <div class="upper-box">
-                    <figure class="profile-image"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt=""></figure>
+                 <!-- s:1022 의사 왼쪽 프로필사진 세션에서 가져오는것-->
+	                 <figure class="image-box profile-image">
+						<c:choose>
+		                     <c:when test="${not empty session.ptProfilePhoto }">
+		                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
+		                     </c:when>
+		                     <c:otherwise>
+		                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
+		                  alt="">
+		                     </c:otherwise>
+		                  </c:choose>
+					</figure>
+
             <div class="title-box centred">
                 <div class="inner">
                     <h3>${session.name}</h3>
@@ -79,11 +91,11 @@ textarea {
                 <li><a href="docProfileForm"><i class="fas fa-stethoscope"></i>진료관리</a></li>
                 <li><a href="docPwChangeForm"><i class="fas fa-unlock-alt"></i>비밀번호 변경</a></li>
                 <li>
-                	<form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
-						<a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-					</form>
-				</li>
+                   <form id="logOutfrm1" name="logOutfrm1" action="../logout" method="post">
+                  <a href="#" id="logoutBtn1"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
+                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+               </form>
+            </li>
             </ul>
         </div>
     </div>
@@ -94,8 +106,8 @@ textarea {
             <div class="review-list">
                 <div class="title-box clearfix">
                     <div class="text pull-left">
-                    	<h3>나의 후기</h3>
-                    	<span>환자가 등록한 후기를 조회할 수 있습니다.</span>
+                       <h3>나의 후기</h3>
+                       <span>환자가 등록한 후기를 조회할 수 있습니다.</span>
                     </div>
                     
                     <div class="select-box pull-right">
@@ -104,7 +116,7 @@ textarea {
                            <option value="oldest">오래된순</option>
                         </select>
                         <script type="text/javascript">
-                        	$("#selectBox").val("${cri.keyword}"== ""?"latest" : "${cri.keyword}")
+                           $("#selectBox").val("${cri.keyword}"== ""?"latest" : "${cri.keyword}")
                         </script>
                     </div>
                    
@@ -112,87 +124,87 @@ textarea {
                 </div>
                
                <div class="comment-inner" id="latest" style="display:block;">
-		       		<c:forEach items="${docReviewPage}" var="docReviewPage">
-     					<div class="single-comment-box">
-         					<div class="comment">
-         						<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
-             					<h4>${docReviewPage.name}</h4>
-             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
-				             	<ul class="rating clearfix">
-					            	<c:forEach var="i" begin="1" end="${docReviewPage.reviewPoint}">
-					             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
-					             	</c:forEach>
-					             	<c:forEach var="i" begin="1" end="${5-docReviewPage.reviewPoint}">
-					             		<i class="icon-Star"></i>
-					             	</c:forEach>
-				                </ul>
-            						<p>${docReviewPage.contents}</p>
-            						<c:if test="${null eq docReviewPage.rcontents}">
-	            						<button class="replay-btn" data-cno="${docReviewPage.cno}" data-no="${docReviewPage.commentWriterNo}"><i class="fas fa-share"></i>Reply Now</button>
-	            						<div id="reply">
-	            						</div>
-            						</c:if>
-            						<c:if test="${null ne docReviewPage.rcontents}">
-			      						<div class="comment replay-comment">
-			                                 <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>
-			                                 <h4><i class="fas fa-comments"></i>&nbsp;${session.name} 의사</h4>
-			                                 <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.rregDate}" pattern="yy-MM-dd"/></span>
-			                                 <span class="rating clearfix">
-			                                 	<a type="button" id="updateBtn" class="theme-btn-one" data-no="${docReviewPage.rno}"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>
-                                                    <input type="hidden" id="rregDate" name="rregDate" value="${docReviewPage.rregDate}"/>
-                                                    <input type="hidden" id="rcontents" name="rcontents" value="${docReviewPage.rcontents}"/>
-			                                 	<a type="button" id="deleteBtn" class="theme-btn-two" data-no="${docReviewPage.rno}"><i class="fas fa-times"></i></a>
-                                                    <input type="hidden" id="rno" name="rno" value="${docReviewPage.rno}"/>
-			                                 </span>
-			                                 <p id="rcontents">${docReviewPage.rcontents}</p>
-			                            </div>
-                            		</c:if>
-             				</div>
-             				
+                   <c:forEach items="${docReviewPage}" var="docReviewPage">
+                    <div class="single-comment-box">
+                        <div id="comment" class="comment">
+                           <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+                            <h4>${docReviewPage.name}</h4>
+                            <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.regDate}" pattern="yy-MM-dd"/></span>
+                            <ul class="rating clearfix">
+                              <c:forEach var="i" begin="1" end="${docReviewPage.reviewPoint}">
+                                  <span style="color:#ffab01;"><i class="icon-Star"></i></span>
+                               </c:forEach>
+                               <c:forEach var="i" begin="1" end="${5-docReviewPage.reviewPoint}">
+                                  <i class="icon-Star"></i>
+                               </c:forEach>
+                            </ul>
+                              <p>${docReviewPage.contents}</p>
+                              <c:if test="${null eq docReviewPage.rcontents}">
+                                 <button class="replay-btn" data-cno="${docReviewPage.cno}" data-no="${docReviewPage.commentWriterNo}"><i class="fas fa-share"></i>Reply Now</button>
+                              </c:if>
+                              <div id="reply">
+                                 </div>
+                              <c:if test="${null ne docReviewPage.rcontents}">
+                                 <div class="comment replay-comment">
+                                          <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>
+                                          <h4><i class="fas fa-comments"></i>&nbsp;${session.name} 의사</h4>
+                                          <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPage.rregDate}" pattern="yy-MM-dd"/></span>
+                                          <span class="rating clearfix">
+                                             <a type="button" id="updateBtn" class="theme-btn-one" data-no="${docReviewPage.rno}"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>
+                                             <input type="hidden" id="rregDate" name="rregDate" value="${docReviewPage.rregDate}"/>
+                                             <input type="hidden" id="rcontents" name="rcontents" value="${docReviewPage.rcontents}"/>
+                                             <a type="button" id="deleteBtn" class="theme-btn-two" data-no="${docReviewPage.rno}"><i class="fas fa-times"></i></a>
+                                             <input type="hidden" id="rno" name="rno" value="${docReviewPage.rno}"/>
+                                          </span>
+                                          <p id="rcontents">${docReviewPage.rcontents}</p>
+                                     </div>
+                                  </c:if>
+                         </div>
+                         
                             
-				    	</div>
-					</c:forEach>
+                   </div>
+               </c:forEach>
                </div>
                
                <%-- <div class="comment-inner" id="oldest" style="display:none;">
-                   	<c:forEach items="${docReviewPageOldest}" var="docReviewPageOldest">
-     					<div class="single-comment-box">
-         					<div class="comment">
-         						<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
-	             					<h4>${docReviewPageOldest.nickname}</h4>
-             					<span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPageOldest.regDate}" pattern="yy-MM-dd"/></span>
-					             <ul class="rating clearfix">
-					              <c:forEach var="i" begin="1" end="${docReviewPageOldest.reviewPoint}">
-					             		<span style="color:#ffab01;"><i class="icon-Star"></i></span>
-					             	</c:forEach>
-					             	<c:forEach var="i" begin="1" end="${5-docReviewPageOldest.reviewPoint}">
-					             		<i class="icon-Star"></i>
-					             	</c:forEach>
-					             </ul>
-             					<p>${docReviewPageOldest.contents}</p>
-				         </div>
-				     </div>
-				    </c:forEach>
+                      <c:forEach items="${docReviewPageOldest}" var="docReviewPageOldest">
+                    <div class="single-comment-box">
+                        <div class="comment">
+                           <figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png"></figure>
+                               <h4>${docReviewPageOldest.nickname}</h4>
+                            <span class="comment-time"><i class="fas fa-calendar-alt"></i><fmt:formatDate value="${docReviewPageOldest.regDate}" pattern="yy-MM-dd"/></span>
+                            <ul class="rating clearfix">
+                             <c:forEach var="i" begin="1" end="${docReviewPageOldest.reviewPoint}">
+                                  <span style="color:#ffab01;"><i class="icon-Star"></i></span>
+                               </c:forEach>
+                               <c:forEach var="i" begin="1" end="${5-docReviewPageOldest.reviewPoint}">
+                                  <i class="icon-Star"></i>
+                               </c:forEach>
+                            </ul>
+                            <p>${docReviewPageOldest.contents}</p>
+                     </div>
+                 </div>
+                </c:forEach>
                </div> --%>
                
             </div>
                 <!-- pagination  -->
-				<div class="pagination-wrapper">
-					<ul class="pagination">
-						<c:if test="${pageMaker.prev}">
-							<li class="paginate_button previous"><a href="docReview?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
-						</c:if>
-							
-						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-							<li class="paginate_button"><a href="docReview?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
-						</c:forEach>
-							
-						<c:if test="${pageMaker.next}">
-							<li class="paginate_button next"><a href="docReview?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
-						</c:if>
-					</ul>
-				</div>
-				<!-- pagination end -->
+            <div class="pagination-wrapper">
+               <ul class="pagination">
+                  <c:if test="${pageMaker.prev}">
+                     <li class="paginate_button previous"><a href="docReview?pageNum=${pageMaker.startPage-1}&keyword=${cri.keyword}">이전</a></li>
+                  </c:if>
+                     
+                  <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+                     <li class="paginate_button"><a href="docReview?pageNum=${num}&keyword=${cri.keyword}">${num}</a></li>
+                  </c:forEach>
+                     
+                  <c:if test="${pageMaker.next}">
+                     <li class="paginate_button next"><a href="docReview?pageNum=${pageMaker.endPage+1}&keyword=${cri.keyword}">다음</a></li>
+                  </c:if>
+               </ul>
+            </div>
+            <!-- pagination end -->
             </div>
         </div>
     </div>
@@ -201,202 +213,232 @@ textarea {
 
 <!--Scroll to top-->
 <button class="scroll-top scroll-to-target" data-target="html">
-	<span class="fa fa-arrow-up"></span>
+   <span class="fa fa-arrow-up"></span>
 </button>
 <!-- End of .page_wrapper -->
 
 <script>
-		var replyBtnBackup;
-		
-		function searchCheck() {
-			var choose = $("#selectBox option:selected").val();
-			
-		/* 	if (choose == 'latest') {
-				$("#latest").css('display', 'block');   
-				$("#oldest").css('display', 'none');
-			} else if (choose == 'oldest') {
-				$("#latest").css('display', 'none');   
-				$("#oldest").css('display', 'block');
-			} */
-			
-			location.href="docReview?pageNum=1&keyword="+choose
-		}
-		
-		// 댓글 등록 후 삭제
-		$(document).on('click', '#replyDelete', function(){
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue = "${_csrf.token}";
-			
-			var rno = $(this).data("no");
-			var pa = $(this).closest(".comment");
-			var replyDiv = pa.prev('#reply');
-			var delReply = pa.find(".replay-comment");
-			
-			$.ajax({
-				url : "replyDelete",
-				method : "post",
-				data : {
-					rno : rno
-				},
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success : function(datas) {
-						if( datas > 0 ){
-							alert("댓글이 삭제되었습니다.");
-							pa.remove();
-							replyDiv.before(replyBtnBackup);
-						}
-				} // success end
-			}) //ajax end
-		});
-		
-		// 기존 댓글 삭제_J21
-		$(document).on('click', '#deleteBtn', function(){
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue = "${_csrf.token}";
-			
-			var rno = $(this).data("no");
-			var pa = $(this).closest(".comment");
-			var replyDiv = pa.prev('#reply');
-			var delReply = pa.find(".replay-comment");
-			
-			$.ajax({
-				url : "replyDelete",
-				method : "post",
-				data : {
-					rno : rno
-				},
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success : function(datas) {
-						if( datas > 0 ){
-							alert("댓글이 삭제되었습니다.");
-							pa.remove();
-							replyDiv.before(replyBtnBackup);
-							location.href="docReview";
-						}
-				} // success end
-			}) //ajax end
-		});
-		
-		// 기존 댓글 수정_J21
-		$(document).on("click", '#updateBtn', function(){
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue = "${_csrf.token}";
-			
-			var rno = $(this).data("no");
-			var rcontents = $("input[name='rcontents']").val();
-			var pa = $(this).closest(".comment");
-			
-			$.ajax({
-				url : "docReplyUpdate",
-				method : "post",
-				data : {
-					rno : rno,
-					rcontents : rcontents
-				},
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success : function(datas) {
-						if( datas > 0 ){
-							alert("댓글이 수정되었습니다.");
-							pa.remove();
-						}
-				} // success end
-			}) //ajax end
-		});
-		
-		// 댓글 등록 후 수정
-		
-		// 등록폼 취소 버튼
-		$(document).on('click', '#cancel', function(){
-			$(".comment #reply").empty();
-		});
-		
-		// 등록폼 등록 버튼
-		$(document).on('click', '#insert', function(){
-			
-			var csrfHeaderName = "${_csrf.headerName}";
-			var csrfTokenValue = "${_csrf.token}";
-			var pa = $(this).closest(".comment");
-			console.log(pa);
-			$.ajax({
-				url : "docReplyInsert",
-				method : "post",
-				data : $("#replyForm").serialize(),
-				beforeSend : function(xhr) {
-					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				},
-				success : function(datas) {
-						$(".add-listing").remove();
-						pa.find(".replay-btn").remove();
-						pa.append('<div class="comment replay-comment">'
-                               	  + '<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
-                                  + '<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
-                                  + '<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
-                                  + '<p id="rcontents">'+datas.rcontents+'</p>'
-                                  +'<span class="rating clearfix">'
-                                  +'<a type="button" id="updateBtn" class="theme-btn-one" data-no=""><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
-                                  +'&nbsp;'
-                                  +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
-                                  + '</span>'
-                                  + '</div>');
-						alert("댓글이 등록되었습니다.");
-				} // success end
-			}) //ajax end
-		});
-		
-		$(document).ready(function() {
-			$('#selectBox').val('${cri.category}').prop("selected", true);
+   var replyBtnBackup;
+   var replyBackup;
+   
+   $(document).ready(function() {
+       $('#selectBox').val('${cri.category}').prop("selected", true);
 
-			$("#logoutBtn1").on("click", function(){
-				$('#logOutfrm1').submit();
-			});
+       $("#logoutBtn1").on("click", function(){
+          $('#logOutfrm1').submit();
+       });
+       
+       // 등록폼
+       $(".comment").on("click",'.replay-btn', function(){
+          var cno = $(this).data("cno")
+          var no = $(this).data("no")
+          
+          replyBtnBackup = $(this)[0];
+          $(".comment #reply").empty();
+          $(this).next()
+          .append('<div class="add-listing">'
+                  +'<form id="replyForm">'
+                  +'<br><label><b>댓글 쓰기</b></label><br>'
+                  +'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
+                  +'    <textarea id="replyContents" name="rcontents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
+                  +'  </div>'
+                  +'  <input type="hidden" name="rcno" value="'+cno+'">'
+                  +'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
+                  +'  <input type="hidden" name="rmainNo" value="'+no+'">'
+                  +'<p><button type="button" class="theme-btn-one" id="insert">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
+                  +'</form>'
+                  +'<div>')
+       });
+       
+		// 수정폼
+		$(document).on("click",'.replay-comment #updateBtn', function(){
+			var parentDiv = $(this).parents('#comment');
+			var replyDiv = parentDiv.find('#reply');
+			var contentDiv = parentDiv.find(".replay-comment");
 			
-			$(".comment").on("click",'.replay-btn', function(){
-			var cno = $(this).data("cno")
-			var no = $(this).data("no")
-			replyBtnBackup = $(this)[0];
-			$(".comment #reply").empty();
-			$(this).next()
-			.append('<div class="add-listing">'
-                	+'<form id="replyForm">'
-                    +'<br><label><b>댓글 쓰기</b></label><br>'
-					+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
-                    +'    <textarea id="replyContents" name="rcontents" placeholder="미마 님의 후기에 댓글을 남겨주세요!"></textarea>'
-                	+'  </div>'
-                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
-                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
-                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
-                	+'<p><button type="button" class="theme-btn-one" id="insert">등록</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
-                	+'</form>'
-                	+'<div>')
-			});
+		   var cno = $(this).data("cno")
+		   var no = $(this).data("no")
+		   var rcontents = $(this).parent().find("#rcontents").val();
+		   
+		   replyBackup = contentDiv;
 			
-			// 수정폼
-			/* $(".comment").on("click",'#updateBtn', function(){
-				var rno = $(this).data("rno")
-				$("input[name='rregDate']").val();
-				$("input[name='rcontents']").val();
-				$(this).next(.comment replay-comment)
-				.append('<div class="replyUpdate">'
-						+'<form id="replyUpdate">'
-	                    +'<br><label><b>댓글 수정하기</b></label><br>'
-						+'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
-	                    +'    <textarea id="replyContents" name="rcontents" placeholder="'+rcontents+'"></textarea>'
-	                	+'  </div>'
-	                	+'  <input type="hidden" name="rcno" value="'+cno+'">'
-	                	+'  <input type="hidden" name="rwriterNo" value="'+${session.memberNo}+'">'
-	                	+'  <input type="hidden" name="rmainNo" value="'+no+'">'
-	                	+'  <input type="hidden" name="rcontents" value="'+rcontents+'">'
-	                	+'<p><button type="button" class="theme-btn-one" id="insert">수정</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
-	                	+'</form>'
-	                	+'<div>')
-				
-			}); */
-		});
-
+		   contentDiv.hide();
+		   replyDiv.append('<div class="add-listing">'
+		              +'<form id="replyForm">'
+		              +'<label><b>댓글 수정</b></label><br>'
+		          	  +'  <div class="single-box col-lg-12 col-md-12 col-sm-12">'
+		              +'    <textarea id="replyContents" name="rcontents" placeholder="'+rcontents+'"></textarea>'
+		              +'  </div>'
+		              +'  <input type="hidden" name="rcno" value="'+cno+'">'
+		              +'  <input type="hidden" name="rwriterNo" value="${session.memberNo}">'
+		              +'  <input type="hidden" name="rmainNo" value="'+no+'">'
+		              +'<p><button type="button" class="theme-btn-one" id="update">수정</button>&nbsp;<button type="button" class="theme-btn-two" id="cancel">취소</button></p>'
+		              +'</form>'
+		              +'<div>')
+	       });
+		
+    }); // document function End
+      
+   function searchCheck() {
+      var choose = $("#selectBox option:selected").val();
+      
+       /* if (choose == 'latest') {
+         $("#latest").css('display', 'block');   
+         $("#oldest").css('display', 'none');
+      } else if (choose == 'oldest') {
+         $("#latest").css('display', 'none');   
+         $("#oldest").css('display', 'block');
+      } */
+      
+      location.href="docReview?pageNum=1&keyword="+choose
+   }
+    
+   // 등록 버튼 in 등록폼
+   $(document).on('click', '#insert', function(){
+      
+      var csrfHeaderName = "${_csrf.headerName}";
+      var csrfTokenValue = "${_csrf.token}";
+      
+      var pa = $(this).closest(".comment");
+      
+      $.ajax({
+         url : "docReplyInsert",
+         method : "post",
+         data : $("#replyForm").serialize(),
+         beforeSend : function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+         },
+         success : function(datas) {
+               $(".add-listing").remove();
+               pa.find(".replay-btn").remove();
+               pa.append('<div class="comment replay-comment">'
+                                   +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
+                                 +'<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
+                                 +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
+                                 +'<p id="rcontents">'+datas.rcontents+'</p>'
+                                 +'<span class="rating clearfix">'
+                                 +'<a type="button" id="updateBtn" class="theme-btn-one" data-no="'+datas.rno+'"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
+                                 +'&nbsp;'
+                                 +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
+                                 +'</span>'
+                                 +'</div>');
+               alert("댓글이 등록되었습니다.");
+         } // success end
+      }) //ajax end
+   }); // 등록 버튼 end
+   
+   // 취소 버튼 in 등록폼
+   /* $(document).on('click', '#cancel', function(){
+      $(".comment #reply").empty();
+   }); */
+   
+   // 등록 버튼 in 수정폼
+   $(document).on('click', '#update', function(){
+      
+      var csrfHeaderName = "${_csrf.headerName}";
+      var csrfTokenValue = "${_csrf.token}";
+      
+      var pdiv = $(this).closest(".add-listing");
+      var rno = pdiv.find("input[name='rmainNo']").val();
+      var rcontents = pdiv.find("#replyContents").val();
+      
+      var pa = $(this).closest(".comment");
+      
+      $.ajax({
+         url : "docReplyUpdate",
+         method : "post",
+         data : {
+            rno : rno,
+            rcontents : rcontents
+         },
+         beforeSend : function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+         },
+         success : function(datas) {
+               $(".add-listing").remove();
+               pa.find(".replay-btn").remove();
+               pa.append('<div class="comment replay-comment">'
+            					   +'<figure class="comment-thumb"><img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-2.png"></figure>'
+                                 +'<h4><i class="fas fa-comments"></i> ${session.name}의사</h4>'
+                                 +'<span class="comment-time"><i class="fas fa-calendar-alt"></i>'+datas.rregDate+'</span>'
+                                 +'<p id="rcontents">'+datas.rcontents+'</p>'
+                                 +'<span class="rating clearfix">'
+                                 +'<a type="button" id="updateBtn" class="theme-btn-one" data-no="'+datas.rno+'"><i class="fas fa-pencil-alt" style="margin-left: 0px;"></i></a>'
+                                 +'&nbsp;'
+                                 +'<a id="replyDelete" type="button" class="theme-btn-two" data-no="'+datas.rno+'"><i class="fas fa-times"></i></a>'
+                                 +'</span>'
+                                 + '</div>');
+               alert("댓글이 수정되었습니다.");
+         } // success end
+      }) //ajax end
+   }); // 수정 버튼 end
+   
+   // 취소 버튼 in 수정폼
+   $(document).on('click', '#cancel', function(){
+	  var cancelDiv = $(this).parents("#comment").find("#reply");
+	  cancelDiv.empty();
+	  cancelDiv.next().show();
+	  replyBackup = '';
+   });
+      
+   // 등록한 댓글 삭제
+   $(document).on('click', '#replyDelete', function(){
+      var csrfHeaderName = "${_csrf.headerName}";
+      var csrfTokenValue = "${_csrf.token}";
+      
+      var rno = $(this).data("no");
+      var pa = $(this).closest(".comment");
+      var replyDiv = pa.prev('#reply');
+      var delReply = pa.find(".replay-comment");
+      
+      $.ajax({
+         url : "replyDelete",
+         method : "post",
+         data : {
+            rno : rno
+         },
+         beforeSend : function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+         },
+         success : function(datas) {
+               if( datas > 0 ){
+                  alert("댓글이 삭제되었습니다.");
+                  pa.remove();
+                  replyDiv.before(replyBtnBackup);
+               }
+         } // success end
+      }) //ajax end
+   });
+      
+   // 기존 댓글 삭제
+   $(document).on('click', '#deleteBtn', function(){
+      var csrfHeaderName = "${_csrf.headerName}";
+      var csrfTokenValue = "${_csrf.token}";
+      
+      var rno = $(this).data("no");
+      var pa = $(this).closest(".comment");
+      var replyDiv = pa.prev('#reply');
+      var delReply = pa.find(".replay-comment");
+      
+      $.ajax({
+         url : "replyDelete",
+         method : "post",
+         data : {
+            rno : rno
+         },
+         beforeSend : function(xhr) {
+            xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+         },
+         success : function(datas) {
+               if( datas > 0 ){
+                  alert("댓글이 삭제되었습니다.");
+                  pa.remove();
+                  replyDiv.before(replyBtnBackup);
+                  replyBtnBackup.append()
+                  location.href="docReview";
+               }
+         } // success end
+      }) //ajax end
+   });
+      
 </script>

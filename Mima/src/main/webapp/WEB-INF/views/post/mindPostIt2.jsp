@@ -111,6 +111,15 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	background: #eaf8f6;
 }
 
+@font-face {
+    font-family: 'GowunBatang-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.memoFont {
+	font-family: 'GowunBatang-Regular';
+}
 </style>
 
 <div class="boxed_wrapper">
@@ -149,11 +158,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 				<div class="col-lg-12 col-md-12 col-sm-12 content-side">
 					<div class="item-shorting clearfix">
 						<div class="left-column pull-left">
-							<h3>오늘 하루는 어땠나요? 😃</h3>
+							<h3 class="memoFont"><b>오늘 하루는 어땠나요?</b> 😃</h3><br>
+							<span style='color:#061a3a;'class="memoFont"><b>포스트잇은 익명으로 메모 등록됩니다. 혹시 하고싶은 말이 있다면 여기에선 마음 한켠 내려놓아도 좋아요! 
+							<br>단 메모는 자정을 기준으로 매일 삭제되오니 이 점 참고하세요!</b></span>
 						</div>
 						<div class="right-column pull-right clearfix">
 							<div class="short-box clearfix">
 								<div class="select-box">
+									
 									<span style='color:#061a3a;' id="DdayTimes"></span>
 								</div>
 							</div>
@@ -230,10 +242,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			<form name="insert"
 				style="padding-bottom: 10px; padding-top: 10px; height: 200px;">
 				<textarea id="contents" name="contents"
-					style="background-color: transparent; line-height: 1.5; width: 100%; height: 170px;"></textarea>
+					style="background-color: transparent; line-height: 1.5; width: 100%; height: 200px;"></textarea>
 				<br />
 			</form>
-			<div style="cursor: pointer; flex-direction: none;">
+			<div style="cursor: pointer; flex-direction: none; margin-top: 50px;">
 				<span id="palletBox" class="pallet"></span> <span
 					class="accept insertBtn" style="float: right;"><i
 					class="fas fa-check"></i></span> <span class="cancel closeBtn"
@@ -304,7 +316,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 
 		
 		document.getElementById("DdayTimes").innerHTML =  
-			"<b>남은 시간 "+ addzero(hour) + "시간" 
+			"<b>오늘의 남은 시간 "+ addzero(hour) + "시간" 
             + addzero(min) + "분" 
             + addzero(sec) + "초</b>";
 	}
@@ -571,7 +583,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
 							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
-							+ '<div><h4>'
+							+ '<div><h4 class="memoFont">'
 							+ data.contents
 							+ '</h4></div>'
 							+ '</div></figure></div></div>')
@@ -625,7 +637,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
 							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
-							+ '<div><h4>'
+							+ '<div><h4 class="memoFont">'
 							+ data.contents
 							+ '</h4></div>'
 							+ '</div></figure></div></div>')
@@ -680,7 +692,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 							+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
 							+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
 							+ '<div class="textBox">'
-							+ '<div><h4>'
+							+ '<div><h4 class="memoFont">'
 							+ arry[i].contents
 							+ '</h4></div>'
 							+ '</div></figure></div></div>')
@@ -715,7 +727,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 					+ '<a class="heartIcon" style="'+ heartStr +'"><i class="far fa-heart"></i></a>'
 					+ '<a class="angryIcon" style="top: 20px; right: 70px;'+ angryStr +'"><i class="far fa-angry"></i></a>'
 					+ '<div class="textBox">'
-					+ '<div><h4>'
+					+ '<div><h4 class="memoFont">'
 					+ arry[i+cnt].contents
 					+ '</h4></div>'
 					+ '</div></figure></div></div>')

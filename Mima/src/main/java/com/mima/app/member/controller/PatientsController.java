@@ -59,8 +59,10 @@ import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
 import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.domain.PaymentVO;
 import com.mima.app.session.service.BookingService;
 import com.mima.app.session.service.ConsultationService;
+import com.mima.app.session.service.RaymentService;
 
 import lombok.extern.java.Log;
 
@@ -77,6 +79,7 @@ public class PatientsController {
 	@Autowired MedDeliveryService deliveryService; // K.10/09 약배달
 	@Autowired MemberService memberService; // K.10/11 약배달 신청 유무
 	@Autowired ConsultationService consultationService; // K. 10/21 약국 후기 등록
+	@Autowired RaymentService paymentService;	// p. 10/24 
 
 	@Value("#{global['path']}")
 	String path;
@@ -273,7 +276,7 @@ public class PatientsController {
 		
 		
 		if(membervo.getPtProfilePhoto() != null) {
-			File file = new File("c:/upload",membervo.getPtProfilePhoto());
+			File file = new File("path",membervo.getPtProfilePhoto());
 			if(! file.exists())
 				return;
 				
@@ -305,7 +308,7 @@ public class PatientsController {
 		String s = "";
 		byte[] fileArray = null;
 		if(membervo.getPtProfilePhoto() != null) {
-			File file = new File("c:/upload",membervo.getPtProfilePhoto());
+			File file = new File(path,membervo.getPtProfilePhoto());
 			if(! file.exists())
 				return new ResponseEntity<byte[]>(null, null, HttpStatus.NOT_FOUND);
 				
@@ -335,7 +338,7 @@ public class PatientsController {
 	@RequestMapping(value = "/patients/FileDown.do")
 	public void cvplFileDownload(@RequestParam Map<String, Object> commandMap, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		File uFile = new File("c:/upload/", (String)commandMap.get("fname"));
+		File uFile = new File(path, (String)commandMap.get("fname"));
 		long fSize = uFile.length();
 		if (fSize > 0) {
 			String mimetype = "application/x-msdownload";
@@ -524,7 +527,12 @@ public class PatientsController {
 		}
 		
 		if (result == 1) {
+			bookingService.cancelUpdate(bookingNo);
 			
+			PaymentVO pvo = new PaymentVO();
+			pvo.setPayItem(bookingNo);
+			
+			paymentService.payStatusUpdate(pvo);
 		} 
 		
 		return result;
@@ -537,7 +545,6 @@ public class PatientsController {
 	public MeditAttachVO docAjaxInsert(MultipartFile uploadFile, MeditAttachVO vo)
 			throws IllegalStateException, IOException {
 		MeditAttachVO attachVo = null;
-		String path = "C:/upload";
 
 		MultipartFile uFile = uploadFile;
 		if (!uFile.isEmpty() && uFile.getSize() > 0) {
@@ -559,5 +566,7 @@ public class PatientsController {
 		}
 		return attachVo;
 	}
+	
+	// 환자 대쉬보드 환자 프로필 이름 밑_J21
 
 }
