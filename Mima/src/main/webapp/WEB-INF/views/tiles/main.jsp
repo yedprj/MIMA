@@ -67,11 +67,11 @@
 
 <script>
 // 전역변수 설정
-var socket  = null;
+var socket;
 $(document).ready(function(){
     // 웹소켓 연결
         
-    var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo";
+    var wsUri = "wss://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo";
    	console.log(wsUri);
     socket = new WebSocket(wsUri);
         
