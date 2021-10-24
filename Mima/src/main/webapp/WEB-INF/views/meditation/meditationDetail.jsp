@@ -40,7 +40,6 @@
                         <div class="inner-box">
                             <div class="image-box" style="text-align:center; background-color: 	#f1f1f4;">
                             
-                            <!-- 분명히 vFileName 있는데 없다고 나와 ㅠㅠㅠ왜이러는거야...글고 이클립스 폴더 안에 저장하니 저장하고 리프레시 안하면 안나옴... -->
                                 <%-- <img src="${pageContext.request.contextPath}/resources/assets/images/news/meditationFile" alt=""> --%>
                                 <video width="770" height="470" src="${pageContext.request.contextPath}/meditation/video/${item.fileName }" controls auto></video>
                                 <span class="category">${item.category }</span>
