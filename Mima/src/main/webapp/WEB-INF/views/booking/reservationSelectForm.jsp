@@ -95,14 +95,15 @@ input[type="time"]:valid::before {
 										<div class="col-lg-12 col-md-12 col-sm-12 form-group">
 											<label>의사</label>
 											<div class="select-box">
-												<input type="text" id="doctorSelect" name="doctorSelect" style="color:black; font-size:20px;"
-												       value="${name}" disabled="disabled" placeholder="Dr. ${name}">
+												<input type="text" id="doctorSelect" name="doctorSelect" style="color:black; font-size:15px;"
+												       value="Dr. ${name}" disabled="disabled">
+												<input type="hidden" id="docNo" name="docNo" value="${docNo}">
 											</div>
 										</div>
 										
 										<div class="col-lg-12 col-md-12 col-sm-12 form-group" id="selectCategory">
 											<label>진료과목</label>
-											<input type="text" id="doctorSelect" name="doctorSelect"
+											<input type="text" id="subject" name="subject"
 												       value="${subject}" disabled="disabled" style="color:black;">
 										</div>
 									
@@ -153,7 +154,7 @@ input[type="time"]:valid::before {
 			var date = $("#date").val();
 			var today = new Date(date).getDay();
 			var day = week[today];
-			var docNo = $("#doctorSelect option:selected").val();
+			var docNo = $("#docNo").val();
 			console.log(date);
 			console.log(day);
 			console.log(docNo);
@@ -271,8 +272,8 @@ input[type="time"]:valid::before {
 			e.preventDefault();
 			
 			var ptNo = ${session.memberNo};									// PT_NO 예약 환자 번호
-			var docNo = $("#doctorSelect option:selected").val();			// DOC_NO 의사 번호
-			var subject = decodeURIComponent($("#categoryChoose option:selected").val());		// 카테고리 추가
+			var docNo = $("#docNo").val();									// DOC_NO 의사 번호
+			var subject = $("#subject").val();								// 카테고리 추가
 			var consultDate = $("#date").val();								// 실제 진료 날짜
 			var consultTime = $('#consultTime').val();						// 실제 진료 시간
 			var firstSession = "";	// 체크박스 y or n

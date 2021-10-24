@@ -355,5 +355,11 @@
 	AND BOOKING_NO = #{bookingNo}
 </select>
 
+<!-- 결제 취소 시 부킹 테이블 업데이트 status - c로 p.10.24 -->
+<update id="cancelUpdate">
+	UPDATE BOOKING
+	SET BOOKING_STATUS = 'c'
+	WHERE BOOKING_NO = #{bookingNo}
+</update>
 
 </mapper>

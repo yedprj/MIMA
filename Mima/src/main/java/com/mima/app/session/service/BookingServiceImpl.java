@@ -96,8 +96,6 @@ public class BookingServiceImpl implements BookingService {
 		return bookingMapper.apptHistoryCount(cri, memberNo);
 	}
 	
-	
-	
 	//	s:0929  s:1011 get rm Id
 	@Override
 	public BookingVO getRoomId(int bookingNo) {
@@ -134,6 +132,10 @@ public class BookingServiceImpl implements BookingService {
 		return bookingMapper.findNamePtDoc(bookingNo);
 	}
 
-
+	// p.10/24 진료 예약 취소 시 BOOKING테이블 status 변경
+	@Override
+	public int cancelUpdate(int bookingNo) {
+		return bookingMapper.cancelUpdate(bookingNo);
+	}
 
 }

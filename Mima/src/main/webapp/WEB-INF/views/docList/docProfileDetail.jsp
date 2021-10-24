@@ -312,6 +312,7 @@
         <!-- doctor-details end -->
 		<!-- 진료 예약 페이지로 이동을 위해 폼 태그 추가 p.10/23 -->
 		<form id="frm" action="patients/reservationSelectForm" method="post" style="display: none;">
+			<input type="hidden" id="docNo" name="docNo" value="${item.memberNo}">
 			<input type="hidden" id="name" name="name" value="${item.name}">
 			<input type="hidden" id="subject" name="subject">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

@@ -59,8 +59,10 @@ import com.mima.app.pharmacy.domain.PartnerPharmacyVO;
 import com.mima.app.pharmacy.service.MedDeliveryService;
 import com.mima.app.pharmacy.service.PatnerPharmacyService;
 import com.mima.app.session.domain.BookingVO;
+import com.mima.app.session.domain.PaymentVO;
 import com.mima.app.session.service.BookingService;
 import com.mima.app.session.service.ConsultationService;
+import com.mima.app.session.service.RaymentService;
 
 import lombok.extern.java.Log;
 
@@ -77,6 +79,7 @@ public class PatientsController {
 	@Autowired MedDeliveryService deliveryService; // K.10/09 약배달
 	@Autowired MemberService memberService; // K.10/11 약배달 신청 유무
 	@Autowired ConsultationService consultationService; // K. 10/21 약국 후기 등록
+	@Autowired RaymentService paymentService;	// p. 10/24 
 
 	@Value("#{global['path']}")
 	String path;
@@ -524,7 +527,12 @@ public class PatientsController {
 		}
 		
 		if (result == 1) {
+			bookingService.cancelUpdate(bookingNo);
 			
+			PaymentVO pvo = new PaymentVO();
+			pvo.setPayItem(bookingNo);
+			
+			paymentService.payStatusUpdate(pvo);
 		} 
 		
 		return result;

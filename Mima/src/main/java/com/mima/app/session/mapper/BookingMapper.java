@@ -69,4 +69,7 @@ public interface BookingMapper {
 	
 	// K. 10/21 예약번호로 환자랑 의사이름 찾기
 	public BookingVO findNamePtDoc(int bookingNo);
+	
+	// p.10/24 진료 예약 취소 시 BOOKING테이블 status 변경
+	public int cancelUpdate(int bookingNo);
 }

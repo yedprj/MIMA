@@ -18,4 +18,11 @@
 			  #{payConfirmnum},
 			  'y')
 	</insert>
+	
+	<!-- 결제 취소에 따른 pay_status 변경 p.10/24 -->
+	<update id="payStatusUpdate">
+		UPDATE PAYMENT
+		SET PAY_STATUS = 'c'
+		WHERE PAY_ITEM = #{payItem}
+	</update>
 </mapper>
