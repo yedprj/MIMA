@@ -66,21 +66,24 @@
 		<filter-name>CORSFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+<!-- ssl https -->
+<security-constraint>
+        <web-resource-collection>
+            <web-resource-name>HTTP</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+
 	
 	<!-- 세션 유지 p.1023 -->
 	<session-config>
 		<session-timeout>60</session-timeout>
 	</session-config>
 
-<!-- 주윤 1023 https -->
-	<!--<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>SSL Forward</web-resource-name>
-			<url-pattern>/*</url-pattern>
-		</web-resource-collection>
-		<user-data-constraint>
-			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
-		</user-data-constraint>
-	</security-constraint> -->
 
 </web-app>
