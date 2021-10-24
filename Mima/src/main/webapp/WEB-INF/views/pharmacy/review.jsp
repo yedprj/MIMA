@@ -99,7 +99,7 @@
 											<img src="FileDown.do?fname=${review.ptProfilePhoto}">
 										</c:when>
 										<c:otherwise>
-											<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+											<img src="${pageContext.request.contextPath}/resources/assets/images/icon/user.png" alt="">
 										</c:otherwise>
 									</c:choose>
                                 </figure>

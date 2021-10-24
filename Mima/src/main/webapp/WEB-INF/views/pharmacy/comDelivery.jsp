@@ -119,7 +119,7 @@
 							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
 						</c:when>
 						<c:otherwise>
-							<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+							<img src="${pageContext.request.contextPath}/resources/assets/images/icon/user.png" alt="">
 						</c:otherwise>
 					</c:choose>
 				</figure>
@@ -208,7 +208,7 @@
 																<img src="FileDown.do?fname=${del.ptProfilePhoto}">
 															</c:when>
 															<c:otherwise>
-																<img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png" alt="">
+																<img src="${pageContext.request.contextPath}/resources/assets/images/icon/user.png" alt="">
 															</c:otherwise>
 														</c:choose>
                                                       </figure>
@@ -224,7 +224,7 @@
 														<span class="status">배달완료</span>
 													</c:if>
 													<c:if test="${phaDel.deliveryStatus eq 'y'}">
-														<span class="status pending">배달중</span>
+														<span style="background-color: #E5F7FB; color:#01B4D9;" class="status">배달중</span>
 													</c:if>
 													<c:if test="${phaDel.deliveryStatus eq 'c'}">
 														<span class="status cancel">신청취소</span>

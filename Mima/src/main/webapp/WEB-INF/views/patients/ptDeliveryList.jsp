@@ -30,6 +30,8 @@ th, td {
   box-sizing:border-box; padding:74px 0;
   line-height:23px; cursor:pointer;
 }
+
+
 </style>
 
 <!-- doctors-dashboard -->
@@ -68,9 +70,7 @@ th, td {
 							<img src="FileDown.do?fname=${session.ptProfilePhoto}">
 						</c:when>
 						<c:otherwise>
-							<img
-								src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-								alt="">
+							<img src="${pageContext.request.contextPath}/resources/assets/images/icon/user.png" alt="">
 						</c:otherwise>
 					</c:choose>
 				</figure>
@@ -138,7 +138,7 @@ th, td {
 													<span id="deliveryCancelBtn" data-no="${del.bookingNo}" class="status cancel">신청취소</span>
 												</c:if>
 												<c:if test="${del.deliveryStatus eq 'y'}">
-													<span class="status pending">배송시작</span>
+													<span style="background-color: #E5F7FB; color:#01B4D9;" class="status ">배송시작</span>
 												</c:if>
 											</td>
 											<td class="text-center">
