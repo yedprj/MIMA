@@ -167,35 +167,68 @@
 <!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
 <select id="apptHistoryPage" resultType="BookingVO">
 	SELECT *
-	FROM (SELECT *
-           FROM (SELECT  /*+INDEX_DESC(BOOKING BOOKING_PK) */
-						  ROWNUM RN,
-						  B.BOOKING_NO,
-						  B.PT_NO,
-						  B.DOC_NO,
-						  B.BOOKING_DATE,
-						  B.PRICE,
-						  B.BOOKING_STATUS,
-						  B.CONSULT_DATE,
-						  B.CONSULT_TIME,
-						  B.EDIT_DATE,
-						  B.ROOM_ID,
-						  B.FIRST_SESSION,
-						  B.SUBJECT,
-						  M.NAME,
-						  M.PT_PROFILE_PHOTO
-				  FROM BOOKING B JOIN MEMBER M
-		          ON PT_NO = M.MEMBER_NO
-		          WHERE <if test ="cri.keyword != null">
-				  			M.NAME LIKE '%'|| #{cri.keyword} || '%' AND
-				  		</if>	
-				  		<![CDATA[
-				  		CONSULT_DATE < TO_DATE(SYSDATE)
-				  AND DOC_NO = #{memberNo}
-				  ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC)
-			WHERE ROWNUM <= #{cri.pageNum} * #{cri.amount} )
-	WHERE RN > #{cri.pageNum}-1)* #{cri.amount} ]]>
+	FROM( SELECT B.*, ROWNUM RN
+		  FROM( SELECT  /*+INDEX_ASC(BOOKING CONSULT_DATE) */
+		  				ROWNUM,
+		                B.BOOKING_NO,
+		                B.PT_NO,
+		                B.DOC_NO,
+		                B.BOOKING_DATE,
+		                B.PRICE,
+		                B.BOOKING_STATUS,
+		                B.CONSULT_DATE,
+		                B.CONSULT_TIME,
+		                B.EDIT_DATE,
+		                B.ROOM_ID,
+		                B.FIRST_SESSION,
+		                B.SUBJECT,
+		                M.NAME,
+		                M.PT_PROFILE_PHOTO
+	             FROM BOOKING B JOIN MEMBER M
+	             ON PT_NO = M.MEMBER_NO
+	             WHERE <if test ="cri.keyword != null">
+					   		M.NAME LIKE '%'|| #{cri.keyword} || '%' AND
+					   </if>
+					   <![CDATA[
+				  	   CONSULT_DATE < TO_DATE(SYSDATE)]]>
+				 AND DOC_NO = #{memberNo}
+			     ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC) B)
+	WHERE RN BETWEEN (#{cri.pageNum}-1)* #{cri.amount}
+			 AND #{cri.pageNum} * #{cri.amount}
 </select>
+
+<!-- <select id="apptHistoryPage" resultType="BookingVO">
+	SELECT
+    *
+FROM( SELECT  /*+INDEX_DESC(BOOKING BOOKING_PK) */
+    ROWNUM rn,
+    b.booking_no,
+    b.pt_no,
+    b.doc_no,
+    b.booking_date,
+    b.price,
+    b.booking_status,
+    b.consult_date,
+    b.consult_time,
+    b.edit_date,
+    b.room_id,
+    b.first_session,
+    b.subject,
+    m.name,
+    m.pt_profile_photo
+FROM
+         booking b
+    JOIN member m ON pt_no = m.member_no
+WHERE <if test ="cri.keyword != null">
+		  			M.NAME LIKE '%'|| #{cri.keyword} || '%' AND
+		  		</if>	
+		  		<![CDATA[
+			  	ROWNUM <= #{cri.pageNum} * #{cri.amount} 
+			  	AND CONSULT_DATE < TO_DATE(SYSDATE)
+				AND DOC_NO = #{memberNo}
+		  ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC)
+	WHERE RN > (#{cri.pageNum}-1)* #{cri.amount}
+</select> -->
 
 <!-- 페이징 -->
 <!-- trim 한 것 따로 빼 낸것... -->
