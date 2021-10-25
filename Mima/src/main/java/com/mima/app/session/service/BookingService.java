@@ -51,9 +51,6 @@ public interface BookingService {
 	// 닥터 대쉬보드 진료내역 페이징 데이터 수 전체조회_J06
 	public int apptHistoryCount(Criteria cri, int memberNo);
 	
-	
-	
-	
 	//s:0929 s:1011 수정 예약번호 받아서 방 아이디 가져오기
 	public BookingVO getRoomId(int bookingNo);
 
@@ -71,5 +68,8 @@ public interface BookingService {
 	
 	// K. 10/21 예약번호로 환자랑 의사이름 찾기
 	public BookingVO findNamePtDoc(int bookingNo);
+	
+	// p.10/24 진료 예약 취소 시 BOOKING테이블 status 변경
+	public int cancelUpdate(int bookingNo);
 	
 }

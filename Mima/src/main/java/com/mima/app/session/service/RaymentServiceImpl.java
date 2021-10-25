@@ -15,5 +15,11 @@ public class RaymentServiceImpl implements RaymentService {
 	public int insertPayment(PaymentVO vo) {
 		return paymentMapper.insertPayment(vo);
 	}
+	
+	// 결제 취소에 따른 pay_status 변경 p.10/24
+	@Override
+	public int payStatusUpdate(PaymentVO vo) {
+		return paymentMapper.payStatusUpdate(vo);
+	}
 
 }

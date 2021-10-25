@@ -30,4 +30,7 @@ public interface ConsultationService {
 	public CommentsVO checkRv(CommentsVO vo);
 	//s:1015 환자가 의사 리뷰 등록
 	public int ptReviewInsert(CommentsVO vo);
+	
+	//s:1025 노드에서 호출, 방번호 인서트
+	public int rmNoInsert(BookingVO vo);
 }

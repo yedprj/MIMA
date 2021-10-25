@@ -26,6 +26,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/consultation/pillSearch.jsp"/>
 	</definition>
 	
+	<definition name="consultation/ptInformation" template="/WEB-INF/views/tiles/nolayout.jsp"> 
+		<put-attribute name="content" value="/WEB-INF/views/consultation/ptInformation.jsp"/>
+	</definition>
+	
 	<definition name="consultation/ptReviewFrm" template="/WEB-INF/views/tiles/nolayout.jsp"> 
 		<put-attribute name="content" value="/WEB-INF/views/consultation/ptReviewFrm.jsp"/>
 	</definition>

@@ -110,8 +110,7 @@
 						</div>
 					</div>
 					<div class="btn-box">
-						<a href="#" id="paybtnClick" class="theme-btn-one">Confirm and
-							Pay<i class="icon-Arrow-Right"></i>
+						<a href="#" id="paybtnClick" class="theme-btn-one">결제하기<i class="icon-Arrow-Right"></i>
 						</a>
 						 <input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}"> 
 						 <input type="hidden" value="${resvinfo.bookingNo}" id="bookingNo" name="bookingNo">

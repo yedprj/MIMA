@@ -63,5 +63,10 @@ public class ConsultationServiceImpl implements ConsultationService {
 	public CommentsVO checkRv(CommentsVO vo) {
 		return consultationMapper.checkRv(vo);
 	}
+//1025 s 방번호인서트
+	@Override
+	public int rmNoInsert(BookingVO vo) {
+		return consultationMapper.rmNoInsert(vo);
+	}
 
 }

@@ -154,7 +154,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		Map<String, Object> httpSession = session.getAttributes();
 		
 		MemberVO mVo = (MemberVO) httpSession.get("session");
-		
+		log.info("세션 저장된 멤버 아이디 "+mVo.toString());
 		String m_id = mVo.getMemberId(); // 세션에 저장된 m_id 기준 조회
 		return m_id==null? null: m_id;
 	}

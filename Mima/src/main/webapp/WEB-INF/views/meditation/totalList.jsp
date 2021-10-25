@@ -167,7 +167,7 @@ a:-webkit-any-link {
 							data-wow-delay="00ms" data-wow-duration="1500ms">
 							<div class="inner-box">
 								<figure class="image-box">
-									<a class="move" href="${item.meditationNo }"> <img
+									<a class="move" href="${item.meditationNo }"> <img style="width:370px; height:270px"
 										src="${pageContext.request.contextPath}/resources/assets/images/medit/${item.meditationThumb}"
 										alt="">
 									</a>
@@ -180,7 +180,7 @@ a:-webkit-any-link {
 									<ul class="post-info">
 										<!--img scr나중에 다시 하기. 절대경로+이미지저장경로/${item.teacherPhoto}  -->
 										<li><img
-											src="${pageContext.request.contextPath}/resources/assets/images/news/admin-1.png"
+											src="${pageContext.request.contextPath}/resources/assets/images/medit/mditlogo.png"
 											alt="">${item.teacherName }</li>
 										<li><fmt:formatDate value="${item.regDate }"
 												pattern="yyyy-MM-dd" /></li>
