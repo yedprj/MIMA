@@ -78,7 +78,7 @@
                         <img src="FileDown.do?fname=${session.ptProfilePhoto}">
                      </c:when>
                      <c:otherwise>
-                        <img src="${pageContext.request.contextPath}/resources/assets/images/icon/user.png" alt="">
+                        <img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
                      </c:otherwise>
                   </c:choose>
 				<div class="title-box centred">
@@ -202,7 +202,7 @@
 																<img src="FileDown.do?fname=${del.ptProfilePhoto}">
 															</c:when>
 															<c:otherwise>
-																<img src="${pageContext.request.contextPath}/resources/assets/images/icon/user.png" alt="">
+																<img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
 															</c:otherwise>
 														</c:choose>
                                                  </figure>
