@@ -212,7 +212,7 @@
 																<img src="FileDown.do?fname=${phaDel.ptProfilePhoto}">
 															</c:when>
 															<c:otherwise>
-																<img src="${pageContext.request.contextPath}/resources/assets/images/icon/user.png" alt="">
+																<img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
 															</c:otherwise>
 														</c:choose>
                                                       </figure>

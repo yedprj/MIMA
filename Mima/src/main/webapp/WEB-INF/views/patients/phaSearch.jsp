@@ -455,7 +455,7 @@
 		// 이미지 존재 유무
 		str = "";
 		if (data.profilePhoto == ''){
-			str = '<img src="${pageContext.request.contextPath}/resources/assets/images/icon/pill.png">'
+			str = '<img src="${pageContext.request.contextPath}/resources/assets/images/icons/pill.png">'
 		} else {
 			str = '<img src="FileDown.do?fname='+data.profilePhoto+'">'
 		}
