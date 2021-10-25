@@ -51,7 +51,7 @@
           AND DOC_NO = #{memberNo}
           ORDER BY CONSULT_DATE DESC)
     WHERE ROWNUM < 6
-     ]]>    
+     ]]>
 </select>
 
 <!-- 닥터 대쉬보드 메인 페이지 나의 환자들 카운트_J07 -->
@@ -167,35 +167,35 @@
 <!-- 닥터 대쉬보드 진료내역 페이징_J06 -->
 <select id="apptHistoryPage" resultType="BookingVO">
 	SELECT *
-	FROM( SELECT  /*+INDEX_DESC(BOOKING BOOKING_PK) */
-				  ROWNUM RN,
-				  B.BOOKING_NO,
-				  B.PT_NO,
-				  B.DOC_NO,
-				  B.BOOKING_DATE,
-				  B.PRICE,
-				  B.BOOKING_STATUS,
-				  B.CONSULT_DATE,
-				  B.CONSULT_TIME,
-				  B.EDIT_DATE,
-				  B.ROOM_ID,
-				  B.FIRST_SESSION,
-				  B.SUBJECT,
-				  M.NAME,
-				  M.PT_PROFILE_PHOTO
-		  FROM BOOKING B JOIN MEMBER M
-                ON PT_NO = M.MEMBER_NO
-		  WHERE <if test ="cri.keyword != null">
-		  			M.NAME LIKE '%'|| #{cri.keyword} || '%' AND
-		  		</if>	
-		  		<![CDATA[
-			  	ROWNUM <= #{cri.pageNum} * #{cri.amount} 
-			  	AND CONSULT_DATE < TO_DATE(SYSDATE)
-				AND DOC_NO = #{memberNo}
-		  ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC)
-	WHERE RN > (#{cri.pageNum}-1)* #{cri.amount}]]>
+	FROM (SELECT *
+           FROM (SELECT  /*+INDEX_DESC(BOOKING BOOKING_PK) */
+						  ROWNUM RN,
+						  B.BOOKING_NO,
+						  B.PT_NO,
+						  B.DOC_NO,
+						  B.BOOKING_DATE,
+						  B.PRICE,
+						  B.BOOKING_STATUS,
+						  B.CONSULT_DATE,
+						  B.CONSULT_TIME,
+						  B.EDIT_DATE,
+						  B.ROOM_ID,
+						  B.FIRST_SESSION,
+						  B.SUBJECT,
+						  M.NAME,
+						  M.PT_PROFILE_PHOTO
+				  FROM BOOKING B JOIN MEMBER M
+		          ON PT_NO = M.MEMBER_NO
+		          WHERE <if test ="cri.keyword != null">
+				  			M.NAME LIKE '%'|| #{cri.keyword} || '%' AND
+				  		</if>	
+				  		<![CDATA[
+				  		CONSULT_DATE < TO_DATE(SYSDATE)
+				  AND DOC_NO = #{memberNo}
+				  ORDER BY CONSULT_DATE DESC, CONSULT_TIME ASC)
+			WHERE ROWNUM <= #{cri.pageNum} * #{cri.amount} )
+	WHERE RN > #{cri.pageNum}-1)* #{cri.amount} ]]>
 </select>
-
 
 <!-- 페이징 -->
 <!-- trim 한 것 따로 빼 낸것... -->
