@@ -439,7 +439,7 @@ th, td {
 					//소켓메세지 보내기
 					console.log("sending3333 :    ", url);
 			          socket.send(url);
-				}, 10000);
+				}, 5000);
 				
 				
 			})//진료시작 이벤트 끝
