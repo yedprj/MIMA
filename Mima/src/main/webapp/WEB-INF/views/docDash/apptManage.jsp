@@ -58,8 +58,7 @@ th, td {
 	                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
 	                     </c:when>
 	                     <c:otherwise>
-	                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-	                  alt="">
+	                        <img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
 	                     </c:otherwise>
 	                  </c:choose>
 
@@ -407,34 +406,40 @@ th, td {
 				window.open('https://mima.miraclemind.kro.kr:443/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
 				//window.open('http://localhost:3000/?bookingNo='+bookingNo,'진료방','width=1200,height=900,location=no,status=no,scrollbars=yes');
 				let url="";
+				console.log("window opened   111")
 				//uuid 구해서 링크 받아오기 s:1011
-				$.ajax({ 
-		            url: '${pageContext.request.contextPath}/socket/getRmId',
-		            type: 'GET',
-		            cache: false, 
-		            data: {
-		               bookingNo: bookingNo
-		            },
-		            beforeSend : function(xhr) {
-							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-							//xhr.setRequestHeader("aa", "bb");
-					},
-					async: false,
-		            success: function(data) {
-		            	
-		                        console.log("진료방 시작후 방번호",data.roomId);
-		                        console.log("진료방 시작후 환자번호",data.ptNo);
-		                        url="https://mima.miraclemind.kro.kr/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
-		                        //url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
-		                        console.log("url 확인!",url);
-		                      },
-		            error: function(jqXHR, textStatus, err){
-		                 alert('text status '+textStatus+', err '+err);
-		             }
-		          });
-		          //ajax 끝
-				//소켓메세지 보내기
-		          socket.send(url);
+				setTimeout(function() {
+					console.log('calling ajax...2222')
+					$.ajax({ 
+			            url: '${pageContext.request.contextPath}/socket/getRmId',
+			            type: 'GET',
+			            cache: false, 
+			            data: {
+			               bookingNo: bookingNo
+			            },
+			            beforeSend : function(xhr) {
+								xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+								//xhr.setRequestHeader("aa", "bb");
+						},
+						async: false,
+			            success: function(data) {
+			            	
+			                        console.log("진료방 시작후 방번호",data.roomId);
+			                        console.log("진료방 시작후 환자번호",data.ptNo);
+			                        url="https://mima.miraclemind.kro.kr/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
+			                        //url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
+			                        console.log("url 확인!",url);
+			                      },
+			            error: function(jqXHR, textStatus, err){
+			                 alert('text status '+textStatus+', err '+err);
+			             }
+			          });
+			          //ajax 끝
+					//소켓메세지 보내기
+					console.log("sending3333 :    ", url);
+			          socket.send(url);
+				}, 10000);
+				
 				
 			})//진료시작 이벤트 끝
 			
