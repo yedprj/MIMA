@@ -67,8 +67,7 @@ textarea {
 		                        <img src="FileDown.do?fname=${session.ptProfilePhoto}">
 		                     </c:when>
 		                     <c:otherwise>
-		                        <img src="${pageContext.request.contextPath}/resources/assets/images/resource/profile-2.png"
-		                  alt="">
+		                        <img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
 		                     </c:otherwise>
 		                  </c:choose>
 					</figure>

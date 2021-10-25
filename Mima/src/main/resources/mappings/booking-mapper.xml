@@ -197,7 +197,6 @@
 	WHERE RN > #{cri.pageNum}-1)* #{cri.amount} ]]>
 </select>
 
-
 <!-- 페이징 -->
 <!-- trim 한 것 따로 빼 낸것... -->
 	<sql id="criteria">
