@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fontFamilies>
 	 <fontFamily name="D2Coding">
-		 <normal>C:\Users\수민\git\MIMA\Mima\src\main\resources\fonts\D2Coding.ttc</normal>
-		 <pdfEncoding>Identity-H</pdfEncoding>
-		 <pdfEmbedded>true</pdfEmbedded>
-	 </fontFamily>
-	 
-	 <fontFamily name="D2Coding">
-		 <normal>C:\Users\admin\git\MIMA\Mima\src\main\resources\fonts\D2Coding.ttc</normal>
+		 <normal>fonts\D2Coding.ttc</normal>
 		 <pdfEncoding>Identity-H</pdfEncoding>
 		 <pdfEmbedded>true</pdfEmbedded>
 	 </fontFamily>
