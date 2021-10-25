@@ -85,17 +85,19 @@
 	<!-- 닥터 대쉬보드 메인 페이지 나의 후기 -->
 	<select id="getlatestreviewList" resultType="CommentsVO">
 		<![CDATA[
-		SELECT C.CMAIN_NO,
-               C.CONTENTS,
-               C.REVIEW_POINT,
-               C.REG_DATE,
-               M.NICKNAME,
-               M.PT_PROFILE_PHOTO
-        FROM COMMENTS C JOIN MEMBER M
-        ON C.COMMENT_WRITER_NO = M.MEMBER_NO
-        WHERE ROWNUM < 6
-        AND CMAIN_NO = #{memberNo}
-        ORDER BY C.REG_DATE DESC
+		
+		SELECT *
+		FROM (SELECT C.CMAIN_NO,
+		             C.CONTENTS,
+		             C.REVIEW_POINT,
+		             C.REG_DATE,
+		             M.NAME,
+		             M.PT_PROFILE_PHOTO
+		      FROM COMMENTS C JOIN MEMBER M
+		      ON C.COMMENT_WRITER_NO = M.MEMBER_NO
+		      AND CMAIN_NO = #{memberNo}
+		      ORDER BY C.REG_DATE DESC)
+		WHERE ROWNUM < 6
 		]]>
 	</select>
 	
