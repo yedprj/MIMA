@@ -419,7 +419,7 @@ th, td {
 							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 							//xhr.setRequestHeader("aa", "bb");
 					},
-					async: true,
+					async: false,
 		            success: function(data) {
 		            	
 		                        console.log("진료방 시작후 방번호",data.roomId);
