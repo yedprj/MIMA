@@ -5,6 +5,12 @@
 		 <pdfEncoding>Identity-H</pdfEncoding>
 		 <pdfEmbedded>true</pdfEmbedded>
 	 </fontFamily>
+	 
+	 <fontFamily name="D2Coding">
+		 <normal>C:\Users\admin\git\MIMA\Mima\src\main\resources\fonts\D2Coding.ttc</normal>
+		 <pdfEncoding>Identity-H</pdfEncoding>
+		 <pdfEmbedded>true</pdfEmbedded>
+	 </fontFamily>
 	
 	<fontFamily name="새굴림">
 	 <normal>C:\Users\수민\git\MIMA\Mima\src\main\resources\fonts\NGULIM.TTF</normal>
