@@ -34,9 +34,10 @@
                         <div class="team-block-two wow fadeInUp animated animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                             <div class="inner-box">
                                 <div class="pattern" style="background-image: url(${pageContext.request.contextPath}/resources/assets/images/shape/shape-43.png);"></div>
-                                <figure class="image-box">
-                                    <img src="${pageContext.request.contextPath}/resources/assets/images/medit/medit_moody.png" alt="">
-                                </figure>
+                                <a class="move" href="${medit.meditationNo }">  <img style="width:290px; height:270px"
+										src="${pageContext.request.contextPath}/resources/assets/images/medit/${medit.meditationThumb}"
+										alt="">
+									</a>
                                 <div class="lower-content">
                                     <h3><a class="move" href="${medit.meditationNo }">${medit.title }</a></h3>
                                     <div>
