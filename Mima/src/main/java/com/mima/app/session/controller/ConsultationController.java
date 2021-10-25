@@ -27,7 +27,7 @@ import lombok.extern.java.Log;
 
 
 @Log
-@CrossOrigin("https://mima.miraclemind.kro.kr")
+@CrossOrigin("https://mima.miraclemind.kro.kr:443")
 @Controller
 @RequestMapping("/consultation/*")
 public class ConsultationController {
@@ -158,4 +158,17 @@ public class ConsultationController {
 			int result =consultationService.medDeliveryInsert(conVo);
 			System.out.println("입력된 값"+result);
 		}
+		
+		
+		//s:1025 노드호출 방번호 인서트 ajax
+		@PostMapping("/rmNoInsert")
+		@ResponseBody
+		public int rmNoInsert(BookingVO vo) {
+			log.info("예약 보 확인 방번호!"+ vo);
+			
+			int result = consultationService.rmNoInsert(vo);
+				
+			return result;
+		}
+		
 }

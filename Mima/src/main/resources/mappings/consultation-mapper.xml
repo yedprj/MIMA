@@ -100,4 +100,8 @@ select * From comments
 where cmain_No=#{cmainNo} AND COMMENT_WRITER_NO=#{commentWriterNo} AND CMAIN_CATEGORY =#{cmainCategory}
 </select>
 
+<insert id="rmNoInsert">
+UPDATE BOOKING SET ROOM_ID=#{roomId} WHERE BOOKING_NO=#{bookingNo}
+</insert>
+
 </mapper>
