@@ -42,7 +42,7 @@ public class PdfController {
 	public String prePdf2(HttpServletResponse response, Model model, @RequestParam(required = false, defaultValue ="39" ) Integer bookingNo ) throws Exception{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("p_booking_no", bookingNo);
-		model.addAttribute("fileName", "/report/mima_all_prescription2.jrxml");
+		model.addAttribute("fileName", "/report/mima_all_prescription.jrxml");
 		model.addAttribute("param", map);
 		return "pdfView";
 	}
@@ -52,7 +52,7 @@ public class PdfController {
 			@RequestParam(required = false, defaultValue ="39" ) Integer bookingNo) throws Exception {
 		log.info("************넘기는 파라미터 값"+bookingNo);
 		Connection conn = dataSource.getConnection();
-		InputStream jasperStream = getClass().getResourceAsStream("/report/mima_all_prescription2.jasper");
+		InputStream jasperStream = getClass().getResourceAsStream("/report/mima_all_prescription.jasper");
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream); //파라미터 맵
 		
 		// 환자이름 찾기
