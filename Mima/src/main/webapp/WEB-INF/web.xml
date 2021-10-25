@@ -68,7 +68,7 @@
 	</filter-mapping>
 
 <!-- ssl https -->
-	 <security-constraint>
+<security-constraint>
         <web-resource-collection>
             <web-resource-name>HTTP</web-resource-name>
             <url-pattern>/*</url-pattern>
