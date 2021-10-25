@@ -93,7 +93,7 @@
                     	<c:forEach var="review" items="${review}">
                         <div class="single-comment-box">
                             <div class="comment">
-                                <figure class="comment-thumb">
+                                <figure class="comment-thumb" style="overflow:hidden;">
                                 	<c:choose>
 										<c:when test="${not empty review.ptProfilePhoto }">
 											<img src="FileDown.do?fname=${review.ptProfilePhoto}">

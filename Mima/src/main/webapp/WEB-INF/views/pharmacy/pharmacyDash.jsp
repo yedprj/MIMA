@@ -188,7 +188,6 @@
                                          <th>처방전</th>
                                          <th>배송메모</th>
                                          <th>&nbsp;</th>
-                                         <th>&nbsp;</th>
                                      </tr>    
                                  </thead>
                                  <tbody>
@@ -196,7 +195,7 @@
                                      <tr id="trList">
                                          <td>
                                              <div class="name-box">
-                                                 <figure class="image">
+                                                 <figure class="image" style="overflow:hidden;">
                                                  	<c:choose>
 															<c:when test="${not empty del.ptProfilePhoto }">
 																<img src="FileDown.do?fname=${del.ptProfilePhoto}">
@@ -217,12 +216,6 @@
                                          	<c:if test="${not empty del.delNote}"><div id="delMemoHidden">${del.delNote}</div></c:if>
                                          </td>
                                          <td>
-                                             <span class="accept" data-no="${del.bookingNo}" data-name="${del.name}"><i class="fas fa-pencil-alt"></i>배달등록</span>
-                                         </td>
-                                         <td>
-                                             <span class="cancel" data-no="${del.bookingNo}" 
-                                             	data-phano="${del.pharmacyNo}"
-                                             data-name="${del.name}"><i class="fas fa-times"></i>반환</span>
                                          </td>
                                      </tr>
                                      </c:forEach>

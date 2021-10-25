@@ -202,7 +202,7 @@
                                               <td><p>${phaDel.medDeliveryNo}</p></td>
                                               <td>
                                                   <div class="name-box">
-                                                      <figure class="image">
+                                                      <figure class="image" style="overflow:hidden;">
                                                       	<c:choose>
 															<c:when test="${not empty del.ptProfilePhoto }">
 																<img src="FileDown.do?fname=${del.ptProfilePhoto}">
