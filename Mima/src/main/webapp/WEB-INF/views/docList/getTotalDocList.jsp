@@ -156,7 +156,7 @@
 
                                             <ul class="name-box clearfix">
                                                 <li class="name">
-                                                    <h3><a class="move" href="${item.memberNo }">Dr.${item.name } num ${item.memberNo }</a></h3>
+                                                    <h3><a class="move" href="${item.memberNo }">Dr.${item.name }</a></h3>
                                                 </li>
                                                 <li><i class="icon-Trust-1"></i></li>
                                                 <li><i class="icon-Trust-2"></i></li>
