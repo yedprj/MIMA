@@ -203,7 +203,7 @@ th, td {
 									                        <img src="FileDown.do?fname=${bookingList.ptProfilePhoto}" style="width:55px; height:55px">
 									                     </c:when>
 									                     <c:otherwise>
-									                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+									                         <img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
 									                     </c:otherwise>
 									                  </c:choose>
 													</figure>
@@ -270,7 +270,7 @@ th, td {
 										                        <img src="FileDown.do?fname=${getlatestapptList.ptProfilePhoto}" style="width:55px; height:55px">
 										                     </c:when>
 										                     <c:otherwise>
-										                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/dashboard-doc-1.png" alt="">
+										                         <img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
 										                     </c:otherwise>
 										                  </c:choose>
 													</figure>
@@ -316,11 +316,11 @@ th, td {
 						                        <img src="FileDown.do?fname=${getlatestreviewList.ptProfilePhoto}" style="width:80px; height:80px">
 						                     </c:when>
 						                     <c:otherwise>
-						                         <img src="${pageContext.request.contextPath}/resources/assets/images/resource/comment-1.png" alt="">
+						                         <img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
 						                     </c:otherwise>
 						                  </c:choose>
 									</figure>
-	             					<h4>${getlatestreviewList.nickname}</h4>
+	             					<h4>${getlatestreviewList.name}</h4>
 									<span class="comment-time"><i
 										class="fas fa-calendar-alt"></i>
 									<fmt:formatDate value="${getlatestreviewList.regDate}"
