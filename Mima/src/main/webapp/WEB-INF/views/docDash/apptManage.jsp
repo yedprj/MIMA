@@ -419,14 +419,14 @@ th, td {
 							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 							//xhr.setRequestHeader("aa", "bb");
 					},
-					async: false,
+					async: true,
 		            success: function(data) {
 		            	
 		                        console.log("진료방 시작후 방번호",data.roomId);
 		                        console.log("진료방 시작후 환자번호",data.ptNo);
 		                        url="https://mima.miraclemind.kro.kr/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
 		                        //url="http://localhost:3000/"+data.roomId+"?roomId="+data.roomId+"&bookingNo="+bookingNo;
-		                        console.log(url);
+		                        console.log("url 확인!",url);
 		                      },
 		            error: function(jqXHR, textStatus, err){
 		                 alert('text status '+textStatus+', err '+err);
