@@ -189,7 +189,7 @@
                                           <tr id="trList">
                                               <td>
                                                   <div class="name-box">
-                                                      <figure class="image">
+                                                      <figure class="image" style="overflow:hidden;">
                                                       	<c:choose>
 															<c:when test="${not empty ptEdu.ptProfilePhoto }">
 																<img src="FileDown.do?fname=${ptEdu.ptProfilePhoto}">
