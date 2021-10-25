@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fontFamilies>
 	 <fontFamily name="D2Coding">
-		 <normal>fonts\D2Coding.ttc</normal>
+		 <normal>/home/ubuntu/apache-tomcat-9.0.54/webapps/ROOT/WEB-INF/classes/fonts/D2Coding.ttc</normal>
 		 <pdfEncoding>Identity-H</pdfEncoding>
 		 <pdfEmbedded>true</pdfEmbedded>
 	 </fontFamily>
