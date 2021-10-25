@@ -30,7 +30,21 @@ th, td {
   box-sizing:border-box; padding:74px 0;
   line-height:23px; cursor:pointer;
 }
-
+#cancelBtn{
+	position: relative;
+    display: inline-block;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 600;
+    background: #fff;
+    color: #061a3a;
+    border: 2px solid #e5eded;
+    border-radius: 30px;
+    padding: 11px 28px;
+    margin-left: 6px;
+    text-align: center;
+    transition: all 500ms ease;
+}
 
 </style>
 
@@ -169,10 +183,10 @@ th, td {
 <!-- doctors-dashboard -->
  <!-- appointment-section -->
  		<div class="modal">
-        <section class="modal_content appointment-section bg-color-3">
+        <section style="padding:0px;" class="modal_content appointment-section bg-color-3">
             <div class="auto-container">
                 <div class="row clearfix">
-                    <div id="modalContentCss" class="col-lg-12 col-md-12 col-sm-12 left-column">
+                    <div id="modalContentCss" style="padding:0px; "class="col-lg-12 col-md-12 col-sm-12 left-column">
                         <div class="appointment-information">
                             <div class="title-box">
                                 <h3>약배달 취소건</h3>
@@ -185,13 +199,14 @@ th, td {
                                                 <label>약국 취소 사유</label>
                                                 <textarea id="message" name="deliveryDecline" ></textarea>
                                             </div>
-                                            <div class="col-lg-10 col-md-6 col-sm-12 form-group">
+                                            <div class="col-lg-8 col-md-6 col-sm-12 form-group">
                                                 <label>취소 약국명</label>
                                                 <input id="phaName" type="text" name=phaName >
                                                 <input id="pharmacyNo" type="hidden" name=pharmacyNo value="" >
                                             </div>
-                                            <div class="col-lg-2 col-md-6 col-sm-12 form-group">
-												<button id="searchBtn" type="button" onclick="window.open('phaSearch', '약국찾기', 'top=100px, left=300, width=600px, height=700px , scrollbars=yes');">검색</button>                                             	
+                                            <div class="col-lg-4 col-md-6 col-sm-12 form-group">
+                                            	<label>&nbsp;&nbsp;</label>
+												<button class="theme-btn-one" id="searchBtn" type="button" onclick="window.open('phaSearch', '약국찾기', 'top=100px, left=300, width=600px, height=700px , scrollbars=yes');">검색</button>                                             	
                                             </div>
                                             
                                         </div>
@@ -263,7 +278,7 @@ $(function(){
 					url : 'delReapply',
 					type : 'post',
 					data : { 
-						delPharmacyNo : pharmacyNo,
+						pharmacyNo : pharmacyNo,
 						bookingNo : bookingNo
 					},
 					beforeSend : function(xhr) {
