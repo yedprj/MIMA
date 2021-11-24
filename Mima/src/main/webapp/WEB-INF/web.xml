@@ -67,7 +67,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-<!-- ssl https , 주윤언니 localhost 경로 수정 
+<!-- ssl https , 주윤언니 localhost 경로 수정--> 
 <security-constraint>
         <web-resource-collection>
             <web-resource-name>HTTP</web-resource-name>
@@ -77,7 +77,6 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
--->
 
 	
 	<!-- 세션 유지 p.1023 -->
