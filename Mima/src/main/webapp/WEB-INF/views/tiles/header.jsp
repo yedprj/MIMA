@@ -164,6 +164,7 @@
 				</div>
 				<!-- 로그인 로그아웃 p.30 -->
 				<!-- K. 10/17 알림 -->
+				<c:if test="${not empty session}">
 				<div class="right-column pull-right">
                      <div class="author-box ">
                      	<div style="position: relative">
@@ -187,6 +188,7 @@
                      	</div>
        	             </div>
                 </div>
+                </c:if>
                 <!-- 알림 end -->	
 				
 				<div class="btn-box">
@@ -322,6 +324,7 @@
 				success : function(data) {
 					console.log(data);
 					li.remove();
+					
 				}
 			});// ajax end
 			

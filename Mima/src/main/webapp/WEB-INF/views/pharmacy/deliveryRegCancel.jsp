@@ -88,6 +88,22 @@
 	cursor: pointer;
     margin-right: 5px;
 }
+#cancelBtn {
+	position: relative;
+    display: inline-block;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 600;
+    background: #fff;
+    color: #061a3a;
+    border: 2px solid #e5eded;
+    border-radius: 30px;
+    padding: 11px 28px;
+    margin-left: 6px;
+    text-align: center;
+    transition: all 500ms ease;
+}
+
 </style>
 
 <!--page-title-two-->
@@ -197,7 +213,7 @@
                                                       <figure class="image" style="overflow:hidden;">
                                                       	<c:choose>
 															<c:when test="${not empty del.ptProfilePhoto }">
-																<img src="FileDown.do?fname=${del.ptProfilePhoto}">
+																<img src="FileDown.do?fname=${del.ptProfilePhoto}" style="width:55px; height:55px">
 															</c:when>
 															<c:otherwise>
 																<img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">
@@ -300,7 +316,7 @@
 </button>
 
 
-<script>
+<script type="text/javascript">
 
 function prescriptionPdf(no){
 	window.open('${pageContext.request.contextPath}/prePdf2?bookingNo='+ no, '처방전', 'width=1000px, height=1600px , scrollbars=yes');

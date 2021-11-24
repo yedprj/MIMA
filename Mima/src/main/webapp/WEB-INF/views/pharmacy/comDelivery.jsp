@@ -205,7 +205,7 @@
                                                       <figure class="image" style="overflow:hidden;">
                                                       	<c:choose>
 															<c:when test="${not empty del.ptProfilePhoto }">
-																<img src="FileDown.do?fname=${del.ptProfilePhoto}">
+																<img src="FileDown.do?fname=${del.ptProfilePhoto}" style="width:55px; height:55px">
 															</c:when>
 															<c:otherwise>
 																<img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">

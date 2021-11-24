@@ -123,8 +123,6 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 </style>
 
 <div class="boxed_wrapper">
-
-
 	<!--page-title-two-->
 	<section class="page-title-two">
 		<div class="title-box centred bg-color-1">
@@ -234,7 +232,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	<div id="myModal" class="modal">
 
 		<!-- Modal content -->
-		<div id="box" class="modal-content box">
+		<div id="box" class="modal-content box" style="background: rgb(244, 221, 218);">
 			<p style="text-align: center;">
 				<span style="font-size: 14pt;"><b><span
 						style="font-size: 16pt;">포스트잇 등록</span></b></span>
@@ -263,7 +261,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	
 </div>
 
-<script>
+<script type="text/javascript">
 	
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";
@@ -592,6 +590,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 			} // success end
 		}); //ajax end
 		console.log(pageNum);
+		console.log('포스트잇 총 갯수'+postCount);
 		console.log(Math.ceil(postCount/9));
 		if (pageNum == Math.ceil(postCount/9) ){
 			$("#addBtn").remove();
@@ -604,6 +603,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	
 	//페이지 목록 조회
 	function postList() {
+		$("#addBtn").remove();
 		$("#rdBtn").remove();
 		//addBtn(pageNum, amount);
 		pageNum = 1;

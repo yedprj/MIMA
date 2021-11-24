@@ -96,7 +96,7 @@
                                 <figure class="comment-thumb" style="overflow:hidden;">
                                 	<c:choose>
 										<c:when test="${not empty review.ptProfilePhoto }">
-											<img src="FileDown.do?fname=${review.ptProfilePhoto}">
+											<img src="FileDown.do?fname=${review.ptProfilePhoto}" style="width:80px; height:80px">
 										</c:when>
 										<c:otherwise>
 											<img src="${pageContext.request.contextPath}/resources/assets/images/icons/user.png" alt="">

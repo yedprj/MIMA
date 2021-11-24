@@ -30,7 +30,7 @@ th, td {
   box-sizing:border-box; padding:74px 0;
   line-height:23px; cursor:pointer;
 }
-#cancelBtn{
+#cancelBtn {
 	position: relative;
     display: inline-block;
     font-size: 15px;
@@ -212,7 +212,7 @@ th, td {
                                 </div>
 		                        <div class="btn-box">
 		                            <a id="delReturnBtn" class="theme-btn-one">재신청하러 가기<i class="icon-Arrow-Right"></i></a>
-		                            <button id="cancelBtn" class="cancel-btn">취소</button>
+		                            <button id="cancelBtn" class="cancel cancel-btn">취소</button>
 		                        </div>
                             </div>
                         </div>

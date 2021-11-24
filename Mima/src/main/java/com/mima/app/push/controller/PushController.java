@@ -1,10 +1,14 @@
 package com.mima.app.push.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mima.app.member.domain.MemberVO;
 import com.mima.app.push.service.PushService;
 
 @Controller
@@ -34,8 +38,15 @@ public class PushController {
 	
 	@PostMapping("pushDelete")
 	@ResponseBody
-	public int pushDelete2(int pushNo) {
-		return pushService.pushDelete(pushNo);
+	public int pushDelete2(int pushNo, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		MemberVO mvo = (MemberVO)session.getAttribute("session");
+		int result = pushService.pushDelete(pushNo);
+		System.out.println("******session*****"+ mvo);	
+		request.getSession().setAttribute("notice", pushService.selectMemberPush(mvo.getMemberNo()));
+		
+		return result;
 	}
 
 }
